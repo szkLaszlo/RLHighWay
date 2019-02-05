@@ -6,3 +6,4 @@
 cd gym-highway
 pip install -e .
 ```
+# RLHighWay
