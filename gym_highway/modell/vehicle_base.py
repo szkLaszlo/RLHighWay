@@ -10,25 +10,21 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 class BaseVehicle:
-    def __init__(self,dict):
-        self.envdict=dict
-        self.dt=self.envdict['dt']
-        self.length=5 #vehicle length in [m]
+    def __init__(self, dict):
+        self.envdict = dict
+        self.dt = self.envdict['dt']
+        self.length = 5  # vehicle length in [m]
         self.x = 0
         self.y = 0
         self.vx = 0
         self.vy = 0
-        self.color='b'
+        self.color = 'b'
         self.ID = 0
 
     def render(self):
-        x=self.x
-        y=self.y
-        l=self.length
-        plt.plot([x,x,x+l,x+l,x],[y-1,y+1,y+1,y-1,y-1],self.color)
-
-
-
-
-
+        x = self.x
+        y = self.y
+        l = self.length
+        plt.plot([x, x, x + l, x + l, x], [y - 1, y + 1, y + 1, y - 1, y - 1], self.color)

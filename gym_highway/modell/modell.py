@@ -6,7 +6,9 @@ import copy
 from gym_highway.modell.ego_vehicle import Egovehicle
 from gym_highway.modell.environment_vehicle import Envvehicle, env_add_entry
 
+
 class Modell:
+
     def __init__(self, envdict):
         self.envdict = envdict
         self.egovehicle = None
@@ -35,11 +37,9 @@ class Modell:
         :return: success, cause
         """
 
-
         # 5. NewBorn vehicles If lane density is smaller than desired
         self.generate_new_vehicles()
         self.random_new_des_speed()
-
 
         # 1. Stepping the ego vehicle
         vehiclecnt = len(self.lanes[self.egovehicle.laneindex])
@@ -50,7 +50,7 @@ class Modell:
             if isinstance(egoveh_lane[i], Egovehicle):
                 pos = i
                 break
-        if (i + 1) <vehiclecnt:
+        if (i + 1) < vehiclecnt:
             vnext = egoveh_lane[i + 1]
 
         self.egovehicle.step(action, vnext)
@@ -94,7 +94,8 @@ class Modell:
                                     if lane_right[k].x > veh.x:
                                         vright_a = lane_right[k]
                                         break
-                                for k in range(len(lane_right)-1, -1, -1):    # from len(lane_right) to -1 with -1, 0 is the last!
+                                for k in range(len(lane_right) - 1, -1,
+                                               -1):  # from len(lane_right) to -1 with -1, 0 is the last!
                                     if lane_right[k].x < veh.x:
                                         vright_b = lane_right[k]
                                         break
@@ -107,7 +108,7 @@ class Modell:
                                     if lane_left[k].x > veh.x:
                                         vleft_a = lane_left[k]
                                         break
-                                for k in range(len(lane_left)-1, -1, -1):
+                                for k in range(len(lane_left) - 1, -1, -1):
                                     if lane_left[k].x < veh.x:
                                         vleft_b = lane_left[k]
                                         break
@@ -128,10 +129,10 @@ class Modell:
                                 for vehicle in oldlane:
                                     if vehicle.ID == veh.ID:
                                         oldlane.remove(vehicle)
-                                        #print('Removed in Step ID:  ' + str(veh.ID))
+                                        # print('Removed in Step ID:  ' + str(veh.ID))
                                         break
 
-        #3.5 Insert vehicle in the other lane if lane switch has occurred
+        # 3.5 Insert vehicle in the other lane if lane switch has occurred
         for i in range(self.envdict['lane_count']):
             lane = self.lanes[i]
             for j in range(len(lane)):
@@ -148,23 +149,24 @@ class Modell:
                             vright_b = None
                             if i > 0:
                                 lane_right = self.lanes[i - 1]
-                                for k in range(len(lane_right)):    # search the vehicle ahead in the right lane
+                                for k in range(len(lane_right)):  # search the vehicle ahead in the right lane
                                     if lane_right[k].x > veh.x:
                                         vright_a = lane_right[k]
                                         break
-                                for k in range(len(lane_right) - 1, -1, -1):  # from len(lane_right) to -1 with -1, 0 is the last!
-                                    if lane_right[k].x < veh.x:     # search the vehicle behind in the right lane
+                                for k in range(len(lane_right) - 1, -1,
+                                               -1):  # from len(lane_right) to -1 with -1, 0 is the last!
+                                    if lane_right[k].x < veh.x:  # search the vehicle behind in the right lane
                                         vright_b = lane_right[k]
                                         break
 
                             if (vright_a is None) or ((vright_a.state != 'switch_lane_left') and
                                                       (vright_a.state != 'acceleration')):
                                 if (vright_b is None) or ((vright_b.state != 'switch_lane_left') and
-                                                       (vright_b.state != 'acceleration')):
+                                                          (vright_b.state != 'acceleration')):
                                     for k in range(len(newlane)):
                                         if (newlane[k].x > veh.x):
                                             veh.change_needed = 0
-                                            ev=copy.copy(veh)
+                                            ev = copy.copy(veh)
 
                                             ev.skip = 0
                                             newlane.insert(k, ev)
@@ -245,8 +247,6 @@ class Modell:
                             if removed == 0:
                                 print('NOT removed ID:  ' + str(veh.ID))
 
-
-
                     elif isinstance(veh, Egovehicle) and (veh.change_needed == 1):
                         inserted = 0
                         if veh.cmd == 'switch_lane_left':
@@ -293,7 +293,7 @@ class Modell:
                         for vehicle in oldlane:
                             if vehicle.ID == veh.ID:
                                 oldlane.remove(vehicle)
-                    #print("ID: " + str(veh.ID) + " laneindex: " + str(veh.laneindex) + " oldlane: " + str(veh.oldlane))
+                    # print("ID: " + str(veh.ID) + " laneindex: " + str(veh.laneindex) + " oldlane: " + str(veh.oldlane))
                     lane.remove(veh)
 
         # 4.5 Recheck position
@@ -306,7 +306,6 @@ class Modell:
         self.generate_new_vehicles()
         self.random_new_des_speed()
         """
-
 
         """
         # 6. Save data
@@ -373,20 +372,15 @@ class Modell:
                 id = lane[j].ID
                 if lane[j].x != 0:
                     st = lane[j].state
-                    text = 'lane: '+str(lane_num)+' idx: '+str(index)+' ID: ' +str(id)+' x: '+ str(x)+\
-                           ' y: '+str(y)+' vx: '+str(vx)+' '+st+' skipped: '+ str(lane[j].skip) + '\n'
+                    text = 'lane: ' + str(lane_num) + ' idx: ' + str(index) + ' ID: ' + str(id) + ' x: ' + str(x) + \
+                           ' y: ' + str(y) + ' vx: ' + str(vx) + ' ' + st + ' skipped: ' + str(lane[j].skip) + '\n'
                 else:
-                    text = 'lane: '+str(lane_num)+' idx: '+str(index)+' ID: '+str(id)+' x: '+str(x)+\
-                           ' y: '+str(y)+' vx: '+str(vx)+'\n'
+                    text = 'lane: ' + str(lane_num) + ' idx: ' + str(index) + ' ID: ' + str(id) + ' x: ' + str(x) + \
+                           ' y: ' + str(y) + ' vx: ' + str(vx) + '\n'
                 write += text
         env_add_entry(write)
 
-
-
-
-
         return True, 'Fine'
-
 
     def check_position(self):
         laneindex = int(round(self.egovehicle.y / self.envdict['lane_width']))
@@ -416,7 +410,7 @@ class Modell:
         rear = i - 1
         if 1 <= i:
             if lane[rear].x > self.egovehicle.x - self.egovehicle.length:
-                #print('ID: '+str(lane[rear].ID)+' x: '+str(lane[rear].x))
+                # print('ID: '+str(lane[rear].ID)+' x: '+str(lane[rear].x))
                 return False, 'Rear Collision'
 
         return True, 'Everything is fine'
@@ -503,14 +497,14 @@ class Modell:
 
                                 if (dist_front > 20) and (veh_left.state != 'switch_lane_right'):
                                     lane.insert(len(lane), ev)
-                                    #print("                     Left is NOT switching lane")
+                                    # print("                     Left is NOT switching lane")
                                 elif (dist_front > 20) and (veh_left.state == 'switch_lane_right'):
                                     if (dist_left > 20):
                                         lane.insert(len(lane), ev)
-                                        #print("                     Left is switching lane")
+                                        # print("                     Left is switching lane")
                                 else:
                                     print("                     INSERT FORBIDDEN!!!")
-                                    #print("first x: " + str(lane[len(lane) - 1].x) + " ev.x: " + str(ev.x))
+                                    # print("first x: " + str(lane[len(lane) - 1].x) + " ev.x: " + str(ev.x))
                             else:
                                 lane.insert(len(lane), ev)
 
@@ -577,7 +571,7 @@ class Modell:
         rear = None
         safe = None
         front = None
-        res = np.array([500., 0., 500., 0. , 0. ])
+        res = np.array([500., 0., 500., 0., 0.])
         egorear = self.egovehicle.x - self.egovehicle.length - szlen
         egofront = self.egovehicle.x + szlen
         egox = self.egovehicle.x
@@ -601,10 +595,10 @@ class Modell:
         return res
 
     def searchEgoVehicle(self, preferredlaneid=-1):
-        if preferredlaneid==-1:
-            laneind= np.random.randint(0,self.envdict['lane_count'])
+        if preferredlaneid == -1:
+            laneind = np.random.randint(0, self.envdict['lane_count'])
         else:
-            laneind=preferredlaneid
+            laneind = preferredlaneid
 
         lane = self.lanes[laneind]
         ind = -1
@@ -625,7 +619,7 @@ class Modell:
             e.vy = 0
             e.vx = e.desired_speed
             e.laneindex = laneind
-            e.desired_speed=self.envdict['speed_ego_desired']
+            e.desired_speed = self.envdict['speed_ego_desired']
             return
 
         offs = -lane[ind].x
@@ -657,7 +651,6 @@ class Modell:
         for i in range(self.envdict['lane_count']):
             self.nextvehicle.append(self.calcnextvehiclefollowing(i))
 
-
         for _ in range(int(warmuptime / self.envdict['dt'])):
             for i in range(self.envdict['lane_count']):
                 lane = self.lanes[i]
@@ -677,7 +670,7 @@ class Modell:
                     """
                     ev.desired_speed = self.envdict['speed_lane' + str(i)][0] + np.random.randn() * \
                                        ((self.envdict['speed_lane' + str(i)][1]) / 3.6)
-                    #ev.desired_speed = self.envdict['speed_mean_lane' + str(i)] + np.random.randn() * self.envdict[
+                    # ev.desired_speed = self.envdict['speed_mean_lane' + str(i)] + np.random.randn() * self.envdict[
                     #    'speed_std_lane' + str(i)]
                     ev.vx = min(ev.desired_speed, vnext)
 
@@ -699,14 +692,14 @@ class Modell:
                     vehiclecnt = len(lane)
                     if j < vehiclecnt:
                         veh = lane[j]
-                        #veh.laneindex = i
+                        # veh.laneindex = i
                         if isinstance(veh, Envvehicle):
                             if j + 1 < vehiclecnt:
                                 vnext = lane[j + 1]
                             else:
                                 vnext = None
                             veh.warmup_step(vnext)
-                            #veh.step(vnext, None, None, None, None, None)
+                            # veh.step(vnext, None, None, None, None, None)
                             if veh.x > self.envdict['length_forward']:
                                 lane.remove(veh)
 
@@ -740,13 +733,16 @@ class Modell:
 
         props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
         if self.egovehicle is not None:
-            th=math.atan2(self.egovehicle.vy, self.egovehicle.vx)*180/math.pi
-            v = math.sqrt(self.egovehicle.vx ** 2 + self.egovehicle.vy ** 2)*3.6
-            tstr='Speed: %4.2f [km/h]\nTheta:  %4.2f [deg]\nPos:  %4.2f [m]\nLane: %4d \n ' % (v,th,self.egovehicle.y,self.egovehicle.laneindex )
-            plt.text(0.05,0.95,tstr,transform=plt.axes().transAxes,verticalalignment='top', bbox=props, fontsize=12,family='monospace')
+            th = math.atan2(self.egovehicle.vy, self.egovehicle.vx) * 180 / math.pi
+            v = math.sqrt(self.egovehicle.vx ** 2 + self.egovehicle.vy ** 2) * 3.6
+            tstr = 'Speed: %4.2f [km/h]\nTheta:  %4.2f [deg]\nPos:  %4.2f [m]\nLane: %4d \n ' % (
+                v, th, self.egovehicle.y, self.egovehicle.laneindex)
+            plt.text(0.05, 0.95, tstr, transform=plt.axes().transAxes, verticalalignment='top', bbox=props, fontsize=12,
+                     family='monospace')
 
         if not (rewards is None):
-            tstr = 'Lane reward: %5.3f\n   y reward:  %5.3f\n   v reward:  %5.3f\n   c reward:  %5.3f\n ' % (rewards[0],rewards[1],rewards[2],rewards[3])
+            tstr = 'Lane reward: %5.3f\n   y reward:  %5.3f\n   v reward:  %5.3f\n   c reward:  %5.3f\n ' % (
+                rewards[0], rewards[1], rewards[2], rewards[3])
             plt.text(0.05, 0.35, tstr, transform=plt.axes().transAxes, verticalalignment='top', bbox=props, fontsize=14,
                      family='monospace')
 
@@ -766,5 +762,3 @@ class Modell:
                 log_file.write(entry)
             log_file.close()
     """
-
-

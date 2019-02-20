@@ -14,7 +14,7 @@ class Egovehicle(BaseVehicle):
         self.color = 'r'
         self.laneindex = 0
         # Properties for state based behavior
-        if self.actiontype==2:
+        if self.actiontype == 2:
             self.state = 'command_receive'
             self.cmd = 'in_lane'
             self.change_needed = 0
@@ -23,9 +23,7 @@ class Egovehicle(BaseVehicle):
             self.oldlane = 0
         else:
             self.change_needed = 0
-            self.state=''
-
-
+            self.state = ''
 
     def vehicle_onestep(self, vehiclestate, action, dt):
         """
@@ -78,11 +76,10 @@ class Egovehicle(BaseVehicle):
         return state
 
     def step(self, action, vnext):
-        if self.actiontype==2:
-            self.step_SM(action,vnext)
+        if self.actiontype == 2:
+            self.step_SM(action, vnext)
         else:
             self.step_CONT(action)
-
 
     def step_CONT(self, action):
         th = math.atan2(self.vy, self.vx)
@@ -94,7 +91,6 @@ class Egovehicle(BaseVehicle):
         self.y = newstate[1]
         self.vx = newstate[3] * math.cos(newstate[2])
         self.vy = newstate[3] * math.sin(newstate[2])
-
 
     def step_SM(self, action, vnext):
         """
@@ -109,9 +105,9 @@ class Egovehicle(BaseVehicle):
         self.vy = newstate[3] * math.sin(newstate[2])
         """
 
-        if (self.state == 'command_receive'):
-            if action == 0:    #
-            #if action == b'4':  #
+        if self.state == 'command_receive':
+            if action == 0:  #
+                # if action == b'4':  #
                 self.cmd = 'switch_lane_left'
                 self.change_needed = 1
                 self.oldlane = self.laneindex
@@ -119,7 +115,7 @@ class Egovehicle(BaseVehicle):
                 self.switch_lane_left()
 
             elif action == 1:  #
-            #elif action == b'6':  #
+                # elif action == b'6':  #
                 self.cmd = 'switch_lane_right'
                 self.change_needed = 1
                 self.oldlane = self.laneindex
@@ -129,10 +125,10 @@ class Egovehicle(BaseVehicle):
             else:
                 self.in_lane(vnext)
 
-        elif (self.state == 'command_execute'):
-            if (self.cmd == 'switch_lane_right'):
+        elif self.state == 'command_execute':
+            if self.cmd == 'switch_lane_right':
                 self.switch_lane_right()
-            elif (self.cmd == 'switch_lane_left'):
+            elif self.cmd == 'switch_lane_left':
                 self.switch_lane_left()
 
     def in_lane(self, vnext):
@@ -154,7 +150,7 @@ class Egovehicle(BaseVehicle):
         else:
             acc = -self.maxacc
 
-        if not (vnext is None):
+        if vnext is not None:
             # following GHR model
             dv = vnext.vx - self.vx
             dx = vnext.x - vnext.length - self.x
@@ -162,7 +158,7 @@ class Egovehicle(BaseVehicle):
                 print('Collision, ID: ', self.ID, ' vnext ID: ', vnext.ID, ' in lane: ', self.laneindex)
                 print(vnext.x, ' - ', vnext.length, ' - ', self.x)
 
-            #dist = vnext.vx * 1.4
+            # dist = vnext.vx * 1.4
             dist = vnext.vx * 1.2
             ddist = dist - dx
             accghr = -1 * ddist + 10 * dv
@@ -182,7 +178,6 @@ class Egovehicle(BaseVehicle):
         if self.y <= ((self.oldlane - 1) * self.lanewidth):
             self.y = ((self.oldlane - 1) * self.lanewidth)
             self.state = 'command_receive'
-
 
     def switch_lane_left(self):
 
