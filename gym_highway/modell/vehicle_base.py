@@ -21,7 +21,6 @@ class BaseVehicle:
         self.vx = 0
         self.vy = 0
         self.color = 'b'
-        self.ID = 0
 
     def render(self):
         x = self.x

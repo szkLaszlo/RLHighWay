@@ -47,10 +47,30 @@ def discaction(x):
 
 def plotstate(i, st):
     plt.figure(2)
-
-    xdata.append(i)
-    ydata.append(st[12])
-    plt.plot(xdata, ydata, 'r-')
+    xstate = [None]*9
+    ystate = [None]*9
+    xstate[0] = st[0]
+    xstate[1] = st[2]
+    xstate[2] = st[4]
+    xstate[3] = -st[6]
+    xstate[4] = -st[8]
+    xstate[5] = -st[10]
+    xstate[6] = 0
+    xstate[7] = 0
+    xstate[8] = 0
+    ystate[0] = st[14]+4
+    ystate[1] = 0
+    ystate[2] = st[14]-4
+    ystate[3] = st[14]+4
+    ystate[4] = 0
+    ystate[5] = st[14]-4
+    ystate[6] = st[14]+4*st[12]
+    ystate[7] = st[14]-4*st[13]
+    ystate[8] = st[14]
+    xdata = xstate
+    ydata = ystate
+    plt.cla()
+    plt.plot(xdata, ydata, 'r*')
     plt.draw()
     plt.pause(1e-17)
     time.sleep(0.1)
@@ -73,15 +93,9 @@ for i in range(10000):
     env.render(mode='human')
     plt.gcf().canvas.mpl_connect('key_press_event', press)
 
-    if env.unwrapped.envdict['action_space'] == 'CONTINUOUS':
-        action = contaction(keyaction)
-        keyaction = '0'
-    elif env.unwrapped.envdict['action_space'] == 'DISCRETE':
-        action = discaction(keyaction)
-        keyaction = '0'
-    elif env.unwrapped.envdict['action_space'] == 'STATEMACHINE':
-        action = smaction(keyaction)
-        keyaction = '0'
+
+    action = discaction(keyaction)
+    keyaction = '0'
 
     state, reward, terminated, cause = env.step(action)
 

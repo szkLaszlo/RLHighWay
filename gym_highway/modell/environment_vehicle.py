@@ -8,8 +8,8 @@ log_list = []
 
 class Envvehicle(BaseVehicle):
 
-    def __init__(self, dict):
-        super().__init__(dict)
+    def __init__(self, dict_env):
+        super().__init__(dict_env)
         self.desired_speed = 0.0
         self.maxacc = 2.0  # Max acceleration m/s^2
         self.maxdec = -6.0  # Max deceleration m/s^2
@@ -26,7 +26,7 @@ class Envvehicle(BaseVehicle):
         self.desired_speed = 130 / 3.6 + sigma * np.random.randn()
         self.vx = self.desired_speed
 
-    def step(self, vnext, vbehind, vright_a, vright_b, vleft_a, vleft_b):
+    def step(self, vnext, vbehind=None, vright_a=None, vright_b=None, vleft_a=None, vleft_b=None):
         """
         Steps with vehicle. Updates state
 
