@@ -5,13 +5,13 @@ from itertools import cycle
 cycol = cycle('bgrcmk')
 envdict ={'length_forward' :2000 ,'length_backward' :1000 ,'dt' :0.2}
 
-vehicles=[ev.Envvehicle(envdict),None]
+vehicles=[ev.EnvironmentVehicle(envdict), None]
 nextvehicle=30
 
 for j in range(10000):
     plt.hold(False)
     if vehicles[0].x>-envdict['length_backward']+nextvehicle:
-        vehicles.insert(0,ev.Envvehicle(envdict))
+        vehicles.insert(0, ev.EnvironmentVehicle(envdict))
         vehicles[0].vx=vehicles[1].vx
         vehicles[0].color=next(cycol)
         nextvehicle=30+max(10,150+np.random.randn()*10)

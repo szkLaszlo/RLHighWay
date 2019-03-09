@@ -1,22 +1,22 @@
 import gym
 import gym_highway
-from gym_highway.modell.modell import Modell
+from gym_highway.modell.model import Model
 #env = gym.make('EPHighWay-v0')
 import matplotlib.pyplot as plt
 import math
 #env.reset()
 
-m=Modell()
+m=Model()
 print("Lanes: ", m.lanes)
 m.warmup(False)
-m.searchEgoVehicle()
+m.search_ego_vehicle()
 m.render(True)
 for i in range(1000):
-    if m.egovehicle.vx<130/3.6:
+    if m.ego_vehicle.vx<130/3.6:
         acc=1
     else:
         acc=0
-    m.onestep([0.0003*math.sin(i/10),acc])
+    m.one_step([0.0003 * math.sin(i / 10), acc])
     #m.onestep([0, acc])
     #print(round(m.egovehicle.vx*3.6,2))
     state=m.generate_state_for_ego()

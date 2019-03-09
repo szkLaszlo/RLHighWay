@@ -2,18 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="999f16c8-7d46-4b0a-83f0-9764e2ed7a90" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gym_highway/Agent/DQN/dqn.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/Agent/DQN/dqn.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gym_highway/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gym_highway/envs/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/envs/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gym_highway/closing_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/closing_test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gym_highway/envs/ep_highway.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/envs/ep_highway.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gym_highway/envtest.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/envtest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gym_highway/modell/ego_vehicle.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/modell/ego_vehicle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gym_highway/misctest.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/misctest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gym_highway/modell/ego_vehicle.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/modell/egovehicle.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gym_highway/modell/environment_vehicle.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/modell/environment_vehicle.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gym_highway/modell/modell.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/modell/modell.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gym_highway/modell/modell.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/modell/model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gym_highway/modell/vehicle_base.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/modell/vehicle_base.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modelltest.py" beforeDir="false" afterPath="$PROJECT_DIR$/modelltest.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -57,26 +58,45 @@
         </counts>
       </usages-collector>
     </session>
+    <session id="1868889273">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.open.time.6" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="Python Console" value="46" />
+          <entry key="dummy" value="6" />
+          <entry key="py" value="2041" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="PLAIN_TEXT" value="6" />
+          <entry key="Python" value="2087" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="py" value="5" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="Python" value="5" />
+        </counts>
+      </usages-collector>
+    </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gym_highway/envtest.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="58" column="17" lean-forward="true" selection-start-line="58" selection-start-column="17" selection-end-line="58" selection-end-column="17" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/codecs.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="97">
-              <caret line="332" selection-start-line="332" selection-end-line="332" />
+            <state relative-caret-position="170">
+              <caret line="99" selection-start-line="99" selection-end-line="99" />
             </state>
           </provider>
         </entry>
@@ -84,17 +104,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gym_highway/envs/ep_highway.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3162">
-              <caret line="193" selection-start-line="193" selection-end-line="193" />
+            <state relative-caret-position="159">
+              <caret line="91" selection-start-line="91" selection-end-line="91" />
+              <folding>
+                <marker date="1552155912000" expanded="true" signature="286:290" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gym_highway/modell/modell.py">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/gym_highway/modell/model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="193" column="34" lean-forward="true" selection-start-line="193" selection-start-column="34" selection-end-line="193" selection-end-column="34" />
+            <state relative-caret-position="-27">
+              <caret line="273" selection-start-line="273" selection-end-line="273" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -103,10 +126,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gym_highway/__init__.py">
+        <entry file="file://$PROJECT_DIR$/gym_highway/modell/egovehicle.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="48" selection-start-line="4" selection-start-column="48" selection-end-line="4" selection-end-column="48" />
+            <state relative-caret-position="51">
+              <caret line="5" column="16" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -114,8 +137,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gym_highway/modell/environment_vehicle.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2227">
-              <caret line="132" column="22" selection-start-line="132" selection-start-column="22" selection-end-line="132" selection-end-column="22" />
+            <state relative-caret-position="250">
+              <caret line="85" column="42" lean-forward="true" selection-start-line="85" selection-start-column="42" selection-end-line="85" selection-end-column="42" />
               <folding>
                 <element signature="e#0#55#0" expanded="true" />
               </folding>
@@ -135,10 +158,12 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>stats</find>
-      <find>laneindex</find>
       <find>ev.laneindex</find>
       <find>searcheg</find>
       <find>check_</find>
+      <find>laneindex</find>
+      <find>sort</find>
+      <find>egovehicle</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -152,24 +177,26 @@
       <list>
         <option value="$PROJECT_DIR$/../../vehicle operation/rnn-tutorial-rnnlm-master/rnn-tutorial-rnnlm-master/rnn_theano.py" />
         <option value="$PROJECT_DIR$/gym_highway/Agent/Q-Learning with Value Function Approximation.py" />
-        <option value="$PROJECT_DIR$/gym_highway/envs/ep_highway.py" />
-        <option value="$PROJECT_DIR$/gym_highway/modell/modell.py" />
-        <option value="$PROJECT_DIR$/gym_highway/modell/vehicle_base.py" />
         <option value="$PROJECT_DIR$/gym_highway/modell/vehicle_modell.py" />
-        <option value="$PROJECT_DIR$/gym_highway/modell/ego_vehicle.py" />
-        <option value="$PROJECT_DIR$/gym_highway/modell/environment_vehicle.py" />
         <option value="$PROJECT_DIR$/modelltest.py" />
         <option value="$PROJECT_DIR$/gym_highway/__init__.py" />
         <option value="$PROJECT_DIR$/gym_highway/Agent/DQN/dqn.py" />
+        <option value="$PROJECT_DIR$/gym_highway/modell/modell.py" />
+        <option value="$PROJECT_DIR$/gym_highway/modell/ego_vehicle.py" />
+        <option value="$PROJECT_DIR$/gym_highway/modell/vehicle_base.py" />
+        <option value="$PROJECT_DIR$/gym_highway/modell/egovehicle.py" />
+        <option value="$PROJECT_DIR$/gym_highway/modell/environment_vehicle.py" />
+        <option value="$PROJECT_DIR$/gym_highway/envs/ep_highway.py" />
         <option value="$PROJECT_DIR$/gym_highway/envtest.py" />
+        <option value="$PROJECT_DIR$/gym_highway/modell/model.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-12" />
-    <option name="y" value="-12" />
-    <option name="width" value="1944" />
-    <option name="height" value="1044" />
+    <option name="x" value="-1928" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -177,47 +204,29 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="gym-highway-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gym-highway-master" type="462c0819:PsiDirectoryNode" />
+              <item name="RLHighWay" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RLHighWay" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="gym-highway-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gym-highway-master" type="462c0819:PsiDirectoryNode" />
+              <item name="RLHighWay" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RLHighWay" type="462c0819:PsiDirectoryNode" />
               <item name="gym_highway" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="gym-highway-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gym-highway-master" type="462c0819:PsiDirectoryNode" />
-              <item name="gym_highway" type="462c0819:PsiDirectoryNode" />
-              <item name="Agent" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="gym-highway-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gym-highway-master" type="462c0819:PsiDirectoryNode" />
-              <item name="gym_highway" type="462c0819:PsiDirectoryNode" />
-              <item name="envs" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="gym-highway-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gym-highway-master" type="462c0819:PsiDirectoryNode" />
-              <item name="gym_highway" type="462c0819:PsiDirectoryNode" />
-              <item name="modell" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="settings.github" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -398,15 +407,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
+    <frame x="-1928" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4911032" visible="true" weight="0.27044535" />
-      <window_info id="Structure" order="1" sideWeight="0.50889677" side_tool="true" visible="true" weight="0.27044535" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.48932385" visible="true" weight="0.15671642" />
+      <window_info id="Structure" order="1" sideWeight="0.51067615" side_tool="true" weight="0.27530363" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49959514" weight="0.4466192" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3950178" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49959514" visible="true" weight="0.44577006" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39479393" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Docker" order="6" show_stripe_button="false" />
@@ -414,8 +424,8 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50040483" side_tool="true" weight="0.3291815" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.1975089" />
-      <window_info anchor="bottom" id="Python Console" order="12" weight="0.32740214" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.19739696" />
+      <window_info anchor="bottom" id="Python Console" order="12" weight="0.3264642" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -424,31 +434,6 @@
       <window_info anchor="right" id="R Packages" order="5" />
       <window_info anchor="right" id="Database" order="6" />
     </layout>
-    <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17246963" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3291815" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39679715" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Docker" order="6" show_stripe_button="false" />
-      <window_info anchor="bottom" id="TODO" order="7" weight="0.329718" />
-      <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.3285968" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.19956616" />
-      <window_info anchor="bottom" id="Python Console" order="12" weight="0.3275488" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="SciView" order="3" />
-      <window_info anchor="right" id="R Graphics" order="4" />
-      <window_info anchor="right" id="R Packages" order="5" />
-      <window_info anchor="right" id="Database" order="6" />
-    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -457,8 +442,27 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/nn-theano" />
+    </ignored-roots>
     <MESSAGE value="initial setup" />
     <option name="LAST_COMMIT_MESSAGE" value="initial setup" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/gym_highway/modell/model.py</url>
+          <line>273</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/gym_highway/modell/model.py</url>
+          <line>90</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/gym_highway/lib/envs/__init__.py">
@@ -473,13 +477,6 @@
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/Desktop/David-Silver-Reinforcement-learning-master/Week 3 - Planning by Dynamic Programming/frozen_lake.py" />
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/gym/wrappers/time_limit.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="28" column="8" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../vehicle operation/rnn-tutorial-rnnlm-master/rnn-tutorial-rnnlm-master/train-theano.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-306">
@@ -559,20 +556,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gym_highway/modell/vehicle_base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="19" column="18" lean-forward="true" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gym_highway/modell/ego_vehicle.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-34">
-          <caret line="12" column="20" lean-forward="true" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/gym_highway/modell/vehicle_modell.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-565">
@@ -605,6 +588,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/codecs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5627">
+          <caret line="332" selection-start-line="332" selection-end-line="332" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/gym_highway/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -612,46 +602,67 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="11" column="2" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/gym_highway/modell/environment_vehicle.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2227">
-          <caret line="132" column="22" selection-start-line="132" selection-start-column="22" selection-end-line="132" selection-end-column="22" />
+        <state relative-caret-position="250">
+          <caret line="85" column="42" lean-forward="true" selection-start-line="85" selection-start-column="42" selection-end-line="85" selection-end-column="42" />
           <folding>
             <element signature="e#0#55#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/codecs.py">
+    <entry file="file://$PROJECT_DIR$/gym_highway/modell/vehicle_base.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="97">
-          <caret line="332" selection-start-line="332" selection-end-line="332" />
+        <state relative-caret-position="323">
+          <caret line="20" column="18" lean-forward="true" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gym_highway/envs/ep_highway.py">
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/gym/wrappers/time_limit.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3162">
-          <caret line="193" selection-start-line="193" selection-end-line="193" />
+        <state relative-caret-position="219">
+          <caret line="28" column="8" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gym_highway/modell/modell.py">
+    <entry file="file://$PROJECT_DIR$/gym_highway/modell/egovehicle.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="193" column="34" lean-forward="true" selection-start-line="193" selection-start-column="34" selection-end-line="193" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="51">
+          <caret line="5" column="16" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="16" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/gym_highway/envtest.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="58" column="17" lean-forward="true" selection-start-line="58" selection-start-column="17" selection-end-line="58" selection-end-column="17" />
+        <state relative-caret-position="170">
+          <caret line="99" selection-start-line="99" selection-end-line="99" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gym_highway/envs/ep_highway.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="159">
+          <caret line="91" selection-start-line="91" selection-end-line="91" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
+            <marker date="1552155912000" expanded="true" signature="286:290" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gym_highway/modell/model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-27">
+          <caret line="273" selection-start-line="273" selection-end-line="273" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>

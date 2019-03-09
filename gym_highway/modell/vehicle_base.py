@@ -12,10 +12,12 @@ import matplotlib.pyplot as plt
 
 
 class BaseVehicle:
-    def __init__(self, dict):
-        self.envdict = dict
-        self.dt = self.envdict['dt']
-        self.length = 5  # vehicle length in [m]
+    def __init__(self, dict_base):
+        self.env_dict = dict_base
+        self.dt = self.env_dict['dt']
+        self.length = self.env_dict['car_length']  # vehicle length in [m]
+        self.max_acc = dict_base['max_acceleration']  # Max acceleration m/s^2
+        self.max_dec = dict_base['max_deceleration']  # Max deceleration m/s^2
         self.x = 0
         self.y = 0
         self.vx = 0
@@ -26,4 +28,4 @@ class BaseVehicle:
         x = self.x
         y = self.y
         l = self.length
-        plt.plot([x, x, x + l, x + l, x], [y - 1, y + 1, y + 1, y - 1, y - 1], self.color)
+        plt.plot([x, x, x + self.length, x + self.length, x], [y - 1, y + 1, y + 1, y - 1, y - 1], self.color)

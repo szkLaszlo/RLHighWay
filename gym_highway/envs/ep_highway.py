@@ -4,7 +4,7 @@ import gym
 from gym import spaces
 from gym.utils import seeding
 import numpy as np
-from gym_highway.modell.modell import Modell
+from gym_highway.modell.model import Model
 from gym_highway.modell.environment_vehicle import CollisionExc
 
 logger = logging.getLogger(__name__)
@@ -17,15 +17,17 @@ class EPHighWayEnv(gym.Env):
 
     def __init__(self):
 
-        self.envdict = {'length_forward': 1000, 'length_backward': 500, 'dt': 0.2, 'lane_width': 4, 'lane_count': 3,
-                        'density_lane0': 16, 'density_lane1': 8, 'speed_mean_lane0': 110.0 / 3.6,
-                        'speed_std_lane0': 10.0 / 3.6, 'speed_mean_lane1': 150.0 / 3.6, 'speed_std_lane1': 10.0 / 3.6,
-                        'speed_ego_desired': 130.0 / 3.6}
+        self.env_dict = {'length_forward': 1000, 'length_backward': 500, 'dt': 0.2, 'lane_width': 4, 'lane_count': 3,
+                         'density_lane0': 16, 'density_lane1': 8, 'speed_mean_lane0': 110.0 / 3.6,
+                         'speed_std_lane0': 10.0 / 3.6, 'speed_mean_lane1': 150.0 / 3.6, 'speed_std_lane1': 10.0 / 3.6,
+                         'speed_ego_desired': 130.0 / 3.6, 'car_length': 3, 'safe_zone_length': 2,
+                         'max_acceleration': 2,
+                         'max_deceleration': -6}
         # Vehicle Generation Parameters
 
-        self.modell = None
+        self.model = None
 
-        self.resetcounter = 0
+        self.reset_counter = 0
 
         self._reset()
 
@@ -34,11 +36,11 @@ class EPHighWayEnv(gym.Env):
 
         alow = np.array([-0.003, -6.0])
         ahigh = np.array([0.003, 3.5])
-        self.action_space = spaces.Discrete(25)
+        self.action_space = spaces.Discrete(49)
         # self.action_space = spaces.Box(alow,ahigh)
         self.observation_space = spaces.Box(low, high)
-        self.cumulatedreward = 0
-        self.rewards = [0, 0, 0]
+        self.cumulated_reward = 0
+        self.rewards = [0, 0, 0, 0]
         self._seed()
 
     def _seed(self, seed=None):
@@ -46,37 +48,36 @@ class EPHighWayEnv(gym.Env):
         return [seed]
 
     def _reset(self):
-        # If resentcounter reached 0 ->New modell is created and warms up
-        # if (self.modell is None) or (self.resetcounter<=0):
 
-        self.envdict['density_lane0'] = np.random.randint(12, 16)  # 16 #[vehicle density vehicle/km]
-        self.envdict['density_lane1'] = np.random.randint(8, 12)  # 8 #[vehicle density vehicle/km]
-        self.envdict['density_lane2'] = np.random.randint(6, 10)  # 8 #[vehicle density vehicle/km]
+        # TODO: lehetne  lane-hez igazítani nem hardcodeolni csak három sávot
+        self.env_dict['density_lane0'] = np.random.randint(12, 16)  # 16 #[vehicle density vehicle/km]
+        self.env_dict['density_lane1'] = np.random.randint(8, 12)  # 8 #[vehicle density vehicle/km]
+        self.env_dict['density_lane2'] = np.random.randint(6, 10)  # 8 #[vehicle density vehicle/km]
 
         seb = np.random.randint(100, 120)
 
-        self.envdict['speed_mean_lane0'] = seb / 3.6  # generated vehicle desired speed mean [m/s]
-        self.envdict['speed_std_lane0'] = 10.0 / 3.6  # generated vehicle desired speed deviation [m/s]
+        self.env_dict['speed_mean_lane0'] = seb / 3.6  # generated vehicle desired speed mean [m/s]
+        self.env_dict['speed_std_lane0'] = 10.0 / 3.6  # generated vehicle desired speed deviation [m/s]
         seb = (seb + np.random.randint(0, 20))
-        self.envdict['speed_mean_lane1'] = seb / 3.6  # generated vehicle desired speed mean [m/s]
-        self.envdict['speed_std_lane1'] = 10.0 / 3.6  # generated vehicle desired speed deviation [m/s]
+        self.env_dict['speed_mean_lane1'] = seb / 3.6  # generated vehicle desired speed mean [m/s]
+        self.env_dict['speed_std_lane1'] = 10.0 / 3.6  # generated vehicle desired speed deviation [m/s]
         seb = (seb + np.random.randint(0, 20))
-        self.envdict['speed_mean_lane2'] = seb / 3.6  # generated vehicle desired speed mean [m/s]
-        self.envdict['speed_std_lane2'] = 10.0 / 3.6  # generated vehicle desired speed deviation [m/s]
+        self.env_dict['speed_mean_lane2'] = seb / 3.6  # generated vehicle desired speed mean [m/s]
+        self.env_dict['speed_std_lane2'] = 10.0 / 3.6  # generated vehicle desired speed deviation [m/s]
 
-        self.modell = Modell(self.envdict)
-        self.modell.warmup(False)
-        self.resetcounter = 10
-        # Picking the EgoVehicle from modell
-        self.modell.searchEgoVehicle()
-        self.cumulatedreward = 0
+        self.model = Model(self.env_dict)
+        self.model.warmup(False)
+        self.reset_counter = 10
+        # Picking the EgoVehicle from model
+        self.model.search_ego_vehicle()
+        self.cumulated_reward = 0
         self.rewards = [0, 0, 0, 0]
-        self.resetcounter = self.resetcounter - 1
+        self.reset_counter = self.reset_counter - 1
         # Aquiring state from modell
-        self.state = self.modell.generate_state_for_ego()
+        self.state = self.model.generate_state_for_ego()
         return self.state
 
-    def calcaction(self, action):
+    def calculate_action(self, action):
         st = [-0.003, -0.0005, 0, 0.0005, 0.003]
         ac = [-6.0, -2.0, 0.0, 2.0, 3.5]
         steer = st[action // 5]
@@ -87,100 +88,100 @@ class EPHighWayEnv(gym.Env):
     def _step(self, action):
         assert self.action_space.contains(action), "%r (%s) invalid" % (action, type(action))
         try:
-            ctrl = self.calcaction(action)
-            isOk, cause = self.modell.onestep(ctrl)
+            ctrl = self.calculate_action(action)
+            is_ok, cause = self.model.one_step(ctrl)
         except CollisionExc:
             print('Collision exception')
             return self.state, -20.0, True, {'Collision exception'}
-        except:
-            isOk = False
-            print('Internal exception')
-            return self.state, -20.0, True, {'Internal exception'}  # Collision exception
 
-        self.state = self.modell.generate_state_for_ego()
-        terminated = not isOk
+        self.state = self.model.generate_state_for_ego()
+        terminated = not is_ok
         if terminated:
             print(cause)
             reward = -20.0
-            rewards = np.zeros(4)
         else:
-            reward, rewards = self.calcreward()
+            reward, rewards = self.calculate_reward()
 
-        self.cumulatedreward = self.cumulatedreward + reward
+        self.cumulated_reward = self.cumulated_reward + reward
+
         return self.state, reward, terminated, {'cause': cause, 'rewards': self.rewards}
 
-    def calcreward(self):
+    def calculate_reward(self):
         reward = 0
+
         # LANE BASED REWARD
 
-        lreward = 0
-        laneindex = self.modell.egovehicle.laneindex
-        if laneindex > 0:
-            if (self.state[13] == 0) and (self.state[4] > 30):
-                lreward = -min(1, max(0, (self.state[4] - 50.0) / 20.0))
+        lane_reward = 0
+        lane_index = self.model.ego_vehicle.lane_index
+        if lane_index > 0:
+            if (self.state['ER']['dx'] == 500) and (self.state['FR']['dx'] > 30):
+                lane_reward = -min(1, max(0, (self.state['FR']['dx'] - 50.0) / 20.0))
 
         # POSITION BASED REWARD
-        # dy=abs(self.modell.egovehicle.y-laneindex*self.envdict['lane_width'])
-        dy = abs(self.modell.egovehicle.y - (self.envdict['lane_count'] - 1.0) / 2 * self.envdict['lane_width'])
-        ytresholdlow = (self.envdict['lane_count'] - 1.0) / 2.0 * self.envdict['lane_width'] + 0.3  # [m]
-        ytresholdhigh = (self.envdict['lane_count']) / 2.0 * self.envdict['lane_width']  # [m]
-        yrewhigh = 1.0
-        yrewlow = 0.0
-        if dy < ytresholdlow:
-            yreward = yrewhigh
-        elif dy > ytresholdhigh:
-            yreward = yrewlow
+        # dy=abs(self.modell.egovehicle.y-lane_index*self.envdict['lane_width'])
+        dy = abs(self.model.ego_vehicle.y - (self.env_dict['lane_count'] - 1.0) / 2 * self.env_dict['lane_width'])
+        y_treshold_low = (self.env_dict['lane_count'] - 1.0) / 2.0 * self.env_dict['lane_width'] + 0.3  # [m]
+        y_treshold_high = (self.env_dict['lane_count']) / 2.0 * self.env_dict['lane_width']  # [m]
+        y_reward_max = 1.0
+        y_reward_low = 0.0
+        if dy < y_treshold_low:
+            y_reward = y_reward_max
+        elif dy > y_treshold_high:
+            y_reward = y_reward_low
         else:
-            yreward = yrewhigh - (yrewhigh - yrewlow) * (dy - ytresholdlow) / (ytresholdhigh - ytresholdlow)
+            y_reward = y_reward_max - (y_reward_max - y_reward_low) * \
+                       (dy - y_treshold_low) / (y_treshold_high - y_treshold_low)
+
         # DESIRED SPEED BASED REWARD
-        dv = abs(self.modell.egovehicle.desired_speed - self.state[16])
-        vtresholdlow = 1  # [m/s]
-        vtresholdhigh = 10  # self.modell.egovehicle.desired_speed #[m/s]
-        vrewhigh = 1.0
-        vrewlow = 0.1
-        if dv < vtresholdlow:
-            vreward = vrewhigh
-        elif dv > vtresholdhigh:
-            vreward = vrewlow
+        dv = abs(self.model.ego_vehicle.desired_speed - self.state['speed'])
+        v_treshold_low = 1  # [m/s]
+        v_treshold_high = 10  # self.modell.egovehicle.desired_speed #[m/s]
+        v_reward_high = 1.0
+        v_reward_low = 0.1
+        if dv < v_treshold_low:
+            v_reward = v_reward_high
+        elif dv > v_treshold_high:
+            v_reward = v_reward_low
         else:
-            vreward = vrewhigh - (vrewhigh - vrewlow) * (dv - vtresholdlow) / (vtresholdhigh - vtresholdlow)
+            v_reward = v_reward_high - (v_reward_high - v_reward_low) * \
+                       (dv - v_treshold_low) / (v_treshold_high - v_treshold_low)
 
         # Vehicle Closing Based Rewards
-        cright = 0  # right safe zone
-        cleft = 0  # left safe zone
-        cfront = 0  # followed vehicle
-        crear = 0  # following vehicle
+        closing_right = 0  # right safe zone
+        closing_left = 0  # left safe zone
+        closing_front = 0  # followed vehicle
+        closing_rear = 0  # following vehicle
 
-        lw = self.envdict['lane_width']
-        vehy = self.modell.egovehicle.y - self.modell.egovehicle.laneindex * lw
+        lane_width = self.env_dict['lane_width']
+        vehicle_y = self.model.ego_vehicle.y - self.model.ego_vehicle.lane_index * lane_width
 
         # right safe zone
-        if self.state[13] == 1:
-            if vehy < -lw / 4:
-                cright = max(-1, (vehy + lw / 4) / (lw / 4))
+        if self.state['ER']['dx'] != 500:
+            if vehicle_y < -lane_width / 4:
+                closing_right = max(-1, (vehicle_y + lane_width / 4) / (lane_width / 4))
         # left safe zone
-        if self.state[12] == 1:
-            if vehy > lw / 4:
-                cleft = max(-1, -(vehy - lw / 4) / (lw / 4))
+        if self.state['EL']['dx'] != 500:
+            if vehicle_y > lane_width / 4:
+                closing_left = max(-1, -(vehicle_y - lane_width / 4) / (lane_width / 4))
         # front
-        followingtime = self.state[2] / self.state[16]
-        if followingtime < 1:
-            cfront = followingtime - 1
+        following_time = self.state['FE']['dx'] / self.state['speed']
+        if following_time < 1:
+            closing_front = following_time - 1
         # rear
-        followingtime = self.state[8] / self.state[16]
-        if followingtime < 0.5:
-            cfront = (followingtime - 0.5) * 2
+        following_time = self.state['RE']['dx'] / self.state['speed']
+        if following_time < 0.5:
+            closing_front = (following_time - 0.5) * 2
 
-        creward = max(-1, cright + cleft + cfront + crear)
+        closing_reward = max(-1, closing_right + closing_left + closing_front + closing_rear)
 
-        creward *= 1.0
-        lreward *= 0.7
-        yreward *= 0.1
-        vreward *= 0.9
+        closing_reward *= 1.0
+        lane_reward *= 0.7
+        y_reward *= 0.1
+        v_reward *= 0.9
 
-        reward = lreward + yreward + vreward + creward
+        reward = lane_reward + y_reward + v_reward + closing_reward
 
-        rewards = {'y': yreward, 'v': vreward, 'l': lreward, 'c': creward}
+        rewards = {'y': y_reward, 'v': v_reward, 'l': lane_reward, 'c': closing_reward}
 
         self.rewards[0] += rewards['l']
         self.rewards[1] += rewards['y']
@@ -190,4 +191,13 @@ class EPHighWayEnv(gym.Env):
         return reward, rewards
 
     def _render(self, mode='human', close=False):
-        self.modell.render(True, self.rewards)
+        self.model.render(True, self.rewards)
+
+    def reset(self):
+        self._reset()
+
+    def render(self, mode='human'):
+        self._render()
+
+    def step(self, action):
+        self._step(action)

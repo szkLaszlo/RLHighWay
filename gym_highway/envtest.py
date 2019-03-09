@@ -49,24 +49,24 @@ def plotstate(i, st):
     plt.figure(2)
     xstate = [None]*9
     ystate = [None]*9
-    xstate[0] = st[0]
-    xstate[1] = st[2]
-    xstate[2] = st[4]
-    xstate[3] = -st[6]
-    xstate[4] = -st[8]
-    xstate[5] = -st[10]
+    xstate[0] = st['FL']['dx']
+    xstate[1] = st['FE']['dx']
+    xstate[2] = st['FR']['dx']
+    xstate[3] = -st['RL']['dx']
+    xstate[4] = -st['RE']['dx']
+    xstate[5] = -st['RR']['dx']
     xstate[6] = 0
     xstate[7] = 0
     xstate[8] = 0
-    ystate[0] = st[14]+4
+    ystate[0] = st['pos_y']+4
     ystate[1] = 0
-    ystate[2] = st[14]-4
-    ystate[3] = st[14]+4
+    ystate[2] = st['pos_y']-4
+    ystate[3] = st['pos_y']+4
     ystate[4] = 0
-    ystate[5] = st[14]-4
-    ystate[6] = st[14]+4*st[12]
-    ystate[7] = st[14]-4*st[13]
-    ystate[8] = st[14]
+    ystate[5] = st['pos_y']-4
+    ystate[6] = st['pos_y']+4*st['EL']['dx']/500
+    ystate[7] = st['pos_y']-4*st['ER']['dx']/500
+    ystate[8] = st['pos_y']
     xdata = xstate
     ydata = ystate
     plt.cla()
