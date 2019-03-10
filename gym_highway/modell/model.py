@@ -13,7 +13,9 @@ class Model:
                              'density_lane0': 16, 'density_lane1': 8, 'speed_mean_lane0': 110.0 / 3.6,
                              'speed_std_lane0': 10.0 / 3.6, 'speed_mean_lane1': 150.0 / 3.6,
                              'speed_std_lane1': 10.0 / 3.6,
-                             'speed_ego_desired': 130.0 / 3.6, 'car_length': 3, 'safe_zone_length': 2}
+                             'speed_ego_desired': 130.0 / 3.6, 'car_length': 3, 'safe_zone_length': 2,
+                             'max_acceleration': 2,
+                             'max_deceleration': -6}
             # Vehicle Generation Parameters
 
         else:
@@ -40,8 +42,8 @@ class Model:
         # perform lane change and collision check
         fine, cause = self.check_position()
         if not fine:
-            self.lanes[self.ego_vehicle.lane_index].remove(self.ego_vehicle)
-            self.search_ego_vehicle()  # TODO: ez minek ide?
+            # self.lanes[self.ego_vehicle.lane_index].remove(self.ego_vehicle)
+            # self.search_ego_vehicle()  # TODO: ez minek ide?
             return False, cause
 
         # 2. Transpose everyone to set x of egovehicle to 0
@@ -249,6 +251,7 @@ class Model:
                {'dx': ret_state[4], 'dv': ret_state[5]}
 
     def search_ego_vehicle(self, preferred_lane_id=-1):
+        # TODO: nem értem ez mit szeretne csinálni.
         if preferred_lane_id == -1:
             lane_ind = np.random.randint(0, self.env_dict['lane_count'])
         else:
@@ -279,36 +282,36 @@ class Model:
         old = self.ego_vehicle
 
         e = EgoVehicle(self.env_dict)
-        self.ego_vehicle = e
-        self.lanes[lane_ind][ind] = e
         e.x = old.x
         e.y = old.y
         e.vy = 0
         e.vx = old.vx
         e.lane_index = lane_ind
+        self.ego_vehicle = e
+        self.lanes[lane_ind][ind] = e
 
-    def warmup(self, render=True):
-        warmuptime = 30  # [secs]
+    def warm_up(self, render=True):
+        warm_up_time = 30  # [secs]
 
         for i in range(self.env_dict['lane_count']):
-            self.next_vehicle.append(self.calcnextvehiclefollowing(i))
+            self.next_vehicle.append(self.calc_next_vehicle_following(i))
 
-        for _ in range(int(warmuptime / self.env_dict['dt'])):
+        for _ in range(int(warm_up_time / self.env_dict['dt'])):
             for i in range(self.env_dict['lane_count']):
                 lane = self.lanes[i]
-                vehiclecnt = len(lane)
-                if vehiclecnt == 0:
-                    firstlength = 100000.0
-                    vnext = 100000.0
+                vehicle_cnt = len(lane)
+                if vehicle_cnt == 0:
+                    first_length = 100000.0
+                    v_next = 100000.0
                 else:
-                    firstlength = lane[0].x - lane[0].length + self.env_dict['length_backward']
-                    vnext = lane[0].vx
+                    first_length = lane[0].x - lane[0].length + self.env_dict['length_backward']
+                    v_next = lane[0].vx
 
-                if firstlength > self.next_vehicle[i]:
+                if first_length > self.next_vehicle[i]:
                     ev = EnvironmentVehicle(self.env_dict)
                     ev.desired_speed = self.env_dict['speed_mean_lane' + str(i)] + np.random.randn() * self.env_dict[
                         'speed_std_lane' + str(i)]
-                    ev.vx = min(ev.desired_speed, vnext)
+                    ev.vx = min(ev.desired_speed, v_next)
 
                     ev.x = -self.env_dict['length_backward']
                     ev.y = i * self.env_dict['lane_width']
@@ -318,31 +321,31 @@ class Model:
                         ev.color = 'k'
                         ev.color = np.random.rand(3, )
                     lane.insert(0, ev)
-                    self.next_vehicle[i] = self.calcnextvehiclefollowing(i)
+                    self.next_vehicle[i] = self.calc_next_vehicle_following(i)
 
-                vehiclecnt = len(lane)
-                for j in range(vehiclecnt):
+                vehicle_cnt = len(lane)
+                for j in range(vehicle_cnt):
                     veh = lane[j]
                     if isinstance(veh, EnvironmentVehicle):
-                        if j + 1 < vehiclecnt:
-                            vnext = lane[j + 1]
+                        if j + 1 < vehicle_cnt:
+                            v_next = lane[j + 1]
                         else:
-                            vnext = None
-                        veh.step(vnext, None, None)
+                            v_next = None
+                        veh.step(v_next, None, None)
                         if veh.x > self.env_dict['length_forward']:
                             lane.remove(veh)
             if render:
                 self.render()
 
-    def render(self, close=False, rewards=None):
+    def render(self, close=False, rewards=None, zoom=1):
         plt.axes().clear()
         for i in range(self.env_dict['lane_count']):
             for j in range(len(self.lanes[i])):
-                self.lanes[i][j].render()
+                self.lanes[i][j].render(zoom=zoom)
 
         lf = self.env_dict['length_forward']
         lb = -self.env_dict['length_backward']
-        lw = self.env_dict['lane_width']
+        lw = self.env_dict['lane_width']*zoom
         lc = self.env_dict['lane_count']
 
         lines = plt.plot([lb, lf], [(lc - .5) * lw, (lc - .5) * lw], 'k')
@@ -363,7 +366,8 @@ class Model:
         th = math.atan2(self.ego_vehicle.vy, self.ego_vehicle.vx) * 180 / math.pi
         v = math.sqrt(self.ego_vehicle.vx ** 2 + self.ego_vehicle.vy ** 2) * 3.6
 
-        tstr = 'Speed: %4.2f [km/h]\nTheta:  %4.2f [deg]\nPos:  %4.2f [m]\n ' % (v, th, self.ego_vehicle.y)
+        tstr = 'Speed: %4.2f [km/h]\nTheta:  %4.2f [deg]\nPos:  %4.2f [m]\nLane:  %d [-]' % \
+               (v, th, self.ego_vehicle.y, self.ego_vehicle.lane_index)
 
         plt.text(0.05, 0.95, tstr, transform=plt.axes().transAxes, verticalalignment='top', bbox=props, fontsize=14,
                  family='monospace')
@@ -377,6 +381,6 @@ class Model:
         plt.show(False)
         plt.pause(0.003)
 
-    def calcnextvehiclefollowing(self, lane):
+    def calc_next_vehicle_following(self, lane):
         mean = 1000 / self.env_dict['density_lane' + str(lane)]
         return max(10, mean + np.random.randn() * 20)

@@ -2,18 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="999f16c8-7d46-4b0a-83f0-9764e2ed7a90" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gym_highway/closing_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/closing_test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gym_highway/envs/ep_highway.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/envs/ep_highway.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gym_highway/envtest.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/envtest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gym_highway/misctest.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/misctest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gym_highway/modell/ego_vehicle.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/modell/egovehicle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gym_highway/modell/egovehicle.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/modell/egovehicle.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gym_highway/modell/environment_vehicle.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/modell/environment_vehicle.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gym_highway/modell/modell.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/modell/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gym_highway/modell/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/modell/model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gym_highway/modell/vehicle_base.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/modell/vehicle_base.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modelltest.py" beforeDir="false" afterPath="$PROJECT_DIR$/modelltest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -61,31 +56,33 @@
     <session id="1868889273">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.20" value="1" />
           <entry key="project.open.time.6" value="1" />
-          <entry key="project.opened" value="1" />
+          <entry key="project.opened" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Python Console" value="46" />
           <entry key="dummy" value="6" />
-          <entry key="py" value="2041" />
+          <entry key="py" value="2339" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="6" />
-          <entry key="Python" value="2087" />
+          <entry key="Python" value="2385" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="py" value="5" />
+          <entry key="py" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Python" value="5" />
+          <entry key="Python" value="7" />
         </counts>
       </usages-collector>
     </session>
@@ -95,8 +92,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gym_highway/envtest.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
+            <state relative-caret-position="258">
               <caret line="99" selection-start-line="99" selection-end-line="99" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/gym/wrappers/time_limit.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="493">
+              <caret line="30" column="25" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -104,20 +110,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gym_highway/envs/ep_highway.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="159">
-              <caret line="91" selection-start-line="91" selection-end-line="91" />
+            <state relative-caret-position="327">
+              <caret line="193" column="23" selection-start-line="193" selection-start-column="23" selection-end-line="193" selection-end-column="23" />
               <folding>
-                <marker date="1552155912000" expanded="true" signature="286:290" ph="..." />
+                <marker date="1552204992000" expanded="true" signature="286:290" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gym_highway/modell/model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-27">
-              <caret line="273" selection-start-line="273" selection-end-line="273" />
+            <state relative-caret-position="86">
+              <caret line="343" column="46" selection-start-line="343" selection-start-column="46" selection-end-line="343" selection-end-column="46" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -125,11 +131,20 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/gym_highway/modell/vehicle_base.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="327">
+              <caret line="32" column="34" lean-forward="true" selection-start-line="32" selection-start-column="34" selection-end-line="32" selection-end-column="34" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gym_highway/modell/egovehicle.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="5" column="16" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="16" />
+            <state relative-caret-position="918">
+              <caret line="56" column="25" lean-forward="true" selection-start-line="56" selection-start-column="25" selection-end-line="56" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -137,8 +152,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gym_highway/modell/environment_vehicle.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="85" column="42" lean-forward="true" selection-start-line="85" selection-start-column="42" selection-end-line="85" selection-end-column="42" />
+            <state relative-caret-position="190">
+              <caret line="249" selection-start-line="249" selection-end-line="249" />
               <folding>
                 <element signature="e#0#55#0" expanded="true" />
               </folding>
@@ -162,8 +177,8 @@
       <find>searcheg</find>
       <find>check_</find>
       <find>laneindex</find>
-      <find>sort</find>
       <find>egovehicle</find>
+      <find>sort</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -183,20 +198,20 @@
         <option value="$PROJECT_DIR$/gym_highway/Agent/DQN/dqn.py" />
         <option value="$PROJECT_DIR$/gym_highway/modell/modell.py" />
         <option value="$PROJECT_DIR$/gym_highway/modell/ego_vehicle.py" />
-        <option value="$PROJECT_DIR$/gym_highway/modell/vehicle_base.py" />
-        <option value="$PROJECT_DIR$/gym_highway/modell/egovehicle.py" />
-        <option value="$PROJECT_DIR$/gym_highway/modell/environment_vehicle.py" />
         <option value="$PROJECT_DIR$/gym_highway/envs/ep_highway.py" />
+        <option value="$PROJECT_DIR$/gym_highway/modell/environment_vehicle.py" />
         <option value="$PROJECT_DIR$/gym_highway/envtest.py" />
+        <option value="$PROJECT_DIR$/gym_highway/modell/egovehicle.py" />
+        <option value="$PROJECT_DIR$/gym_highway/modell/vehicle_base.py" />
         <option value="$PROJECT_DIR$/gym_highway/modell/model.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-1928" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="x" value="-11" />
+    <option name="y" value="-11" />
+    <option name="width" value="1943" />
+    <option name="height" value="1043" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -407,16 +422,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1928" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-1928" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.48932385" visible="true" weight="0.15671642" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.48932385" visible="true" weight="0.15938166" />
       <window_info id="Structure" order="1" sideWeight="0.51067615" side_tool="true" weight="0.27530363" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
       <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49959514" visible="true" weight="0.44577006" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39479393" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.60412145" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Docker" order="6" show_stripe_button="false" />
@@ -452,14 +467,14 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/gym_highway/modell/model.py</url>
-          <line>273</line>
-          <option name="timeStamp" value="6" />
+          <url>file://$PROJECT_DIR$/gym_highway/envtest.py</url>
+          <line>96</line>
+          <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/gym_highway/modell/model.py</url>
-          <line>90</line>
-          <option name="timeStamp" value="7" />
+          <url>file://$PROJECT_DIR$/gym_highway/modell/egovehicle.py</url>
+          <line>47</line>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -582,9 +597,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7157">
           <caret line="432" column="59" selection-start-line="432" selection-start-column="59" selection-end-line="432" selection-end-column="59" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -609,61 +621,61 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/gym/wrappers/time_limit.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="30" column="25" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gym_highway/envtest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="258">
+          <caret line="99" selection-start-line="99" selection-end-line="99" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/gym_highway/modell/environment_vehicle.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="85" column="42" lean-forward="true" selection-start-line="85" selection-start-column="42" selection-end-line="85" selection-end-column="42" />
+        <state relative-caret-position="190">
+          <caret line="249" selection-start-line="249" selection-end-line="249" />
           <folding>
             <element signature="e#0#55#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gym_highway/modell/vehicle_base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="20" column="18" lean-forward="true" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/gym/wrappers/time_limit.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="28" column="8" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/gym_highway/modell/egovehicle.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="5" column="16" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gym_highway/envtest.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="99" selection-start-line="99" selection-end-line="99" />
+        <state relative-caret-position="918">
+          <caret line="56" column="25" lean-forward="true" selection-start-line="56" selection-start-column="25" selection-end-line="56" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/gym_highway/envs/ep_highway.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="91" selection-start-line="91" selection-end-line="91" />
+        <state relative-caret-position="327">
+          <caret line="193" column="23" selection-start-line="193" selection-start-column="23" selection-end-line="193" selection-end-column="23" />
           <folding>
-            <marker date="1552155912000" expanded="true" signature="286:290" ph="..." />
+            <marker date="1552204992000" expanded="true" signature="286:290" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/gym_highway/modell/model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-27">
-          <caret line="273" selection-start-line="273" selection-end-line="273" />
+        <state relative-caret-position="86">
+          <caret line="343" column="46" selection-start-line="343" selection-start-column="46" selection-end-line="343" selection-end-column="46" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gym_highway/modell/vehicle_base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="327">
+          <caret line="32" column="34" lean-forward="true" selection-start-line="32" selection-start-column="34" selection-end-line="32" selection-end-column="34" />
         </state>
       </provider>
     </entry>

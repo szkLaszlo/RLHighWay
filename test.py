@@ -8,7 +8,7 @@ import math
 
 m=Model()
 print("Lanes: ", m.lanes)
-m.warmup(False)
+m.warm_up(False)
 m.search_ego_vehicle()
 m.render(True)
 for i in range(1000):

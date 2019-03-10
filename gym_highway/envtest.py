@@ -47,8 +47,8 @@ def discaction(x):
 
 def plotstate(i, st):
     plt.figure(2)
-    xstate = [None]*9
-    ystate = [None]*9
+    xstate = [None] * 9
+    ystate = [None] * 9
     xstate[0] = st['FL']['dx']
     xstate[1] = st['FE']['dx']
     xstate[2] = st['FR']['dx']
@@ -58,14 +58,14 @@ def plotstate(i, st):
     xstate[6] = 0
     xstate[7] = 0
     xstate[8] = 0
-    ystate[0] = st['pos_y']+4
+    ystate[0] = st['pos_y'] + 4
     ystate[1] = 0
-    ystate[2] = st['pos_y']-4
-    ystate[3] = st['pos_y']+4
+    ystate[2] = st['pos_y'] - 4
+    ystate[3] = st['pos_y'] + 4
     ystate[4] = 0
-    ystate[5] = st['pos_y']-4
-    ystate[6] = st['pos_y']+4*st['EL']['dx']/500
-    ystate[7] = st['pos_y']-4*st['ER']['dx']/500
+    ystate[5] = st['pos_y'] - 4
+    ystate[6] = st['pos_y'] + 4 * st['EL']['dx'] / 500
+    ystate[7] = st['pos_y'] - 4 * st['ER']['dx'] / 500
     ystate[8] = st['pos_y']
     xdata = xstate
     ydata = ystate
@@ -87,19 +87,19 @@ def smaction(x):
 st = [-0.003, -0.0005, 0, 0.0005, 0.003]
 ac = [-6.0, -2.0, 0.0, 2.0, 3.5]
 
-action = 12
 t = time.time()
 for i in range(10000):
     env.render(mode='human')
     plt.gcf().canvas.mpl_connect('key_press_event', press)
 
-
     action = discaction(keyaction)
+    if action == 2:
+        plt.pause(0.1)
     keyaction = '0'
 
     state, reward, terminated, cause = env.step(action)
 
-    plotstate(i, state)
+    # plotstate(i, state)
     # if i % 200 == 0:
     #    plt.close('all')
     action = 12  # np.random.randint(0,25)

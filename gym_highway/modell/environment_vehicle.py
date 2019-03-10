@@ -225,7 +225,7 @@ class EnvironmentVehicle(BaseVehicle):
                             self.vx = next_vehicle.vx
                     else:
                         if not (left_a is None):
-                            if (((left_a.x - left_a.length - self.x) / 3) > self.length):
+                            if ((left_a.x - left_a.length - self.x) / 3) > self.length:
                                 self.state = 'switch_lane_left'
                                 self.change_needed = 1
                                 self.max_acc = 2

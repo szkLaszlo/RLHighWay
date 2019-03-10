@@ -50,8 +50,8 @@ class EgoVehicle(BaseVehicle):
             if -math.pi > state[2]:
                 state[2] = state[2] + 2 * math.pi
             # new position
-            # transpose distance dist=2*turning_radius*sin(|turn/2|)
-            dist = 2 * turning_radius * math.sin(abs(turn / 2))
+            # transpose distance dist=|2*turning_radius*sin(turn/2)|
+            dist = abs(2 * turning_radius * math.sin(turn / 2))
             # transpose angle ang=th+turn/2
             ang = vehicle_state[2] + turn / 2
             # unit vector

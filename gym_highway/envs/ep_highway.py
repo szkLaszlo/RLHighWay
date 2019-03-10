@@ -66,7 +66,7 @@ class EPHighWayEnv(gym.Env):
         self.env_dict['speed_std_lane2'] = 10.0 / 3.6  # generated vehicle desired speed deviation [m/s]
 
         self.model = Model(self.env_dict)
-        self.model.warmup(False)
+        self.model.warm_up(False)
         self.reset_counter = 10
         # Picking the EgoVehicle from model
         self.model.search_ego_vehicle()
@@ -190,14 +190,6 @@ class EPHighWayEnv(gym.Env):
 
         return reward, rewards
 
-    def _render(self, mode='human', close=False):
-        self.model.render(True, self.rewards)
+    def _render(self):
+        self.model.render(True, self.rewards, zoom=2)
 
-    def reset(self):
-        self._reset()
-
-    def render(self, mode='human'):
-        self._render()
-
-    def step(self, action):
-        self._step(action)
