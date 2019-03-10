@@ -190,6 +190,6 @@ class EPHighWayEnv(gym.Env):
 
         return reward, rewards
 
-    def _render(self):
+    def _render(self, mode='human', close=False):
         self.model.render(True, self.rewards, zoom=2)
 
