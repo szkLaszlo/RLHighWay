@@ -24,11 +24,11 @@ class BaseVehicle:
         self.vy = 0
         self.color = 'b'
 
-    def render(self, zoom=None):
+    def render(self, axes, zoom=None):
 
         if zoom is None:
             zoom = 1
         x = self.x
         y = self.y * zoom
         l = self.length * zoom / 2
-        plt.plot([x-l, x-l, x + l, x + l, x-l], [y - l/2, y + l/2, y + l/2, y - l/2, y - l/2], self.color)
+        axes.plot([x-l, x-l, x + l, x + l, x-l], [y - l/2, y + l/2, y + l/2, y - l/2, y - l/2], self.color)

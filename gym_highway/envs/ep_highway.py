@@ -18,7 +18,7 @@ class EPHighWayEnv(gym.Env):
     def __init__(self):
 
         self.env_dict = {'length_forward': 1000, 'length_backward': 500, 'dt': 0.2, 'lane_width': 4, 'lane_count': 3,
-                         'density_lane0': 16, 'density_lane1': 8, 'speed_mean_lane0': 110.0 / 3.6,
+                         'density_lane0': 12, 'density_lane1': 8, 'speed_mean_lane0': 110.0 / 3.6,
                          'speed_std_lane0': 10.0 / 3.6, 'speed_mean_lane1': 150.0 / 3.6, 'speed_std_lane1': 10.0 / 3.6,
                          'speed_ego_desired': 130.0 / 3.6, 'car_length': 3, 'safe_zone_length': 2,
                          'max_acceleration': 2,
@@ -66,6 +66,7 @@ class EPHighWayEnv(gym.Env):
         self.env_dict['speed_std_lane2'] = 10.0 / 3.6  # generated vehicle desired speed deviation [m/s]
 
         self.model = Model(self.env_dict)
+        self.model.generate_new_vehicles(1)
         self.model.warm_up(False)
         self.reset_counter = 10
         # Picking the EgoVehicle from model

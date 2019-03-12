@@ -10,7 +10,7 @@ class Model:
         if env_dict is None:
             self.env_dict = {'length_forward': 1000, 'length_backward': 500, 'dt': 0.2, 'lane_width': 4,
                              'lane_count': 3,
-                             'density_lane0': 16, 'density_lane1': 8, 'speed_mean_lane0': 110.0 / 3.6,
+                             'density_lane0': 12, 'density_lane1': 8, 'speed_mean_lane0': 110.0 / 3.6,
                              'speed_std_lane0': 10.0 / 3.6, 'speed_mean_lane1': 150.0 / 3.6,
                              'speed_std_lane1': 10.0 / 3.6,
                              'speed_ego_desired': 130.0 / 3.6, 'car_length': 3, 'safe_zone_length': 2,
@@ -56,14 +56,11 @@ class Model:
         # 3. Stepping every other vehicle
         for i in range(self.env_dict['lane_count']):
             lane = self.lanes[i]
-            for j in range(len(lane)):
+            for j in reversed(range(len(lane))):
                 veh = lane[j]
                 if isinstance(veh, EnvironmentVehicle):
-                    if j < len(lane) - 1:
-                        v_next = lane[j + 1]
-                    else:
-                        v_next = None
-                    veh.step(v_next, None, None)
+                    state = self.generate_state_for_ego(current_ego=veh)
+                    veh.step(state=state, lanes=self.lanes)
 
         # 4. Deleting vehicles out of range
         for j in range(self.env_dict['lane_count']):
@@ -73,7 +70,7 @@ class Model:
                     lane.remove(veh)
 
         # 5. NewBorn vehicles If lane density is smaller than desired
-        self.generate_new_vehicles()
+        self.generate_new_vehicles(200)
 
         self.random_new_des_speed()
 
@@ -107,31 +104,48 @@ class Model:
 
         return True, 'Everything is fine'
 
-    def generate_new_vehicles(self):
+    def generate_new_vehicles(self, epsilon):
         for i in range(self.env_dict['lane_count']):
             lane = self.lanes[i]
             density = 1000 * len(lane) / (self.env_dict['length_backward'] + self.env_dict['length_forward'])
 
             while density < self.env_dict['density_lane' + str(i)]:
-                if len(lane) > 1:
-                    new_x = np.random.randint(-self.env_dict['length_backward']+10, self.env_dict['length_forward']-10)
-                    dist = 21
+                if len(lane) < 2:
+                    new_x = np.random.randint(-self.env_dict['length_backward'] + 10,
+                                              self.env_dict['length_forward'] - 10)
+                    dist = 41
                     j = -1
                     v_front = 10000
                 else:
                     j = len(lane)
-                    while j < len(lane)-1:
-                        j = np.random.randint(0, len(lane)-2)
-
-                    veh_next = lane[j+1]
-                    v_front = veh_next.vx
+                    while j > len(lane) - 1:
+                        j = np.random.randint(0, len(lane))
                     veh = lane[j]
-                    dist = veh_next.x-veh.x
-                    new_x = np.random.randint(veh.x+10, veh_next.x-10)
+                    if j == len(lane) - 1:
+                        dist = self.env_dict['length_forward'] - veh.x
+                        if dist < 40:
+                            continue
+                        new_x = np.random.randint(veh.x + 20, self.env_dict['length_forward'] - 10)
+                        v_front = 1000
+                    elif j == 0:
+                        dist = veh.x + self.env_dict['length_backward']
+                        if abs(dist) < 40:
+                            continue
+                        new_x = np.random.randint(-self.env_dict['length_backward'] + 10, veh.x - 20)
+                        v_front = 1000
+                    else:
+                        veh_next = lane[j + 1]
+                        v_front = veh_next.vx
 
-                if dist < 20 or new_x < 200:
+                        dist = veh_next.x - veh.x
+                        if abs(dist) < 40:
+                            continue
+                        new_x = np.random.randint(veh.x + 15, veh_next.x - 15)
+
+                if abs(dist) < 40 or abs(new_x) < epsilon:
                     continue
                 else:
+
                     ev = EnvironmentVehicle(self.env_dict)
                     ev.desired_speed = \
                         self.env_dict['speed_mean_lane' + str(i)] + np.random.randn() * \
@@ -140,17 +154,16 @@ class Model:
                     ev.vx = min(ev.desired_speed, v_front)
                     ev.x = new_x
                     ev.y = i * self.env_dict['lane_width']
+                    ev.lane_index = i
                     if i == 0:
                         ev.color = 'b'
                     elif i == 1:
                         ev.color = 'k'
                     else:
                         ev.color = 'y'
-                    lane.insert(j+1, ev)
+                    lane.insert(j + 1, ev)
+                    lane.sort(key=lambda car: car.x)
                 density = 1000 * len(lane) / (self.env_dict['length_backward'] + self.env_dict['length_forward'])
-            lane.sort(key=lambda car: car.x)
-
-
 
     def random_new_des_speed(self):
         factor = 0.05
@@ -161,9 +174,9 @@ class Model:
                     ev.desired_speed = self.env_dict['speed_mean_lane' + str(i)] + np.random.randn() * self.env_dict[
                         'speed_std_lane' + str(i)]
 
-    def generate_state_for_ego(self):
+    def generate_state_for_ego(self, current_ego=None):
         """
-        Calculating the environment for the ego vehicle
+        Calculating the environment for the current_ego vehicle
 
 
         :return: np.array()
@@ -181,41 +194,49 @@ class Model:
             15    | Vehicle heading   |  th[rad]    |  -
             16    | Vehicle speed     |  v[m/s]     |  -
         """
-        basic_vals = {'dx': 500, 'dv': 0}
+
         basic_keys = ['FL', 'FE', 'FR', 'RL', 'RE', 'RR', 'EL', 'ER']
         state = {}
+
+        if current_ego is None:
+            current_ego = self.ego_vehicle
+            state['pos_y'] = 0
+            state['heading'] = 0
+            state['speed'] = 0
+            basic_vals = {'dx': 500, 'dv': 0}
+        else:
+            basic_vals = None
+        lane_count = self.env_dict['lane_count']
         for keys in basic_keys:
             state[keys] = basic_vals
-        state['pos_y'] = 0
-        state['heading'] = 0
-        state['speed'] = 0
-
-        lane_count = self.env_dict['lane_count']
         # Left
-        if not (self.ego_vehicle.lane_index == lane_count - 1):
+        if not (current_ego.lane_index == lane_count - 1):
             state['FL'], state['RL'], state['EL'] = self.search_lane_for_state(
-                self.lanes[self.ego_vehicle.lane_index + 1])
+                self.lanes[current_ego.lane_index + 1], current_ego=current_ego)
         # right
-        if self.ego_vehicle.lane_index != 0:
+        if current_ego.lane_index != 0:
             state['FR'], state['RR'], state['ER'] = self.search_lane_for_state(
-                self.lanes[self.ego_vehicle.lane_index - 1])
-            # Ego lane
-            state['FE'], state['RE'], _ = self.search_lane_for_state(self.lanes[self.ego_vehicle.lane_index])
+                self.lanes[current_ego.lane_index - 1], current_ego=current_ego)
+        # Ego lane
+        state['FE'], state['RE'], _ = \
+            self.search_lane_for_state(self.lanes[current_ego.lane_index], current_ego=current_ego)
 
-        state['pos_y'] = round(self.ego_vehicle.y, 3)
-        state['heading'] = round(math.atan2(self.ego_vehicle.vy, self.ego_vehicle.vx), 6)
-        state['speed'] = round(math.sqrt(self.ego_vehicle.vx ** 2 + self.ego_vehicle.vy ** 2), 3)
+        state['pos_y'] = round(current_ego.y, 3)
+        state['heading'] = round(math.atan2(current_ego.vy, current_ego.vx), 6)
+        state['speed'] = round(math.sqrt(current_ego.vx ** 2 + current_ego.vy ** 2), 3)
         return state
 
-    def search_lane_for_state(self, lane):
+    def search_lane_for_state(self, lane, current_ego=None):
+        if current_ego is None:
+            current_ego = self.ego_vehicle
         safe_zone_length = self.env_dict['safe_zone_length']
         rear = None
         side = None
         front = None
         ret_state = np.array([500, 0, 500, 0, 500, 0])
-        ego_rear = self.ego_vehicle.x - self.ego_vehicle.length / 2 - safe_zone_length
-        ego_front = self.ego_vehicle.x + self.ego_vehicle.length / 2 + safe_zone_length
-
+        ego_rear = current_ego.x - current_ego.length / 2 - safe_zone_length
+        ego_front = current_ego.x + current_ego.length / 2 + safe_zone_length
+        lane.sort(key=lambda car: car.x)
         # TODO: if lane is  sorted by x, and then this is good.
         for i in range(len(lane)):
             if (lane[i].x + lane[i].length / 2) < ego_rear:
@@ -226,16 +247,20 @@ class Model:
                 front = lane[i]
                 break  # just if lane is ordered otherwise this causes problems.
         if front is not None:
-            ret_state[0] = front.x - front.length / 2 - self.ego_vehicle.length / 2 - self.ego_vehicle.x
-            ret_state[1] = front.vx - self.ego_vehicle.vx
+            ret_state[0] = front.x - front.length / 2 - current_ego.length / 2 - current_ego.x
+            ret_state[1] = front.vx - current_ego.vx
         if rear is not None:
-            ret_state[2] = self.ego_vehicle.x - self.ego_vehicle.length / 2 - rear.length / 2 - rear.x
-            ret_state[3] = rear.vx - self.ego_vehicle.vx
+            ret_state[2] = current_ego.x - current_ego.length / 2 - rear.length / 2 - rear.x
+            ret_state[3] = rear.vx - current_ego.vx
         if side is not None:
-            ret_state[4] = self.ego_vehicle.x - side.x
-            ret_state[5] = side.vx - self.ego_vehicle.vx
-        return {'dx': ret_state[0], 'dv': ret_state[1]}, {'dx': ret_state[2], 'dv': ret_state[3]}, \
-               {'dx': ret_state[4], 'dv': ret_state[5]}
+            ret_state[4] = current_ego.x - side.x
+            ret_state[5] = side.vx - current_ego.vx
+
+        if current_ego == self.ego_vehicle:
+            return {'dx': ret_state[0], 'dv': ret_state[1]}, {'dx': ret_state[2], 'dv': ret_state[3]}, \
+                   {'dx': ret_state[4], 'dv': ret_state[5]}
+        else:
+            return front, rear, side
 
     def search_ego_vehicle(self, preferred_lane_id=-1):
         # TODO: nem értem ez mit szeretne csinálni.
@@ -302,6 +327,7 @@ class Model:
 
                     ev.x = -self.env_dict['length_backward']
                     ev.y = i * self.env_dict['lane_width']
+                    ev.lane_index = i
                     if i == 0:
                         ev.color = 'b'
                     elif i == 1:
@@ -312,31 +338,28 @@ class Model:
                     self.next_vehicle[i] = self.calc_next_vehicle_following(i)
 
                 vehicle_cnt = len(lane)
-                for j in range(vehicle_cnt):
+                for j in reversed(range(vehicle_cnt)):
                     veh = lane[j]
                     if isinstance(veh, EnvironmentVehicle):
-                        if j + 1 < vehicle_cnt:
-                            v_next = lane[j + 1]
-                        else:
-                            v_next = None
-                        veh.step(v_next, None, None)
-                        if veh.x > self.env_dict['length_forward']:
-                            lane.remove(veh)
+                        state = self.generate_state_for_ego(current_ego=veh)
+                        veh.step(state=state, lanes=self.lanes)
             if render:
                 self.render()
 
     def render(self, close=False, rewards=None, zoom=1):
-        plt.axes().clear()
+        a = plt.axes()
+        a.clear()
+
         for i in range(self.env_dict['lane_count']):
             for j in range(len(self.lanes[i])):
-                self.lanes[i][j].render(zoom=zoom)
+                self.lanes[i][j].render(a, zoom=zoom)
 
         lf = self.env_dict['length_forward']
         lb = -self.env_dict['length_backward']
         lw = self.env_dict['lane_width'] * zoom
         lc = self.env_dict['lane_count']
 
-        lines = plt.plot([lb, lf], [(lc - .5) * lw, (lc - .5) * lw], 'k')
+        lines = a.plot([lb, lf], [(lc - .5) * lw, (lc - .5) * lw], 'k')
         plt.setp(lines, linewidth=.5)
         lines = plt.plot([lb, lf], [-lw / 2, -lw / 2], 'k')
         plt.setp(lines, linewidth=.5)
@@ -366,7 +389,7 @@ class Model:
             plt.text(0.05, 0.35, tstr, transform=plt.axes().transAxes, verticalalignment='top', bbox=props, fontsize=14,
                      family='monospace')
 
-        plt.show(False)
+        # plt.show()
         plt.pause(0.003)
 
     def calc_next_vehicle_following(self, lane):
