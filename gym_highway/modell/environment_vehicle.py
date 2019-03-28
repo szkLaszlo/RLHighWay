@@ -1,3 +1,4 @@
+from gym_highway.modell.egovehicle import EgoVehicle
 from gym_highway.modell.vehicle_base import BaseVehicle
 import numpy as np
 
@@ -17,6 +18,7 @@ class EnvironmentVehicle(BaseVehicle):
         self.lane_index = 0
         self.lane_width = dict_env['lane_width']
         self.old_lane = 0
+        self.behave = 1 # np.random.randint(0, 2)
         self.skip = 0
         self.state = {}
 
@@ -55,7 +57,7 @@ class EnvironmentVehicle(BaseVehicle):
                 acc = self.max_dec
 
             if front is not None:
-                # following GHR model
+                # following car ahead
                 dv = front.vx - self.vx
                 dx = front.x - front.length/2 - self.length/2 - self.x
                 if dx <= 0:
@@ -65,15 +67,9 @@ class EnvironmentVehicle(BaseVehicle):
                     raise CollisionExc('Collision')
 
                 # desired following dist
-                # dist = vnext.vx * 1.4
-                # dist = front.vx * 1.2
-                # d_dist = dist - dx
-                # acc_ghr = -1 * d_dist + 10 * dv
-
-                alpha = 0.6
-                m = 0.4
-                l = 1.9
-                acc_ghr = alpha*(self.vx**m)*dv/(dx**l)
+                dist = front.vx * 1.4
+                d_dist = dist - dx
+                acc_ghr = -1 * d_dist + 10 * dv
 
                 acc_ghr = min(max(self.max_dec, acc_ghr), self.max_acc)
                 if self.vx > self.desired_speed:
@@ -85,10 +81,10 @@ class EnvironmentVehicle(BaseVehicle):
             self.x = self.x + self.dt * self.vx
 
             #   Keeping right
-            if self.lane_index != 0:
+            if self.lane_index != 0 and self.behave:
                 if ((front_right is None) or (((front_right.x - front_right.length - self.x) / 11) > self.length)) \
                         and right is None:
-                    if (rear_right is None) or (((self.x - self.length - rear_right.x) / 9) > self.length):
+                    if (rear_right is None) or (((self.x - self.length/2 - rear_right.length/2 - rear_right.x) / 9) > self.length):
                         if front_right is not None:
                             if (self.vx * 0.7) < front_right.vx:
                                 self.state_action = 'switch_lane_right'
@@ -116,18 +112,21 @@ class EnvironmentVehicle(BaseVehicle):
             """
             #  Gyorsabban menne, előzés
 
-            if self.lane_index != (self.env_dict['lane_count'] - 1):
+            if self.lane_index != (self.env_dict['lane_count'] - 1) and self.behave:
                 if front is not None and left is None:
-                    diff = (front.x - front.length - self.x)
+                    diff = (front.x - front.length/2 - self.length/2 - self.x)
                     if (diff / 9) < self.length:
                         if self.desired_speed > front.desired_speed:
-                            if (front_left is None) or (((front_left.x - front_left.length - self.x) / 4) > self.length):
-                                if (rear_left is None) or (((self.x - self.length - rear_left.x) / 4) > self.length):
+                            if (front_left is None) or \
+                                    (((front_left.x - front_left.length/2 - self.length/2 - self.x) / 4) > self.length):
+                                if (rear_left is None) or \
+                                        (((self.x - self.length/2 - rear_left.length/2 - rear_left.x) / 4) > self.length):
                                     if (rear is None) \
                                             or (isinstance(rear, EnvironmentVehicle)
                                                 and (rear.state_action != 'acceleration')):
+
                                         self.state_action = 'acceleration'
-                                        s = front.x - front.length - self.x
+                                        s = front.x - front.length/2 - self.length/2 - self.x
                                         v_rel = abs(front.vx - self.vx)
                                         t = 3 / self.env_dict['dt']
                                         a = abs((2 * (s - (v_rel * t))) / (t * t))
@@ -139,17 +138,16 @@ class EnvironmentVehicle(BaseVehicle):
             if front is not None:
                 # following GHR model
                 dv = front.vx - self.vx
-                dx = front.x - front.length - self.x
+                dx = front.x - front.length/2 - self.length/2 - self.x
                 if dx < 0:
                     print('Collision, ID: ', self.ID, ' vnext ID: ', front.ID, ' in lane: ', self.lane_index)
                     env_save_log()
                     raise CollisionExc('Collision')
                     print('Collision')
                 # desired following dist
-                alpha = 0.6
-                m = 0.4
-                l = 1.9
-                acc_ghr = alpha*(self.vx**m)*dv/(dx**l)
+                dist = front.vx * 1.4
+                d_dist = dist - dx
+                acc_ghr = -1 * d_dist + 10 * dv
                 acc_ghr = min(max(self.max_dec, acc_ghr), self.max_acc)
                 if self.vx > self.desired_speed:
                     acc = min(self.max_dec, acc_ghr)
@@ -178,10 +176,10 @@ class EnvironmentVehicle(BaseVehicle):
 
         elif self.state_action == 'switch_lane_left':
             acc = max(self.max_acc, 2)
-            if not (front is None):
+            if front is not None:
                 # following GHR model
                 dv = front.vx - self.vx
-                dx = front.x - front.length - self.x
+                dx = front.x - front.length/2 - self.length/2 - self.x
                 if dx < 0:
                     print('Collision, ID: ', self.ID, ' vnext ID: ', front.ID, ' in lane: ', self.lane_index)
                     env_save_log()
@@ -189,10 +187,9 @@ class EnvironmentVehicle(BaseVehicle):
                     print('Collision')
 
                 # desired following dist
-                alpha = 0.6
-                m = 0.4
-                l = 1.9
-                acc_ghr = alpha*(self.vx**m)*dv/(dx**l)
+                dist = front.vx * 1.4
+                d_dist = dist - dx
+                acc_ghr = -1 * d_dist + 10 * dv
                 acc_ghr = min(max(self.max_dec, acc_ghr), self.max_acc)
                 if self.vx > self.desired_speed:
                     acc = min(self.max_dec, acc_ghr)
@@ -226,13 +223,14 @@ class EnvironmentVehicle(BaseVehicle):
             self.x = self.x + self.dt * self.vx
 
             if front is not None:
-                s = (front.x - front.length - self.x)
-                if (s / 3) < self.length:
+                s = (front.x - front.length/2 - self.length/2 - self.x)
+                if (s / 5) < self.length:
                     if rear_left is not None:
-                        if (self.vx > (0.8 * rear_left.vx)) and (((self.x - self.length - rear_left.x) / 3) > self.length):
+                        if (self.vx > (0.95 * rear_left.vx)) and \
+                                (((self.x - self.length/2 - rear_left.length/2 - rear_left.x) / 3) > self.length):
                             if front_left is not None:
-                                if (((front_left.x - front_left.length - self.x) / 3) > self.length) and \
-                                        (front_left.vx > (self.vx * 0.8)):
+                                if (((front_left.x - front_left.length/2 - self.length/2 - self.x) / 3) > self.length) \
+                                        and (front_left.vx > (self.vx * 0.95)):
                                     self.state_action = 'switch_lane_left'
                                     self.change_needed = 1
                                     self.max_acc = 2
@@ -253,7 +251,7 @@ class EnvironmentVehicle(BaseVehicle):
                     else:
                         if front_left is not None:
                             if ((front_left.x - front_left.length - self.x) / 3) > self.length and \
-                                        (front_left.vx > (self.vx * 0.8)):
+                                        (front_left.vx > (self.vx * 0.95)):
                                 self.state_action = 'switch_lane_left'
                                 self.change_needed = 1
                                 self.max_acc = 2

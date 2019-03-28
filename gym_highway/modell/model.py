@@ -6,20 +6,9 @@ from gym_highway.modell.environment_vehicle import EnvironmentVehicle
 
 
 class Model:
-    def __init__(self, env_dict=None):
-        if env_dict is None:
-            self.env_dict = {'length_forward': 1000, 'length_backward': 500, 'dt': 0.2, 'lane_width': 4,
-                             'lane_count': 3,
-                             'density_lane0': 12, 'density_lane1': 8, 'speed_mean_lane0': 110.0 / 3.6,
-                             'speed_std_lane0': 10.0 / 3.6, 'speed_mean_lane1': 150.0 / 3.6,
-                             'speed_std_lane1': 10.0 / 3.6,
-                             'speed_ego_desired': 130.0 / 3.6, 'car_length': 3, 'safe_zone_length': 2,
-                             'max_acceleration': 2,
-                             'max_deceleration': -6}
-            # Vehicle Generation Parameters
+    def __init__(self, env_dict):
 
-        else:
-            self.env_dict = env_dict
+        self.env_dict = env_dict
         self.ego_vehicle = None
 
         self.highway_length = self.env_dict['length_forward'] + self.env_dict['length_backward']
@@ -194,7 +183,7 @@ class Model:
             15    | Vehicle heading   |  th[rad]    |  -
             16    | Vehicle speed     |  v[m/s]     |  -
         """
-
+# TODO: rewrite function descriptions
         basic_keys = ['FL', 'FE', 'FR', 'RL', 'RE', 'RR', 'EL', 'ER']
         state = {}
 
@@ -260,6 +249,12 @@ class Model:
             return {'dx': ret_state[0], 'dv': ret_state[1]}, {'dx': ret_state[2], 'dv': ret_state[3]}, \
                    {'dx': ret_state[4], 'dv': ret_state[5]}
         else:
+            if front is not None and front.x > current_ego.x + 200:
+                front = None
+            if rear is not None and rear.x < current_ego.x - 200:
+                rear = None
+            if side is not None and side.y > current_ego.y + self.env_dict['lane_width']:
+                side = None
             return front, rear, side
 
     def search_ego_vehicle(self, preferred_lane_id=-1):

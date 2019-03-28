@@ -72,3 +72,5 @@ class EgoVehicle(BaseVehicle):
         self.y = new_state[1]
         self.vx = new_state[3] * math.cos(new_state[2])
         self.vy = new_state[3] * math.sin(new_state[2])
+        self.desired_speed = self.vx
+

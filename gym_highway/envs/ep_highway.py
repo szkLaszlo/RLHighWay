@@ -20,7 +20,7 @@ class EPHighWayEnv(gym.Env):
         self.env_dict = {'length_forward': 1000, 'length_backward': 500, 'dt': 0.2, 'lane_width': 4, 'lane_count': 3,
                          'density_lane0': 12, 'density_lane1': 8, 'speed_mean_lane0': 110.0 / 3.6,
                          'speed_std_lane0': 10.0 / 3.6, 'speed_mean_lane1': 150.0 / 3.6, 'speed_std_lane1': 10.0 / 3.6,
-                         'speed_ego_desired': 130.0 / 3.6, 'car_length': 3, 'safe_zone_length': 2,
+                         'speed_ego_desired': 130.0 / 3.6, 'car_length': 3, 'safe_zone_length': 1,
                          'max_acceleration': 2,
                          'max_deceleration': -6}
         # Vehicle Generation Parameters
@@ -50,11 +50,11 @@ class EPHighWayEnv(gym.Env):
     def _reset(self):
 
         # TODO: lehetne  lane-hez igazítani nem hardcodeolni csak három sávot
-        self.env_dict['density_lane0'] = np.random.randint(12, 16)  # 16 #[vehicle density vehicle/km]
-        self.env_dict['density_lane1'] = np.random.randint(8, 12)  # 8 #[vehicle density vehicle/km]
-        self.env_dict['density_lane2'] = np.random.randint(6, 10)  # 8 #[vehicle density vehicle/km]
+        self.env_dict['density_lane0'] = np.random.randint(8, 12)  # 16 #[vehicle density vehicle/km]
+        self.env_dict['density_lane1'] = np.random.randint(8, 11)  # 8 #[vehicle density vehicle/km]
+        self.env_dict['density_lane2'] = np.random.randint(8, 10)  # 8 #[vehicle density vehicle/km]
 
-        seb = np.random.randint(100, 120)
+        seb = np.random.randint(100, 160)
 
         self.env_dict['speed_mean_lane0'] = seb / 3.6  # generated vehicle desired speed mean [m/s]
         self.env_dict['speed_std_lane0'] = 10.0 / 3.6  # generated vehicle desired speed deviation [m/s]
