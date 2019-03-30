@@ -4,7 +4,6 @@
     <list default="true" id="999f16c8-7d46-4b0a-83f0-9764e2ed7a90" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gym_highway/envs/ep_highway.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/envs/ep_highway.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gym_highway/modell/egovehicle.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/modell/egovehicle.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gym_highway/modell/environment_vehicle.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/modell/environment_vehicle.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gym_highway/modell/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/modell/model.py" afterDir="false" />
     </list>
@@ -15,27 +14,15 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/RLHighWay$envtest.coverage" NAME="envtest Coverage Results" MODIFIED="1553813489902" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_highway" />
+    <SUITE FILE_PATH="coverage/RLHighWay$envtest.coverage" NAME="envtest Coverage Results" MODIFIED="1553989797079" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_highway" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gym_highway/envtest.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-146">
+            <state>
               <caret line="99" column="45" selection-start-line="99" selection-start-column="44" selection-end-line="99" selection-end-column="45" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gym_highway/modell/model.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4250">
-              <caret line="250" column="13" lean-forward="true" selection-start-line="250" selection-start-column="13" selection-end-line="250" selection-end-column="13" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -43,10 +30,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gym_highway/envs/ep_highway.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="609">
-              <caret line="45" column="31" lean-forward="true" selection-start-line="45" selection-start-column="31" selection-end-line="45" selection-end-column="31" />
+            <state relative-caret-position="-2193">
+              <caret line="21" column="33" selection-start-line="21" selection-start-column="33" selection-end-line="21" selection-end-column="33" />
               <folding>
-                <marker date="1553809882000" expanded="true" signature="286:290" ph="..." />
+                <marker date="1553989466000" expanded="true" signature="286:290" ph="..." />
               </folding>
             </state>
           </provider>
@@ -55,8 +42,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gym_highway/modell/vehicle_base.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="19" column="18" lean-forward="true" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
+            <state relative-caret-position="186">
+              <caret line="26" column="38" lean-forward="true" selection-start-line="26" selection-start-column="38" selection-end-line="26" selection-end-column="38" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/gym_highway/modell/model.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="116">
+              <caret line="273" column="67" selection-start-line="273" selection-start-column="67" selection-end-line="273" selection-end-column="67" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -64,17 +63,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gym_highway/modell/egovehicle.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="107">
+            <state relative-caret-position="119">
               <caret line="9" column="16" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="16" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gym_highway/modell/environment_vehicle.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2482">
-              <caret line="146" column="31" lean-forward="true" selection-start-line="146" selection-start-column="31" selection-end-line="146" selection-end-column="31" />
+            <state relative-caret-position="-1530">
+              <caret line="154" column="36" selection-start-line="154" selection-start-column="36" selection-end-line="154" selection-end-column="36" />
               <folding>
                 <element signature="e#0#52#0" expanded="true" />
               </folding>
@@ -125,11 +124,11 @@
         <option value="$PROJECT_DIR$/gym_highway/modell/modell.py" />
         <option value="$PROJECT_DIR$/gym_highway/modell/ego_vehicle.py" />
         <option value="$PROJECT_DIR$/gym_highway/envtest.py" />
-        <option value="$PROJECT_DIR$/gym_highway/modell/vehicle_base.py" />
-        <option value="$PROJECT_DIR$/gym_highway/envs/ep_highway.py" />
         <option value="$PROJECT_DIR$/gym_highway/modell/egovehicle.py" />
-        <option value="$PROJECT_DIR$/gym_highway/modell/model.py" />
         <option value="$PROJECT_DIR$/gym_highway/modell/environment_vehicle.py" />
+        <option value="$PROJECT_DIR$/gym_highway/envs/ep_highway.py" />
+        <option value="$PROJECT_DIR$/gym_highway/modell/vehicle_base.py" />
+        <option value="$PROJECT_DIR$/gym_highway/modell/model.py" />
       </list>
     </option>
   </component>
@@ -145,6 +144,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -167,7 +167,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -343,7 +342,9 @@
       <workItem from="1552459716103" duration="52000" />
       <workItem from="1553596359804" duration="1688000" />
       <workItem from="1553691463884" duration="23000" />
-      <workItem from="1553805859713" duration="7964000" />
+      <workItem from="1553805859713" duration="8024000" />
+      <workItem from="1553876343117" duration="5564000" />
+      <workItem from="1553971915177" duration="17970000" />
     </task>
     <task id="LOCAL-00001" summary="initial setup">
       <created>1549377943473</created>
@@ -356,7 +357,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="38196000" />
+    <option name="totallyTimeSpent" value="61790000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -369,14 +370,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.48932385" visible="true" weight="0.12307692" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.48932385" visible="true" weight="0.12631579" />
       <window_info id="Structure" order="1" sideWeight="0.51067615" side_tool="true" weight="0.27530363" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49959514" visible="true" weight="0.28596804" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49959514" weight="0.28596804" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.44937834" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -387,14 +387,14 @@
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50040483" side_tool="true" weight="0.3291815" />
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.19739696" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.3264642" />
-      <window_info anchor="right" x="0" y="0" width="273" height="495" id="Documentation" side_tool="true" weight="0.32955465" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" auto_hide="true" x="-1270" y="190" width="619" height="659" id="SciView" order="3" show_stripe_button="false" type="FLOATING" weight="0.32995737" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24939272" />
+      <window_info anchor="right" auto_hide="true" x="357" y="72" width="566" height="537" id="SciView" order="3" show_stripe_button="false" type="FLOATING" weight="0.32995737" />
       <window_info anchor="right" id="R Graphics" order="4" />
       <window_info anchor="right" id="R Packages" order="5" />
       <window_info anchor="right" id="Database" order="6" />
+      <window_info anchor="right" x="0" y="0" width="273" height="495" id="Documentation" order="7" side_tool="true" weight="0.32955465" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -406,6 +406,37 @@
     </ignored-roots>
     <MESSAGE value="initial setup" />
     <option name="LAST_COMMIT_MESSAGE" value="initial setup" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="(self.env_dict['length_backward'] + self.env_dict['length_forward'])" />
+        <watch expression="any(abs(np.array(places[:-1])-np.array(places[1:]))" language="Python" />
+        <watch expression="np.array(places[:-1])" />
+        <watch expression="np.array(places[1:])" language="Python" />
+        <watch expression="abs(np.array(places[:-1])-np.array(places[1:]))" language="Python" />
+        <watch expression="any(abs(np.array(places[:-1])-np.array(places[1:])) &lt; 10 * self.env_dict['car_length'])" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="watch">
+      <expression>
+        <expression-string>abs(np.array(places[:-1])-np.array(places[1:]))</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>np.array(places[1:])</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>any(abs(np.array(places[:-1])-np.array(places[1:]))</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/gym_highway/lib/envs/__init__.py">
@@ -570,13 +601,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gym_highway/modell/vehicle_base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="19" column="18" lean-forward="true" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/matplotlib/figure.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="320">
@@ -584,46 +608,53 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/gym_highway/modell/egovehicle.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="9" column="16" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/gym_highway/envtest.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-146">
+        <state>
           <caret line="99" column="45" selection-start-line="99" selection-start-column="44" selection-end-line="99" selection-end-column="45" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gym_highway/modell/egovehicle.py">
+    <entry file="file://$PROJECT_DIR$/gym_highway/modell/vehicle_base.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="9" column="16" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="16" />
+        <state relative-caret-position="186">
+          <caret line="26" column="38" lean-forward="true" selection-start-line="26" selection-start-column="38" selection-end-line="26" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gym_highway/modell/environment_vehicle.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1530">
+          <caret line="154" column="36" selection-start-line="154" selection-start-column="36" selection-end-line="154" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#52#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/gym_highway/envs/ep_highway.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="609">
-          <caret line="45" column="31" lean-forward="true" selection-start-line="45" selection-start-column="31" selection-end-line="45" selection-end-column="31" />
+        <state relative-caret-position="-2193">
+          <caret line="21" column="33" selection-start-line="21" selection-start-column="33" selection-end-line="21" selection-end-column="33" />
           <folding>
-            <marker date="1553809882000" expanded="true" signature="286:290" ph="..." />
+            <marker date="1553989466000" expanded="true" signature="286:290" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/gym_highway/modell/model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4250">
-          <caret line="250" column="13" lean-forward="true" selection-start-line="250" selection-start-column="13" selection-end-line="250" selection-end-column="13" />
+        <state relative-caret-position="116">
+          <caret line="273" column="67" selection-start-line="273" selection-start-column="67" selection-end-line="273" selection-end-column="67" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gym_highway/modell/environment_vehicle.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2482">
-          <caret line="146" column="31" lean-forward="true" selection-start-line="146" selection-start-column="31" selection-end-line="146" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#52#0" expanded="true" />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
