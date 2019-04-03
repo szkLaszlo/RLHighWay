@@ -267,9 +267,9 @@ class Model:
             return {'dx': ret_state[0], 'dv': ret_state[1]}, {'dx': ret_state[2], 'dv': ret_state[3]}, \
                    {'dx': ret_state[4], 'dv': ret_state[5]}
         else:
-            if front is not None and front.x > current_ego.x + 200:
+            if front is not None and abs(front.x - current_ego.x) > 300:
                 front = None
-            if rear is not None and rear.x < current_ego.x - 200:
+            if rear is not None and abs(current_ego.x - rear.x) > 300:
                 rear = None
             if side is not None and (abs(side.y - current_ego.y) >= 2 * self.env_dict['lane_width']):
                 side = None

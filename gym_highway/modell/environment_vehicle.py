@@ -60,16 +60,15 @@ class EnvironmentVehicle(BaseVehicle):
                 # following car ahead
                 dv = front.vx - self.vx
                 dx = abs(front.x - self.x) - front.length / 2 - self.length / 2
-                if dx <= 8 * self.length:
+                if dx <= 20 * self.length:
                 # desired following dist
                     dist = front.vx * 1.4
-                    d_dist = dist - dx
-                    acc_ghr = -1 * d_dist + 10 * dv
-
+                    d_dist = dx - dist + dv*self.env_dict['dt']
+                    acc_ghr = -1*d_dist*dv
                     acc_ghr = min(max(self.max_dec, acc_ghr), self.max_acc)
 
                     if self.vx > self.desired_speed:
-                        acc = min(self.max_dec, acc_ghr)
+                        acc = max(self.max_dec, acc_ghr)
                     else:
                         acc = acc_ghr
 
@@ -139,7 +138,9 @@ class EnvironmentVehicle(BaseVehicle):
                 # desired following dist
                 dist = front_right.vx * 1.4
                 d_dist = dist - dx
+
                 acc_ghr = -1 * d_dist + 10 * dv
+
                 acc_ghr = min(max(self.max_dec, acc_ghr), self.max_acc)
                 if self.vx > self.desired_speed:
                     acc = min(self.max_dec, acc_ghr)
@@ -172,14 +173,15 @@ class EnvironmentVehicle(BaseVehicle):
                 # following GHR model
                 dv = front.vx - self.vx
                 dx = abs(front.x - self.x) - front.length / 2 - self.length / 2
-                if dx <= 5*self.length:
+                if dx <= 10 *self.length:
                 # desired following dist
                     dist = front.vx * 1.4
-                    d_dist = dist - dx
-                    acc_ghr = -1 * d_dist + 5 * dv
+                    d_dist = dx - dist + dv * self.env_dict['dt']
+                    acc_ghr = -1 * d_dist * dv
+
                     acc_ghr = min(max(self.max_dec, acc_ghr), self.max_acc)
                     if self.vx > self.desired_speed:
-                        acc = min(self.max_dec, acc_ghr)
+                        acc = max(self.max_dec, acc_ghr)
                     else:
                         acc = acc_ghr
 

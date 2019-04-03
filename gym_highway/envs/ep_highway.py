@@ -22,7 +22,7 @@ class EPHighWayEnv(gym.Env):
                          'speed_std_lane0': 10.0 / 3.6, 'speed_mean_lane1': 150.0 / 3.6, 'speed_std_lane1': 10.0 / 3.6,
                          'speed_ego_desired': 130.0 / 3.6, 'car_length': 3, 'safe_zone_length': 1,
                          'max_acceleration': 2,
-                         'max_deceleration': -6}
+                         'max_deceleration': -12}
         # Vehicle Generation Parameters
 
         self.model = None
@@ -54,7 +54,7 @@ class EPHighWayEnv(gym.Env):
         self.env_dict['density_lane1'] = np.random.randint(6, 15)  # 8 #[vehicle density vehicle/km]
         self.env_dict['density_lane2'] = np.random.randint(8, 15)  # 8 #[vehicle density vehicle/km]
 
-        seb = np.random.randint(100, 130)
+        seb = np.random.randint(150, 180)
 
         self.env_dict['speed_mean_lane0'] = seb / 3.6  # generated vehicle desired speed mean [m/s]
         self.env_dict['speed_std_lane0'] = 10.0 / 3.6  # generated vehicle desired speed deviation [m/s]
