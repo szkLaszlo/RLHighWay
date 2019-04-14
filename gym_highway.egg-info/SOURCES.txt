@@ -1,6 +1,0 @@
-README.md
-gym_highway.egg-info/PKG-INFO
-gym_highway.egg-info/SOURCES.txt
-gym_highway.egg-info/dependency_links.txt
-gym_highway.egg-info/requires.txt
-gym_highway.egg-info/top_level.txt
