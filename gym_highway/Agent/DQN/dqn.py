@@ -87,7 +87,7 @@ class Estimator():
 
         # Placeholders for our input
         # Our input are 4 RGB frames of shape 160, 160 each
-        self.X_pl = tf.placeholder(shape=[None, 17], dtype=tf.float32, name="X")
+        self.X_pl = tf.placeholder(shape=[None,19], dtype=tf.float32, name="X")
         # The TD target value
         self.y_pl = tf.placeholder(shape=[None], dtype=tf.float32, name="y")
         # Integer id of which action was selected
@@ -96,7 +96,7 @@ class Estimator():
         h_size = 256
 
         # Weight initializations
-        self.w_1 = init_weights((17, h_size))
+        self.w_1 = init_weights((19, h_size))
         self.w_2 = init_weights((h_size, 1))
 
         # Forward propagation
@@ -140,7 +140,12 @@ class Estimator():
           Tensor of shape [batch_size, NUM_VALID_ACTIONS] containing the estimated 
           action values.
         """
-        return sess.run(self.predictions, feed_dict={self.X_pl: s})
+
+        temp_s = [[s[i]['pos_y'], s[i]['heading'], s[i]['speed'], s[i]['FL']['dx'], s[i]['FL']['dv'],
+                  s[i]['FE']['dx'], s[i]['FE']['dv'], s[i]['RL']['dx'], s[i]['RL']['dv'], s[i]['RE']['dx'], s[i]['RE']['dv'],
+                  s[i]['FR']['dx'], s[i]['FR']['dv'], s[i]['RR']['dx'], s[i]['RR']['dv'], s[i]['EL']['dx'], s[i]['EL']['dv'],
+                  s[i]['ER']['dx'], s[i]['ER']['dv']] for i in range(len(s))]
+        return sess.run(self.predictions, feed_dict={self.X_pl: temp_s})
 
     def update(self, sess, s, a, y):
         """
@@ -155,7 +160,12 @@ class Estimator():
         Returns:
           The calculated loss on the batch.
         """
-        feed_dict = {self.X_pl: s, self.y_pl: y, self.actions_pl: a}
+
+        temp_s = [[s[i]['pos_y'], s[i]['heading'], s[i]['speed'], s[i]['FL']['dx'], s[i]['FL']['dv'],
+                  s[i]['FE']['dx'], s[i]['FE']['dv'], s[i]['RL']['dx'], s[i]['RL']['dv'], s[i]['RE']['dx'], s[i]['RE']['dv'],
+                  s[i]['FR']['dx'], s[i]['FR']['dv'], s[i]['RR']['dx'], s[i]['RR']['dv'], s[i]['EL']['dx'], s[i]['EL']['dv'],
+                  s[i]['ER']['dx'], s[i]['ER']['dv']] for i in range(len(s))]
+        feed_dict = {self.X_pl: temp_s, self.y_pl: y, self.actions_pl: a}
         summaries, global_step, _, loss = sess.run(
             [self.summaries, tf.contrib.framework.get_global_step(), self.train_op, self.loss],
             feed_dict)

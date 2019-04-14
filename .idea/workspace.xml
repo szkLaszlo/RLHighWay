@@ -3,9 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="999f16c8-7d46-4b0a-83f0-9764e2ed7a90" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gym_highway/envs/ep_highway.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/envs/ep_highway.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gym_highway/modell/environment_vehicle.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/modell/environment_vehicle.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gym_highway/modell/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/modell/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gym_highway/Agent/DQN/dqn.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/Agent/DQN/dqn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gym_highway/modell/egovehicle.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/modell/egovehicle.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,6 +14,21 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/RLHighWay$envtest.coverage" NAME="envtest Coverage Results" MODIFIED="1554201419043" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_highway" />
+    <SUITE FILE_PATH="coverage/RLHighWay$dqn.coverage" NAME="dqn Coverage Results" MODIFIED="1554559331618" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_highway/Agent/DQN" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
@@ -42,8 +56,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gym_highway/modell/vehicle_base.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="26" column="38" selection-start-line="26" selection-start-column="38" selection-end-line="26" selection-end-column="38" />
+            <state relative-caret-position="221">
+              <caret line="14" column="31" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -63,20 +77,38 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gym_highway/modell/egovehicle.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="10" column="24" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
+            <state relative-caret-position="1224">
+              <caret line="74" column="9" selection-start-line="74" selection-start-column="9" selection-end-line="74" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gym_highway/modell/environment_vehicle.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1598">
+              <caret line="96" column="37" selection-start-line="96" selection-start-column="37" selection-end-line="96" selection-end-column="37" />
+              <folding>
+                <element signature="e#0#52#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/gym_highway/modell/environment_vehicle.py">
+        <entry file="file://$PROJECT_DIR$/gym_highway/Agent/DQN/dqn.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="481">
-              <caret line="96" column="37" selection-start-line="96" selection-start-column="37" selection-end-line="96" selection-end-column="37" />
-              <folding>
-                <element signature="e#0#52#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="17">
+              <caret line="410" column="66" selection-start-line="410" selection-start-column="66" selection-end-line="410" selection-end-column="66" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/tensorflow/python/client/session.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="18717">
+              <caret line="1124" column="76" selection-start-line="1124" selection-start-column="76" selection-end-line="1124" selection-end-column="76" />
             </state>
           </provider>
         </entry>
@@ -120,15 +152,15 @@
         <option value="$PROJECT_DIR$/gym_highway/modell/vehicle_modell.py" />
         <option value="$PROJECT_DIR$/modelltest.py" />
         <option value="$PROJECT_DIR$/gym_highway/__init__.py" />
-        <option value="$PROJECT_DIR$/gym_highway/Agent/DQN/dqn.py" />
         <option value="$PROJECT_DIR$/gym_highway/modell/modell.py" />
         <option value="$PROJECT_DIR$/gym_highway/modell/ego_vehicle.py" />
         <option value="$PROJECT_DIR$/gym_highway/envtest.py" />
-        <option value="$PROJECT_DIR$/gym_highway/modell/egovehicle.py" />
         <option value="$PROJECT_DIR$/gym_highway/modell/vehicle_base.py" />
         <option value="$PROJECT_DIR$/gym_highway/envs/ep_highway.py" />
         <option value="$PROJECT_DIR$/gym_highway/modell/model.py" />
         <option value="$PROJECT_DIR$/gym_highway/modell/environment_vehicle.py" />
+        <option value="$PROJECT_DIR$/gym_highway/Agent/DQN/dqn.py" />
+        <option value="$PROJECT_DIR$/gym_highway/modell/egovehicle.py" />
       </list>
     </option>
   </component>
@@ -152,17 +184,6 @@
               <item name="RLHighWay" type="b2602c69:ProjectViewProjectNode" />
               <item name="RLHighWay" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="RLHighWay" type="b2602c69:ProjectViewProjectNode" />
-              <item name="RLHighWay" type="462c0819:PsiDirectoryNode" />
-              <item name="gym_highway" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RLHighWay" type="b2602c69:ProjectViewProjectNode" />
-              <item name="RLHighWay" type="462c0819:PsiDirectoryNode" />
-              <item name="gym_highway" type="462c0819:PsiDirectoryNode" />
-              <item name="envs" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -171,7 +192,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../vehicle operation/vo-project" />
     <property name="settings.editor.selected.configurable" value="settings.github" />
   </component>
   <component name="RecentsManager">
@@ -192,7 +213,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.envtest">
+  <component name="RunManager" selected="Python.dqn">
     <configuration name="Q-Learning with Value Function Approximation" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="gym-highway-master" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -312,8 +333,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.envtest" />
         <item itemvalue="Python.dqn" />
+        <item itemvalue="Python.envtest" />
         <item itemvalue="Python.modelltest" />
         <item itemvalue="Python.Q-Learning with Value Function Approximation" />
         <item itemvalue="Python.rnn_theano" />
@@ -347,6 +368,8 @@
       <workItem from="1553971915177" duration="17970000" />
       <workItem from="1554196735638" duration="4900000" />
       <workItem from="1554279931695" duration="39000" />
+      <workItem from="1554557580924" duration="6975000" />
+      <workItem from="1554706253255" duration="17000" />
     </task>
     <task id="LOCAL-00001" summary="initial setup">
       <created>1549377943473</created>
@@ -359,7 +382,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="66729000" />
+    <option name="totallyTimeSpent" value="73721000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -372,14 +395,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.48932385" visible="true" weight="0.12955466" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.48932385" visible="true" weight="0.13360325" />
       <window_info id="Structure" order="1" sideWeight="0.51067615" side_tool="true" weight="0.27530363" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49959514" weight="0.28596804" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49959514" weight="0.39635158" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.44937834" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -395,8 +417,8 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24939272" />
       <window_info anchor="right" auto_hide="true" x="357" y="72" width="566" height="537" id="SciView" order="3" show_stripe_button="false" type="FLOATING" weight="0.32995737" />
       <window_info anchor="right" id="R Graphics" order="4" />
-      <window_info anchor="right" id="R Packages" order="5" />
-      <window_info anchor="right" id="Database" order="6" />
+      <window_info anchor="right" id="Database" order="5" weight="0.32955465" />
+      <window_info anchor="right" id="R Packages" order="6" />
       <window_info anchor="right" x="0" y="0" width="273" height="495" id="Documentation" order="7" side_tool="true" weight="0.32955465" />
     </layout>
   </component>
@@ -578,13 +600,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gym_highway/Agent/DQN/dqn.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5337">
-          <caret line="432" column="59" selection-start-line="432" selection-start-column="59" selection-end-line="432" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/gym/envs/classic_control/rendering.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="512">
@@ -620,6 +635,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/numpy/core/numeric.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="61">
+          <caret line="491" lean-forward="true" selection-start-line="491" selection-end-line="491" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/gym_highway/envtest.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1547">
@@ -639,8 +661,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/gym_highway/modell/vehicle_base.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="26" column="38" selection-start-line="26" selection-start-column="38" selection-end-line="26" selection-end-column="38" />
+        <state relative-caret-position="221">
+          <caret line="14" column="31" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
         </state>
       </provider>
     </entry>
@@ -656,18 +678,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/gym_highway/modell/egovehicle.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="10" column="24" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
+        <state relative-caret-position="1224">
+          <caret line="74" column="9" selection-start-line="74" selection-start-column="9" selection-end-line="74" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/gym_highway/modell/environment_vehicle.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="481">
+        <state relative-caret-position="1598">
           <caret line="96" column="37" selection-start-line="96" selection-start-column="37" selection-end-line="96" selection-end-column="37" />
           <folding>
             <element signature="e#0#52#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/tensorflow/python/client/session.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18717">
+          <caret line="1124" column="76" selection-start-line="1124" selection-start-column="76" selection-end-line="1124" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gym_highway/Agent/DQN/dqn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="410" column="66" selection-start-line="410" selection-start-column="66" selection-end-line="410" selection-end-column="66" />
         </state>
       </provider>
     </entry>
