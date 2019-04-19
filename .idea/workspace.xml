@@ -2,23 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="999f16c8-7d46-4b0a-83f0-9764e2ed7a90" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sumoProject/agents/vanilla_policy_gradient.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sumoProject/envtest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gym-highway-master.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gym-highway-master.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyproject/gym_highway/Agent/DQN/dqn.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject/gym_highway/Agent/DQN/dqn.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyproject/gym_highway/Agent/Q-Learning with Value Function Approximation.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject/gym_highway/Agent/Q-Learning with Value Function Approximation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyproject/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject/test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sumoProject/SUMO_Starter.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sumoProject/basicnet.add.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sumoProject/basicnet.net.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sumoProject/basicnet.rou.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sumoProject/earthbackground.JPG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sumoProject/gui-settings.cfg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sumoProject/gui.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sumoProject/jatek.sumocfg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sumoProject/envs/virtualtraffic" beforeDir="false" afterPath="$PROJECT_DIR$/sumoProject/envs/virtualtraffic" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -115,18 +100,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="361">
               <caret line="738" column="19" selection-start-line="738" selection-start-column="19" selection-end-line="738" selection-end-column="19" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/gym/envs/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="14" column="33" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
-              <folding>
-                <element signature="e#0#64#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -425,7 +398,7 @@
       <workItem from="1554557580924" duration="6975000" />
       <workItem from="1554706253255" duration="17000" />
       <workItem from="1555589416087" duration="918000" />
-      <workItem from="1555658173007" duration="53819000" />
+      <workItem from="1555658173007" duration="54105000" />
     </task>
     <task id="LOCAL-00001" summary="initial setup">
       <created>1549377943473</created>
@@ -438,7 +411,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="128458000" />
+    <option name="totallyTimeSpent" value="128744000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -452,12 +425,12 @@
   <component name="ToolWindowManager">
     <frame x="-1928" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.48932385" visible="true" weight="0.1369936" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.48932385" visible="true" weight="0.1369936" />
       <window_info id="Structure" order="1" sideWeight="0.51067615" side_tool="true" weight="0.27530363" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49959514" visible="true" weight="0.3943662" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49959514" visible="true" weight="0.3943662" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.44853738" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
