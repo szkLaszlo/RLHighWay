@@ -1,10 +1,10 @@
 import gym
 import gym_highway
 from gym_highway.modell.model import Model
-#env = gym.make('EPHighWay-v0')
+#envs = gym.make('EPHighWay-v0')
 import matplotlib.pyplot as plt
 import math
-#env.reset()
+#envs.reset()
 
 m=Model()
 print("Lanes: ", m.lanes)

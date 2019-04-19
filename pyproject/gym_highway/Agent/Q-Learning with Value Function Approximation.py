@@ -260,5 +260,5 @@ print(np.sum(stats.episode_rewards) / stats.episode_rewards.__len__())
 plt.plot(stats.episode_rewards)
 
 wins, tot_reward, averagereward = play_episodes(env, 10, policy)
-# plotting.plot_cost_to_go_mountain_car(env, estimator)
+# plotting.plot_cost_to_go_mountain_car(envs, estimator)
 # plotting.plot_episode_stats(stats, smoothing_window=25)

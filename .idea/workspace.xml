@@ -2,9 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="999f16c8-7d46-4b0a-83f0-9764e2ed7a90" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sumoProject/agents/vanilla_policy_gradient.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sumoProject/envtest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gym-highway-master.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gym-highway-master.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gym_highway/Agent/DQN/dqn.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/Agent/DQN/dqn.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gym_highway/modell/egovehicle.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_highway/modell/egovehicle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyproject/gym_highway/Agent/DQN/dqn.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject/gym_highway/Agent/DQN/dqn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyproject/gym_highway/Agent/Q-Learning with Value Function Approximation.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject/gym_highway/Agent/Q-Learning with Value Function Approximation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyproject/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sumoProject/SUMO_Starter.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sumoProject/basicnet.add.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sumoProject/basicnet.net.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sumoProject/basicnet.rou.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sumoProject/earthbackground.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sumoProject/gui-settings.cfg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sumoProject/gui.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sumoProject/jatek.sumocfg" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,41 +46,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gym_highway/envtest.py">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/sumoProject/envs/SUMO_Starter.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1547">
-              <caret line="99" column="45" selection-start-line="99" selection-start-column="44" selection-end-line="99" selection-end-column="45" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gym_highway/envs/ep_highway.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="18" selection-start-line="18" selection-end-line="18" />
-              <folding>
-                <marker date="1554197890000" expanded="true" signature="286:290" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gym_highway/modell/vehicle_base.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="14" column="31" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gym_highway/modell/model.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4573">
-              <caret line="275" column="36" selection-start-line="275" selection-start-column="36" selection-end-line="275" selection-end-column="36" />
+            <state relative-caret-position="885">
+              <caret line="135" column="55" selection-start-line="135" selection-start-column="55" selection-end-line="135" selection-end-column="55" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -75,40 +59,74 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gym_highway/modell/egovehicle.py">
+        <entry file="file://$PROJECT_DIR$/sumoProject/agents/vanilla_policy_gradient.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1224">
-              <caret line="74" column="9" selection-start-line="74" selection-start-column="9" selection-end-line="74" selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gym_highway/modell/environment_vehicle.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1598">
-              <caret line="96" column="37" selection-start-line="96" selection-start-column="37" selection-end-line="96" selection-end-column="37" />
+            <state relative-caret-position="467">
+              <caret line="129" column="31" selection-start-line="129" selection-start-column="31" selection-end-line="129" selection-end-column="31" />
               <folding>
-                <element signature="e#0#52#0" expanded="true" />
+                <element signature="e#97#108#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/gym_highway/Agent/DQN/dqn.py">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sumoProject/envtest.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="410" column="66" selection-start-line="410" selection-start-column="66" selection-end-line="410" selection-end-column="66" />
+            <state relative-caret-position="189">
+              <caret line="35" column="22" selection-start-line="35" selection-start-column="22" selection-end-line="35" selection-end-column="22" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/tensorflow/python/client/session.py">
+        <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/gym/spaces/box.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18717">
-              <caret line="1124" column="76" selection-start-line="1124" selection-start-column="76" selection-end-line="1124" selection-end-column="76" />
+            <state relative-caret-position="374">
+              <caret line="24" selection-start-line="24" selection-end-line="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sumoProject/envs/basicnet.add.xml">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sumoProject/envs/basicnet.net.xml">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sumoProject/envs/basicnet.rou.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="10" column="43" selection-start-line="10" selection-start-column="43" selection-end-line="10" selection-end-column="43" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sumoProject/envs/gui.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="361">
+              <caret line="738" column="19" selection-start-line="738" selection-start-column="19" selection-end-line="738" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/gym/envs/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="14" column="33" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
+              <folding>
+                <element signature="e#0#64#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -136,13 +154,16 @@
       <find>self.des</find>
       <find>desired</find>
       <find>front.vx * 1.2</find>
+      <find>viewport</find>
+      <find>time</find>
+      <find>print</find>
+      <find>sumo</find>
+      <find>left</find>
+      <find>starting sumo</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="GithubDefaultAccount">
-    <option name="defaultAccountId" value="c49ffcfb-4396-44a0-8101-38073a222c44" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -161,6 +182,21 @@
         <option value="$PROJECT_DIR$/gym_highway/modell/environment_vehicle.py" />
         <option value="$PROJECT_DIR$/gym_highway/Agent/DQN/dqn.py" />
         <option value="$PROJECT_DIR$/gym_highway/modell/egovehicle.py" />
+        <option value="$PROJECT_DIR$/sumoProject/v2.net.xml" />
+        <option value="$PROJECT_DIR$/sumoProject/gui.xml" />
+        <option value="$PROJECT_DIR$/pyproject/gym_highway/modell/model.py" />
+        <option value="$PROJECT_DIR$/sumoProject/__init__.py" />
+        <option value="$PROJECT_DIR$/sumoProject/basicnet.rou.xml" />
+        <option value="C:/Sumo/tools/traci/__init__.py" />
+        <option value="$PROJECT_DIR$/sumoProject/no-gui.xml" />
+        <option value="$PROJECT_DIR$/sumoProject/no_gui.sumocfg" />
+        <option value="$PROJECT_DIR$/sumoProject/jatek.sumocfg" />
+        <option value="$PROJECT_DIR$/sumoProject/SUMO_Starter.py" />
+        <option value="$PROJECT_DIR$/__init__.py" />
+        <option value="$PROJECT_DIR$/venv/Lib/site-packages/gym/envs/__init__.py" />
+        <option value="$PROJECT_DIR$/sumoProject/envtest.py" />
+        <option value="$PROJECT_DIR$/sumoProject/agents/vanilla_policy_gradient.py" />
+        <option value="$PROJECT_DIR$/sumoProject/envs/SUMO_Starter.py" />
       </list>
     </option>
   </component>
@@ -176,7 +212,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -184,20 +219,45 @@
               <item name="RLHighWay" type="b2602c69:ProjectViewProjectNode" />
               <item name="RLHighWay" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="RLHighWay" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RLHighWay" type="462c0819:PsiDirectoryNode" />
+              <item name="sumoProject" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="RLHighWay" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RLHighWay" type="462c0819:PsiDirectoryNode" />
+              <item name="sumoProject" type="462c0819:PsiDirectoryNode" />
+              <item name="agents" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="RLHighWay" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RLHighWay" type="462c0819:PsiDirectoryNode" />
+              <item name="sumoProject" type="462c0819:PsiDirectoryNode" />
+              <item name="envs" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="settings.github" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/sumoProject" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\msc\second\research\RLHighWay\sumoProject\env" />
+      <recent name="D:\msc\second\research\RLHighWay" />
+      <recent name="D:\msc\second\research\RLHighWay\sumoProject" />
+      <recent name="D:\msc\second\research\RLHighWay\pyproject" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\msc\second\research\RLHighWay\sumoProject" />
       <recent name="C:\Users\szoke\Documents\msc\second\research\gym-highway-master\gym_highway" />
       <recent name="C:\Users\szoke\Documents\msc\second\research\gym-highway-master\gym_highway\Agent" />
     </key>
@@ -214,8 +274,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.dqn">
-    <configuration name="Q-Learning with Value Function Approximation" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.vanilla_policy_gradient">
+    <configuration name="__init__ (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="gym-highway-master" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -223,12 +283,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/gym_highway/Agent" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sumoProject" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gym_highway/Agent/Q-Learning with Value Function Approximation.py" />
+      <option name="SCRIPT_NAME" value="D:\msc\second\research\RLHighWay\__init__.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -237,7 +297,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="dqn" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="__init__ (2)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="gym-highway-master" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -245,12 +305,34 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/gym_highway/Agent/DQN" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gym_highway/Agent/DQN/dqn.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/__init__.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="__init__" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="gym-highway-master" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sumoProject" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="D:\msc\second\research\RLHighWay\__init__.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -267,12 +349,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/gym_highway" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sumoProject" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gym_highway/envtest.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sumoProject/envtest.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -281,7 +363,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="modelltest" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="vanilla_policy_gradient" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="gym-highway-master" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -289,12 +371,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sumoProject/agents" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/modelltest.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sumoProject/agents/vanilla_policy_gradient.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -303,42 +385,13 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="rnn_theano" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="gym-highway-master" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../vehicle operation/rnn-tutorial-rnnlm-master/rnn-tutorial-rnnlm-master" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../vehicle operation/rnn-tutorial-rnnlm-master/rnn-tutorial-rnnlm-master/rnn_theano.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <list>
-      <item itemvalue="Python.envtest" />
-      <item itemvalue="Python.Q-Learning with Value Function Approximation" />
-      <item itemvalue="Python.rnn_theano" />
-      <item itemvalue="Python.dqn" />
-      <item itemvalue="Python.modelltest" />
-    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.dqn" />
+        <item itemvalue="Python.vanilla_policy_gradient" />
         <item itemvalue="Python.envtest" />
-        <item itemvalue="Python.modelltest" />
-        <item itemvalue="Python.Q-Learning with Value Function Approximation" />
-        <item itemvalue="Python.rnn_theano" />
+        <item itemvalue="Python.__init__ (2)" />
+        <item itemvalue="Python.__init__ (1)" />
+        <item itemvalue="Python.__init__" />
       </list>
     </recent_temporary>
   </component>
@@ -371,6 +424,8 @@
       <workItem from="1554279931695" duration="39000" />
       <workItem from="1554557580924" duration="6975000" />
       <workItem from="1554706253255" duration="17000" />
+      <workItem from="1555589416087" duration="918000" />
+      <workItem from="1555658173007" duration="53819000" />
     </task>
     <task id="LOCAL-00001" summary="initial setup">
       <created>1549377943473</created>
@@ -383,7 +438,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="73721000" />
+    <option name="totallyTimeSpent" value="128458000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -395,15 +450,15 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
+    <frame x="-1928" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.48932385" visible="true" weight="0.13360325" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.48932385" visible="true" weight="0.1369936" />
       <window_info id="Structure" order="1" sideWeight="0.51067615" side_tool="true" weight="0.27530363" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49959514" weight="0.39635158" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.44937834" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49959514" visible="true" weight="0.3943662" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.44853738" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Docker" order="6" show_stripe_button="false" />
@@ -412,7 +467,7 @@
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50040483" side_tool="true" weight="0.3291815" />
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.19739696" />
-      <window_info anchor="bottom" id="Python Console" order="12" weight="0.3264642" />
+      <window_info anchor="bottom" id="Python Console" order="12" weight="0.3261105" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24939272" />
@@ -422,6 +477,32 @@
       <window_info anchor="right" id="R Packages" order="6" />
       <window_info anchor="right" x="0" y="0" width="273" height="495" id="Documentation" order="7" side_tool="true" weight="0.32955465" />
     </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.48932385" weight="0.1369936" />
+      <window_info id="Structure" order="1" sideWeight="0.51067615" side_tool="true" weight="0.27530363" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49959514" visible="true" weight="0.3943662" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.44853738" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Docker" order="6" show_stripe_button="false" />
+      <window_info anchor="bottom" id="TODO" order="7" weight="0.329718" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Database Changes" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50040483" side_tool="true" weight="0.3291815" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.19739696" />
+      <window_info anchor="bottom" id="Python Console" order="12" weight="0.3261105" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24939272" />
+      <window_info anchor="right" auto_hide="true" x="357" y="72" width="566" height="537" id="SciView" order="3" show_stripe_button="false" type="FLOATING" weight="0.32995737" />
+      <window_info anchor="right" id="R Graphics" order="4" />
+      <window_info anchor="right" id="Database" order="5" weight="0.32955465" />
+      <window_info anchor="right" id="R Packages" order="6" />
+      <window_info anchor="right" x="0" y="0" width="273" height="495" id="Documentation" order="7" side_tool="true" weight="0.32955465" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -441,21 +522,67 @@
           <line>69</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pyproject/gym_highway/__init__.py</url>
+          <line>3</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/__init__.py</url>
+          <line>5</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sumoProject/envtest.py</url>
+          <line>35</line>
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
-        <watch expression="(self.env_dict['length_backward'] + self.env_dict['length_forward'])" />
-        <watch expression="any(abs(np.array(places[:-1])-np.array(places[1:]))" language="Python" />
-        <watch expression="np.array(places[:-1])" />
-        <watch expression="np.array(places[1:])" language="Python" />
-        <watch expression="abs(np.array(places[:-1])-np.array(places[1:]))" language="Python" />
-        <watch expression="any(abs(np.array(places[:-1])-np.array(places[1:])) &lt; 10 * self.env_dict['car_length'])" />
+        <watch expression="self.state['y_pos']" />
+        <watch expression="self.state['lane']" />
+        <watch expression="traci.vehicle.getPosition(self.egoID)" language="Python" />
+        <watch expression="state['lane']*self.lane_width + self.lane_width/2" />
+        <watch expression=" max(self.state['speed'] + ctrl[1],0)" />
+        <watch expression="traci.simulation.getArrivedIDList()" />
+        <watch expression="traci.simulation.getCollidingVehiclesIDList()" language="Python" />
+        <watch expression="state[keys]" />
       </configuration>
     </watches-manager>
   </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/RLHighWay$envtest__1_.coverage" NAME="envtest (1) Coverage Results" MODIFIED="1555687339574" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject" />
+    <SUITE FILE_PATH="coverage/RLHighWay$envtest.coverage" NAME="envtest Coverage Results" MODIFIED="1555713373972" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject" />
+    <SUITE FILE_PATH="coverage/RLHighWay$SUMO_Starter.coverage" NAME="SUMO_Starter Coverage Results" MODIFIED="1555674718619" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject" />
+    <SUITE FILE_PATH="coverage/RLHighWay$__init____1_.coverage" NAME="__init__ (1) Coverage Results" MODIFIED="1555689036554" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject" />
+    <SUITE FILE_PATH="coverage/RLHighWay$vanilla_policy_gradient.coverage" NAME="vanilla_policy_gradient Coverage Results" MODIFIED="1555715203393" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject/agents" />
+    <SUITE FILE_PATH="coverage/RLHighWay$__init__.coverage" NAME="__init__ Coverage Results" MODIFIED="1555688396164" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject" />
+    <SUITE FILE_PATH="coverage/RLHighWay$__init____2_.coverage" NAME="__init__ (2) Coverage Results" MODIFIED="1555689078724" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
   <component name="debuggerHistoryManager">
     <expressions id="watch">
+      <expression>
+        <expression-string>traci.simulation.getCollidingVehiclesIDList()</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>traci.vehicle.getPosition(self.egoID)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>traci.vehicle.getAngle(self.egoID)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>traci.vehicle.setParameter(self.egoID, str(tc.VAR_ANGLE), str(self.state['angle'] + ctrl[0]))</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>abs(np.array(places[:-1])-np.array(places[1:]))</expression-string>
         <language-id>Python</language-id>
@@ -472,135 +599,40 @@
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
     </expressions>
+    <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>keys is type(dict)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>self.state['speed'] + ctrl[1]</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>__py_debug_temp_var_145605849</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>__py_debug_temp_var_362020351</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>float(self.state[&quot;y_pos&quot;])</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>float(xy)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/gym_highway/lib/envs/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$USER_HOME$/Desktop/David-Silver-Reinforcement-learning-master/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/gym_highway/lib/plotting.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="11" selection-start-line="2" selection-start-column="11" selection-end-line="2" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Desktop/David-Silver-Reinforcement-learning-master/Week 3 - Planning by Dynamic Programming/frozen_lake.py" />
-    <entry file="file://$PROJECT_DIR$/../../vehicle operation/rnn-tutorial-rnnlm-master/rnn-tutorial-rnnlm-master/train-theano.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-306">
-          <caret line="32" column="17" lean-forward="true" selection-start-line="32" selection-start-column="17" selection-end-line="32" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../vehicle operation/rnn-tutorial-rnnlm-master/rnn-tutorial-rnnlm-master/rnn_theano.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="10" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/pandas/compat/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="437" selection-start-line="437" selection-end-line="437" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gym_highway/envs/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gym_highway/Agent/Q-Learning with Value Function Approximation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="874">
-          <caret line="254" column="44" selection-start-line="254" selection-start-column="44" selection-end-line="254" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/setup.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gym_highway/Agent/setup.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/matplotlib/_pylab_helpers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="39" selection-start-line="39" selection-end-line="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/matplotlib/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="1411" selection-start-line="1411" selection-end-line="1411" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/gym/envs/registration.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="331">
-          <caret line="190" selection-start-line="190" selection-end-line="190" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gym_highway/modell/vehicle_modell.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-565">
-          <caret line="7" column="19" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modelltest.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="81">
-          <caret line="14" column="17" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gym_highway/modell/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gym_highway/misctest.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-136" />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/codecs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5627">
-          <caret line="332" selection-start-line="332" selection-end-line="332" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gym_highway/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="48" selection-start-line="4" selection-start-column="48" selection-end-line="4" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="11" column="2" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharm2018.3/system/python_stubs/388880136/numpy/random/mtrand.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="2023" column="4" selection-start-line="2023" selection-start-column="4" selection-end-line="2023" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/gym/core.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4590">
-          <caret line="274" column="12" selection-start-line="274" selection-start-column="12" selection-end-line="274" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/gym/envs/classic_control/rendering.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="512">
@@ -643,68 +675,291 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gym_highway/envtest.py">
+    <entry file="file://$PROJECT_DIR$/gym_highway/envtest.py" />
+    <entry file="file://$PROJECT_DIR$/gym_highway/envs/ep_highway.py" />
+    <entry file="file://$PROJECT_DIR$/gym_highway/modell/vehicle_base.py" />
+    <entry file="file://$PROJECT_DIR$/gym_highway/modell/model.py" />
+    <entry file="file://$PROJECT_DIR$/gym_highway/modell/egovehicle.py" />
+    <entry file="file://$PROJECT_DIR$/gym_highway/modell/environment_vehicle.py" />
+    <entry file="file://$PROJECT_DIR$/gym_highway/Agent/DQN/dqn.py" />
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/tensorflow/python/client/session.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1547">
-          <caret line="99" column="45" selection-start-line="99" selection-start-column="44" selection-end-line="99" selection-end-column="45" />
+        <state relative-caret-position="482">
+          <caret line="1124" column="76" selection-start-line="1124" selection-start-column="76" selection-end-line="1124" selection-end-column="76" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gym_highway/envs/ep_highway.py">
+    <entry file="file://C:/Sumo/tools/traci/_gui.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
-          <folding>
-            <marker date="1554197890000" expanded="true" signature="286:290" ph="..." />
-          </folding>
+        <state relative-caret-position="85">
+          <caret line="29" column="28" selection-start-line="29" selection-start-column="19" selection-end-line="29" selection-end-column="28" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gym_highway/modell/vehicle_base.py">
+    <entry file="file://$PROJECT_DIR$/pyproject/gym_highway/modell/environment_vehicle.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="14" column="31" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gym_highway/modell/model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4573">
-          <caret line="275" column="36" selection-start-line="275" selection-start-column="36" selection-end-line="275" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gym_highway/modell/egovehicle.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1224">
-          <caret line="74" column="9" selection-start-line="74" selection-start-column="9" selection-end-line="74" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gym_highway/modell/environment_vehicle.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1598">
-          <caret line="96" column="37" selection-start-line="96" selection-start-column="37" selection-end-line="96" selection-end-column="37" />
+        <state relative-caret-position="-1987">
+          <caret line="204" column="66" selection-start-line="204" selection-start-column="16" selection-end-line="204" selection-end-column="66" />
           <folding>
             <element signature="e#0#52#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/tensorflow/python/client/session.py">
+    <entry file="file://$PROJECT_DIR$/pyproject/gym_highway/modell/model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18717">
-          <caret line="1124" column="76" selection-start-line="1124" selection-start-column="76" selection-end-line="1124" selection-end-column="76" />
+        <state relative-caret-position="289">
+          <caret line="21" column="8" selection-start-line="21" selection-start-column="8" selection-end-line="21" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gym_highway/Agent/DQN/dqn.py">
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/codecs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="59">
+          <caret line="309" selection-start-line="309" selection-end-line="309" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyproject/gym_highway/envtest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/gym/core.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
-          <caret line="410" column="66" selection-start-line="410" selection-start-column="66" selection-end-line="410" selection-end-column="66" />
+          <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyproject/gym_highway/modell/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyproject/gym_highway/closing_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyproject/gym_highway/envs/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyproject/gym_highway/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="28" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyproject/gym_highway/envs/ep_highway.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="16" lean-forward="true" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/gym/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/gym/wrappers/time_limit.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="314">
+          <caret line="40" column="8" selection-start-line="40" selection-start-column="8" selection-end-line="40" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/copy.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="137" selection-start-line="137" selection-end-line="137" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Sumo/tools/traci/domain.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="114" selection-start-line="114" selection-end-line="114" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sumoProject/envs/v2.net.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1598">
+          <caret line="30" column="16" selection-start-line="30" selection-start-column="16" selection-end-line="30" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2019.1/system/python_stubs/1246575679/cmath.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="120" column="4" selection-start-line="120" selection-start-column="4" selection-end-line="120" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2019.1/system/python_stubs/1246575679/math.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="244" column="4" selection-start-line="244" selection-start-column="4" selection-end-line="244" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Sumo/tools/traci/_simulation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="276" column="83" selection-start-line="276" selection-start-column="79" selection-end-line="276" selection-end-column="83" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Sumo/tools/traci/connection.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="137" selection-start-line="137" selection-end-line="137" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Sumo/tools/traci/_vehicle.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="815" selection-start-line="815" selection-end-line="815" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sumoProject/no-gui.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sumoProject/envs/jatek.sumocfg">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="10" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sumoProject/envs/no_gui.sumocfg">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="38" selection-start-line="9" selection-start-column="38" selection-end-line="9" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/importlib/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="126" selection-start-line="126" selection-end-line="126" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/gym/envs/registration.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="190" column="7" lean-forward="true" selection-start-line="190" selection-start-column="7" selection-end-line="190" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sumoProject/envs/basicnet.add.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sumoProject/envs/basicnet.net.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sumoProject/envs/basicnet.rou.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="43" selection-start-line="10" selection-start-column="43" selection-end-line="10" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sumoProject/envs/gui.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="738" column="19" selection-start-line="738" selection-start-column="19" selection-end-line="738" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/gym/envs/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="33" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#64#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Sumo/tools/traci/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="88" column="4" selection-start-line="88" selection-start-column="4" selection-end-line="88" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/gym/spaces/box.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sumoProject/envtest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="35" column="22" selection-start-line="35" selection-start-column="22" selection-end-line="35" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sumoProject/agents/vanilla_policy_gradient.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="467">
+          <caret line="129" column="31" selection-start-line="129" selection-start-column="31" selection-end-line="129" selection-end-column="31" />
+          <folding>
+            <element signature="e#97#108#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sumoProject/envs/SUMO_Starter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="885">
+          <caret line="135" column="55" selection-start-line="135" selection-start-column="55" selection-end-line="135" selection-end-column="55" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

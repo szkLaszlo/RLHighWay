@@ -321,7 +321,7 @@ def deep_q_learning(sess,
             state = next_state
 
     # Record videos
-    # Use the gym env Monitor wrapper
+    # Use the gym envs Monitor wrapper
     env = Monitor(env,
                   directory=monitor_path,
                   resume=True,
