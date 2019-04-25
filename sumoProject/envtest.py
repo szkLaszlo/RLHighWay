@@ -34,10 +34,10 @@ for _ in range(100):
         action = np.random.randint(0,25)
         state, reward, terminated, info = env.step(action)
         if terminated:
-            if cause['cause'] is not None:
-                print(cause['cause'])
+            if info['cause'] is not None:
+                print(info['cause'])
             else:
-                print(sum(cause['rewards'])+reward)
+                print(sum(info['rewards'])+reward)
             env.reset()  # some comment wee added
 
 elapsed = time.time() - t

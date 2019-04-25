@@ -10,7 +10,7 @@ TRAIN = True
 
 env = gym.make('EPHighWay-v1')
 
-gamma = 0.99
+gamma = 0.90
 
 
 def discount_rewards(r):
@@ -59,14 +59,14 @@ class agent():
 tf.reset_default_graph()  # Clear the Tensorflow graph.
 
 # myAgent = agent(lr=1e-2, s_size=4, a_size=2, h_size=8)  # Load the agent.
-myAgent = agent(lr=1e-3, s_size=20, a_size=25, h_size=64)  # Load the agent.
+myAgent = agent(lr=1e-3, s_size=20, a_size=25, h_size=128)  # Load the agent.
 
 total_episodes = 30000  # Set total number of episodes to train agent on.
 update_frequency = 5
 
 init = tf.global_variables_initializer()
 saver = tf.train.Saver()
-env.render(mode='noone')
+causes={}
 # Launch the tensorflow graph
 with tf.Session() as sess:
     i = 0
@@ -75,6 +75,8 @@ with tf.Session() as sess:
     won = 0
 
     if TRAIN:
+        # env.render(mode='noone')
+        env.render()
         sess.run(init)
         gradBuffer = sess.run(tf.trainable_variables())
         for ix, grad in enumerate(gradBuffer):
@@ -115,6 +117,13 @@ with tf.Session() as sess:
                     total_reward.append(running_reward)
                     if info['cause'] is None:
                         won += 1
+                    else:
+                        try:
+                            causes[info['cause']] = causes[info['cause']]+1
+                        except KeyError:
+                            causes[info['cause']] = 1
+                        except AttributeError:
+                            causes[info['cause']] = 1
                     break
 
                 # Update our running tally of scores.
@@ -126,7 +135,10 @@ with tf.Session() as sess:
 
                 won = 0
             i += 1
+        print(causes)
+
     else:
+        env.render()
         saver.restore(sess, "../save_model/model2.ckpt")
         while i < total_episodes:
             s = env.reset()

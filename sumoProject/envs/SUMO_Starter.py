@@ -62,7 +62,7 @@ class EPHighWayEnv(gym.Env):
             self.lane_width = traci.lane.getWidth('A_0')
             self.lane_offset = traci.junction.getPosition('J1')[1] - 3 * self.lane_width
             self.cumulated_reward = 0
-            self.rewards = [0, 0, 0, 0]
+            self.rewards = [0, 0, 0]
             self.egoID = None
             self.dt = traci.simulation.getDeltaT()
             self.desired_speed = random.randint(100, 140)
@@ -77,7 +77,7 @@ class EPHighWayEnv(gym.Env):
 
     def calculate_action(self, action):
         st = [-0.03, -0.05, 0, 0.05, 0.03]
-        ac = [-6.0, -2.0, 0.0, 2.0, 3.5]
+        ac = [-0.2, -0.1, 0.0, 0.1, 0.2]
         steer = st[action // 5]
         acc = ac[action % 5]
         ctrl = [steer, acc]
@@ -95,15 +95,14 @@ class EPHighWayEnv(gym.Env):
             lane_new = traci.vehicle.getLaneID(self.egoID)
             if lane_new[-1] != self.state['lane']:
                 if self.state['lane'] < 0 or self.state['lane'] > 2:
-                    return self.state, -100, True, {'cause': 'Left Highway', 'rewards': self.rewards}
+                    return self.state, -100, True, {'cause': 'Left Highway', 'rewards': [-100, -100, -100]}
                 lane_new = lane_new[:-1] + str(self.state['lane'])
-                x = traci.vehicle.getLanePosition(self.egoID) - (self.state['speed'] + ctrl[0]) * self.dt * (
-                            1 - math.cos(
-                        math.radians(self.state['angle'])))
+                x = traci.vehicle.getLanePosition(self.egoID)
                 try:
                     traci.vehicle.moveTo(self.egoID, lane_new, x)
                 except traci.exceptions.TraCIException:
-                    traci.vehicle.moveTo(self.egoID, lane_new, x+0.1)
+                    self.state['lane']=int(traci.vehicle.getLaneID(self.egoID)[-1])
+                    pass
             is_ok, cause = self.one_step()
 
         if self.egoID is not None and self.rendering and is_ok:
@@ -113,10 +112,12 @@ class EPHighWayEnv(gym.Env):
         terminated = not is_ok
         if terminated and cause is not None:
             reward = -100.0
+            self.cumulated_reward = reward
+            self.rewards = [-100, -100, -100]
         else:
             reward, rewards = self.calculate_reward()
 
-        self.cumulated_reward = self.cumulated_reward + reward
+            self.cumulated_reward = self.cumulated_reward + reward
 
         return self.state, reward, terminated, {'cause': cause, 'rewards': self.rewards}
 
@@ -196,10 +197,12 @@ class EPHighWayEnv(gym.Env):
         basic_vals = {'dx': 500, 'dv': 0}
         basic_keys = ['FL', 'FE', 'FR', 'RL', 'RE', 'RR', 'EL', 'ER']
         for keys in basic_keys:
-            state[keys] = basic_vals
             if keys in ['RL', 'RE', 'RR']:
+                state[keys] = copy.copy(basic_vals)
                 state[keys]['dv'] = 0
                 state[keys]['dx'] = -500
+            else:
+                state[keys] = copy.copy(basic_vals)
         lane = {0: [], 1: [], 2: []}
         for keys in cars_around.keys():
             if keys is not self.egoID:
@@ -254,14 +257,15 @@ class EPHighWayEnv(gym.Env):
             state['angle'] = self.state['angle']
             state['y_pos'] = self.state['y_pos'] + (state['speed']) * self.dt * sin(
                 math.radians(state['angle']))
+            if state['y_pos'] > (self.state['lane'] + 1) * self.lane_width:
+                state['lane'] += 1
+            elif state['y_pos'] < self.state['lane'] * self.lane_width:
+                state['lane'] -= 1
         else:
             state['angle'] = 0
             state['y_pos'] = ego_data[tc.VAR_POSITION][1] - self.lane_offset + (state['speed']) * self.dt * sin(
                 math.radians(state['angle']))
-        if state['y_pos'] > (state['lane'] + 1) * self.lane_width:
-            state['lane'] += 1
-        elif state['y_pos'] < state['lane'] * self.lane_width:
-            state['lane'] -= 1
+
         return state
 
     def one_step(self):
@@ -279,13 +283,16 @@ class EPHighWayEnv(gym.Env):
                                             tc.VAR_LENGTH])
             traci.vehicle.addSubscriptionFilterLanes(lanes, noOpposite=True, downstreamDist=100.0, upstreamDist=100.0)
         cause = None
-        if 'ego' not in IDsOfVehicles and self.egoID is not None:
+        if self.egoID is not None:
             if self.egoID in traci.simulation.getCollidingVehiclesIDList():
                 cause = "Collision"
+            elif traci.vehicle.getSpeed(self.egoID) < (70 / 3.6):
+                cause = 'Too Slow'
             else:
                 cause = None
-            terminated = True
-            self.egoID = None
+            if cause is not None:
+                terminated = True
+                self.egoID = None
         return (not terminated), cause
 
     @staticmethod
