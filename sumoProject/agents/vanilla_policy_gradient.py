@@ -1,16 +1,16 @@
 # https://medium.com/@awjuliani/super-simple-reinforcement-learning-tutorial-part-2-ded33892c724
-import math
-import tensorflow as tf
-import tensorflow.contrib.slim as slim
-import numpy as np
-import gym
+import os
 import time
-import sumoProject.envs.SUMO_Starter
+
+import gym
+import numpy as np
+import tensorflow as tf
+
 TRAIN = True
 
 env = gym.make('EPHighWay-v1')
 
-gamma = 0.90
+gamma = 0.99
 
 
 def discount_rewards(r):
@@ -59,14 +59,14 @@ class agent():
 tf.reset_default_graph()  # Clear the Tensorflow graph.
 
 # myAgent = agent(lr=1e-2, s_size=4, a_size=2, h_size=8)  # Load the agent.
-myAgent = agent(lr=1e-3, s_size=20, a_size=25, h_size=128)  # Load the agent.
+myAgent = agent(lr=1e-4, s_size=20, a_size=25, h_size=128)  # Load the agent.
 
 total_episodes = 30000  # Set total number of episodes to train agent on.
 update_frequency = 5
-
+summaries_dir = './vanilla'
 init = tf.global_variables_initializer()
 saver = tf.train.Saver()
-causes={}
+causes = {}
 # Launch the tensorflow graph
 with tf.Session() as sess:
     i = 0
@@ -75,8 +75,18 @@ with tf.Session() as sess:
     won = 0
 
     if TRAIN:
-        # env.render(mode='noone')
-        env.render()
+        scope = 'train'
+        # Writes Tensorboard summaries to disk
+        summary_writer = None
+        with tf.variable_scope(scope):
+            # Build the graph
+            if summaries_dir:
+                summary_dir = os.path.join(summaries_dir, "summaries_{}".format(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())))
+                if not os.path.exists(summary_dir):
+                    os.makedirs(summary_dir)
+                summary_writer = tf.summary.FileWriter(summary_dir)
+        env.render(mode='noone')
+        # env.render()
         sess.run(init)
         gradBuffer = sess.run(tf.trainable_variables())
         for ix, grad in enumerate(gradBuffer):
@@ -87,18 +97,27 @@ with tf.Session() as sess:
             s = env.state_to_tuple(s)
             running_reward = 0
             ep_history = []
+            steps_done = 0
             while True:
                 # Probabilistically pick an action given our network outputs.
                 da_dist = sess.run(myAgent.output, feed_dict={myAgent.state_in: [s]})  # a_dist=[0.1 0.2 0.7]
                 a = np.random.choice(da_dist[0], p=da_dist[0])  # a = [0.2]
-                a = np.argmax(da_dist == a)  # a = 1
+                a = np.argmax(da_dist==a)  # a = 1
 
                 s1, r, d, info = env.step(a)  # Get our reward for taking an action given a bandit.
                 s1 = env.state_to_tuple(s1)
                 ep_history.append([s, a, r, s1])
                 s = s1
                 running_reward += r
+                steps_done += 1
                 if d:
+                    episode_summary = tf.Summary()
+                    episode_summary.value.add(simple_value=running_reward, node_name="episode_reward",
+                                              tag="episode_reward")
+                    episode_summary.value.add(simple_value=max(da_dist[0]), node_name="max_action",
+                                              tag="max_action")
+                    summary_writer.add_summary(episode_summary, steps_done)
+                    summary_writer.flush()
                     # Update the network.
                     ep_history = np.array(ep_history)
                     ep_history[:, 2] = discount_rewards(ep_history[:, 2])
@@ -113,13 +132,13 @@ with tf.Session() as sess:
                         _ = sess.run(myAgent.update_batch, feed_dict=feed_dict)
                         for ix, grad in enumerate(gradBuffer):
                             gradBuffer[ix] = grad * 0
-
+                    print('Episode: %s\t steps: %s \t reward: %d\t cause: %s ' % (i,steps_done, running_reward, info['cause']), end='')
                     total_reward.append(running_reward)
                     if info['cause'] is None:
                         won += 1
                     else:
                         try:
-                            causes[info['cause']] = causes[info['cause']]+1
+                            causes[info['cause']] = causes[info['cause']] + 1
                         except KeyError:
                             causes[info['cause']] = 1
                         except AttributeError:
@@ -131,7 +150,8 @@ with tf.Session() as sess:
                 save_path = saver.save(sess, "../save_model/model2.ckpt")
                 # print("Episode: "+str(i)+", Won: "+str(won)+", Avg. reward: "+str(np.mean(total_reward[-10:]))+
                 #       ", Save path: "+save_path)
-                print("Episode: " + str(i) + ", Won: " + str(won) + ", Avg. reward: " + str(np.mean(total_reward[-10:])))
+                print(
+                    "Episode: " + str(i) + ", Won: " + str(won) + ", Avg. reward: " + str(np.mean(total_reward[-10:])))
 
                 won = 0
             i += 1
@@ -162,6 +182,7 @@ with tf.Session() as sess:
                 # print("Episode: " + str(i) + ", EP reward: " + str(ep_reward) + ", Avg. reward: " + str(
                 #     np.mean(total_reward[-100:])))
                 #
-                print("Episode: " + str(i) + ", Won: " + str(won) + ", Avg. reward: " + str(np.mean(total_reward[-10:])))
+                print(
+                    "Episode: " + str(i) + ", Won: " + str(won) + ", Avg. reward: " + str(np.mean(total_reward[-10:])))
                 won = 0
             i += 1
