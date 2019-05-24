@@ -1,7 +1,5 @@
 import copy
-import os
 import random
-import sys
 
 import gym
 import math
@@ -23,8 +21,8 @@ class EPHighWayEnv(gym.Env):
         self.rendering = None
 
         low = np.array(
-            [-500, -50, -500, -50, -500, -50, -500, -50, -500, -50, -500, -50, -500, -50, -500, -50, 0, -1, -90, -10])
-        high = np.array([500, 50, 500, 50, 500, 50, 500, 50, 500, 50, 500, 50, 500, 50, 500, 50, 50, 3, 90, 20])
+            [-200, -50, -200, -50, -200, -50, -200, -50, -200, -50, -200, -50, -200, -50, -200, -50, 0, -1, -90, -10])
+        high = np.array([200, 50, 200, 50, 200, 50, 200, 50, 200, 50, 200, 50, 200, 50, 200, 50, 50, 3, 90, 20])
         self.action_space = spaces.Discrete(49)
         self.observation_space = spaces.Box(low, high, dtype=np.float32)
         self.cumulated_reward = 0
@@ -93,8 +91,8 @@ class EPHighWayEnv(gym.Env):
                 if int(lane_new[-1]) != self.state['lane']:
                     if self.state['lane'] < 0 or self.state['lane'] > 2:
                         self.cumulated_reward += -100
-                        return self.state, self.steps_done-2000, True,\
-                               {'cause': 'Left Highway', 'rewards': self.steps_done-2000}
+                        return self.state, (self.steps_done - 2000) / 2000, True, \
+                               {'cause': 'Left Highway', 'rewards': (self.steps_done - 2000) / 2000}
                     lane_new = lane_new[:-1] + str(self.state['lane'])
                     x = traci.vehicle.getLanePosition(self.egoID)
                     try:
@@ -122,6 +120,7 @@ class EPHighWayEnv(gym.Env):
             self.steps_done += 1
         else:
             reward = 2000 - self.steps_done
+        reward = reward / 2000
         return self.state, reward, terminated, {'cause': cause, 'rewards': reward}
 
     def calculate_reward(self):
@@ -132,7 +131,7 @@ class EPHighWayEnv(gym.Env):
         lane_reward = 0
         lane_index = self.state['lane']
         if lane_index > 0:
-            if (self.state['ER']['dx'] == 500) and (self.state['FR']['dx'] > 30):
+            if (self.state['ER']['dx'] == 200) and (self.state['FR']['dx'] > 30):
                 lane_reward = -min(1, max(0, (self.state['FR']['dx'] - 50.0) / 20.0))
 
         # POSITION BASED REWARD
@@ -174,11 +173,11 @@ class EPHighWayEnv(gym.Env):
         vehicle_y = self.state['y_pos'] - self.state['lane'] * lane_width
 
         # right safe zone
-        if self.state['ER']['dx'] != 500:
+        if self.state['ER']['dx'] != 200:
             if vehicle_y < -lane_width / 4:
                 closing_right = max(-1, (vehicle_y + lane_width / 4) / (lane_width / 4))
         # left safe zone
-        if self.state['EL']['dx'] != 500:
+        if self.state['EL']['dx'] != 200:
             if vehicle_y > lane_width / 4:
                 closing_left = max(-1, -(vehicle_y - lane_width / 4) / (lane_width / 4))
         # front
@@ -227,13 +226,13 @@ class EPHighWayEnv(gym.Env):
         cars_around = traci.vehicle.getContextSubscriptionResults(self.egoID)
         ego_data = cars_around[self.egoID]
         state = {}
-        basic_vals = {'dx': 500, 'dv': 0}
+        basic_vals = {'dx': 200, 'dv': 0}
         basic_keys = ['FL', 'FE', 'FR', 'RL', 'RE', 'RR', 'EL', 'ER']
         for keys in basic_keys:
             if keys in ['RL', 'RE', 'RR']:
                 state[keys] = copy.copy(basic_vals)
                 state[keys]['dv'] = 0
-                state[keys]['dx'] = -500
+                state[keys]['dx'] = -200
             else:
                 state[keys] = copy.copy(basic_vals)
         lane = {0: [], 1: [], 2: []}
@@ -342,9 +341,9 @@ class EPHighWayEnv(gym.Env):
                 if dict is type(state[keys]):
                     for key in ['dx', 'dv']:
                         if key == 'dx':
-                            new_state.append(state[keys][key] / 500)
+                            new_state.append(state[keys][key] / 200)
                         else:
-                            new_state.append((state[keys][key] / 40))
+                            new_state.append((state[keys][key] / 50))
                 else:
                     new_state.append(state[keys])
         return new_state

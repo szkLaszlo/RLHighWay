@@ -22,10 +22,11 @@ class Policy(nn.Module):
         self.state_space = self.env.observation_space.shape[0]
         self.action_space = self.env.action_space.n
 
-        self.l1 = nn.Linear(self.state_space, 128, bias=False)
-        self.l2 = nn.Linear(128, self.action_space, bias=False)
+        self.l1 = nn.Linear(self.state_space, 256, bias=False)
+        self.l2 = nn.Linear(256, self.action_space, bias=False)
 
         self.gamma = gamma
+
 
         # Episode policy and reward history
         self.policy_history = Variable(torch.Tensor())
@@ -33,11 +34,12 @@ class Policy(nn.Module):
         # Overall reward and loss history
         self.reward_history = []
         self.loss_history = []
+        self.optimizer = optim.Adam(self.parameters(), lr=learning_rate)
 
     def forward(self, x):
         self.model = torch.nn.Sequential(
             self.l1,
-            nn.Dropout(p=0.6),
+            nn.Dropout(p=0.4),
             nn.ReLU(),
             self.l2,
             nn.Softmax(dim=-1)
@@ -126,8 +128,8 @@ def main(pol, save_path, episodes=100):
         if episode % 50 == 0:
             print('Episode {}\tLast length: {:5d}\tAverage reward: {:.2f}'.format(episode, t, running_reward / 50))
             running_reward = 0
-        if episode % (episodes/10):
-            torch.save(policy, os.path.join(save_path, 'model_{}'.format(episode)))
+        if not episode % (episodes // 10):
+            torch.save(policy, os.path.join(save_path, 'model_{}.weight'.format(episode)))
 
 
 if __name__ == "__main__":
@@ -139,17 +141,16 @@ if __name__ == "__main__":
 
         torch.manual_seed(1)
         # Hyperparameters
-        learning_rate = 0.001
+        learning_rate = 0.0001
         gamma = 0.99
         save_path = 'torchSummary/{}'.format(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime()))
         policy = Policy(env=env)
-        optimizer = optim.Adam(policy.parameters(), lr=learning_rate)
 
         main(pol=policy,
              save_path=save_path,
-             episodes=10000,
+             episodes=100000,
              )
-        torch.save(policy, os.path.join(save_path, 'model_final'))
+        torch.save(policy, os.path.join(save_path, 'model_final.weight'))
     else:
         path = easygui.fileopenbox()
         model = torch.load(path)
