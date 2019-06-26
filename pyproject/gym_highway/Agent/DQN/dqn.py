@@ -1,21 +1,18 @@
-import gym
-from gym.wrappers import Monitor
 import itertools
-import numpy as np
 import os
 import random
 import sys
 
-from gym_highway.envs.ep_highway import EPHighWayEnv
-
-import gym_highway
+import gym
+import numpy as np
 import tensorflow as tf
+from gym.wrappers import Monitor
 
 if "../" not in sys.path:
     sys.path.append("../")
 
 from gym_highway.Agent.lib import plotting
-from collections import deque, namedtuple
+from collections import namedtuple
 
 env = gym.make('EPHighWay-v0')
 

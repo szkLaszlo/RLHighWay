@@ -70,7 +70,7 @@ class EPHighWayEnv(gym.Env):
 
     def calculate_action(self, action):
         st = [-0.1, -0.3, -0.5, 0, 0.5, 0.3, 0.1]
-        ac = [-0.3, -0.2, -0.1, 0.0, 0.1, 0.2, 0.3]
+        ac = [-0.5, -0.2, -0.1, 0.0, 0.1, 0.2, 0.3]
         steer = st[action // 7]
         acc = ac[action % 7]
         ctrl = [steer, acc]
@@ -91,8 +91,9 @@ class EPHighWayEnv(gym.Env):
                 if int(lane_new[-1]) != self.state['lane']:
                     if self.state['lane'] < 0 or self.state['lane'] > 2:
                         self.cumulated_reward += -100
-                        return self.state, (self.steps_done - 2000) / 2000, True, \
-                               {'cause': 'Left Highway', 'rewards': (self.steps_done - 2000) / 2000}
+                        traci.close()
+                        return self.state, (- 2000), True, \
+                               {'cause': 'Left Highway', 'rewards': (- 2000)}
                     lane_new = lane_new[:-1] + str(self.state['lane'])
                     x = traci.vehicle.getLanePosition(self.egoID)
                     try:
@@ -112,15 +113,17 @@ class EPHighWayEnv(gym.Env):
         terminated = not is_ok
         reward = 0
         if terminated and cause is not None:
+            traci.close()
             self.cumulated_reward += -100
-            reward = -2000 + self.steps_done
+            reward = -2000 # + self.steps_done
         elif not terminated:
             self.cumulated_reward = self.cumulated_reward + 1
             reward = 1
             self.steps_done += 1
         else:
+            traci.close()
             reward = 2000 - self.steps_done
-        reward = reward / 2000
+        reward = reward
         return self.state, reward, terminated, {'cause': cause, 'rewards': reward}
 
     def calculate_reward(self):
@@ -324,6 +327,10 @@ class EPHighWayEnv(gym.Env):
                 cause = "Collision"
             elif self.egoID in traci.vehicle.getIDList() and traci.vehicle.getSpeed(self.egoID) < (70 / 3.6):
                 cause = 'Too Slow'
+            elif self.egoID in traci.simulation.getArrivedIDList():
+                cause = None
+                self.egoID = None
+                terminated = True
             else:
                 cause = None
             if cause is not None:

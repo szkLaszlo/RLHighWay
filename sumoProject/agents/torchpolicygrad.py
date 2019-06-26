@@ -15,18 +15,18 @@ from torch.utils.tensorboard import SummaryWriter
 
 class Policy(nn.Module):
 
-    def __init__(self, env):
+    def __init__(self, env, episodes):
         super(Policy, self).__init__()
         self.env = env
         self.model = None
         self.state_space = self.env.observation_space.shape[0]
         self.action_space = self.env.action_space.n
 
-        self.l1 = nn.Linear(self.state_space, 256, bias=False)
-        self.l2 = nn.Linear(256, self.action_space, bias=False)
+        self.l1 = nn.Linear(self.state_space, 128, bias=False)
+        self.l2 = nn.Linear(128, self.action_space, bias=False)
 
         self.gamma = gamma
-
+        self.loss = 10
 
         # Episode policy and reward history
         self.policy_history = Variable(torch.Tensor())
@@ -39,7 +39,7 @@ class Policy(nn.Module):
     def forward(self, x):
         self.model = torch.nn.Sequential(
             self.l1,
-            nn.Dropout(p=0.4),
+            # nn.Dropout(p=0.4),
             nn.ReLU(),
             self.l2,
             nn.Softmax(dim=-1)
@@ -67,9 +67,13 @@ class Policy(nn.Module):
         self.loss.backward()
         self.optimizer.step()
 
+
         # Save and intialize episode history counters
         self.loss_history.append(self.loss.item())
         self.reward_history.append(np.sum(self.reward_episode))
+        if len(self.loss_history) > 5000:
+            self.loss_history.pop(0)
+            self.reward_history.pop(0)
         self.policy_history = Variable(torch.Tensor())
         self.reward_episode = []
 
@@ -143,12 +147,13 @@ if __name__ == "__main__":
         # Hyperparameters
         learning_rate = 0.0001
         gamma = 0.99
+        episodes= 100000
         save_path = 'torchSummary/{}'.format(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime()))
-        policy = Policy(env=env)
+        policy = Policy(env=env,episodes=episodes)
 
         main(pol=policy,
              save_path=save_path,
-             episodes=100000,
+             episodes=episodes,
              )
         torch.save(policy, os.path.join(save_path, 'model_final.weight'))
     else:
