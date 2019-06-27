@@ -78,7 +78,7 @@ class EPHighWayEnv(gym.Env):
 
     def step(self, action):
         assert self.action_space.contains(action), "%r (%s) invalid" % (action, type(action))
-
+        new_x, last_x = 0, 0
         IDsOfVehicles = traci.vehicle.getIDList()
         if "ego" in IDsOfVehicles:
             ctrl = self.calculate_action(action)
@@ -92,7 +92,7 @@ class EPHighWayEnv(gym.Env):
                     if self.state['lane'] < 0 or self.state['lane'] > 2:
                         self.cumulated_reward += -100
                         traci.close()
-                        return self.state, (- 2000), True, {'cause': 'Left Highway', 'rewards': (- 2000)}
+                        return self.state, (0), True, {'cause': 'Left Highway', 'rewards': (0)}
                     lane_new = lane_new[:-1] + str(self.state['lane'])
                     x = traci.vehicle.getLanePosition(self.egoID)
                     try:
@@ -100,7 +100,12 @@ class EPHighWayEnv(gym.Env):
                     except traci.exceptions.TraCIException:
                         self.state['lane'] = int(traci.vehicle.getLaneID(self.egoID)[-1])
                         pass
+                last_x = traci.vehicle.getContextSubscriptionResults(self.egoID)[self.egoID][tc.VAR_POSITION][0]
                 is_ok, cause = self.one_step()
+                if is_ok:
+                    new_x = traci.vehicle.getContextSubscriptionResults(self.egoID)[self.egoID][tc.VAR_POSITION][0]
+                else:
+                    new_x = last_x
         else:
             is_ok = False
             cause = None
@@ -114,14 +119,14 @@ class EPHighWayEnv(gym.Env):
         if terminated and cause is not None:
             traci.close()
             self.cumulated_reward += -100
-            reward = -2000 # + self.steps_done
+            reward = new_x - last_x  # -2000 # + self.steps_done
         elif not terminated:
             self.cumulated_reward = self.cumulated_reward + 1
-            reward = 1
+            reward = new_x - last_x  # 1
             self.steps_done += 1
         else:
             traci.close()
-            reward = 2000 - self.steps_done
+            reward = new_x - last_x  # 2000 - self.steps_done
         reward = reward
         return self.state, reward, terminated, {'cause': cause, 'rewards': reward}
 
@@ -226,6 +231,7 @@ class EPHighWayEnv(gym.Env):
 
     def get_surroundings(self):
         cars_around = traci.vehicle.getContextSubscriptionResults(self.egoID)
+        traci.vehicle.getContextSubscriptionResults(self.egoID)[self.egoID][tc.VAR_POSITION][0]
         ego_data = cars_around[self.egoID]
         state = {}
         basic_vals = {'dx': 200, 'dv': 0}
@@ -235,6 +241,14 @@ class EPHighWayEnv(gym.Env):
                 state[keys] = copy.copy(basic_vals)
                 state[keys]['dv'] = 0
                 state[keys]['dx'] = -200
+            elif keys in ['EL']:
+                state[keys] = copy.copy(basic_vals)
+                state[keys]['dv'] = 0
+                state[keys]['dx'] = 3 * self.lane_width + self.lane_offset - ego_data[tc.VAR_POSITION][1]
+            elif keys in ['ER']:
+                state[keys] = copy.copy(basic_vals)
+                state[keys]['dv'] = 0
+                state[keys]['dx'] = ego_data[tc.VAR_POSITION][1] - self.lane_offset
             else:
                 state[keys] = copy.copy(basic_vals)
         lane = {0: [], 1: [], 2: []}
@@ -242,6 +256,7 @@ class EPHighWayEnv(gym.Env):
             if keys is not self.egoID:
                 new_car = dict()
                 new_car['dx'] = cars_around[keys][tc.VAR_POSITION][0] - ego_data[tc.VAR_POSITION][0]
+                new_car['dy'] = abs(cars_around[keys][tc.VAR_POSITION][1] - ego_data[tc.VAR_POSITION][1])
                 new_car['dv'] = cars_around[keys][tc.VAR_SPEED] - ego_data[tc.VAR_SPEED]
                 new_car['l'] = cars_around[keys][tc.VAR_LENGTH]
                 lane[cars_around[keys][tc.VAR_LANE_INDEX]].append(new_car)
@@ -268,8 +283,8 @@ class EPHighWayEnv(gym.Env):
                             state['RL']['dx'] = veh['dx'] + ego_data[tc.VAR_LENGTH]
                             state['RL']['dv'] = veh['dv']
                     else:
-                        if veh['dx'] < state['EL']['dx']:
-                            state['EL']['dx'] = veh['dx']
+                        if veh['dy'] < state['EL']['dx']:
+                            state['EL']['dx'] = veh['dy']
                             state['EL']['dv'] = veh['dv']
             elif keys < ego_data[tc.VAR_LANE_INDEX]:
                 for veh in lane[keys]:
@@ -282,11 +297,11 @@ class EPHighWayEnv(gym.Env):
                             state['RR']['dx'] = veh['dx'] + ego_data[tc.VAR_LENGTH]
                             state['RR']['dv'] = veh['dv']
                     else:
-                        if veh['dx'] < state['ER']['dx']:
-                            state['ER']['dx'] = veh['dx']
+                        if veh['dy'] < state['ER']['dx']:
+                            state['ER']['dx'] = veh['dy']
                             state['ER']['dv'] = veh['dv']
         state['speed'] = ego_data[tc.VAR_SPEED]
-        state['lane'] = ego_data[tc.VAR_LANE_INDEX]
+        state['lane'] = ego_data[tc.VAR_LANE_INDEX]  # todo: onehot vector
         if self.state is not None:
             state['angle'] = self.state['angle']
             state['y_pos'] = self.state['y_pos'] + (state['speed']) * self.dt * sin(
