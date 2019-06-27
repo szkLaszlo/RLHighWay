@@ -92,8 +92,7 @@ class EPHighWayEnv(gym.Env):
                     if self.state['lane'] < 0 or self.state['lane'] > 2:
                         self.cumulated_reward += -100
                         traci.close()
-                        return self.state, (- 2000), True, \
-                               {'cause': 'Left Highway', 'rewards': (- 2000)}
+                        return self.state, (- 2000), True, {'cause': 'Left Highway', 'rewards': (- 2000)}
                     lane_new = lane_new[:-1] + str(self.state['lane'])
                     x = traci.vehicle.getLanePosition(self.egoID)
                     try:

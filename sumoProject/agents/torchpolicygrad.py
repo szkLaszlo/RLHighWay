@@ -35,6 +35,7 @@ class Policy(nn.Module):
         self.reward_history = []
         self.loss_history = []
         self.optimizer = optim.Adam(self.parameters(), lr=learning_rate)
+        self.scheduler = optim.lr_scheduler.StepLR(self.optimizer, step_size=4000, gamma=0.1)
 
     def forward(self, x):
         self.model = torch.nn.Sequential(
@@ -128,6 +129,7 @@ def main(pol, save_path, episodes=100):
         # writer.add_scalar('episode_length', t, 1)
 
         pol.update()
+        pol.scheduler.step()
 
         if episode % 50 == 0:
             print('Episode {}\tLast length: {:5d}\tAverage reward: {:.2f}'.format(episode, t, running_reward / 50))
