@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on Thu Jun 27 21:46:03 2019 by Eclipse SUMO Version 1.2.0
+<!-- generated on Tue Jul  2 18:31:25 2019 by Eclipse SUMO Version 1.2.0
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
 
     <input>
@@ -32,7 +32,7 @@
     </report>
 
     <traci_server>
-        <remote-port value="40439"/>
+        <remote-port value="46771"/>
     </traci_server>
 
     <gui_only>
@@ -2184,7 +2184,7 @@
                 <vehicle id="carflow2.1" pos="105.95" speed="23.78"/>
             </lane>
             <lane id="A_1">
-                <vehicle id="ego" pos="7.32" speed="20.20"/>
+                <vehicle id="ego" pos="7.33" speed="20.30"/>
                 <vehicle id="carflow3.2" pos="45.03" speed="17.12"/>
                 <vehicle id="carflow3.1" pos="114.79" speed="28.37"/>
             </lane>
@@ -2214,7 +2214,7 @@
                 <vehicle id="carflow2.1" pos="108.35" speed="23.95"/>
             </lane>
             <lane id="A_1">
-                <vehicle id="ego" pos="9.34" speed="20.20"/>
+                <vehicle id="ego" pos="9.36" speed="20.30"/>
                 <vehicle id="carflow3.2" pos="46.78" speed="17.51"/>
                 <vehicle id="carflow3.1" pos="117.66" speed="28.68"/>
             </lane>
@@ -2244,7 +2244,7 @@
                 <vehicle id="carflow2.1" pos="110.77" speed="24.23"/>
             </lane>
             <lane id="A_1">
-                <vehicle id="ego" pos="11.38" speed="20.40"/>
+                <vehicle id="ego" pos="11.34" speed="19.80"/>
                 <vehicle id="carflow3.2" pos="48.57" speed="17.91"/>
                 <vehicle id="carflow3.1" pos="120.56" speed="29.03"/>
             </lane>
@@ -2274,7 +2274,7 @@
                 <vehicle id="carflow2.1" pos="113.24" speed="24.69"/>
             </lane>
             <lane id="A_1">
-                <vehicle id="ego" pos="13.43" speed="20.50"/>
+                <vehicle id="ego" pos="13.40" speed="20.60"/>
                 <vehicle id="carflow3.2" pos="50.41" speed="18.33"/>
                 <vehicle id="carflow3.1" pos="123.50" speed="29.39"/>
             </lane>
@@ -2305,7 +2305,7 @@
             </lane>
             <lane id="A_1">
                 <vehicle id="carflow3.3" pos="4.60" speed="0.00"/>
-                <vehicle id="ego" pos="15.49" speed="20.60"/>
+                <vehicle id="ego" pos="15.41" speed="20.10"/>
                 <vehicle id="carflow3.2" pos="52.28" speed="18.75"/>
                 <vehicle id="carflow3.1" pos="126.48" speed="29.80"/>
             </lane>
@@ -2336,7 +2336,7 @@
             </lane>
             <lane id="A_1">
                 <vehicle id="carflow3.3" pos="4.65" speed="0.48"/>
-                <vehicle id="ego" pos="17.57" speed="20.80"/>
+                <vehicle id="ego" pos="17.50" speed="20.90"/>
                 <vehicle id="carflow3.2" pos="54.19" speed="19.10"/>
                 <vehicle id="carflow3.1" pos="129.50" speed="30.20"/>
             </lane>
@@ -2367,7 +2367,7 @@
             </lane>
             <lane id="A_1">
                 <vehicle id="carflow3.3" pos="4.74" speed="0.95"/>
-                <vehicle id="ego" pos="19.65" speed="20.80"/>
+                <vehicle id="ego" pos="19.46" speed="19.60"/>
                 <vehicle id="carflow3.2" pos="56.14" speed="19.48"/>
                 <vehicle id="carflow3.1" pos="132.56" speed="30.60"/>
             </lane>
@@ -2398,7 +2398,7 @@
             </lane>
             <lane id="A_1">
                 <vehicle id="carflow3.3" pos="4.88" speed="1.42"/>
-                <vehicle id="ego" pos="21.75" speed="21.00"/>
+                <vehicle id="ego" pos="21.58" speed="21.20"/>
                 <vehicle id="carflow3.2" pos="58.13" speed="19.90"/>
                 <vehicle id="carflow3.1" pos="135.65" speed="30.90"/>
             </lane>
@@ -2429,7 +2429,7 @@
             </lane>
             <lane id="A_1">
                 <vehicle id="carflow3.3" pos="5.07" speed="1.82"/>
-                <vehicle id="ego" pos="23.85" speed="21.00"/>
+                <vehicle id="ego" pos="23.57" speed="19.90"/>
                 <vehicle id="carflow3.2" pos="60.15" speed="20.20"/>
                 <vehicle id="carflow3.1" pos="138.77" speed="31.17"/>
             </lane>
@@ -2460,7 +2460,7 @@
             </lane>
             <lane id="A_1">
                 <vehicle id="carflow3.3" pos="5.29" speed="2.28"/>
-                <vehicle id="ego" pos="25.96" speed="21.10"/>
+                <vehicle id="ego" pos="25.72" speed="21.50"/>
                 <vehicle id="carflow3.2" pos="62.22" speed="20.67"/>
                 <vehicle id="carflow3.1" pos="141.94" speed="31.66"/>
             </lane>
@@ -2491,7 +2491,7 @@
             </lane>
             <lane id="A_1">
                 <vehicle id="carflow3.3" pos="5.56" speed="2.68"/>
-                <vehicle id="ego" pos="28.04" speed="20.80"/>
+                <vehicle id="ego" pos="27.74" speed="20.20"/>
                 <vehicle id="carflow3.2" pos="64.32" speed="21.08"/>
                 <vehicle id="carflow3.1" pos="145.14" speed="32.08"/>
             </lane>
@@ -2522,7 +2522,7 @@
             </lane>
             <lane id="A_1">
                 <vehicle id="carflow3.3" pos="5.88" speed="3.14"/>
-                <vehicle id="ego" pos="30.17" speed="21.30"/>
+                <vehicle id="ego" pos="29.92" speed="21.80"/>
                 <vehicle id="carflow3.2" pos="66.47" speed="21.46"/>
                 <vehicle id="carflow3.1" pos="148.38" speed="32.34"/>
             </lane>
@@ -2553,7 +2553,7 @@
             </lane>
             <lane id="A_1">
                 <vehicle id="carflow3.3" pos="6.23" speed="3.48"/>
-                <vehicle id="ego" pos="32.27" speed="21.00"/>
+                <vehicle id="ego" pos="31.89" speed="19.70"/>
                 <vehicle id="carflow3.2" pos="68.65" speed="21.79"/>
                 <vehicle id="carflow3.1" pos="151.65" speed="32.74"/>
             </lane>
@@ -2584,7 +2584,7 @@
             </lane>
             <lane id="A_1">
                 <vehicle id="carflow3.3" pos="6.61" speed="3.88"/>
-                <vehicle id="ego" pos="34.39" speed="21.20"/>
+                <vehicle id="ego" pos="34.02" speed="21.30"/>
                 <vehicle id="carflow3.2" pos="70.86" speed="22.09"/>
                 <vehicle id="carflow3.1" pos="154.97" speed="33.20"/>
             </lane>
@@ -2615,7 +2615,7 @@
             </lane>
             <lane id="A_1">
                 <vehicle id="carflow3.3" pos="7.03" speed="4.17"/>
-                <vehicle id="ego" pos="36.51" speed="21.20"/>
+                <vehicle id="ego" pos="36.02" speed="20.00"/>
                 <vehicle id="carflow3.2" pos="73.11" speed="22.52"/>
                 <vehicle id="carflow3.1" pos="158.33" speed="33.60"/>
             </lane>
@@ -2646,7 +2646,7 @@
             </lane>
             <lane id="A_1">
                 <vehicle id="carflow3.3" pos="7.49" speed="4.61"/>
-                <vehicle id="ego" pos="38.63" speed="21.20"/>
+                <vehicle id="ego" pos="38.10" speed="20.80"/>
                 <vehicle id="carflow3.2" pos="75.41" speed="22.96"/>
                 <vehicle id="carflow3.1" pos="161.73" speed="34.00"/>
             </lane>
@@ -2677,7 +2677,7 @@
             </lane>
             <lane id="A_1">
                 <vehicle id="carflow3.3" pos="7.99" speed="4.97"/>
-                <vehicle id="ego" pos="40.74" speed="21.10"/>
+                <vehicle id="ego" pos="40.13" speed="20.30"/>
                 <vehicle id="carflow3.2" pos="77.73" speed="23.21"/>
                 <vehicle id="carflow3.1" pos="165.16" speed="34.25"/>
             </lane>
@@ -2708,7 +2708,7 @@
             </lane>
             <lane id="A_1">
                 <vehicle id="carflow3.3" pos="8.51" speed="5.25"/>
-                <vehicle id="ego" pos="42.89" speed="21.50"/>
+                <vehicle id="ego" pos="42.16" speed="20.30"/>
                 <vehicle id="carflow3.2" pos="80.09" speed="23.68"/>
                 <vehicle id="carflow3.1" pos="168.63" speed="34.71"/>
             </lane>
@@ -2739,7 +2739,7 @@
             </lane>
             <lane id="A_1">
                 <vehicle id="carflow3.3" pos="9.07" speed="5.53"/>
-                <vehicle id="ego" pos="45.01" speed="21.20"/>
+                <vehicle id="ego" pos="44.14" speed="19.80"/>
                 <vehicle id="carflow3.2" pos="82.49" speed="23.93"/>
                 <vehicle id="carflow3.1" pos="172.14" speed="35.09"/>
             </lane>
@@ -2770,7 +2770,7 @@
             </lane>
             <lane id="A_1">
                 <vehicle id="carflow3.3" pos="9.66" speed="5.96"/>
-                <vehicle id="ego" pos="47.18" speed="21.70"/>
+                <vehicle id="ego" pos="46.12" speed="19.80"/>
                 <vehicle id="carflow3.2" pos="84.92" speed="24.32"/>
                 <vehicle id="carflow3.1" pos="175.68" speed="35.41"/>
             </lane>
@@ -2801,7 +2801,7 @@
             </lane>
             <lane id="A_1">
                 <vehicle id="carflow3.3" pos="10.29" speed="6.29"/>
-                <vehicle id="ego" pos="49.31" speed="21.30"/>
+                <vehicle id="ego" pos="48.05" speed="19.30"/>
                 <vehicle id="carflow3.2" pos="87.39" speed="24.66"/>
                 <vehicle id="carflow3.1" pos="179.25" speed="35.69"/>
             </lane>
@@ -2832,7 +2832,7 @@
             </lane>
             <lane id="A_1">
                 <vehicle id="carflow3.3" pos="10.96" speed="6.72"/>
-                <vehicle id="ego" pos="51.46" speed="21.50"/>
+                <vehicle id="ego" pos="50.06" speed="20.10"/>
                 <vehicle id="carflow3.2" pos="89.90" speed="25.15"/>
                 <vehicle id="carflow3.1" pos="182.86" speed="36.14"/>
             </lane>
@@ -2863,7 +2863,7 @@
             </lane>
             <lane id="A_1">
                 <vehicle id="carflow3.3" pos="11.68" speed="7.14"/>
-                <vehicle id="ego" pos="53.61" speed="21.50"/>
+                <vehicle id="ego" pos="52.02" speed="19.60"/>
                 <vehicle id="carflow3.2" pos="92.46" speed="25.57"/>
                 <vehicle id="carflow3.1" pos="186.51" speed="36.52"/>
             </lane>
@@ -2894,7 +2894,7 @@
             </lane>
             <lane id="A_1">
                 <vehicle id="carflow3.3" pos="12.44" speed="7.59"/>
-                <vehicle id="ego" pos="55.78" speed="21.70"/>
+                <vehicle id="ego" pos="54.06" speed="20.40"/>
                 <vehicle id="carflow3.2" pos="95.04" speed="25.85"/>
                 <vehicle id="carflow3.1" pos="190.21" speed="36.98"/>
             </lane>
@@ -2931,7 +2931,7 @@
             </lane>
             <lane id="A_1">
                 <vehicle id="carflow3.3" pos="13.23" speed="7.90"/>
-                <vehicle id="ego" pos="57.94" speed="21.60"/>
+                <vehicle id="ego" pos="56.02" speed="19.60"/>
                 <vehicle id="carflow3.2" pos="97.67" speed="26.28"/>
                 <vehicle id="carflow3.1" pos="193.95" speed="37.37"/>
             </lane>
@@ -2970,7 +2970,7 @@
             <lane id="A_1">
                 <vehicle id="carflow2.4" pos="3.80" speed="0.00"/>
                 <vehicle id="carflow3.3" pos="14.04" speed="8.17"/>
-                <vehicle id="ego" pos="60.11" speed="21.70"/>
+                <vehicle id="ego" pos="58.09" speed="20.70"/>
                 <vehicle id="carflow3.2" pos="100.34" speed="26.67"/>
                 <vehicle id="carflow3.1" pos="197.73" speed="37.81"/>
             </lane>
@@ -3010,7 +3010,7 @@
             <lane id="A_1">
                 <vehicle id="carflow2.4" pos="3.85" speed="0.47"/>
                 <vehicle id="carflow3.3" pos="14.89" speed="8.52"/>
-                <vehicle id="ego" pos="62.27" speed="21.60"/>
+                <vehicle id="ego" pos="60.08" speed="19.90"/>
                 <vehicle id="carflow3.2" pos="103.05" speed="27.08"/>
             </lane>
             <lane id="A_2">
@@ -3050,7 +3050,7 @@
             <lane id="A_1">
                 <vehicle id="carflow2.4" pos="3.94" speed="0.88"/>
                 <vehicle id="carflow3.3" pos="15.79" speed="8.97"/>
-                <vehicle id="ego" pos="64.43" speed="21.60"/>
+                <vehicle id="ego" pos="62.18" speed="21.00"/>
                 <vehicle id="carflow3.2" pos="105.80" speed="27.51"/>
             </lane>
             <lane id="A_2">
@@ -3083,14 +3083,14 @@
         <edge id="A">
             <lane id="A_0">
                 <vehicle id="carflow1.4" pos="5.60" speed="1.49"/>
+                <vehicle id="carflow1.3" pos="42.66" speed="18.67"/>
                 <vehicle id="carflow2.2" pos="88.75" speed="20.73"/>
                 <vehicle id="carflow2.1" pos="183.76" speed="31.10"/>
             </lane>
             <lane id="A_1">
                 <vehicle id="carflow2.4" pos="4.07" speed="1.30"/>
                 <vehicle id="carflow3.3" pos="16.72" speed="9.32"/>
-                <vehicle id="carflow1.3" pos="42.66" speed="18.67"/>
-                <vehicle id="ego" pos="66.60" speed="21.70"/>
+                <vehicle id="ego" pos="64.17" speed="19.90"/>
                 <vehicle id="carflow3.2" pos="108.60" speed="27.99"/>
             </lane>
             <lane id="A_2">
@@ -3122,15 +3122,15 @@
     <timestep time="14.80">
         <edge id="A">
             <lane id="A_0">
-                <vehicle id="carflow1.4" pos="5.80" speed="1.98"/>
+                <vehicle id="carflow1.4" pos="5.80" speed="1.99"/>
+                <vehicle id="carflow1.3" pos="44.58" speed="19.15"/>
                 <vehicle id="carflow2.2" pos="90.87" speed="21.15"/>
                 <vehicle id="carflow2.1" pos="186.87" speed="31.14"/>
             </lane>
             <lane id="A_1">
-                <vehicle id="carflow2.4" pos="4.23" speed="1.69"/>
-                <vehicle id="carflow3.3" pos="17.70" speed="9.76"/>
-                <vehicle id="carflow1.3" pos="44.58" speed="19.12"/>
-                <vehicle id="ego" pos="68.77" speed="21.70"/>
+                <vehicle id="carflow2.4" pos="4.24" speed="1.76"/>
+                <vehicle id="carflow3.3" pos="17.69" speed="9.65"/>
+                <vehicle id="ego" pos="66.30" speed="21.30"/>
                 <vehicle id="carflow3.2" pos="111.43" speed="28.30"/>
             </lane>
             <lane id="A_2">
@@ -3162,16 +3162,16 @@
     <timestep time="14.90">
         <edge id="A">
             <lane id="A_0">
-                <vehicle id="carflow1.4" pos="6.04" speed="2.47"/>
-                <vehicle id="carflow2.2" pos="93.03" speed="21.61"/>
+                <vehicle id="carflow1.4" pos="6.05" speed="2.49"/>
+                <vehicle id="carflow1.3" pos="46.43" speed="18.55"/>
+                <vehicle id="carflow2.2" pos="93.00" speed="21.34"/>
                 <vehicle id="carflow2.1" pos="190.03" speed="31.60"/>
             </lane>
             <lane id="A_1">
-                <vehicle id="carflow2.4" pos="4.44" speed="2.01"/>
-                <vehicle id="carflow3.3" pos="18.71" speed="10.11"/>
-                <vehicle id="carflow1.3" pos="46.50" speed="19.20"/>
-                <vehicle id="ego" pos="70.96" speed="21.90"/>
-                <vehicle id="carflow3.2" pos="114.28" speed="28.58"/>
+                <vehicle id="carflow2.4" pos="4.46" speed="2.19"/>
+                <vehicle id="carflow3.3" pos="18.70" speed="10.14"/>
+                <vehicle id="ego" pos="68.24" speed="19.40"/>
+                <vehicle id="carflow3.2" pos="114.29" speed="28.64"/>
             </lane>
             <lane id="A_2">
                 <vehicle id="carflow3.4" pos="5.29" speed="2.31"/>
@@ -3202,20 +3202,20 @@
     <timestep time="15.00">
         <edge id="A">
             <lane id="A_0">
-                <vehicle id="carflow1.4" pos="6.34" speed="2.97"/>
-                <vehicle id="carflow2.2" pos="95.24" speed="22.10"/>
-                <vehicle id="carflow2.1" pos="193.21" speed="31.74"/>
+                <vehicle id="carflow1.4" pos="6.35" speed="2.99"/>
+                <vehicle id="carflow2.2" pos="95.15" speed="21.45"/>
+                <vehicle id="carflow2.1" pos="193.24" speed="32.06"/>
             </lane>
             <lane id="A_1">
-                <vehicle id="carflow2.4" pos="4.68" speed="2.40"/>
-                <vehicle id="carflow3.3" pos="19.76" speed="10.49"/>
-                <vehicle id="ego" pos="73.15" speed="21.90"/>
-                <vehicle id="carflow3.2" pos="117.19" speed="29.07"/>
+                <vehicle id="carflow2.4" pos="4.72" speed="2.63"/>
+                <vehicle id="carflow3.3" pos="19.77" speed="10.64"/>
+                <vehicle id="carflow1.3" pos="48.23" speed="17.95"/>
+                <vehicle id="ego" pos="70.40" speed="21.60"/>
+                <vehicle id="carflow3.2" pos="117.19" speed="28.99"/>
             </lane>
             <lane id="A_2">
                 <vehicle id="carflow3.4" pos="5.56" speed="2.68"/>
                 <vehicle id="carflow2.3" pos="30.20" speed="11.56"/>
-                <vehicle id="carflow1.3" pos="48.43" speed="19.38"/>
                 <vehicle id="carflow1.2" pos="152.38" speed="37.19"/>
             </lane>
         </edge>
@@ -3242,20 +3242,20 @@
     <timestep time="15.10">
         <edge id="A">
             <lane id="A_0">
-                <vehicle id="carflow1.4" pos="6.69" speed="3.45"/>
-                <vehicle id="ego" pos="75.36" speed="22.10"/>
-                <vehicle id="carflow2.2" pos="97.48" speed="22.36"/>
-                <vehicle id="carflow2.1" pos="196.40" speed="31.86"/>
+                <vehicle id="carflow1.4" pos="6.69" speed="3.48"/>
+                <vehicle id="carflow2.2" pos="97.31" speed="21.61"/>
+                <vehicle id="carflow2.1" pos="196.47" speed="32.29"/>
             </lane>
             <lane id="A_1">
-                <vehicle id="carflow2.4" pos="4.96" speed="2.88"/>
-                <vehicle id="carflow3.3" pos="20.85" speed="10.93"/>
-                <vehicle id="carflow3.2" pos="120.14" speed="29.52"/>
+                <vehicle id="carflow2.4" pos="5.03" speed="3.05"/>
+                <vehicle id="carflow3.3" pos="20.87" speed="11.08"/>
+                <vehicle id="carflow1.3" pos="50.07" speed="18.43"/>
+                <vehicle id="ego" pos="72.29" speed="18.90"/>
+                <vehicle id="carflow3.2" pos="120.11" speed="29.25"/>
             </lane>
             <lane id="A_2">
-                <vehicle id="carflow3.4" pos="5.87" speed="3.09"/>
-                <vehicle id="carflow2.3" pos="31.38" speed="11.75"/>
-                <vehicle id="carflow1.3" pos="50.42" speed="19.84"/>
+                <vehicle id="carflow3.4" pos="5.87" speed="3.08"/>
+                <vehicle id="carflow2.3" pos="31.36" speed="11.64"/>
                 <vehicle id="carflow1.2" pos="156.10" speed="37.17"/>
             </lane>
         </edge>
@@ -3282,20 +3282,20 @@
     <timestep time="15.20">
         <edge id="A">
             <lane id="A_0">
-                <vehicle id="carflow1.4" pos="7.08" speed="3.92"/>
-                <vehicle id="ego" pos="77.56" speed="22.00"/>
-                <vehicle id="carflow2.2" pos="99.74" speed="22.66"/>
-                <vehicle id="carflow2.1" pos="199.60" speed="32.02"/>
+                <vehicle id="carflow1.4" pos="7.09" speed="3.95"/>
+                <vehicle id="carflow2.2" pos="99.48" speed="21.73"/>
+                <vehicle id="carflow2.1" pos="199.71" speed="32.41"/>
             </lane>
             <lane id="A_1">
-                <vehicle id="carflow2.4" pos="5.29" speed="3.30"/>
-                <vehicle id="carflow3.3" pos="21.98" speed="11.32"/>
-                <vehicle id="carflow3.2" pos="123.13" speed="29.84"/>
+                <vehicle id="carflow2.4" pos="5.37" speed="3.46"/>
+                <vehicle id="carflow3.3" pos="22.03" speed="11.53"/>
+                <vehicle id="carflow1.3" pos="51.85" speed="17.83"/>
+                <vehicle id="ego" pos="74.48" speed="21.90"/>
+                <vehicle id="carflow3.2" pos="123.09" speed="29.72"/>
             </lane>
             <lane id="A_2">
-                <vehicle id="carflow3.4" pos="6.21" speed="3.43"/>
-                <vehicle id="carflow2.3" pos="32.56" speed="11.83"/>
-                <vehicle id="carflow1.3" pos="52.45" speed="20.32"/>
+                <vehicle id="carflow3.4" pos="6.22" speed="3.51"/>
+                <vehicle id="carflow2.3" pos="32.55" speed="11.83"/>
                 <vehicle id="carflow1.2" pos="159.82" speed="37.18"/>
             </lane>
         </edge>
@@ -3322,25 +3322,25 @@
     <timestep time="15.30">
         <edge id="A">
             <lane id="A_0">
-                <vehicle id="carflow1.4" pos="7.52" speed="4.42"/>
-                <vehicle id="ego" pos="79.75" speed="21.90"/>
-                <vehicle id="carflow2.2" pos="102.02" speed="22.73"/>
+                <vehicle id="carflow1.4" pos="7.53" speed="4.45"/>
+                <vehicle id="carflow2.2" pos="101.70" speed="22.16"/>
             </lane>
             <lane id="A_1">
-                <vehicle id="carflow2.4" pos="5.66" speed="3.66"/>
-                <vehicle id="carflow3.3" pos="23.15" speed="11.66"/>
-                <vehicle id="carflow3.2" pos="126.15" speed="30.27"/>
+                <vehicle id="carflow2.4" pos="5.76" speed="3.88"/>
+                <vehicle id="carflow3.3" pos="23.21" speed="11.80"/>
+                <vehicle id="ego" pos="76.40" speed="19.20"/>
+                <vehicle id="carflow3.2" pos="126.09" speed="30.06"/>
             </lane>
             <lane id="A_2">
-                <vehicle id="carflow3.4" pos="6.59" speed="3.77"/>
-                <vehicle id="carflow2.3" pos="33.76" speed="12.07"/>
-                <vehicle id="carflow1.3" pos="54.53" speed="20.80"/>
-                <vehicle id="carflow1.2" pos="163.54" speed="37.20"/>
+                <vehicle id="carflow3.4" pos="6.62" speed="3.96"/>
+                <vehicle id="carflow2.3" pos="33.74" speed="11.89"/>
+                <vehicle id="carflow1.3" pos="53.68" speed="18.32"/>
+                <vehicle id="carflow1.2" pos="163.53" speed="37.17"/>
             </lane>
         </edge>
         <edge id="gneE1">
             <lane id="gneE1_0">
-                <vehicle id="carflow2.1" pos="2.71" speed="32.14"/>
+                <vehicle id="carflow2.1" pos="2.86" speed="32.48"/>
             </lane>
             <lane id="gneE1_1">
                 <vehicle id="carflow2.0" pos="121.91" speed="39.55"/>
@@ -3363,25 +3363,25 @@
     <timestep time="15.40">
         <edge id="A">
             <lane id="A_0">
-                <vehicle id="carflow1.4" pos="8.01" speed="4.91"/>
-                <vehicle id="ego" pos="81.93" speed="21.80"/>
-                <vehicle id="carflow2.2" pos="104.33" speed="23.19"/>
+                <vehicle id="carflow1.4" pos="8.02" speed="4.91"/>
+                <vehicle id="carflow2.2" pos="103.96" speed="22.62"/>
             </lane>
             <lane id="A_1">
-                <vehicle id="carflow2.4" pos="6.07" speed="4.08"/>
-                <vehicle id="carflow3.3" pos="24.34" speed="11.93"/>
-                <vehicle id="carflow3.2" pos="129.23" speed="30.73"/>
+                <vehicle id="carflow2.4" pos="6.18" speed="4.18"/>
+                <vehicle id="carflow3.3" pos="24.43" speed="12.26"/>
+                <vehicle id="ego" pos="78.62" speed="22.20"/>
+                <vehicle id="carflow3.2" pos="129.13" speed="30.39"/>
             </lane>
             <lane id="A_2">
-                <vehicle id="carflow3.4" pos="7.00" speed="4.12"/>
-                <vehicle id="carflow2.3" pos="35.01" speed="12.46"/>
-                <vehicle id="carflow1.3" pos="56.66" speed="21.27"/>
-                <vehicle id="carflow1.2" pos="167.25" speed="37.17"/>
+                <vehicle id="carflow3.4" pos="7.04" speed="4.26"/>
+                <vehicle id="carflow2.3" pos="34.93" speed="11.99"/>
+                <vehicle id="carflow1.3" pos="55.56" speed="18.79"/>
+                <vehicle id="carflow1.2" pos="167.25" speed="37.19"/>
             </lane>
         </edge>
         <edge id="gneE1">
             <lane id="gneE1_0">
-                <vehicle id="carflow2.1" pos="5.94" speed="32.26"/>
+                <vehicle id="carflow2.1" pos="6.12" speed="32.60"/>
             </lane>
             <lane id="gneE1_1">
                 <vehicle id="carflow2.0" pos="125.90" speed="39.92"/>
@@ -3404,25 +3404,25 @@
     <timestep time="15.50">
         <edge id="A">
             <lane id="A_0">
-                <vehicle id="carflow1.4" pos="8.55" speed="5.36"/>
-                <vehicle id="ego" pos="84.13" speed="22.00"/>
-                <vehicle id="carflow2.2" pos="106.69" speed="23.58"/>
+                <vehicle id="carflow1.4" pos="8.56" speed="5.39"/>
+                <vehicle id="carflow2.2" pos="106.26" speed="23.06"/>
             </lane>
             <lane id="A_1">
-                <vehicle id="carflow2.4" pos="6.52" speed="4.50"/>
-                <vehicle id="carflow3.3" pos="25.58" speed="12.40"/>
-                <vehicle id="carflow3.2" pos="132.33" speed="31.06"/>
+                <vehicle id="carflow2.4" pos="6.61" speed="4.27"/>
+                <vehicle id="carflow3.3" pos="25.71" speed="12.74"/>
+                <vehicle id="ego" pos="80.49" speed="18.70"/>
+                <vehicle id="carflow3.2" pos="132.21" speed="30.82"/>
             </lane>
             <lane id="A_2">
-                <vehicle id="carflow3.4" pos="7.46" speed="4.56"/>
-                <vehicle id="carflow2.3" pos="36.28" speed="12.73"/>
-                <vehicle id="carflow1.3" pos="58.83" speed="21.73"/>
-                <vehicle id="carflow1.2" pos="170.97" speed="37.17"/>
+                <vehicle id="carflow3.4" pos="7.50" speed="4.57"/>
+                <vehicle id="carflow2.3" pos="36.15" speed="12.13"/>
+                <vehicle id="carflow1.3" pos="57.49" speed="19.28"/>
+                <vehicle id="carflow1.2" pos="170.97" speed="37.18"/>
             </lane>
         </edge>
         <edge id="gneE1">
             <lane id="gneE1_0">
-                <vehicle id="carflow2.1" pos="9.19" speed="32.50"/>
+                <vehicle id="carflow2.1" pos="9.40" speed="32.84"/>
             </lane>
             <lane id="gneE1_1">
                 <vehicle id="carflow2.0" pos="129.93" speed="40.31"/>
@@ -3445,25 +3445,25 @@
     <timestep time="15.60">
         <edge id="A">
             <lane id="A_0">
-                <vehicle id="carflow1.4" pos="9.13" speed="5.82"/>
-                <vehicle id="ego" pos="86.33" speed="22.00"/>
-                <vehicle id="carflow2.2" pos="109.09" speed="23.94"/>
+                <vehicle id="carflow1.4" pos="9.15" speed="5.85"/>
+                <vehicle id="carflow2.2" pos="108.61" speed="23.49"/>
             </lane>
             <lane id="A_1">
-                <vehicle id="carflow2.4" pos="6.97" speed="4.52"/>
-                <vehicle id="carflow3.3" pos="26.87" speed="12.83"/>
-                <vehicle id="carflow3.2" pos="135.48" speed="31.45"/>
+                <vehicle id="carflow2.4" pos="7.05" speed="4.44"/>
+                <vehicle id="carflow3.3" pos="27.02" speed="13.17"/>
+                <vehicle id="ego" pos="82.66" speed="21.70"/>
+                <vehicle id="carflow3.2" pos="135.34" speed="31.22"/>
             </lane>
             <lane id="A_2">
-                <vehicle id="carflow3.4" pos="7.94" speed="4.83"/>
-                <vehicle id="carflow2.3" pos="37.56" speed="12.77"/>
-                <vehicle id="carflow1.3" pos="61.05" speed="22.21"/>
-                <vehicle id="carflow1.2" pos="174.69" speed="37.17"/>
+                <vehicle id="carflow3.4" pos="7.99" speed="4.86"/>
+                <vehicle id="carflow2.3" pos="37.40" speed="12.50"/>
+                <vehicle id="carflow1.3" pos="59.47" speed="19.76"/>
+                <vehicle id="carflow1.2" pos="174.69" speed="37.18"/>
             </lane>
         </edge>
         <edge id="gneE1">
             <lane id="gneE1_0">
-                <vehicle id="carflow2.1" pos="12.48" speed="32.91"/>
+                <vehicle id="carflow2.1" pos="12.73" speed="33.25"/>
             </lane>
             <lane id="gneE1_1">
                 <vehicle id="carflow2.0" pos="134.00" speed="40.72"/>
@@ -3486,25 +3486,25 @@
     <timestep time="15.70">
         <edge id="A">
             <lane id="A_0">
-                <vehicle id="carflow1.4" pos="9.76" speed="6.31"/>
-                <vehicle id="ego" pos="88.55" speed="22.20"/>
-                <vehicle id="carflow2.2" pos="111.50" speed="24.13"/>
+                <vehicle id="carflow1.4" pos="9.78" speed="6.31"/>
+                <vehicle id="carflow2.2" pos="111.00" speed="23.85"/>
             </lane>
             <lane id="A_1">
-                <vehicle id="carflow2.4" pos="7.45" speed="4.82"/>
-                <vehicle id="carflow3.3" pos="28.18" speed="13.11"/>
-                <vehicle id="carflow3.2" pos="138.67" speed="31.93"/>
+                <vehicle id="carflow2.4" pos="7.54" speed="4.84"/>
+                <vehicle id="carflow3.3" pos="28.39" speed="13.64"/>
+                <vehicle id="ego" pos="84.53" speed="18.70"/>
+                <vehicle id="carflow3.2" pos="138.50" speed="31.65"/>
             </lane>
             <lane id="A_2">
-                <vehicle id="carflow3.4" pos="8.46" speed="5.17"/>
-                <vehicle id="carflow2.3" pos="38.84" speed="12.84"/>
-                <vehicle id="carflow1.3" pos="63.32" speed="22.71"/>
-                <vehicle id="carflow1.2" pos="178.41" speed="37.20"/>
+                <vehicle id="carflow3.4" pos="8.52" speed="5.33"/>
+                <vehicle id="carflow2.3" pos="38.65" speed="12.54"/>
+                <vehicle id="carflow1.3" pos="61.49" speed="20.21"/>
+                <vehicle id="carflow1.2" pos="178.41" speed="37.19"/>
             </lane>
         </edge>
         <edge id="gneE1">
             <lane id="gneE1_0">
-                <vehicle id="carflow2.1" pos="15.82" speed="33.38"/>
+                <vehicle id="carflow2.1" pos="16.10" speed="33.72"/>
             </lane>
             <lane id="gneE1_1">
                 <vehicle id="carflow2.0" pos="138.09" speed="40.94"/>
@@ -3527,25 +3527,25 @@
     <timestep time="15.80">
         <edge id="A">
             <lane id="A_0">
-                <vehicle id="carflow1.4" pos="10.44" speed="6.80"/>
-                <vehicle id="ego" pos="90.76" speed="22.10"/>
-                <vehicle id="carflow2.2" pos="113.94" speed="24.40"/>
+                <vehicle id="carflow1.4" pos="10.46" speed="6.78"/>
+                <vehicle id="carflow2.2" pos="113.39" speed="23.93"/>
             </lane>
             <lane id="A_1">
-                <vehicle id="carflow2.4" pos="7.95" speed="4.98"/>
-                <vehicle id="carflow3.3" pos="29.53" speed="13.55"/>
-                <vehicle id="carflow3.2" pos="141.90" speed="32.33"/>
+                <vehicle id="carflow2.4" pos="8.05" speed="5.12"/>
+                <vehicle id="carflow3.3" pos="29.79" speed="13.97"/>
+                <vehicle id="ego" pos="86.65" speed="21.20"/>
+                <vehicle id="carflow3.2" pos="141.71" speed="32.12"/>
             </lane>
             <lane id="A_2">
-                <vehicle id="carflow3.4" pos="9.02" speed="5.61"/>
-                <vehicle id="carflow2.3" pos="40.16" speed="13.19"/>
-                <vehicle id="carflow1.3" pos="65.64" speed="23.19"/>
-                <vehicle id="carflow1.2" pos="182.13" speed="37.17"/>
+                <vehicle id="carflow3.4" pos="9.08" speed="5.61"/>
+                <vehicle id="carflow2.3" pos="39.92" speed="12.72"/>
+                <vehicle id="carflow1.3" pos="63.56" speed="20.67"/>
+                <vehicle id="carflow1.2" pos="182.13" speed="37.21"/>
             </lane>
         </edge>
         <edge id="gneE1">
             <lane id="gneE1_0">
-                <vehicle id="carflow2.1" pos="19.17" speed="33.53"/>
+                <vehicle id="carflow2.1" pos="19.49" speed="33.87"/>
             </lane>
             <lane id="gneE1_1">
                 <vehicle id="carflow2.0" pos="142.23" speed="41.32"/>
@@ -3568,25 +3568,25 @@
     <timestep time="15.90">
         <edge id="A">
             <lane id="A_0">
-                <vehicle id="carflow1.4" pos="11.17" speed="7.29"/>
-                <vehicle id="ego" pos="93.00" speed="22.40"/>
-                <vehicle id="carflow2.2" pos="116.39" speed="24.49"/>
+                <vehicle id="carflow1.4" pos="11.18" speed="7.27"/>
+                <vehicle id="carflow2.2" pos="115.83" speed="24.37"/>
             </lane>
             <lane id="A_1">
-                <vehicle id="carflow2.4" pos="8.49" speed="5.41"/>
-                <vehicle id="carflow3.3" pos="30.93" speed="14.01"/>
-                <vehicle id="carflow3.2" pos="145.18" speed="32.76"/>
+                <vehicle id="carflow2.4" pos="8.58" speed="5.31"/>
+                <vehicle id="carflow3.3" pos="31.23" speed="14.42"/>
+                <vehicle id="ego" pos="88.55" speed="19.00"/>
+                <vehicle id="carflow3.2" pos="144.97" speed="32.55"/>
             </lane>
             <lane id="A_2">
-                <vehicle id="carflow3.4" pos="9.62" speed="5.98"/>
-                <vehicle id="carflow2.3" pos="41.53" speed="13.63"/>
-                <vehicle id="carflow1.3" pos="68.01" speed="23.66"/>
-                <vehicle id="carflow1.2" pos="185.84" speed="37.18"/>
+                <vehicle id="carflow3.4" pos="9.67" speed="5.95"/>
+                <vehicle id="carflow2.3" pos="41.23" speed="13.10"/>
+                <vehicle id="carflow1.3" pos="65.67" speed="21.16"/>
+                <vehicle id="carflow1.2" pos="185.85" speed="37.19"/>
             </lane>
         </edge>
         <edge id="gneE1">
             <lane id="gneE1_0">
-                <vehicle id="carflow2.1" pos="22.54" speed="33.69"/>
+                <vehicle id="carflow2.1" pos="22.89" speed="34.03"/>
             </lane>
             <lane id="gneE1_1">
                 <vehicle id="carflow2.0" pos="146.37" speed="41.41"/>
@@ -3609,25 +3609,25 @@
     <timestep time="16.00">
         <edge id="A">
             <lane id="A_0">
-                <vehicle id="carflow1.4" pos="11.94" speed="7.76"/>
-                <vehicle id="ego" pos="95.19" speed="21.90"/>
-                <vehicle id="carflow2.2" pos="118.87" speed="24.81"/>
+                <vehicle id="carflow1.4" pos="11.96" speed="7.76"/>
+                <vehicle id="carflow2.2" pos="118.29" speed="24.64"/>
             </lane>
             <lane id="A_1">
-                <vehicle id="carflow2.4" pos="9.06" speed="5.73"/>
-                <vehicle id="carflow3.3" pos="32.38" speed="14.47"/>
-                <vehicle id="carflow3.2" pos="148.50" speed="33.21"/>
+                <vehicle id="carflow2.4" pos="9.12" speed="5.46"/>
+                <vehicle id="carflow3.3" pos="32.70" speed="14.67"/>
+                <vehicle id="ego" pos="90.70" speed="21.50"/>
+                <vehicle id="carflow3.2" pos="148.27" speed="33.01"/>
             </lane>
             <lane id="A_2">
-                <vehicle id="carflow3.4" pos="10.26" speed="6.46"/>
-                <vehicle id="carflow2.3" pos="42.92" speed="13.90"/>
-                <vehicle id="carflow1.3" pos="70.42" speed="24.12"/>
-                <vehicle id="carflow1.2" pos="189.56" speed="37.18"/>
+                <vehicle id="carflow3.4" pos="10.30" speed="6.27"/>
+                <vehicle id="carflow2.3" pos="42.57" speed="13.34"/>
+                <vehicle id="carflow1.3" pos="67.84" speed="21.65"/>
+                <vehicle id="carflow1.2" pos="189.57" speed="37.18"/>
             </lane>
         </edge>
         <edge id="gneE1">
             <lane id="gneE1_0">
-                <vehicle id="carflow2.1" pos="25.94" speed="34.01"/>
+                <vehicle id="carflow2.1" pos="26.33" speed="34.35"/>
             </lane>
             <lane id="gneE1_1">
                 <vehicle id="carflow2.0" pos="150.55" speed="41.87"/>
@@ -3650,25 +3650,25 @@
     <timestep time="16.10">
         <edge id="A">
             <lane id="A_0">
-                <vehicle id="carflow1.4" pos="12.77" speed="8.23"/>
-                <vehicle id="ego" pos="97.46" speed="22.70"/>
-                <vehicle id="carflow2.2" pos="121.36" speed="24.88"/>
+                <vehicle id="carflow1.4" pos="12.78" speed="8.22"/>
+                <vehicle id="carflow2.2" pos="120.79" speed="25.02"/>
             </lane>
             <lane id="A_1">
-                <vehicle id="carflow2.4" pos="9.67" speed="6.09"/>
-                <vehicle id="carflow3.3" pos="33.87" speed="14.87"/>
-                <vehicle id="carflow3.2" pos="151.85" speed="33.54"/>
+                <vehicle id="carflow2.4" pos="9.69" speed="5.65"/>
+                <vehicle id="carflow3.3" pos="34.20" speed="15.07"/>
+                <vehicle id="ego" pos="92.63" speed="19.30"/>
+                <vehicle id="carflow3.2" pos="151.60" speed="33.30"/>
             </lane>
             <lane id="A_2">
-                <vehicle id="carflow3.4" pos="10.95" speed="6.91"/>
-                <vehicle id="carflow2.3" pos="44.32" speed="13.99"/>
-                <vehicle id="carflow1.3" pos="72.88" speed="24.57"/>
-                <vehicle id="carflow1.2" pos="193.28" speed="37.16"/>
+                <vehicle id="carflow3.4" pos="10.95" speed="6.53"/>
+                <vehicle id="carflow2.3" pos="43.95" speed="13.79"/>
+                <vehicle id="carflow1.3" pos="70.05" speed="22.13"/>
+                <vehicle id="carflow1.2" pos="193.28" speed="37.17"/>
             </lane>
         </edge>
         <edge id="gneE1">
             <lane id="gneE1_0">
-                <vehicle id="carflow2.1" pos="29.36" speed="34.18"/>
+                <vehicle id="carflow2.1" pos="29.78" speed="34.52"/>
             </lane>
             <lane id="gneE1_1">
                 <vehicle id="carflow2.0" pos="154.76" speed="42.03"/>
@@ -3691,25 +3691,25 @@
     <timestep time="16.20">
         <edge id="A">
             <lane id="A_0">
-                <vehicle id="carflow1.4" pos="13.64" speed="8.69"/>
-                <vehicle id="ego" pos="99.67" speed="22.10"/>
-                <vehicle id="carflow2.2" pos="123.86" speed="24.99"/>
+                <vehicle id="carflow1.4" pos="13.65" speed="8.71"/>
+                <vehicle id="carflow2.2" pos="123.32" speed="25.29"/>
             </lane>
             <lane id="A_1">
-                <vehicle id="carflow2.4" pos="10.30" speed="6.27"/>
-                <vehicle id="carflow3.3" pos="35.40" speed="15.32"/>
-                <vehicle id="carflow3.2" pos="155.25" speed="33.91"/>
+                <vehicle id="carflow2.4" pos="10.26" speed="5.68"/>
+                <vehicle id="carflow3.3" pos="35.73" speed="15.32"/>
+                <vehicle id="ego" pos="94.81" speed="21.80"/>
+                <vehicle id="carflow3.2" pos="154.97" speed="33.73"/>
             </lane>
             <lane id="A_2">
-                <vehicle id="carflow3.4" pos="11.68" speed="7.25"/>
-                <vehicle id="carflow2.3" pos="45.75" speed="14.38"/>
-                <vehicle id="carflow1.3" pos="75.38" speed="25.03"/>
-                <vehicle id="carflow1.2" pos="197.00" speed="37.18"/>
+                <vehicle id="carflow3.4" pos="11.64" speed="6.86"/>
+                <vehicle id="carflow2.3" pos="45.37" speed="14.21"/>
+                <vehicle id="carflow1.3" pos="72.31" speed="22.59"/>
+                <vehicle id="carflow1.2" pos="197.00" speed="37.17"/>
             </lane>
         </edge>
         <edge id="gneE1">
             <lane id="gneE1_0">
-                <vehicle id="carflow2.1" pos="32.80" speed="34.42"/>
+                <vehicle id="carflow2.1" pos="33.24" speed="34.65"/>
             </lane>
             <lane id="gneE1_1">
                 <vehicle id="carflow2.0" pos="158.96" speed="42.08"/>
@@ -3732,30 +3732,30 @@
     <timestep time="16.30">
         <edge id="A">
             <lane id="A_0">
-                <vehicle id="carflow1.4" pos="14.55" speed="9.15"/>
-                <vehicle id="ego" pos="101.97" speed="23.00"/>
-                <vehicle id="carflow2.2" pos="126.39" speed="25.35"/>
+                <vehicle id="carflow1.4" pos="14.57" speed="9.20"/>
+                <vehicle id="carflow2.2" pos="125.88" speed="25.61"/>
             </lane>
             <lane id="A_1">
-                <vehicle id="carflow2.4" pos="10.93" speed="6.28"/>
-                <vehicle id="carflow3.3" pos="36.97" speed="15.75"/>
-                <vehicle id="carflow3.2" pos="158.68" speed="34.38"/>
+                <vehicle id="carflow2.4" pos="10.87" speed="6.15"/>
+                <vehicle id="carflow3.3" pos="37.30" speed="15.71"/>
+                <vehicle id="ego" pos="96.77" speed="19.60"/>
+                <vehicle id="carflow3.2" pos="158.39" speed="34.23"/>
             </lane>
             <lane id="A_2">
-                <vehicle id="carflow3.4" pos="12.43" speed="7.52"/>
-                <vehicle id="carflow2.3" pos="47.21" speed="14.54"/>
-                <vehicle id="carflow1.3" pos="77.93" speed="25.49"/>
+                <vehicle id="carflow3.4" pos="12.37" speed="7.25"/>
+                <vehicle id="carflow2.3" pos="46.81" speed="14.38"/>
+                <vehicle id="carflow1.3" pos="74.62" speed="23.07"/>
             </lane>
         </edge>
         <edge id="gneE1">
             <lane id="gneE1_0">
-                <vehicle id="carflow2.1" pos="36.27" speed="34.72"/>
+                <vehicle id="carflow2.1" pos="36.71" speed="34.72"/>
             </lane>
             <lane id="gneE1_1">
                 <vehicle id="carflow2.0" pos="163.18" speed="42.14"/>
             </lane>
             <lane id="gneE1_2">
-                <vehicle id="carflow1.2" pos="0.61" speed="37.19"/>
+                <vehicle id="carflow1.2" pos="0.62" speed="37.17"/>
                 <vehicle id="carflow3.1" pos="76.57" speed="43.83"/>
                 <vehicle id="carflow1.1" pos="161.22" speed="43.24"/>
             </lane>
@@ -3773,30 +3773,30 @@
     <timestep time="16.40">
         <edge id="A">
             <lane id="A_0">
-                <vehicle id="carflow1.4" pos="15.51" speed="9.63"/>
-                <vehicle id="ego" pos="104.16" speed="21.90"/>
-                <vehicle id="carflow2.2" pos="128.94" speed="25.51"/>
+                <vehicle id="carflow1.4" pos="15.54" speed="9.66"/>
+                <vehicle id="carflow2.2" pos="128.46" speed="25.80"/>
             </lane>
             <lane id="A_1">
-                <vehicle id="carflow2.4" pos="11.57" speed="6.39"/>
-                <vehicle id="carflow3.3" pos="38.58" speed="16.04"/>
-                <vehicle id="carflow3.2" pos="162.15" speed="34.70"/>
+                <vehicle id="carflow2.4" pos="11.51" speed="6.35"/>
+                <vehicle id="carflow3.3" pos="38.92" speed="16.11"/>
+                <vehicle id="ego" pos="98.90" speed="21.30"/>
+                <vehicle id="carflow3.2" pos="161.85" speed="34.55"/>
             </lane>
             <lane id="A_2">
-                <vehicle id="carflow3.4" pos="13.23" speed="7.99"/>
-                <vehicle id="carflow2.3" pos="48.66" speed="14.57"/>
-                <vehicle id="carflow1.3" pos="80.52" speed="25.96"/>
+                <vehicle id="carflow3.4" pos="13.12" speed="7.52"/>
+                <vehicle id="carflow2.3" pos="48.26" speed="14.53"/>
+                <vehicle id="carflow1.3" pos="76.97" speed="23.53"/>
             </lane>
         </edge>
         <edge id="gneE1">
             <lane id="gneE1_0">
-                <vehicle id="carflow2.1" pos="39.75" speed="34.79"/>
+                <vehicle id="carflow2.1" pos="40.19" speed="34.79"/>
             </lane>
             <lane id="gneE1_1">
                 <vehicle id="carflow2.0" pos="167.39" speed="42.09"/>
             </lane>
             <lane id="gneE1_2">
-                <vehicle id="carflow1.2" pos="4.33" speed="37.19"/>
+                <vehicle id="carflow1.2" pos="4.34" speed="37.19"/>
                 <vehicle id="carflow3.1" pos="80.96" speed="43.88"/>
                 <vehicle id="carflow1.1" pos="165.54" speed="43.27"/>
             </lane>
@@ -3814,24 +3814,24 @@
     <timestep time="16.50">
         <edge id="A">
             <lane id="A_0">
-                <vehicle id="carflow1.4" pos="16.52" speed="10.08"/>
-                <vehicle id="ego" pos="106.48" speed="23.20"/>
-                <vehicle id="carflow2.2" pos="131.49" speed="25.52"/>
+                <vehicle id="carflow1.4" pos="16.55" speed="10.13"/>
+                <vehicle id="carflow2.2" pos="131.05" speed="25.85"/>
             </lane>
             <lane id="A_1">
-                <vehicle id="carflow2.4" pos="12.24" speed="6.75"/>
-                <vehicle id="carflow3.3" pos="40.22" speed="16.39"/>
-                <vehicle id="carflow3.2" pos="165.66" speed="35.09"/>
+                <vehicle id="carflow2.4" pos="12.17" speed="6.61"/>
+                <vehicle id="carflow3.3" pos="40.56" speed="16.49"/>
+                <vehicle id="ego" pos="100.89" speed="19.90"/>
+                <vehicle id="carflow3.2" pos="165.35" speed="35.02"/>
             </lane>
             <lane id="A_2">
-                <vehicle id="carflow3.4" pos="14.06" speed="8.29"/>
-                <vehicle id="carflow2.3" pos="50.16" speed="14.95"/>
-                <vehicle id="carflow1.3" pos="83.17" speed="26.42"/>
+                <vehicle id="carflow3.4" pos="13.92" speed="7.99"/>
+                <vehicle id="carflow2.3" pos="49.72" speed="14.56"/>
+                <vehicle id="carflow1.3" pos="79.37" speed="24.00"/>
             </lane>
         </edge>
         <edge id="gneE1">
             <lane id="gneE1_0">
-                <vehicle id="carflow2.1" pos="43.23" speed="34.85"/>
+                <vehicle id="carflow2.1" pos="43.68" speed="34.85"/>
             </lane>
             <lane id="gneE1_1">
                 <vehicle id="carflow2.0" pos="171.58" speed="41.97"/>
@@ -3850,6 +3850,1119 @@
                 <vehicle id="carflow1.0" pos="93.27" speed="39.37"/>
             </lane>
             <lane id="gneE2_2"/>
+        </edge>
+    </timestep>
+    <timestep time="16.60">
+        <edge id="A">
+            <lane id="A_0">
+                <vehicle id="carflow1.4" pos="17.61" speed="10.60"/>
+                <vehicle id="carflow2.2" pos="133.65" speed="25.96"/>
+            </lane>
+            <lane id="A_1">
+                <vehicle id="carflow2.4" pos="12.87" speed="7.05"/>
+                <vehicle id="carflow3.3" pos="42.25" speed="16.89"/>
+                <vehicle id="ego" pos="102.97" speed="20.80"/>
+                <vehicle id="carflow3.2" pos="168.90" speed="35.51"/>
+            </lane>
+            <lane id="A_2">
+                <vehicle id="carflow3.4" pos="14.75" speed="8.30"/>
+                <vehicle id="carflow2.3" pos="51.21" speed="14.94"/>
+                <vehicle id="carflow1.3" pos="81.81" speed="24.46"/>
+            </lane>
+        </edge>
+        <edge id="gneE1">
+            <lane id="gneE1_0">
+                <vehicle id="carflow2.1" pos="47.15" speed="34.74"/>
+            </lane>
+            <lane id="gneE1_1">
+                <vehicle id="carflow2.0" pos="175.78" speed="41.96"/>
+            </lane>
+            <lane id="gneE1_2">
+                <vehicle id="carflow1.2" pos="11.77" speed="37.20"/>
+                <vehicle id="carflow3.1" pos="89.73" speed="43.76"/>
+                <vehicle id="carflow1.1" pos="174.19" speed="43.24"/>
+            </lane>
+        </edge>
+        <edge id="gneE2">
+            <lane id="gneE2_0">
+                <vehicle id="carflow3.0" pos="84.33" speed="44.21"/>
+            </lane>
+            <lane id="gneE2_1">
+                <vehicle id="carflow1.0" pos="97.21" speed="39.37"/>
+            </lane>
+            <lane id="gneE2_2"/>
+        </edge>
+    </timestep>
+    <timestep time="16.70">
+        <edge id="A">
+            <lane id="A_0">
+                <vehicle id="carflow1.4" pos="18.72" speed="11.09"/>
+                <vehicle id="carflow2.2" pos="136.25" speed="26.08"/>
+            </lane>
+            <lane id="A_1">
+                <vehicle id="carflow2.4" pos="13.59" speed="7.12"/>
+                <vehicle id="carflow3.3" pos="43.88" speed="16.29"/>
+                <vehicle id="ego" pos="104.99" speed="20.20"/>
+                <vehicle id="carflow3.2" pos="172.49" speed="35.87"/>
+            </lane>
+            <lane id="A_2">
+                <vehicle id="carflow3.4" pos="15.62" speed="8.69"/>
+                <vehicle id="carflow2.3" pos="52.71" speed="14.98"/>
+                <vehicle id="carflow1.3" pos="84.31" speed="24.92"/>
+            </lane>
+        </edge>
+        <edge id="gneE1">
+            <lane id="gneE1_0">
+                <vehicle id="carflow2.1" pos="50.61" speed="34.59"/>
+            </lane>
+            <lane id="gneE1_1">
+                <vehicle id="carflow2.0" pos="180.01" speed="42.28"/>
+            </lane>
+            <lane id="gneE1_2">
+                <vehicle id="carflow1.2" pos="15.49" speed="37.21"/>
+                <vehicle id="carflow3.1" pos="94.12" speed="43.92"/>
+                <vehicle id="carflow1.1" pos="178.52" speed="43.23"/>
+            </lane>
+        </edge>
+        <edge id="gneE2">
+            <lane id="gneE2_0">
+                <vehicle id="carflow3.0" pos="88.69" speed="43.61"/>
+            </lane>
+            <lane id="gneE2_1">
+                <vehicle id="carflow1.0" pos="101.14" speed="39.38"/>
+            </lane>
+            <lane id="gneE2_2"/>
+        </edge>
+    </timestep>
+    <timestep time="16.80">
+        <edge id="A">
+            <lane id="A_0">
+                <vehicle id="carflow1.4" pos="19.87" speed="11.55"/>
+                <vehicle id="carflow2.2" pos="138.87" speed="26.17"/>
+            </lane>
+            <lane id="A_1">
+                <vehicle id="carflow2.4" pos="14.32" speed="7.37"/>
+                <vehicle id="carflow3.3" pos="45.55" speed="16.70"/>
+                <vehicle id="ego" pos="107.10" speed="21.10"/>
+                <vehicle id="carflow3.2" pos="176.09" speed="35.98"/>
+            </lane>
+            <lane id="A_2">
+                <vehicle id="carflow3.4" pos="16.53" speed="9.18"/>
+                <vehicle id="carflow2.3" pos="54.23" speed="15.24"/>
+                <vehicle id="carflow1.3" pos="86.84" speed="25.37"/>
+            </lane>
+        </edge>
+        <edge id="gneE1">
+            <lane id="gneE1_0">
+                <vehicle id="carflow2.1" pos="54.10" speed="34.86"/>
+            </lane>
+            <lane id="gneE1_1">
+                <vehicle id="carflow2.0" pos="184.23" speed="42.19"/>
+            </lane>
+            <lane id="gneE1_2">
+                <vehicle id="carflow1.2" pos="19.21" speed="37.18"/>
+                <vehicle id="carflow3.1" pos="98.50" speed="43.81"/>
+                <vehicle id="carflow1.1" pos="182.84" speed="43.26"/>
+            </lane>
+        </edge>
+        <edge id="gneE2">
+            <lane id="gneE2_0">
+                <vehicle id="carflow3.0" pos="92.99" speed="43.01"/>
+            </lane>
+            <lane id="gneE2_1">
+                <vehicle id="carflow1.0" pos="105.08" speed="39.38"/>
+            </lane>
+            <lane id="gneE2_2"/>
+        </edge>
+    </timestep>
+    <timestep time="16.90">
+        <edge id="A">
+            <lane id="A_0">
+                <vehicle id="carflow1.4" pos="21.08" speed="12.02"/>
+                <vehicle id="carflow2.2" pos="141.50" speed="26.33"/>
+            </lane>
+            <lane id="A_1">
+                <vehicle id="carflow2.4" pos="15.09" speed="7.69"/>
+                <vehicle id="carflow3.3" pos="47.16" speed="16.10"/>
+                <vehicle id="ego" pos="109.07" speed="19.70"/>
+                <vehicle id="carflow3.2" pos="179.68" speed="35.91"/>
+            </lane>
+            <lane id="A_2">
+                <vehicle id="carflow3.4" pos="17.49" speed="9.55"/>
+                <vehicle id="carflow2.3" pos="55.80" speed="15.72"/>
+                <vehicle id="carflow1.3" pos="89.43" speed="25.86"/>
+            </lane>
+        </edge>
+        <edge id="gneE1">
+            <lane id="gneE1_0">
+                <vehicle id="carflow2.1" pos="57.56" speed="34.65"/>
+            </lane>
+            <lane id="gneE1_1">
+                <vehicle id="carflow2.0" pos="188.44" speed="42.15"/>
+            </lane>
+            <lane id="gneE1_2">
+                <vehicle id="carflow1.2" pos="22.93" speed="37.20"/>
+                <vehicle id="carflow3.1" pos="102.88" speed="43.82"/>
+                <vehicle id="carflow1.1" pos="187.17" speed="43.26"/>
+            </lane>
+        </edge>
+        <edge id="gneE2">
+            <lane id="gneE2_0">
+                <vehicle id="carflow3.0" pos="97.23" speed="42.41"/>
+            </lane>
+            <lane id="gneE2_1">
+                <vehicle id="carflow1.0" pos="109.02" speed="39.38"/>
+            </lane>
+            <lane id="gneE2_2"/>
+        </edge>
+    </timestep>
+    <timestep time="17.00">
+        <edge id="A">
+            <lane id="A_0">
+                <vehicle id="carflow1.4" pos="22.32" speed="12.47"/>
+                <vehicle id="carflow2.2" pos="144.17" speed="26.65"/>
+            </lane>
+            <lane id="A_1">
+                <vehicle id="carflow2.4" pos="15.90" speed="8.05"/>
+                <vehicle id="carflow3.3" pos="48.81" speed="16.51"/>
+                <vehicle id="ego" pos="111.21" speed="21.40"/>
+                <vehicle id="carflow3.2" pos="183.27" speed="35.93"/>
+            </lane>
+            <lane id="A_2">
+                <vehicle id="carflow3.4" pos="18.49" speed="9.97"/>
+                <vehicle id="carflow2.3" pos="57.41" speed="16.11"/>
+                <vehicle id="carflow1.3" pos="92.06" speed="26.32"/>
+            </lane>
+        </edge>
+        <edge id="gneE1">
+            <lane id="gneE1_0">
+                <vehicle id="carflow2.1" pos="61.03" speed="34.71"/>
+            </lane>
+            <lane id="gneE1_1">
+                <vehicle id="carflow2.0" pos="192.68" speed="42.35"/>
+            </lane>
+            <lane id="gneE1_2">
+                <vehicle id="carflow1.2" pos="26.65" speed="37.20"/>
+                <vehicle id="carflow3.1" pos="107.27" speed="43.84"/>
+                <vehicle id="carflow1.1" pos="191.50" speed="43.26"/>
+            </lane>
+        </edge>
+        <edge id="gneE2">
+            <lane id="gneE2_0">
+                <vehicle id="carflow3.0" pos="101.42" speed="41.81"/>
+            </lane>
+            <lane id="gneE2_1">
+                <vehicle id="carflow1.0" pos="112.96" speed="39.39"/>
+            </lane>
+            <lane id="gneE2_2"/>
+        </edge>
+    </timestep>
+    <timestep time="17.10">
+        <edge id="A">
+            <lane id="A_0">
+                <vehicle id="carflow1.4" pos="23.62" speed="12.92"/>
+                <vehicle id="carflow2.2" pos="146.85" speed="26.83"/>
+            </lane>
+            <lane id="A_1">
+                <vehicle id="carflow2.4" pos="16.74" speed="8.45"/>
+                <vehicle id="carflow3.3" pos="50.49" speed="16.79"/>
+                <vehicle id="ego" pos="113.21" speed="20.00"/>
+                <vehicle id="carflow3.2" pos="186.86" speed="35.87"/>
+            </lane>
+            <lane id="A_2">
+                <vehicle id="carflow3.4" pos="19.53" speed="10.40"/>
+                <vehicle id="carflow2.3" pos="59.03" speed="16.16"/>
+                <vehicle id="carflow1.3" pos="94.74" speed="26.81"/>
+            </lane>
+        </edge>
+        <edge id="gneE1">
+            <lane id="gneE1_0">
+                <vehicle id="carflow2.1" pos="64.50" speed="34.68"/>
+            </lane>
+            <lane id="gneE1_1">
+                <vehicle id="carflow2.0" pos="196.87" speed="41.96"/>
+            </lane>
+            <lane id="gneE1_2">
+                <vehicle id="carflow1.2" pos="30.37" speed="37.21"/>
+                <vehicle id="carflow3.1" pos="111.66" speed="43.91"/>
+                <vehicle id="carflow1.1" pos="195.82" speed="43.26"/>
+            </lane>
+        </edge>
+        <edge id="gneE2">
+            <lane id="gneE2_0">
+                <vehicle id="carflow3.0" pos="105.54" speed="41.21"/>
+            </lane>
+            <lane id="gneE2_1">
+                <vehicle id="carflow1.0" pos="116.90" speed="39.38"/>
+            </lane>
+            <lane id="gneE2_2"/>
+        </edge>
+    </timestep>
+    <timestep time="17.20">
+        <edge id="A">
+            <lane id="A_0">
+                <vehicle id="carflow1.4" pos="24.96" speed="13.39"/>
+                <vehicle id="carflow2.2" pos="149.58" speed="27.24"/>
+            </lane>
+            <lane id="A_1">
+                <vehicle id="carflow2.4" pos="17.62" speed="8.82"/>
+                <vehicle id="carflow3.3" pos="52.11" speed="16.19"/>
+                <vehicle id="ego" pos="115.38" speed="21.70"/>
+                <vehicle id="carflow3.2" pos="190.45" speed="35.91"/>
+            </lane>
+            <lane id="A_2">
+                <vehicle id="carflow3.4" pos="20.60" speed="10.74"/>
+                <vehicle id="carflow2.3" pos="60.67" speed="16.39"/>
+                <vehicle id="carflow1.3" pos="97.47" speed="27.29"/>
+            </lane>
+        </edge>
+        <edge id="gneE1">
+            <lane id="gneE1_0">
+                <vehicle id="carflow2.1" pos="67.98" speed="34.75"/>
+            </lane>
+            <lane id="gneE1_1"/>
+            <lane id="gneE1_2">
+                <vehicle id="carflow1.2" pos="34.09" speed="37.17"/>
+                <vehicle id="carflow3.1" pos="116.05" speed="43.89"/>
+            </lane>
+        </edge>
+        <edge id="gneE2">
+            <lane id="gneE2_0">
+                <vehicle id="carflow3.0" pos="109.60" speed="40.61"/>
+            </lane>
+            <lane id="gneE2_1">
+                <vehicle id="carflow2.0" pos="1.01" speed="42.34"/>
+                <vehicle id="carflow1.0" pos="120.83" speed="39.36"/>
+            </lane>
+            <lane id="gneE2_2">
+                <vehicle id="carflow1.1" pos="0.05" speed="43.26"/>
+            </lane>
+        </edge>
+    </timestep>
+    <timestep time="17.30">
+        <edge id="A">
+            <lane id="A_0">
+                <vehicle id="carflow1.4" pos="26.34" speed="13.88"/>
+                <vehicle id="carflow2.2" pos="152.31" speed="27.31"/>
+            </lane>
+            <lane id="A_1">
+                <vehicle id="carflow2.4" pos="18.55" speed="9.22"/>
+                <vehicle id="carflow3.3" pos="53.77" speed="16.59"/>
+                <vehicle id="ego" pos="117.41" speed="20.30"/>
+                <vehicle id="carflow3.2" pos="194.03" speed="35.75"/>
+            </lane>
+            <lane id="A_2">
+                <vehicle id="carflow3.4" pos="21.70" speed="11.03"/>
+                <vehicle id="carflow2.3" pos="62.34" speed="16.71"/>
+                <vehicle id="carflow1.3" pos="100.25" speed="27.79"/>
+            </lane>
+        </edge>
+        <edge id="gneE1">
+            <lane id="gneE1_0">
+                <vehicle id="carflow2.1" pos="71.44" speed="34.64"/>
+            </lane>
+            <lane id="gneE1_1"/>
+            <lane id="gneE1_2">
+                <vehicle id="carflow1.2" pos="37.81" speed="37.19"/>
+                <vehicle id="carflow3.1" pos="120.43" speed="43.88"/>
+            </lane>
+        </edge>
+        <edge id="gneE2">
+            <lane id="gneE2_0">
+                <vehicle id="carflow3.0" pos="113.60" speed="40.01"/>
+            </lane>
+            <lane id="gneE2_1">
+                <vehicle id="carflow2.0" pos="5.24" speed="42.37"/>
+                <vehicle id="carflow1.0" pos="124.77" speed="39.40"/>
+            </lane>
+            <lane id="gneE2_2">
+                <vehicle id="carflow1.1" pos="4.37" speed="43.23"/>
+            </lane>
+        </edge>
+    </timestep>
+    <timestep time="17.40">
+        <edge id="A">
+            <lane id="A_0">
+                <vehicle id="carflow1.4" pos="27.78" speed="14.36"/>
+                <vehicle id="carflow2.2" pos="155.06" speed="27.55"/>
+            </lane>
+            <lane id="A_1">
+                <vehicle id="carflow2.4" pos="19.47" speed="9.28"/>
+                <vehicle id="carflow3.3" pos="55.46" speed="16.87"/>
+                <vehicle id="ego" pos="119.58" speed="21.70"/>
+                <vehicle id="carflow3.2" pos="197.61" speed="35.84"/>
+            </lane>
+            <lane id="A_2">
+                <vehicle id="carflow3.4" pos="22.84" speed="11.32"/>
+                <vehicle id="carflow2.3" pos="64.02" speed="16.78"/>
+                <vehicle id="carflow1.3" pos="103.08" speed="28.27"/>
+            </lane>
+        </edge>
+        <edge id="gneE1">
+            <lane id="gneE1_0">
+                <vehicle id="carflow2.1" pos="74.88" speed="34.41"/>
+            </lane>
+            <lane id="gneE1_1"/>
+            <lane id="gneE1_2">
+                <vehicle id="carflow1.2" pos="41.53" speed="37.18"/>
+                <vehicle id="carflow3.1" pos="124.80" speed="43.68"/>
+            </lane>
+        </edge>
+        <edge id="gneE2">
+            <lane id="gneE2_0">
+                <vehicle id="carflow3.0" pos="117.54" speed="39.41"/>
+            </lane>
+            <lane id="gneE2_1">
+                <vehicle id="carflow2.0" pos="9.47" speed="42.21"/>
+                <vehicle id="carflow1.0" pos="128.71" speed="39.36"/>
+            </lane>
+            <lane id="gneE2_2">
+                <vehicle id="carflow1.1" pos="8.69" speed="43.23"/>
+            </lane>
+        </edge>
+    </timestep>
+    <timestep time="17.50">
+        <edge id="A">
+            <lane id="A_0">
+                <vehicle id="carflow1.4" pos="29.26" speed="14.83"/>
+                <vehicle id="carflow2.2" pos="157.86" speed="27.96"/>
+            </lane>
+            <lane id="A_1">
+                <vehicle id="carflow2.4" pos="20.40" speed="9.29"/>
+                <vehicle id="carflow3.3" pos="57.14" speed="16.78"/>
+                <vehicle id="ego" pos="121.64" speed="20.60"/>
+            </lane>
+            <lane id="A_2">
+                <vehicle id="carflow3.4" pos="24.00" speed="11.59"/>
+                <vehicle id="carflow2.3" pos="65.71" speed="16.88"/>
+                <vehicle id="carflow1.3" pos="105.95" speed="28.72"/>
+            </lane>
+        </edge>
+        <edge id="gneE1">
+            <lane id="gneE1_0">
+                <vehicle id="carflow2.1" pos="78.36" speed="34.77"/>
+            </lane>
+            <lane id="gneE1_1">
+                <vehicle id="carflow3.2" pos="1.09" speed="35.82"/>
+            </lane>
+            <lane id="gneE1_2">
+                <vehicle id="carflow1.2" pos="45.25" speed="37.20"/>
+                <vehicle id="carflow3.1" pos="129.18" speed="43.74"/>
+            </lane>
+        </edge>
+        <edge id="gneE2">
+            <lane id="gneE2_0">
+                <vehicle id="carflow3.0" pos="121.48" speed="39.36"/>
+            </lane>
+            <lane id="gneE2_1">
+                <vehicle id="carflow2.0" pos="13.68" speed="42.13"/>
+                <vehicle id="carflow1.0" pos="132.65" speed="39.39"/>
+            </lane>
+            <lane id="gneE2_2">
+                <vehicle id="carflow1.1" pos="13.02" speed="43.22"/>
+            </lane>
+        </edge>
+    </timestep>
+    <timestep time="17.60">
+        <edge id="A">
+            <lane id="A_0">
+                <vehicle id="carflow1.4" pos="30.79" speed="15.30"/>
+                <vehicle id="carflow2.2" pos="160.67" speed="28.11"/>
+            </lane>
+            <lane id="A_1">
+                <vehicle id="carflow2.4" pos="21.36" speed="9.53"/>
+                <vehicle id="carflow3.3" pos="58.75" speed="16.18"/>
+                <vehicle id="ego" pos="123.84" speed="22.00"/>
+            </lane>
+            <lane id="A_2">
+                <vehicle id="carflow3.4" pos="25.20" speed="12.08"/>
+                <vehicle id="carflow2.3" pos="67.41" speed="16.98"/>
+                <vehicle id="carflow1.3" pos="108.87" speed="29.18"/>
+            </lane>
+        </edge>
+        <edge id="gneE1">
+            <lane id="gneE1_0">
+                <vehicle id="carflow2.1" pos="81.84" speed="34.83"/>
+            </lane>
+            <lane id="gneE1_1">
+                <vehicle id="carflow3.2" pos="4.68" speed="35.83"/>
+            </lane>
+            <lane id="gneE1_2">
+                <vehicle id="carflow1.2" pos="48.96" speed="37.17"/>
+                <vehicle id="carflow3.1" pos="133.55" speed="43.74"/>
+            </lane>
+        </edge>
+        <edge id="gneE2">
+            <lane id="gneE2_0">
+                <vehicle id="carflow3.0" pos="125.41" speed="39.39"/>
+            </lane>
+            <lane id="gneE2_1">
+                <vehicle id="carflow2.0" pos="17.92" speed="42.42"/>
+                <vehicle id="carflow1.0" pos="136.58" speed="39.36"/>
+            </lane>
+            <lane id="gneE2_2">
+                <vehicle id="carflow1.1" pos="17.34" speed="43.24"/>
+            </lane>
+        </edge>
+    </timestep>
+    <timestep time="17.70">
+        <edge id="A">
+            <lane id="A_0">
+                <vehicle id="carflow1.4" pos="32.37" speed="15.76"/>
+            </lane>
+            <lane id="A_1">
+                <vehicle id="carflow2.4" pos="22.33" speed="9.75"/>
+                <vehicle id="carflow3.3" pos="60.41" speed="16.60"/>
+                <vehicle id="ego" pos="125.93" speed="20.90"/>
+                <vehicle id="carflow2.2" pos="163.49" speed="28.23"/>
+            </lane>
+            <lane id="A_2">
+                <vehicle id="carflow3.4" pos="26.44" speed="12.41"/>
+                <vehicle id="carflow2.3" pos="69.14" speed="17.30"/>
+                <vehicle id="carflow1.3" pos="111.83" speed="29.65"/>
+            </lane>
+        </edge>
+        <edge id="gneE1">
+            <lane id="gneE1_0">
+                <vehicle id="carflow2.1" pos="85.33" speed="34.84"/>
+            </lane>
+            <lane id="gneE1_1">
+                <vehicle id="carflow3.2" pos="8.27" speed="35.95"/>
+            </lane>
+            <lane id="gneE1_2">
+                <vehicle id="carflow1.2" pos="52.68" speed="37.19"/>
+                <vehicle id="carflow3.1" pos="137.93" speed="43.85"/>
+            </lane>
+        </edge>
+        <edge id="gneE2">
+            <lane id="gneE2_0">
+                <vehicle id="carflow3.0" pos="129.35" speed="39.36"/>
+            </lane>
+            <lane id="gneE2_1">
+                <vehicle id="carflow2.0" pos="22.12" speed="41.99"/>
+                <vehicle id="carflow1.0" pos="140.52" speed="39.37"/>
+            </lane>
+            <lane id="gneE2_2">
+                <vehicle id="carflow1.1" pos="21.67" speed="43.25"/>
+            </lane>
+        </edge>
+    </timestep>
+    <timestep time="17.80">
+        <edge id="A">
+            <lane id="A_0">
+                <vehicle id="carflow1.4" pos="33.99" speed="16.24"/>
+            </lane>
+            <lane id="A_1">
+                <vehicle id="carflow2.4" pos="23.33" speed="10.03"/>
+                <vehicle id="carflow3.3" pos="62.12" speed="17.07"/>
+                <vehicle id="ego" pos="128.08" speed="21.50"/>
+                <vehicle id="carflow2.2" pos="166.33" speed="28.35"/>
+            </lane>
+            <lane id="A_2">
+                <vehicle id="carflow3.4" pos="27.73" speed="12.84"/>
+                <vehicle id="carflow2.3" pos="70.91" speed="17.71"/>
+                <vehicle id="carflow1.3" pos="114.85" speed="30.15"/>
+            </lane>
+        </edge>
+        <edge id="gneE1">
+            <lane id="gneE1_0">
+                <vehicle id="carflow2.1" pos="88.77" speed="34.44"/>
+            </lane>
+            <lane id="gneE1_1">
+                <vehicle id="carflow3.2" pos="11.87" speed="35.98"/>
+            </lane>
+            <lane id="gneE1_2">
+                <vehicle id="carflow1.2" pos="56.40" speed="37.21"/>
+                <vehicle id="carflow3.1" pos="142.31" speed="43.77"/>
+            </lane>
+        </edge>
+        <edge id="gneE2">
+            <lane id="gneE2_0">
+                <vehicle id="carflow3.0" pos="133.29" speed="39.37"/>
+            </lane>
+            <lane id="gneE2_1">
+                <vehicle id="carflow2.0" pos="26.31" speed="41.94"/>
+                <vehicle id="carflow1.0" pos="144.46" speed="39.38"/>
+            </lane>
+            <lane id="gneE2_2">
+                <vehicle id="carflow1.1" pos="25.99" speed="43.26"/>
+            </lane>
+        </edge>
+    </timestep>
+    <timestep time="17.90">
+        <edge id="A">
+            <lane id="A_0">
+                <vehicle id="carflow1.4" pos="35.66" speed="16.71"/>
+            </lane>
+            <lane id="A_1">
+                <vehicle id="carflow2.4" pos="24.36" speed="10.30"/>
+                <vehicle id="carflow3.3" pos="63.87" speed="17.46"/>
+                <vehicle id="ego" pos="130.12" speed="20.40"/>
+                <vehicle id="carflow2.2" pos="169.18" speed="28.53"/>
+            </lane>
+            <lane id="A_2">
+                <vehicle id="carflow3.4" pos="29.06" speed="13.34"/>
+                <vehicle id="carflow2.3" pos="72.69" speed="17.83"/>
+                <vehicle id="carflow1.3" pos="117.91" speed="30.65"/>
+            </lane>
+        </edge>
+        <edge id="gneE1">
+            <lane id="gneE1_0">
+                <vehicle id="carflow2.1" pos="92.22" speed="34.46"/>
+            </lane>
+            <lane id="gneE1_1">
+                <vehicle id="carflow3.2" pos="15.46" speed="35.92"/>
+            </lane>
+            <lane id="gneE1_2">
+                <vehicle id="carflow1.2" pos="60.12" speed="37.19"/>
+                <vehicle id="carflow3.1" pos="146.70" speed="43.84"/>
+            </lane>
+        </edge>
+        <edge id="gneE2">
+            <lane id="gneE2_0">
+                <vehicle id="carflow3.0" pos="137.23" speed="39.38"/>
+            </lane>
+            <lane id="gneE2_1">
+                <vehicle id="carflow2.0" pos="30.53" speed="42.22"/>
+                <vehicle id="carflow1.0" pos="148.40" speed="39.37"/>
+            </lane>
+            <lane id="gneE2_2">
+                <vehicle id="carflow1.1" pos="30.32" speed="43.27"/>
+            </lane>
+        </edge>
+    </timestep>
+    <timestep time="18.00">
+        <edge id="A">
+            <lane id="A_0">
+                <vehicle id="carflow3.5" pos="4.60" speed="0.00"/>
+                <vehicle id="carflow1.4" pos="37.38" speed="17.20"/>
+            </lane>
+            <lane id="A_1">
+                <vehicle id="carflow1.5" pos="5.30" speed="0.00"/>
+                <vehicle id="carflow2.4" pos="25.40" speed="10.36"/>
+                <vehicle id="carflow3.3" pos="65.64" speed="17.72"/>
+                <vehicle id="ego" pos="132.30" speed="21.80"/>
+                <vehicle id="carflow2.2" pos="172.06" speed="28.80"/>
+            </lane>
+            <lane id="A_2">
+                <vehicle id="carflow3.4" pos="30.42" speed="13.59"/>
+                <vehicle id="carflow2.3" pos="74.52" speed="18.28"/>
+                <vehicle id="carflow1.3" pos="121.02" speed="31.13"/>
+            </lane>
+        </edge>
+        <edge id="gneE1">
+            <lane id="gneE1_0">
+                <vehicle id="carflow2.1" pos="95.67" speed="34.55"/>
+            </lane>
+            <lane id="gneE1_1">
+                <vehicle id="carflow3.2" pos="19.05" speed="35.85"/>
+            </lane>
+            <lane id="gneE1_2">
+                <vehicle id="carflow1.2" pos="63.84" speed="37.19"/>
+                <vehicle id="carflow3.1" pos="151.08" speed="43.89"/>
+            </lane>
+        </edge>
+        <edge id="gneE2">
+            <lane id="gneE2_0">
+                <vehicle id="carflow3.0" pos="141.16" speed="39.37"/>
+            </lane>
+            <lane id="gneE2_1">
+                <vehicle id="carflow2.0" pos="34.77" speed="42.36"/>
+                <vehicle id="carflow1.0" pos="152.33" speed="39.38"/>
+            </lane>
+            <lane id="gneE2_2">
+                <vehicle id="carflow1.1" pos="34.64" speed="43.26"/>
+            </lane>
+        </edge>
+    </timestep>
+    <timestep time="18.10">
+        <edge id="A">
+            <lane id="A_0">
+                <vehicle id="carflow3.5" pos="4.65" speed="0.49"/>
+                <vehicle id="carflow1.4" pos="39.15" speed="17.69"/>
+            </lane>
+            <lane id="A_1">
+                <vehicle id="carflow1.5" pos="5.35" speed="0.50"/>
+                <vehicle id="carflow2.4" pos="26.46" speed="10.64"/>
+                <vehicle id="carflow3.3" pos="67.35" speed="17.12"/>
+                <vehicle id="ego" pos="134.37" speed="20.70"/>
+                <vehicle id="carflow2.2" pos="174.95" speed="28.89"/>
+            </lane>
+            <lane id="A_2">
+                <vehicle id="carflow3.4" pos="31.81" speed="13.93"/>
+                <vehicle id="carflow2.3" pos="76.35" speed="18.34"/>
+                <vehicle id="carflow1.3" pos="124.18" speed="31.59"/>
+            </lane>
+        </edge>
+        <edge id="gneE1">
+            <lane id="gneE1_0">
+                <vehicle id="carflow2.1" pos="99.16" speed="34.85"/>
+            </lane>
+            <lane id="gneE1_1">
+                <vehicle id="carflow3.2" pos="22.62" speed="35.76"/>
+            </lane>
+            <lane id="gneE1_2">
+                <vehicle id="carflow1.2" pos="67.56" speed="37.20"/>
+                <vehicle id="carflow3.1" pos="155.46" speed="43.73"/>
+            </lane>
+        </edge>
+        <edge id="gneE2">
+            <lane id="gneE2_0">
+                <vehicle id="carflow3.0" pos="145.10" speed="39.38"/>
+            </lane>
+            <lane id="gneE2_1">
+                <vehicle id="carflow2.0" pos="39.00" speed="42.30"/>
+                <vehicle id="carflow1.0" pos="156.27" speed="39.36"/>
+            </lane>
+            <lane id="gneE2_2">
+                <vehicle id="carflow1.1" pos="38.97" speed="43.25"/>
+            </lane>
+        </edge>
+    </timestep>
+    <timestep time="18.20">
+        <edge id="A">
+            <lane id="A_0">
+                <vehicle id="carflow3.5" pos="4.74" speed="0.96"/>
+                <vehicle id="carflow1.4" pos="40.97" speed="18.17"/>
+            </lane>
+            <lane id="A_1">
+                <vehicle id="carflow1.5" pos="5.45" speed="0.99"/>
+                <vehicle id="carflow2.4" pos="27.58" speed="11.11"/>
+                <vehicle id="carflow3.3" pos="69.00" speed="16.52"/>
+                <vehicle id="carflow2.2" pos="177.85" speed="29.02"/>
+            </lane>
+            <lane id="A_2">
+                <vehicle id="carflow2.5" pos="3.80" speed="0.00"/>
+                <vehicle id="carflow3.4" pos="33.25" speed="14.40"/>
+                <vehicle id="carflow2.3" pos="78.19" speed="18.43"/>
+                <vehicle id="carflow1.3" pos="127.25" speed="30.69"/>
+                <vehicle id="ego" pos="136.58" speed="22.10"/>
+            </lane>
+        </edge>
+        <edge id="gneE1">
+            <lane id="gneE1_0">
+                <vehicle id="carflow2.1" pos="102.60" speed="34.46"/>
+            </lane>
+            <lane id="gneE1_1">
+                <vehicle id="carflow3.2" pos="26.22" speed="35.97"/>
+            </lane>
+            <lane id="gneE1_2">
+                <vehicle id="carflow1.2" pos="71.28" speed="37.20"/>
+                <vehicle id="carflow3.1" pos="159.83" speed="43.73"/>
+            </lane>
+        </edge>
+        <edge id="gneE2">
+            <lane id="gneE2_0">
+                <vehicle id="carflow3.0" pos="149.04" speed="39.36"/>
+            </lane>
+            <lane id="gneE2_1">
+                <vehicle id="carflow2.0" pos="43.21" speed="42.07"/>
+                <vehicle id="carflow1.0" pos="160.21" speed="39.36"/>
+            </lane>
+            <lane id="gneE2_2">
+                <vehicle id="carflow1.1" pos="43.30" speed="43.26"/>
+            </lane>
+        </edge>
+    </timestep>
+    <timestep time="18.30">
+        <edge id="A">
+            <lane id="A_0">
+                <vehicle id="carflow3.5" pos="4.89" speed="1.45"/>
+                <vehicle id="carflow1.4" pos="42.74" speed="17.70"/>
+            </lane>
+            <lane id="A_1">
+                <vehicle id="carflow1.5" pos="5.60" speed="1.49"/>
+                <vehicle id="carflow2.4" pos="28.73" speed="11.52"/>
+                <vehicle id="carflow3.3" pos="70.68" speed="16.79"/>
+                <vehicle id="carflow2.2" pos="180.79" speed="29.38"/>
+            </lane>
+            <lane id="A_2">
+                <vehicle id="carflow2.5" pos="3.85" speed="0.49"/>
+                <vehicle id="carflow3.4" pos="34.73" speed="14.79"/>
+                <vehicle id="carflow2.3" pos="80.06" speed="18.65"/>
+                <vehicle id="carflow1.3" pos="130.23" speed="29.79"/>
+                <vehicle id="ego" pos="138.68" speed="21.00"/>
+            </lane>
+        </edge>
+        <edge id="gneE1">
+            <lane id="gneE1_0">
+                <vehicle id="carflow2.1" pos="106.08" speed="34.77"/>
+            </lane>
+            <lane id="gneE1_1">
+                <vehicle id="carflow3.2" pos="29.81" speed="35.95"/>
+            </lane>
+            <lane id="gneE1_2">
+                <vehicle id="carflow1.2" pos="75.00" speed="37.20"/>
+                <vehicle id="carflow3.1" pos="164.21" speed="43.80"/>
+            </lane>
+        </edge>
+        <edge id="gneE2">
+            <lane id="gneE2_0">
+                <vehicle id="carflow3.0" pos="152.97" speed="39.36"/>
+            </lane>
+            <lane id="gneE2_1">
+                <vehicle id="carflow2.0" pos="47.45" speed="42.41"/>
+                <vehicle id="carflow1.0" pos="164.14" speed="39.37"/>
+            </lane>
+            <lane id="gneE2_2">
+                <vehicle id="carflow1.1" pos="47.62" speed="43.23"/>
+            </lane>
+        </edge>
+    </timestep>
+    <timestep time="18.40">
+        <edge id="A">
+            <lane id="A_0">
+                <vehicle id="carflow3.5" pos="5.08" speed="1.91"/>
+                <vehicle id="carflow1.4" pos="44.53" speed="17.87"/>
+            </lane>
+            <lane id="A_1">
+                <vehicle id="carflow1.5" pos="5.79" speed="1.98"/>
+                <vehicle id="carflow2.4" pos="29.90" speed="11.73"/>
+                <vehicle id="carflow3.3" pos="72.30" speed="16.19"/>
+                <vehicle id="carflow2.2" pos="183.76" speed="29.73"/>
+            </lane>
+            <lane id="A_2">
+                <vehicle id="carflow2.5" pos="3.95" speed="0.99"/>
+                <vehicle id="carflow3.4" pos="36.24" speed="15.11"/>
+                <vehicle id="carflow2.3" pos="81.94" speed="18.76"/>
+                <vehicle id="carflow1.3" pos="133.12" speed="28.89"/>
+                <vehicle id="ego" pos="140.92" speed="22.40"/>
+            </lane>
+        </edge>
+        <edge id="gneE1">
+            <lane id="gneE1_0">
+                <vehicle id="carflow2.1" pos="109.54" speed="34.64"/>
+            </lane>
+            <lane id="gneE1_1">
+                <vehicle id="carflow3.2" pos="33.39" speed="35.74"/>
+            </lane>
+            <lane id="gneE1_2">
+                <vehicle id="carflow1.2" pos="78.72" speed="37.21"/>
+                <vehicle id="carflow3.1" pos="168.60" speed="43.89"/>
+            </lane>
+        </edge>
+        <edge id="gneE2">
+            <lane id="gneE2_0">
+                <vehicle id="carflow3.0" pos="156.91" speed="39.37"/>
+            </lane>
+            <lane id="gneE2_1">
+                <vehicle id="carflow2.0" pos="51.67" speed="42.24"/>
+                <vehicle id="carflow1.0" pos="168.08" speed="39.39"/>
+            </lane>
+            <lane id="gneE2_2">
+                <vehicle id="carflow1.1" pos="51.94" speed="43.24"/>
+            </lane>
+        </edge>
+    </timestep>
+    <timestep time="18.50">
+        <edge id="A">
+            <lane id="A_0">
+                <vehicle id="carflow3.5" pos="5.31" speed="2.30"/>
+                <vehicle id="carflow1.4" pos="46.27" speed="17.41"/>
+            </lane>
+            <lane id="A_1">
+                <vehicle id="carflow1.5" pos="6.04" speed="2.45"/>
+                <vehicle id="carflow2.4" pos="31.08" speed="11.82"/>
+                <vehicle id="carflow3.3" pos="73.97" speed="16.66"/>
+                <vehicle id="carflow2.2" pos="186.74" speed="29.78"/>
+            </lane>
+            <lane id="A_2">
+                <vehicle id="carflow2.5" pos="4.08" speed="1.35"/>
+                <vehicle id="carflow3.4" pos="37.79" speed="15.42"/>
+                <vehicle id="carflow2.3" pos="83.81" speed="18.77"/>
+                <vehicle id="carflow1.3" pos="135.92" speed="27.99"/>
+                <vehicle id="ego" pos="143.05" speed="21.30"/>
+            </lane>
+        </edge>
+        <edge id="gneE1">
+            <lane id="gneE1_0">
+                <vehicle id="carflow2.1" pos="112.99" speed="34.50"/>
+            </lane>
+            <lane id="gneE1_1">
+                <vehicle id="carflow3.2" pos="36.98" speed="35.91"/>
+            </lane>
+            <lane id="gneE1_2">
+                <vehicle id="carflow1.2" pos="82.44" speed="37.19"/>
+                <vehicle id="carflow3.1" pos="172.99" speed="43.91"/>
+            </lane>
+        </edge>
+        <edge id="gneE2">
+            <lane id="gneE2_0">
+                <vehicle id="carflow3.0" pos="160.85" speed="39.39"/>
+            </lane>
+            <lane id="gneE2_1">
+                <vehicle id="carflow2.0" pos="55.91" speed="42.43"/>
+                <vehicle id="carflow1.0" pos="172.02" speed="39.37"/>
+            </lane>
+            <lane id="gneE2_2">
+                <vehicle id="carflow1.1" pos="56.27" speed="43.25"/>
+            </lane>
+        </edge>
+    </timestep>
+    <timestep time="18.60">
+        <edge id="A">
+            <lane id="A_0">
+                <vehicle id="carflow3.5" pos="5.58" speed="2.71"/>
+                <vehicle id="carflow1.4" pos="48.04" speed="17.72"/>
+            </lane>
+            <lane id="A_1">
+                <vehicle id="carflow1.5" pos="6.33" speed="2.94"/>
+                <vehicle id="carflow2.4" pos="32.28" speed="11.93"/>
+                <vehicle id="carflow3.3" pos="75.66" speed="16.95"/>
+                <vehicle id="carflow2.2" pos="189.76" speed="30.18"/>
+            </lane>
+            <lane id="A_2">
+                <vehicle id="carflow2.5" pos="4.26" speed="1.75"/>
+                <vehicle id="carflow3.4" pos="39.36" speed="15.75"/>
+                <vehicle id="carflow2.3" pos="85.70" speed="18.90"/>
+                <vehicle id="carflow1.3" pos="138.63" speed="27.09"/>
+                <vehicle id="ego" pos="145.24" speed="21.90"/>
+            </lane>
+        </edge>
+        <edge id="gneE1">
+            <lane id="gneE1_0">
+                <vehicle id="carflow2.1" pos="116.44" speed="34.45"/>
+            </lane>
+            <lane id="gneE1_1">
+                <vehicle id="carflow3.2" pos="40.57" speed="35.91"/>
+            </lane>
+            <lane id="gneE1_2">
+                <vehicle id="carflow1.2" pos="86.16" speed="37.21"/>
+                <vehicle id="carflow3.1" pos="177.37" speed="43.79"/>
+            </lane>
+        </edge>
+        <edge id="gneE2">
+            <lane id="gneE2_0">
+                <vehicle id="carflow3.0" pos="164.78" speed="39.37"/>
+            </lane>
+            <lane id="gneE2_1">
+                <vehicle id="carflow2.0" pos="60.13" speed="42.16"/>
+                <vehicle id="carflow1.0" pos="175.96" speed="39.38"/>
+            </lane>
+            <lane id="gneE2_2">
+                <vehicle id="carflow1.1" pos="60.59" speed="43.26"/>
+            </lane>
+        </edge>
+    </timestep>
+    <timestep time="18.70">
+        <edge id="A">
+            <lane id="A_0">
+                <vehicle id="carflow3.5" pos="5.90" speed="3.13"/>
+                <vehicle id="carflow1.4" pos="49.83" speed="17.90"/>
+            </lane>
+            <lane id="A_1">
+                <vehicle id="carflow1.5" pos="6.68" speed="3.42"/>
+                <vehicle id="carflow2.4" pos="33.48" speed="12.03"/>
+                <vehicle id="carflow3.3" pos="77.40" speed="17.38"/>
+                <vehicle id="carflow2.2" pos="192.81" speed="30.51"/>
+            </lane>
+            <lane id="A_2">
+                <vehicle id="carflow2.5" pos="4.46" speed="2.04"/>
+                <vehicle id="carflow3.4" pos="40.97" speed="16.10"/>
+                <vehicle id="carflow2.3" pos="87.62" speed="19.19"/>
+                <vehicle id="carflow1.3" pos="141.25" speed="26.19"/>
+                <vehicle id="ego" pos="147.32" speed="20.80"/>
+            </lane>
+        </edge>
+        <edge id="gneE1">
+            <lane id="gneE1_0">
+                <vehicle id="carflow2.1" pos="119.92" speed="34.78"/>
+            </lane>
+            <lane id="gneE1_1">
+                <vehicle id="carflow3.2" pos="44.17" speed="35.97"/>
+            </lane>
+            <lane id="gneE1_2">
+                <vehicle id="carflow1.2" pos="89.88" speed="37.21"/>
+                <vehicle id="carflow3.1" pos="181.74" speed="43.72"/>
+            </lane>
+        </edge>
+        <edge id="gneE2">
+            <lane id="gneE2_0">
+                <vehicle id="carflow3.0" pos="168.72" speed="39.38"/>
+            </lane>
+            <lane id="gneE2_1">
+                <vehicle id="carflow2.0" pos="64.37" speed="42.38"/>
+                <vehicle id="carflow1.0" pos="179.90" speed="39.40"/>
+            </lane>
+            <lane id="gneE2_2">
+                <vehicle id="carflow1.1" pos="64.92" speed="43.27"/>
+            </lane>
+        </edge>
+    </timestep>
+    <timestep time="18.80">
+        <edge id="A">
+            <lane id="A_0">
+                <vehicle id="carflow3.5" pos="6.24" speed="3.45"/>
+                <vehicle id="carflow1.4" pos="51.65" speed="18.20"/>
+            </lane>
+            <lane id="A_1">
+                <vehicle id="carflow1.5" pos="7.07" speed="3.91"/>
+                <vehicle id="carflow2.4" pos="34.70" speed="12.21"/>
+                <vehicle id="carflow3.3" pos="79.18" speed="17.79"/>
+                <vehicle id="carflow2.2" pos="195.87" speed="30.67"/>
+            </lane>
+            <lane id="A_2">
+                <vehicle id="carflow2.5" pos="4.71" speed="2.47"/>
+                <vehicle id="carflow3.4" pos="42.62" speed="16.44"/>
+                <vehicle id="carflow2.3" pos="89.56" speed="19.40"/>
+                <vehicle id="carflow1.3" pos="143.78" speed="25.29"/>
+                <vehicle id="ego" pos="149.46" speed="21.40"/>
+            </lane>
+        </edge>
+        <edge id="gneE1">
+            <lane id="gneE1_0">
+                <vehicle id="carflow2.1" pos="123.37" speed="34.51"/>
+            </lane>
+            <lane id="gneE1_1">
+                <vehicle id="carflow3.2" pos="47.75" speed="35.85"/>
+            </lane>
+            <lane id="gneE1_2">
+                <vehicle id="carflow1.2" pos="93.60" speed="37.19"/>
+                <vehicle id="carflow3.1" pos="186.12" speed="43.76"/>
+            </lane>
+        </edge>
+        <edge id="gneE2">
+            <lane id="gneE2_0">
+                <vehicle id="carflow3.0" pos="172.66" speed="39.40"/>
+            </lane>
+            <lane id="gneE2_1">
+                <vehicle id="carflow2.0" pos="68.57" speed="41.97"/>
+                <vehicle id="carflow1.0" pos="183.83" speed="39.38"/>
+            </lane>
+            <lane id="gneE2_2">
+                <vehicle id="carflow1.1" pos="69.25" speed="43.24"/>
+            </lane>
+        </edge>
+    </timestep>
+    <timestep time="18.90">
+        <edge id="A">
+            <lane id="A_0">
+                <vehicle id="carflow3.5" pos="6.62" speed="3.79"/>
+                <vehicle id="carflow1.4" pos="53.50" speed="18.48"/>
+            </lane>
+            <lane id="A_1">
+                <vehicle id="carflow1.5" pos="7.50" speed="4.37"/>
+                <vehicle id="carflow2.4" pos="35.95" speed="12.55"/>
+                <vehicle id="carflow3.3" pos="81.00" speed="18.19"/>
+                <vehicle id="carflow2.2" pos="198.97" speed="30.93"/>
+            </lane>
+            <lane id="A_2">
+                <vehicle id="carflow2.5" pos="4.98" speed="2.70"/>
+                <vehicle id="carflow3.4" pos="44.30" speed="16.88"/>
+                <vehicle id="carflow2.3" pos="91.52" speed="19.53"/>
+                <vehicle id="carflow1.3" pos="146.21" speed="24.39"/>
+                <vehicle id="ego" pos="151.57" speed="21.10"/>
+            </lane>
+        </edge>
+        <edge id="gneE1">
+            <lane id="gneE1_0">
+                <vehicle id="carflow2.1" pos="126.85" speed="34.83"/>
+            </lane>
+            <lane id="gneE1_1">
+                <vehicle id="carflow3.2" pos="51.35" speed="35.94"/>
+            </lane>
+            <lane id="gneE1_2">
+                <vehicle id="carflow1.2" pos="97.32" speed="37.18"/>
+                <vehicle id="carflow3.1" pos="190.50" speed="43.77"/>
+            </lane>
+        </edge>
+        <edge id="gneE2">
+            <lane id="gneE2_0">
+                <vehicle id="carflow3.0" pos="176.60" speed="39.38"/>
+            </lane>
+            <lane id="gneE2_1">
+                <vehicle id="carflow2.0" pos="72.80" speed="42.34"/>
+                <vehicle id="carflow1.0" pos="187.77" speed="39.38"/>
+            </lane>
+            <lane id="gneE2_2">
+                <vehicle id="carflow1.1" pos="73.57" speed="43.27"/>
+            </lane>
+        </edge>
+    </timestep>
+    <timestep time="19.00">
+        <edge id="A">
+            <lane id="A_0">
+                <vehicle id="carflow3.5" pos="7.03" speed="4.12"/>
+                <vehicle id="carflow1.4" pos="55.37" speed="18.77"/>
+            </lane>
+            <lane id="A_1">
+                <vehicle id="carflow1.5" pos="7.99" speed="4.85"/>
+                <vehicle id="carflow2.4" pos="37.24" speed="12.84"/>
+                <vehicle id="carflow3.3" pos="82.86" speed="18.59"/>
+            </lane>
+            <lane id="A_2">
+                <vehicle id="carflow2.5" pos="5.28" speed="3.02"/>
+                <vehicle id="carflow3.4" pos="46.02" speed="17.21"/>
+                <vehicle id="carflow2.3" pos="93.48" speed="19.61"/>
+            </lane>
+        </edge>
+        <edge id="gneE1">
+            <lane id="gneE1_0">
+                <vehicle id="carflow2.1" pos="130.31" speed="34.63"/>
+            </lane>
+            <lane id="gneE1_1">
+                <vehicle id="carflow2.2" pos="1.97" speed="31.00"/>
+                <vehicle id="carflow3.2" pos="54.94" speed="35.95"/>
+            </lane>
+            <lane id="gneE1_2">
+                <vehicle id="carflow1.2" pos="101.04" speed="37.20"/>
+                <vehicle id="carflow3.1" pos="194.89" speed="43.91"/>
+            </lane>
+        </edge>
+        <edge id="gneE2">
+            <lane id="gneE2_0">
+                <vehicle id="carflow3.0" pos="180.54" speed="39.38"/>
+            </lane>
+            <lane id="gneE2_1">
+                <vehicle id="carflow2.0" pos="77.04" speed="42.36"/>
+                <vehicle id="carflow1.0" pos="191.71" speed="39.40"/>
+            </lane>
+            <lane id="gneE2_2">
+                <vehicle id="carflow1.1" pos="77.90" speed="43.24"/>
+            </lane>
+        </edge>
+    </timestep>
+    <timestep time="19.10">
+        <edge id="A">
+            <lane id="A_0">
+                <vehicle id="carflow3.5" pos="7.48" speed="4.49"/>
+                <vehicle id="carflow1.4" pos="57.28" speed="19.05"/>
+            </lane>
+            <lane id="A_1">
+                <vehicle id="carflow1.5" pos="8.52" speed="5.32"/>
+                <vehicle id="carflow2.4" pos="38.55" speed="13.16"/>
+                <vehicle id="carflow3.3" pos="84.75" speed="18.97"/>
+            </lane>
+            <lane id="A_2">
+                <vehicle id="carflow2.5" pos="5.61" speed="3.32"/>
+                <vehicle id="carflow3.4" pos="47.78" speed="17.59"/>
+                <vehicle id="carflow2.3" pos="95.49" speed="20.10"/>
+            </lane>
+        </edge>
+        <edge id="gneE1">
+            <lane id="gneE1_0">
+                <vehicle id="carflow2.1" pos="133.78" speed="34.63"/>
+            </lane>
+            <lane id="gneE1_1">
+                <vehicle id="carflow2.2" pos="5.11" speed="31.46"/>
+                <vehicle id="carflow3.2" pos="58.54" speed="35.98"/>
+            </lane>
+            <lane id="gneE1_2">
+                <vehicle id="carflow1.2" pos="104.76" speed="37.19"/>
+                <vehicle id="carflow3.1" pos="199.26" speed="43.68"/>
+            </lane>
+        </edge>
+        <edge id="gneE2">
+            <lane id="gneE2_0">
+                <vehicle id="carflow3.0" pos="184.48" speed="39.40"/>
+            </lane>
+            <lane id="gneE2_1">
+                <vehicle id="carflow2.0" pos="81.25" speed="42.13"/>
+                <vehicle id="carflow1.0" pos="195.65" speed="39.37"/>
+            </lane>
+            <lane id="gneE2_2">
+                <vehicle id="carflow1.1" pos="82.22" speed="43.22"/>
+            </lane>
         </edge>
     </timestep>
 </netstate>

@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/sumoProject/agents/torchpolicygrad.py" line="162" />
+    <bookmark url="file://$PROJECT_DIR$/sumoProject/agents/torchpolicygrad.py" line="164" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="999f16c8-7d46-4b0a-83f0-9764e2ed7a90" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sumoProject/agents/torchpolicygrad.py" beforeDir="false" afterPath="$PROJECT_DIR$/sumoProject/agents/torchpolicygrad.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sumoProject/envs/SUMO_Starter.py" beforeDir="false" afterPath="$PROJECT_DIR$/sumoProject/envs/SUMO_Starter.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sumoProject/envs/virtualtraffic" beforeDir="false" afterPath="$PROJECT_DIR$/sumoProject/envs/virtualtraffic" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sumoProject/envtest.py" beforeDir="false" afterPath="$PROJECT_DIR$/sumoProject/envtest.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -40,21 +41,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sumoProject/envs/SUMO_Starter.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-211">
-              <caret line="94" column="93" selection-start-line="94" selection-start-column="93" selection-end-line="94" selection-end-column="93" />
+            <state relative-caret-position="143">
+              <caret line="345" column="33" selection-start-line="345" selection-start-column="33" selection-end-line="345" selection-end-column="33" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
-                <element signature="e#4695#7906#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="385">
-              <caret line="109" lean-forward="true" selection-start-line="109" selection-end-line="109" />
+            <state relative-caret-position="1635">
+              <caret line="109" selection-start-line="109" selection-end-line="109" />
             </state>
           </provider>
         </entry>
@@ -62,8 +62,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sumoProject/envtest.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="34" column="48" selection-start-line="34" selection-start-column="48" selection-end-line="34" selection-end-column="48" />
+            <state relative-caret-position="311">
+              <caret line="42" lean-forward="true" selection-start-line="42" selection-end-line="42" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -71,23 +71,41 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file:///usr/local/lib/python3.5/dist-packages/gym/wrappers/time_limit.py">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/sumoProject/agents/torchpolicygrad.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="373">
-              <caret line="30" column="54" selection-start-line="30" selection-start-column="54" selection-end-line="30" selection-end-column="54" />
+            <state relative-caret-position="420">
+              <caret line="153" column="41" lean-forward="true" selection-start-line="153" selection-start-column="41" selection-end-line="153" selection-end-column="41" />
+              <folding>
+                <element signature="e#0#16#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sumoProject/agents/torchpolicygrad.py">
+        <entry file="file://$PROJECT_DIR$/sumoProject/agents/torchpolicygrad_labor.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1231">
-              <caret line="67" column="28" selection-start-line="67" selection-start-column="28" selection-end-line="67" selection-end-column="28" />
-              <folding>
-                <element signature="e#0#16#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="235">
+              <caret line="134" column="60" selection-start-line="134" selection-start-column="60" selection-end-line="134" selection-end-column="60" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file:///usr/local/lib/python3.5/dist-packages/torch/nn/modules/module.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2565">
+              <caret line="178" selection-start-line="178" selection-end-line="178" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file:///usr/local/lib/python3.5/dist-packages/torch/nn/modules/container.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="675">
+              <caret line="52" selection-start-line="52" selection-end-line="52" />
             </state>
           </provider>
         </entry>
@@ -161,7 +179,6 @@
         <option value="$PROJECT_DIR$/sumoProject/jatek.sumocfg" />
         <option value="$PROJECT_DIR$/sumoProject/SUMO_Starter.py" />
         <option value="$PROJECT_DIR$/venv/Lib/site-packages/gym/envs/__init__.py" />
-        <option value="$PROJECT_DIR$/sumoProject/envtest.py" />
         <option value="$PROJECT_DIR$/venv/lib/python3.7/site-packages/gym/envs/__init__.py" />
         <option value="$PROJECT_DIR$/sumoProject/plotting.py" />
         <option value="$PROJECT_DIR$/sumoProject/agents/dqn.py" />
@@ -173,9 +190,11 @@
         <option value="$PROJECT_DIR$/__init__.py" />
         <option value="$PROJECT_DIR$/sumoProject/__init__.py" />
         <option value="/usr/share/sumo/tools/traci/__init__.py" />
-        <option value="$PROJECT_DIR$/sumoProject/agents/torchpolicygrad.py" />
-        <option value="$PROJECT_DIR$/sumoProject/envs/SUMO_Starter.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/sumoProject/agents/torchpolicygrad_labor.py" />
+        <option value="$PROJECT_DIR$/sumoProject/envs/SUMO_Starter.py" />
+        <option value="$PROJECT_DIR$/sumoProject/agents/torchpolicygrad.py" />
+        <option value="$PROJECT_DIR$/sumoProject/envtest.py" />
       </list>
     </option>
   </component>
@@ -191,6 +210,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -209,35 +229,41 @@
               <item name="sumoProject" type="462c0819:PsiDirectoryNode" />
               <item name="agents" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="RLhighway" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RLhighway" type="462c0819:PsiDirectoryNode" />
+              <item name="sumoProject" type="462c0819:PsiDirectoryNode" />
+              <item name="agents" type="462c0819:PsiDirectoryNode" />
+              <item name="torchSummary" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="/usr/share/sumo/tools" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/sumoProject/agents" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/sumoProject/agents" />
-      <recent name="D:\msc\second\research\RLHighWay\sumoProject" />
-      <recent name="C:\Users\szoke\Documents\msc\second\research\gym-highway-master\gym_highway" />
-      <recent name="C:\Users\szoke\Documents\msc\second\research\gym-highway-master\gym_highway\Agent" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-05-22_08:22:37" />
       <recent name="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-05-22_18:49:03" />
       <recent name="$PROJECT_DIR$/sumoProject/agents/torchSummary" />
       <recent name="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-05-20_18:51:14" />
       <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/sumoProject/agents" />
+      <recent name="D:\msc\second\research\RLHighWay\sumoProject" />
+      <recent name="C:\Users\szoke\Documents\msc\second\research\gym-highway-master\gym_highway" />
+      <recent name="C:\Users\szoke\Documents\msc\second\research\gym-highway-master\gym_highway\Agent" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -387,6 +413,28 @@
         <option name="RunConfigurationTask" enabled="true" run_configuration_name="__init__ (1)" run_configuration_type="PythonConfigurationType" />
       </method>
     </configuration>
+    <configuration name="torchpolicygrad_labor" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="gym-highway-master" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sumoProject/agents" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sumoProject/agents/torchpolicygrad_labor.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="vanilla_policy_gradient" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="gym-highway-master" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -417,10 +465,12 @@
       <item itemvalue="Python.vanilla_policy_gradient" />
       <item itemvalue="Python.torchpolicygrad" />
       <item itemvalue="Python.setup" />
+      <item itemvalue="Python.torchpolicygrad_labor" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.torchpolicygrad" />
+        <item itemvalue="Python.torchpolicygrad_labor" />
         <item itemvalue="Python.setup" />
         <item itemvalue="Python.vanilla_policy_gradient" />
         <item itemvalue="Python.envtest" />
@@ -489,7 +539,9 @@
       <workItem from="1560151435446" duration="5251000" />
       <workItem from="1561031777388" duration="4819000" />
       <workItem from="1561270067983" duration="2518000" />
-      <workItem from="1561563900968" duration="13364000" />
+      <workItem from="1561563900968" duration="14891000" />
+      <workItem from="1561981966842" duration="1368000" />
+      <workItem from="1562084733855" duration="333000" />
     </task>
     <task id="LOCAL-00001" summary="initial setup">
       <created>1549377943473</created>
@@ -519,11 +571,18 @@
       <option name="project" value="LOCAL" />
       <updated>1561666266246</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="David féle környezet rep, plusz dx reward">
+      <created>1561671785425</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1561671785425</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="261899000" />
+    <option name="totallyTimeSpent" value="265127000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -536,23 +595,25 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-3" y="28" width="1926" height="1029" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.48737374" visible="true" weight="0.18536325" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.48737374" visible="true" weight="0.18963675" />
       <window_info id="Structure" order="1" sideWeight="0.5126263" side_tool="true" weight="0.13004847" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32791728" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49786323" weight="0.42217246" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.49839744" visible="true" weight="0.4356103" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49626067" visible="true" weight="0.42105263" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49839744" weight="0.4356103" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Docker" order="6" show_stripe_button="false" />
       <window_info anchor="bottom" id="TODO" order="7" sideWeight="0.49946582" weight="0.32922733" />
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49946582" weight="0.32922733" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5016026" side_tool="true" visible="true" weight="0.4356103" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5037393" side_tool="true" visible="true" weight="0.42105263" />
       <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49893162" weight="0.21388578" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.32474804" />
+      <window_info anchor="bottom" id="Messages" order="13" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24939272" />
@@ -599,7 +660,8 @@
     <MESSAGE value="initial setup" />
     <MESSAGE value="working model, learning with this settings" />
     <MESSAGE value="new rewards" />
-    <option name="LAST_COMMIT_MESSAGE" value="new rewards" />
+    <MESSAGE value="David féle környezet rep, plusz dx reward" />
+    <option name="LAST_COMMIT_MESSAGE" value="David féle környezet rep, plusz dx reward" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -618,7 +680,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/sumoProject/envtest.py</url>
-          <line>35</line>
+          <line>36</line>
           <option name="timeStamp" value="37" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -630,6 +692,7 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/RLhighway$torchpolicygrad_labor.coverage" NAME="torchpolicygrad_labor Coverage Results" MODIFIED="1561982820423" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject/agents" />
     <SUITE FILE_PATH="coverage/RLHighWay$__init__.coverage" NAME="__init__ Coverage Results" MODIFIED="1555688396164" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject" />
     <SUITE FILE_PATH="coverage/RLHighWay$SUMO_Starter.coverage" NAME="SUMO_Starter Coverage Results" MODIFIED="1555674718619" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject" />
     <SUITE FILE_PATH="coverage/szoke$__init____2_.coverage" NAME="__init__ (2) Coverage Results" MODIFIED="1556406923154" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -639,8 +702,8 @@
     <SUITE FILE_PATH="coverage/szoke$SUMO_Starter.coverage" NAME="SUMO_Starter Coverage Results" MODIFIED="1556408064264" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject/envs" />
     <SUITE FILE_PATH="coverage/RLhighway$__init__.coverage" NAME="__init__ Coverage Results" MODIFIED="1560150635829" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RLHighWay$__init____2_.coverage" NAME="__init__ (2) Coverage Results" MODIFIED="1555689078724" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/RLhighway$__init____1_.coverage" NAME="__init__ (1) Coverage Results" MODIFIED="1561671069851" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject" />
-    <SUITE FILE_PATH="coverage/RLhighway$torchpolicygrad.coverage" NAME="torchpolicygrad Coverage Results" MODIFIED="1561671070479" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject/agents" />
+    <SUITE FILE_PATH="coverage/RLhighway$__init____1_.coverage" NAME="__init__ (1) Coverage Results" MODIFIED="1562084906893" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject" />
+    <SUITE FILE_PATH="coverage/RLhighway$torchpolicygrad.coverage" NAME="torchpolicygrad Coverage Results" MODIFIED="1562084907596" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject/agents" />
     <SUITE FILE_PATH="coverage/RLHighWay$envtest.coverage" NAME="envtest Coverage Results" MODIFIED="1555713373972" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject" />
     <SUITE FILE_PATH="coverage/RLHighWay$__init____1_.coverage" NAME="__init__ (1) Coverage Results" MODIFIED="1555689036554" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject" />
     <SUITE FILE_PATH="coverage/RLHighWay$vanilla_policy_gradient.coverage" NAME="vanilla_policy_gradient Coverage Results" MODIFIED="1556010535754" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject/agents" />
@@ -736,11 +799,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/gym/envs/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/gym/spaces/box.py" />
-    <entry file="file://$PROJECT_DIR$/sumoProject/envs/basicnet.net.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://C:/Sumo/tools/traci/exceptions.py" />
     <entry file="file://C:/Sumo/tools/traci/__init__.py" />
     <entry file="file://$PROJECT_DIR$/venv/bin/python3.7" />
@@ -923,48 +981,68 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1635">
+          <caret line="109" selection-start-line="109" selection-end-line="109" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python3.5/dist-packages/torch/nn/modules/module.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2565">
+          <caret line="178" selection-start-line="178" selection-end-line="178" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python3.5/dist-packages/torch/nn/modules/container.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="675">
+          <caret line="52" selection-start-line="52" selection-end-line="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sumoProject/envs/SUMO_Starter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="143">
+          <caret line="345" column="33" selection-start-line="345" selection-start-column="33" selection-end-line="345" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sumoProject/agents/torchpolicygrad_labor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="235">
+          <caret line="134" column="60" selection-start-line="134" selection-start-column="60" selection-end-line="134" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python3.5/dist-packages/gym/wrappers/time_limit.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="431">
+          <caret line="30" column="54" selection-start-line="30" selection-start-column="54" selection-end-line="30" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/sumoProject/envtest.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="34" column="48" selection-start-line="34" selection-start-column="48" selection-end-line="34" selection-end-column="48" />
+        <state relative-caret-position="311">
+          <caret line="42" lean-forward="true" selection-start-line="42" selection-end-line="42" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/local/lib/python3.5/dist-packages/gym/wrappers/time_limit.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="373">
-          <caret line="30" column="54" selection-start-line="30" selection-start-column="54" selection-end-line="30" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sumoProject/agents/torchpolicygrad.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1231">
-          <caret line="67" column="28" selection-start-line="67" selection-start-column="28" selection-end-line="67" selection-end-column="28" />
+        <state relative-caret-position="420">
+          <caret line="153" column="41" lean-forward="true" selection-start-line="153" selection-start-column="41" selection-end-line="153" selection-end-column="41" />
           <folding>
             <element signature="e#0#16#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sumoProject/envs/SUMO_Starter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-211">
-          <caret line="94" column="93" selection-start-line="94" selection-start-column="93" selection-end-line="94" selection-end-column="93" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#4695#7906#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="385">
-          <caret line="109" lean-forward="true" selection-start-line="109" selection-end-line="109" />
         </state>
       </provider>
     </entry>

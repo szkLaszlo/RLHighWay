@@ -23,7 +23,7 @@ class EPHighWayEnv(gym.Env):
         low = np.array(
             [-200, -50, -200, -50, -200, -50, -200, -50, -200, -50, -200, -50, -200, -50, -200, -50, 0, -1, -90, -10])
         high = np.array([200, 50, 200, 50, 200, 50, 200, 50, 200, 50, 200, 50, 200, 50, 200, 50, 50, 3, 90, 20])
-        self.action_space = spaces.Discrete(49)
+        self.action_space = spaces.Discrete(9)
         self.observation_space = spaces.Box(low, high, dtype=np.float32)
         self.cumulated_reward = 0
         self.rewards = [0, 0, 0, 0]
@@ -69,10 +69,10 @@ class EPHighWayEnv(gym.Env):
             raise RuntimeError('Please run render before reset!')
 
     def calculate_action(self, action):
-        st = [-0.1, -0.3, -0.5, 0, 0.5, 0.3, 0.1]
-        ac = [-0.5, -0.2, -0.1, 0.0, 0.1, 0.2, 0.3]
-        steer = st[action // 7]
-        acc = ac[action % 7]
+        st = [-0.5, 0, 0.5]
+        ac = [-0.5, 0.0, 0.3]
+        steer = st[action // 3]
+        acc = ac[action % 3]
         ctrl = [steer, acc]
         return ctrl
 
@@ -105,7 +105,7 @@ class EPHighWayEnv(gym.Env):
                 if is_ok:
                     new_x = traci.vehicle.getContextSubscriptionResults(self.egoID)[self.egoID][tc.VAR_POSITION][0]
                 else:
-                    new_x = last_x
+                    new_x = last_x + max(self.state['speed'] + ctrl[1], 0) * self.dt
         else:
             is_ok = False
             cause = None
@@ -339,7 +339,7 @@ class EPHighWayEnv(gym.Env):
         if self.egoID is not None:
             if self.egoID in traci.simulation.getCollidingVehiclesIDList():
                 cause = "Collision"
-            elif self.egoID in traci.vehicle.getIDList() and traci.vehicle.getSpeed(self.egoID) < (70 / 3.6):
+            elif self.egoID in traci.vehicle.getIDList() and traci.vehicle.getSpeed(self.egoID) < (50 / 3.6):
                 cause = 'Too Slow'
             elif self.egoID in traci.simulation.getArrivedIDList():
                 cause = None

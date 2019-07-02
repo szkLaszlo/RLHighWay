@@ -35,7 +35,7 @@ class Policy(nn.Module):
         self.reward_history = []
         self.loss_history = []
         self.optimizer = optim.Adam(self.parameters(), lr=learning_rate)
-        self.scheduler = optim.lr_scheduler.StepLR(self.optimizer, step_size=4000, gamma=0.1)
+        self.scheduler = optim.lr_scheduler.StepLR(self.optimizer, step_size=1000, gamma=0.9)
 
     def forward(self, x):
         self.model = torch.nn.Sequential(
@@ -149,7 +149,7 @@ if __name__ == "__main__":
         # Hyperparameters
         learning_rate = 0.0001
         gamma = 0.99
-        episodes= 100000
+        episodes = 100000
         save_path = 'torchSummary/{}'.format(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime()))
         policy = Policy(env=env,episodes=episodes)
 
