@@ -5,10 +5,13 @@
 	<vType id="car2" length="5.2" accel="5" decel="6" sigma="0.1" speedFactor="normc(1,0.1,0.2,2)" />
 	<vType id="car4" length="4.5" accel="5" decel="6" sigma="0.5" speedFactor="normc(1,0.1,0.2,2)" />
 	<vType id="car3" length="3.7" accel="5" decel="6" sigma="1" speedFactor="normc(1,0.1,0.2,2)" />
-	<flow id="carflow1"  type="car2" route="r1" beg="0" end="3600" color="0,0,1" maxSpeed="random" speedFactor="normc(1,0.2,0.2,2)" departLane="random" vehsPerHour ="1000"/>
-	<flow id="carflow2"  type="car3" route="r1" beg="0" end="3600" color="1,0,0" maxSpeed="random" speedFactor="normc(1,0.2,0.2,2)" departLane="random" vehsPerHour ="1000"/>
-	<flow id="carflow3"  type="car4" route="r1" beg="0" end="3600" color="0,1,0" maxSpeed="random" speedFactor="normc(1,0.2,0.2,2)" departLane="random" vehsPerHour ="1000"/>
-	<vehicle id="ego" type="car1" depart="2" route="r1" color="1,1,1" departSpeed="20" departLane="random">
+	<flow id="carflow1" type="car2" route="r1" beg="0" end="3600" color="0,0,1" maxSpeed="30"
+		  speedFactor="normc(1,0.2,0.2,2)" departLane="random" vehsPerHour="1000"/>
+	<flow id="carflow2" type="car3" route="r1" beg="0" end="3600" color="1,0,0" maxSpeed="38"
+		  speedFactor="normc(1,0.2,0.2,2)" departLane="random" vehsPerHour="1000"/>
+	<flow id="carflow3" type="car4" route="r1" beg="0" end="3600" color="0,1,0" maxSpeed="35"
+		  speedFactor="normc(1,0.2,0.2,2)" departLane="random" vehsPerHour="1000"/>
+	<vehicle id="ego" type="car1" depart="5" route="r1" color="1,1,1" departSpeed="30" departLane="2">
 	</vehicle>
 
 </routes>

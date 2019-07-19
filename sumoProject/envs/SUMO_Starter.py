@@ -1,9 +1,8 @@
 import copy
-import random
-
 import gym
 import math
 import numpy as np
+import random
 import traci
 import traci.constants as tc
 from gym import spaces
@@ -90,9 +89,8 @@ class EPHighWayEnv(gym.Env):
                 lane_new = traci.vehicle.getLaneID(self.egoID)
                 if int(lane_new[-1]) != self.state['lane']:
                     if self.state['lane'] < 0 or self.state['lane'] > 2:
-                        self.cumulated_reward += -100
                         traci.close()
-                        return self.state, (0), True, {'cause': 'Left Highway', 'rewards': (0)}
+                        return self.state, (0), True, {'cause': 'Left Highway', 'rewards': self.cumulated_reward}
                     lane_new = lane_new[:-1] + str(self.state['lane'])
                     x = traci.vehicle.getLanePosition(self.egoID)
                     try:
@@ -118,17 +116,17 @@ class EPHighWayEnv(gym.Env):
         reward = 0
         if terminated and cause is not None:
             traci.close()
-            self.cumulated_reward += -100
             reward = new_x - last_x  # -2000 # + self.steps_done
         elif not terminated:
-            self.cumulated_reward = self.cumulated_reward + 1
             reward = new_x - last_x  # 1
+            self.cumulated_reward = self.cumulated_reward + reward
             self.steps_done += 1
         else:
             traci.close()
             reward = new_x - last_x  # 2000 - self.steps_done
+            self.cumulated_reward = self.cumulated_reward + reward
         reward = reward
-        return self.state, reward, terminated, {'cause': cause, 'rewards': reward}
+        return self.state, reward, terminated, {'cause': cause, 'rewards': self.cumulated_reward}
 
     def calculate_reward(self):
         reward = 0
@@ -327,10 +325,8 @@ class EPHighWayEnv(gym.Env):
             lanes = [-1, 0, 1]
             traci.vehicle.setLaneChangeMode(self.egoID, 0x0)
             traci.vehicle.setSpeedMode(self.egoID, 0x0)
-            desired_speed = random.randint(100, 140)
-            desired_speed = desired_speed / 3.6
-            traci.vehicle.setSpeed(self.egoID,desired_speed)
-            traci.vehicle.setMaxSpeed(self.egoID,desired_speed)
+            traci.vehicle.setSpeed(self.egoID, self.desired_speed)
+            traci.vehicle.setMaxSpeed(self.egoID, self.desired_speed)
             traci.vehicle.subscribeContext(self.egoID, tc.CMD_GET_VEHICLE_VARIABLE, 0.0,
                                            [tc.VAR_SPEED, tc.VAR_LANE_INDEX, tc.VAR_ANGLE, tc.VAR_POSITION,
                                             tc.VAR_LENGTH])

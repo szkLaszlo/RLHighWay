@@ -1,10 +1,9 @@
-import itertools
-import os
-import time
-
 import easygui as easygui
 import gym
+import itertools
 import numpy as np
+import os
+import time
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -22,8 +21,8 @@ class Policy(nn.Module):
         self.state_space = self.env.observation_space.shape[0]
         self.action_space = self.env.action_space.n
 
-        self.l1 = nn.Linear(self.state_space, 128, bias=False)
-        self.l2 = nn.Linear(128, self.action_space, bias=False)
+        self.l1 = nn.Linear(self.state_space, 256, bias=True)
+        self.l2 = nn.Linear(256, self.action_space, bias=True)
 
         self.gamma = gamma
         self.loss = 10
@@ -35,7 +34,7 @@ class Policy(nn.Module):
         self.reward_history = []
         self.loss_history = []
         self.optimizer = optim.Adam(self.parameters(), lr=learning_rate)
-        self.scheduler = optim.lr_scheduler.StepLR(self.optimizer, step_size=1000, gamma=0.9)
+        self.scheduler = optim.lr_scheduler.StepLR(self.optimizer, step_size=1000, gamma=0.99)
 
     def forward(self, x):
         self.model = torch.nn.Sequential(
@@ -67,7 +66,6 @@ class Policy(nn.Module):
         self.optimizer.zero_grad()
         self.loss.backward()
         self.optimizer.step()
-
 
         # Save and intialize episode history counters
         self.loss_history.append(self.loss.item())
@@ -116,11 +114,11 @@ def main(pol, save_path, episodes=100):
             if done:
                 print(info)
                 print(t)
-                episode_reward = reward
+                episode_reward = info['rewards']
                 break
 
         # Used to determine when the environment is solved.
-        running_reward += reward
+        running_reward += episode_reward
         writer.add_scalar('episode_reward', episode_reward, episode)
         writer.add_scalar('episode_length', t, episode)
         writer.add_scalar('finished', 1 if info['cause'] is None else 0, episode)
@@ -149,7 +147,7 @@ if __name__ == "__main__":
         # Hyperparameters
         learning_rate = 0.0001
         gamma = 0.99
-        episodes = 100000
+        episodes = 10000
         save_path = 'torchSummary/{}'.format(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime()))
         policy = Policy(env=env,episodes=episodes)
 
