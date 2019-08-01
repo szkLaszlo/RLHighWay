@@ -1,9 +1,10 @@
-import easygui as easygui
-import gym
 import itertools
-import numpy as np
 import os
 import time
+
+import easygui as easygui
+import gym
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -21,8 +22,8 @@ class Policy(nn.Module):
         self.state_space = self.env.observation_space.shape[0]
         self.action_space = self.env.action_space.n
 
-        self.l1 = nn.Linear(self.state_space, 256, bias=True)
-        self.l2 = nn.Linear(256, self.action_space, bias=True)
+        self.l1 = nn.Linear(self.state_space, 512, bias=True)
+        self.l2 = nn.Linear(512, self.action_space, bias=True)
 
         self.gamma = gamma
         self.loss = 10
@@ -34,7 +35,7 @@ class Policy(nn.Module):
         self.reward_history = []
         self.loss_history = []
         self.optimizer = optim.Adam(self.parameters(), lr=learning_rate)
-        self.scheduler = optim.lr_scheduler.StepLR(self.optimizer, step_size=1000, gamma=0.99)
+        self.scheduler = optim.lr_scheduler.StepLR(self.optimizer, step_size=2000, gamma=0.5)
 
     def forward(self, x):
         self.model = torch.nn.Sequential(
@@ -145,9 +146,9 @@ if __name__ == "__main__":
 
         torch.manual_seed(1)
         # Hyperparameters
-        learning_rate = 0.0001
-        gamma = 0.99
-        episodes = 10000
+        learning_rate = 0.001
+        gamma = 0.9
+        episodes = 50000
         save_path = 'torchSummary/{}'.format(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime()))
         policy = Policy(env=env,episodes=episodes)
 

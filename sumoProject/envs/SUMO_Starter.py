@@ -1,8 +1,9 @@
 import copy
+import random
+
 import gym
 import math
 import numpy as np
-import random
 import traci
 import traci.constants as tc
 from gym import spaces
@@ -90,7 +91,9 @@ class EPHighWayEnv(gym.Env):
                 if int(lane_new[-1]) != self.state['lane']:
                     if self.state['lane'] < 0 or self.state['lane'] > 2:
                         traci.close()
-                        return self.state, (0), True, {'cause': 'Left Highway', 'rewards': self.cumulated_reward}
+                        reward = -2000
+                        self.cumulated_reward += reward
+                        return self.state, reward, True, {'cause': 'Left Highway', 'rewards': self.cumulated_reward}
                     lane_new = lane_new[:-1] + str(self.state['lane'])
                     x = traci.vehicle.getLanePosition(self.egoID)
                     try:
@@ -116,15 +119,16 @@ class EPHighWayEnv(gym.Env):
         reward = 0
         if terminated and cause is not None:
             traci.close()
-            reward = new_x - last_x  # -2000 # + self.steps_done
+            reward = -2000
+            self.cumulated_reward = self.cumulated_reward + reward
         elif not terminated:
             reward = new_x - last_x  # 1
+            reward *= self.state['speed'] * 0.1
             self.cumulated_reward = self.cumulated_reward + reward
             self.steps_done += 1
         else:
             traci.close()
-            reward = new_x - last_x  # 2000 - self.steps_done
-            self.cumulated_reward = self.cumulated_reward + reward
+            reward = self.cumulated_reward - self.steps_done
         reward = reward
         return self.state, reward, terminated, {'cause': cause, 'rewards': self.cumulated_reward}
 
