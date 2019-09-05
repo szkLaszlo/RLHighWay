@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on Thu Aug  1 08:07:18 2019 by Eclipse SUMO Version 1.2.0
+<!-- generated on Thu Sep  5 18:15:02 2019 by Eclipse SUMO Version 1.2.0
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
 
     <input>
@@ -32,8 +32,12 @@
     </report>
 
     <traci_server>
-        <remote-port value="41587"/>
+        <remote-port value="59471"/>
     </traci_server>
+
+    <random_number>
+        <random value="true"/>
+    </random_number>
 
     <gui_only>
         <quit-on-end value="true"/>
@@ -45,652 +49,315 @@
 -->
 
 <netstate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netstate_file.xsd">
-    <timestep time="0.00">
+    <timestep time="0.00"/>
+    <timestep time="0.10"/>
+    <timestep time="0.20"/>
+    <timestep time="0.30"/>
+    <timestep time="0.40"/>
+    <timestep time="0.50"/>
+    <timestep time="0.60"/>
+    <timestep time="0.70"/>
+    <timestep time="0.80"/>
+    <timestep time="0.90"/>
+    <timestep time="1.00"/>
+    <timestep time="1.10"/>
+    <timestep time="1.20"/>
+    <timestep time="1.30"/>
+    <timestep time="1.40"/>
+    <timestep time="1.50"/>
+    <timestep time="1.60"/>
+    <timestep time="1.70"/>
+    <timestep time="1.80"/>
+    <timestep time="1.90"/>
+    <timestep time="2.00"/>
+    <timestep time="2.10"/>
+    <timestep time="2.20"/>
+    <timestep time="2.30"/>
+    <timestep time="2.40"/>
+    <timestep time="2.50"/>
+    <timestep time="2.60"/>
+    <timestep time="2.70"/>
+    <timestep time="2.80"/>
+    <timestep time="2.90"/>
+    <timestep time="3.00"/>
+    <timestep time="3.10"/>
+    <timestep time="3.20"/>
+    <timestep time="3.30"/>
+    <timestep time="3.40"/>
+    <timestep time="3.50"/>
+    <timestep time="3.60"/>
+    <timestep time="3.70"/>
+    <timestep time="3.80"/>
+    <timestep time="3.90"/>
+    <timestep time="4.00"/>
+    <timestep time="4.10"/>
+    <timestep time="4.20"/>
+    <timestep time="4.30"/>
+    <timestep time="4.40"/>
+    <timestep time="4.50"/>
+    <timestep time="4.60"/>
+    <timestep time="4.70"/>
+    <timestep time="4.80"/>
+    <timestep time="4.90"/>
+    <timestep time="5.00">
         <edge id="A">
-            <lane id="A_0">
-                <vehicle id="carflow3.0" pos="4.60" speed="0.00"/>
-            </lane>
+            <lane id="A_0"/>
             <lane id="A_1">
-                <vehicle id="carflow2.0" pos="3.80" speed="0.00"/>
+                <vehicle id="ego" pos="5.30" speed="30.00"/>
             </lane>
-            <lane id="A_2">
-                <vehicle id="carflow1.0" pos="5.30" speed="0.00"/>
-            </lane>
-        </edge>
-        <edge id="gneE5">
-            <lane id="gneE5_0">
-                <vehicle id="carflow5.0" pos="4.60" speed="0.00"/>
-            </lane>
-            <lane id="gneE5_1">
-                <vehicle id="carflow6.0" pos="3.80" speed="0.00"/>
-            </lane>
-            <lane id="gneE5_2">
-                <vehicle id="carflow4.0" pos="5.30" speed="0.00"/>
-            </lane>
+            <lane id="A_2"/>
         </edge>
     </timestep>
-    <timestep time="0.10">
+    <timestep time="5.10">
         <edge id="A">
-            <lane id="A_0">
-                <vehicle id="carflow3.0" pos="4.65" speed="0.48"/>
-            </lane>
+            <lane id="A_0"/>
             <lane id="A_1">
-                <vehicle id="carflow2.0" pos="3.85" speed="0.49"/>
+                <vehicle id="ego" pos="8.30" speed="30.00"/>
             </lane>
-            <lane id="A_2">
-                <vehicle id="carflow1.0" pos="5.35" speed="0.48"/>
-            </lane>
-        </edge>
-        <edge id="gneE5">
-            <lane id="gneE5_0">
-                <vehicle id="carflow5.0" pos="4.65" speed="0.47"/>
-            </lane>
-            <lane id="gneE5_1">
-                <vehicle id="carflow6.0" pos="3.85" speed="0.49"/>
-            </lane>
-            <lane id="gneE5_2">
-                <vehicle id="carflow4.0" pos="5.35" speed="0.47"/>
-            </lane>
+            <lane id="A_2"/>
         </edge>
     </timestep>
-    <timestep time="0.20">
+    <timestep time="5.20">
         <edge id="A">
-            <lane id="A_0">
-                <vehicle id="carflow3.0" pos="4.74" speed="0.96"/>
-            </lane>
+            <lane id="A_0"/>
             <lane id="A_1">
-                <vehicle id="carflow2.0" pos="3.94" speed="0.94"/>
+                <vehicle id="ego" pos="11.30" speed="30.00"/>
             </lane>
-            <lane id="A_2">
-                <vehicle id="carflow1.0" pos="5.44" speed="0.91"/>
-            </lane>
-        </edge>
-        <edge id="gneE5">
-            <lane id="gneE5_0">
-                <vehicle id="carflow5.0" pos="4.74" speed="0.92"/>
-            </lane>
-            <lane id="gneE5_1">
-                <vehicle id="carflow6.0" pos="3.94" speed="0.91"/>
-            </lane>
-            <lane id="gneE5_2">
-                <vehicle id="carflow4.0" pos="5.44" speed="0.91"/>
-            </lane>
+            <lane id="A_2"/>
         </edge>
     </timestep>
-    <timestep time="0.30">
+    <timestep time="5.30">
         <edge id="A">
-            <lane id="A_0">
-                <vehicle id="carflow3.0" pos="4.89" speed="1.44"/>
-            </lane>
+            <lane id="A_0"/>
             <lane id="A_1">
-                <vehicle id="carflow2.0" pos="4.08" speed="1.38"/>
+                <vehicle id="ego" pos="14.33" speed="30.30"/>
             </lane>
-            <lane id="A_2">
-                <vehicle id="carflow1.0" pos="5.57" speed="1.27"/>
-            </lane>
-        </edge>
-        <edge id="gneE5">
-            <lane id="gneE5_0">
-                <vehicle id="carflow5.0" pos="4.88" speed="1.40"/>
-            </lane>
-            <lane id="gneE5_1">
-                <vehicle id="carflow6.0" pos="4.08" speed="1.35"/>
-            </lane>
-            <lane id="gneE5_2">
-                <vehicle id="carflow4.0" pos="5.57" speed="1.34"/>
-            </lane>
+            <lane id="A_2"/>
         </edge>
     </timestep>
-    <timestep time="0.40">
+    <timestep time="5.40">
         <edge id="A">
-            <lane id="A_0">
-                <vehicle id="carflow3.0" pos="5.07" speed="1.80"/>
-            </lane>
+            <lane id="A_0"/>
             <lane id="A_1">
-                <vehicle id="carflow2.0" pos="4.25" speed="1.72"/>
+                <vehicle id="ego" pos="17.31" speed="29.80"/>
             </lane>
-            <lane id="A_2">
-                <vehicle id="carflow1.0" pos="5.74" speed="1.76"/>
-            </lane>
-        </edge>
-        <edge id="gneE5">
-            <lane id="gneE5_0">
-                <vehicle id="carflow5.0" pos="5.06" speed="1.79"/>
-            </lane>
-            <lane id="gneE5_1">
-                <vehicle id="carflow6.0" pos="4.25" speed="1.76"/>
-            </lane>
-            <lane id="gneE5_2">
-                <vehicle id="carflow4.0" pos="5.75" speed="1.82"/>
-            </lane>
+            <lane id="A_2"/>
         </edge>
     </timestep>
-    <timestep time="0.50">
+    <timestep time="5.50">
         <edge id="A">
-            <lane id="A_0">
-                <vehicle id="carflow3.0" pos="5.28" speed="2.15"/>
-            </lane>
+            <lane id="A_0"/>
             <lane id="A_1">
-                <vehicle id="carflow2.0" pos="4.46" speed="2.05"/>
+                <vehicle id="ego" pos="20.29" speed="29.80"/>
             </lane>
-            <lane id="A_2">
-                <vehicle id="carflow1.0" pos="5.96" speed="2.17"/>
-            </lane>
-        </edge>
-        <edge id="gneE5">
-            <lane id="gneE5_0">
-                <vehicle id="carflow5.0" pos="5.27" speed="2.15"/>
-            </lane>
-            <lane id="gneE5_1">
-                <vehicle id="carflow6.0" pos="4.47" speed="2.16"/>
-            </lane>
-            <lane id="gneE5_2">
-                <vehicle id="carflow4.0" pos="5.98" speed="2.25"/>
-            </lane>
+            <lane id="A_2"/>
         </edge>
     </timestep>
-    <timestep time="0.60">
+    <timestep time="5.60">
         <edge id="A">
-            <lane id="A_0">
-                <vehicle id="carflow3.0" pos="5.53" speed="2.47"/>
-            </lane>
+            <lane id="A_0"/>
             <lane id="A_1">
-                <vehicle id="carflow2.0" pos="4.70" speed="2.39"/>
+                <vehicle id="ego" pos="23.22" speed="29.30"/>
             </lane>
-            <lane id="A_2">
-                <vehicle id="carflow1.0" pos="6.20" speed="2.44"/>
-            </lane>
-        </edge>
-        <edge id="gneE5">
-            <lane id="gneE5_0">
-                <vehicle id="carflow5.0" pos="5.52" speed="2.50"/>
-            </lane>
-            <lane id="gneE5_1">
-                <vehicle id="carflow6.0" pos="4.72" speed="2.48"/>
-            </lane>
-            <lane id="gneE5_2">
-                <vehicle id="carflow4.0" pos="6.24" speed="2.60"/>
-            </lane>
+            <lane id="A_2"/>
         </edge>
     </timestep>
-    <timestep time="0.70">
+    <timestep time="5.70">
         <edge id="A">
-            <lane id="A_0">
-                <vehicle id="carflow3.0" pos="5.81" speed="2.83"/>
-            </lane>
+            <lane id="A_0"/>
             <lane id="A_1">
-                <vehicle id="carflow2.0" pos="4.96" speed="2.62"/>
+                <vehicle id="ego" pos="26.10" speed="28.80"/>
             </lane>
-            <lane id="A_2">
-                <vehicle id="carflow1.0" pos="6.48" speed="2.78"/>
-            </lane>
-        </edge>
-        <edge id="gneE5">
-            <lane id="gneE5_0">
-                <vehicle id="carflow5.0" pos="5.82" speed="2.98"/>
-            </lane>
-            <lane id="gneE5_1">
-                <vehicle id="carflow6.0" pos="5.01" speed="2.90"/>
-            </lane>
-            <lane id="gneE5_2">
-                <vehicle id="carflow4.0" pos="6.54" speed="3.02"/>
-            </lane>
+            <lane id="A_2"/>
         </edge>
     </timestep>
-    <timestep time="0.80">
+    <timestep time="5.80">
         <edge id="A">
-            <lane id="A_0">
-                <vehicle id="carflow3.0" pos="6.13" speed="3.14"/>
-            </lane>
+            <lane id="A_0"/>
             <lane id="A_1">
-                <vehicle id="carflow2.0" pos="5.25" speed="2.91"/>
+                <vehicle id="ego" pos="28.93" speed="28.30"/>
             </lane>
-            <lane id="A_2">
-                <vehicle id="carflow1.0" pos="6.79" speed="3.06"/>
-            </lane>
-        </edge>
-        <edge id="gneE5">
-            <lane id="gneE5_0">
-                <vehicle id="carflow5.0" pos="6.14" speed="3.14"/>
-            </lane>
-            <lane id="gneE5_1">
-                <vehicle id="carflow6.0" pos="5.32" speed="3.09"/>
-            </lane>
-            <lane id="gneE5_2">
-                <vehicle id="carflow4.0" pos="6.87" speed="3.33"/>
-            </lane>
+            <lane id="A_2"/>
         </edge>
     </timestep>
-    <timestep time="0.90">
+    <timestep time="5.90">
         <edge id="A">
-            <lane id="A_0">
-                <vehicle id="carflow3.0" pos="6.46" speed="3.31"/>
-            </lane>
+            <lane id="A_0"/>
             <lane id="A_1">
-                <vehicle id="carflow2.0" pos="5.56" speed="3.10"/>
+                <vehicle id="ego" pos="31.79" speed="28.60"/>
             </lane>
-            <lane id="A_2">
-                <vehicle id="carflow1.0" pos="7.13" speed="3.41"/>
-            </lane>
-        </edge>
-        <edge id="gneE5">
-            <lane id="gneE5_0">
-                <vehicle id="carflow5.0" pos="6.49" speed="3.50"/>
-            </lane>
-            <lane id="gneE5_1">
-                <vehicle id="carflow6.0" pos="5.67" speed="3.50"/>
-            </lane>
-            <lane id="gneE5_2">
-                <vehicle id="carflow4.0" pos="7.25" speed="3.80"/>
-            </lane>
+            <lane id="A_2"/>
         </edge>
     </timestep>
-    <timestep time="1.00">
+    <timestep time="6.00">
         <edge id="A">
-            <lane id="A_0">
-                <vehicle id="carflow3.0" pos="6.80" speed="3.44"/>
-            </lane>
+            <lane id="A_0"/>
             <lane id="A_1">
-                <vehicle id="carflow2.0" pos="5.90" speed="3.42"/>
+                <vehicle id="ego" pos="34.60" speed="28.10"/>
             </lane>
-            <lane id="A_2">
-                <vehicle id="carflow1.0" pos="7.50" speed="3.69"/>
-            </lane>
-        </edge>
-        <edge id="gneE5">
-            <lane id="gneE5_0">
-                <vehicle id="carflow5.0" pos="6.86" speed="3.76"/>
-            </lane>
-            <lane id="gneE5_1">
-                <vehicle id="carflow6.0" pos="6.03" speed="3.69"/>
-            </lane>
-            <lane id="gneE5_2">
-                <vehicle id="carflow4.0" pos="7.66" speed="4.02"/>
-            </lane>
+            <lane id="A_2"/>
         </edge>
     </timestep>
-    <timestep time="1.10">
+    <timestep time="6.10">
         <edge id="A">
-            <lane id="A_0">
-                <vehicle id="carflow3.0" pos="7.19" speed="3.86"/>
-            </lane>
+            <lane id="A_0"/>
             <lane id="A_1">
-                <vehicle id="carflow2.0" pos="6.28" speed="3.82"/>
+                <vehicle id="ego" pos="37.41" speed="28.10"/>
             </lane>
-            <lane id="A_2">
-                <vehicle id="carflow1.0" pos="7.89" speed="3.96"/>
-            </lane>
-        </edge>
-        <edge id="gneE5">
-            <lane id="gneE5_0">
-                <vehicle id="carflow5.0" pos="7.27" speed="4.13"/>
-            </lane>
-            <lane id="gneE5_1">
-                <vehicle id="carflow6.0" pos="6.45" speed="4.16"/>
-            </lane>
-            <lane id="gneE5_2">
-                <vehicle id="carflow4.0" pos="8.08" speed="4.23"/>
-            </lane>
+            <lane id="A_2"/>
         </edge>
     </timestep>
-    <timestep time="1.20">
+    <timestep time="6.20">
         <edge id="A">
-            <lane id="A_0">
-                <vehicle id="carflow3.0" pos="7.60" speed="4.12"/>
-            </lane>
+            <lane id="A_0"/>
             <lane id="A_1">
-                <vehicle id="carflow2.0" pos="6.69" speed="4.08"/>
+                <vehicle id="ego" pos="40.22" speed="28.10"/>
             </lane>
-            <lane id="A_2">
-                <vehicle id="carflow1.0" pos="8.29" speed="4.02"/>
-            </lane>
-        </edge>
-        <edge id="gneE5">
-            <lane id="gneE5_0">
-                <vehicle id="carflow5.0" pos="7.72" speed="4.47"/>
-            </lane>
-            <lane id="gneE5_1">
-                <vehicle id="carflow6.0" pos="6.90" speed="4.47"/>
-            </lane>
-            <lane id="gneE5_2">
-                <vehicle id="carflow4.0" pos="8.53" speed="4.54"/>
-            </lane>
+            <lane id="A_2"/>
         </edge>
     </timestep>
-    <timestep time="1.30">
+    <timestep time="6.30">
         <edge id="A">
-            <lane id="A_0">
-                <vehicle id="carflow3.0" pos="8.05" speed="4.48"/>
-            </lane>
+            <lane id="A_0"/>
             <lane id="A_1">
-                <vehicle id="carflow2.0" pos="7.15" speed="4.53"/>
+                <vehicle id="ego" pos="42.98" speed="27.60"/>
             </lane>
-            <lane id="A_2">
-                <vehicle id="carflow1.0" pos="8.72" speed="4.28"/>
-            </lane>
-        </edge>
-        <edge id="gneE5">
-            <lane id="gneE5_0">
-                <vehicle id="carflow5.0" pos="8.20" speed="4.75"/>
-            </lane>
-            <lane id="gneE5_1">
-                <vehicle id="carflow6.0" pos="7.39" speed="4.95"/>
-            </lane>
-            <lane id="gneE5_2">
-                <vehicle id="carflow4.0" pos="9.00" speed="4.69"/>
-            </lane>
+            <lane id="A_2"/>
         </edge>
     </timestep>
-    <timestep time="1.40">
+    <timestep time="6.40">
         <edge id="A">
-            <lane id="A_0">
-                <vehicle id="carflow3.0" pos="8.53" speed="4.84"/>
-            </lane>
+            <lane id="A_0"/>
             <lane id="A_1">
-                <vehicle id="carflow2.0" pos="7.63" speed="4.86"/>
+                <vehicle id="ego" pos="45.77" speed="27.90"/>
             </lane>
-            <lane id="A_2">
-                <vehicle id="carflow1.0" pos="9.19" speed="4.69"/>
-            </lane>
-        </edge>
-        <edge id="gneE5">
-            <lane id="gneE5_0">
-                <vehicle id="carflow5.0" pos="8.72" speed="5.21"/>
-            </lane>
-            <lane id="gneE5_1">
-                <vehicle id="carflow6.0" pos="7.90" speed="5.08"/>
-            </lane>
-            <lane id="gneE5_2">
-                <vehicle id="carflow4.0" pos="9.49" speed="4.85"/>
-            </lane>
+            <lane id="A_2"/>
         </edge>
     </timestep>
-    <timestep time="1.50">
+    <timestep time="6.50">
         <edge id="A">
-            <lane id="A_0">
-                <vehicle id="carflow3.0" pos="9.07" speed="5.34"/>
-            </lane>
+            <lane id="A_0"/>
             <lane id="A_1">
-                <vehicle id="carflow2.0" pos="8.12" speed="4.89"/>
+                <vehicle id="ego" pos="48.56" speed="27.90"/>
             </lane>
-            <lane id="A_2">
-                <vehicle id="carflow1.0" pos="9.67" speed="4.75"/>
-            </lane>
-        </edge>
-        <edge id="gneE5">
-            <lane id="gneE5_0">
-                <vehicle id="carflow5.0" pos="9.25" speed="5.34"/>
-            </lane>
-            <lane id="gneE5_1">
-                <vehicle id="carflow6.0" pos="8.44" speed="5.43"/>
-            </lane>
-            <lane id="gneE5_2">
-                <vehicle id="carflow4.0" pos="10.00" speed="5.17"/>
-            </lane>
+            <lane id="A_2"/>
         </edge>
     </timestep>
-    <timestep time="1.60">
+    <timestep time="6.60">
         <edge id="A">
-            <lane id="A_0">
-                <vehicle id="carflow3.0" pos="9.63" speed="5.65"/>
-            </lane>
+            <lane id="A_0"/>
             <lane id="A_1">
-                <vehicle id="carflow2.0" pos="8.61" speed="4.91"/>
+                <vehicle id="ego" pos="51.30" speed="27.40"/>
             </lane>
-            <lane id="A_2">
-                <vehicle id="carflow1.0" pos="10.15" speed="4.79"/>
-            </lane>
-        </edge>
-        <edge id="gneE5">
-            <lane id="gneE5_0">
-                <vehicle id="carflow5.0" pos="9.82" speed="5.64"/>
-            </lane>
-            <lane id="gneE5_1">
-                <vehicle id="carflow6.0" pos="9.01" speed="5.65"/>
-            </lane>
-            <lane id="gneE5_2">
-                <vehicle id="carflow4.0" pos="10.52" speed="5.20"/>
-            </lane>
+            <lane id="A_2"/>
         </edge>
     </timestep>
-    <timestep time="1.70">
+    <timestep time="6.70">
         <edge id="A">
-            <lane id="A_0">
-                <vehicle id="carflow3.0" pos="10.23" speed="5.96"/>
-            </lane>
+            <lane id="A_0"/>
             <lane id="A_1">
-                <vehicle id="carflow2.0" pos="9.14" speed="5.30"/>
+                <vehicle id="ego" pos="53.99" speed="26.90"/>
             </lane>
-            <lane id="A_2">
-                <vehicle id="carflow1.0" pos="10.66" speed="5.14"/>
-            </lane>
-        </edge>
-        <edge id="gneE5">
-            <lane id="gneE5_0">
-                <vehicle id="carflow5.0" pos="10.38" speed="5.65"/>
-            </lane>
-            <lane id="gneE5_1">
-                <vehicle id="carflow6.0" pos="9.59" speed="5.80"/>
-            </lane>
-            <lane id="gneE5_2">
-                <vehicle id="carflow4.0" pos="11.04" speed="5.21"/>
-            </lane>
+            <lane id="A_2"/>
         </edge>
     </timestep>
-    <timestep time="1.80">
+    <timestep time="6.80">
         <edge id="A">
-            <lane id="A_0">
-                <vehicle id="carflow3.0" pos="10.83" speed="6.04"/>
-            </lane>
+            <lane id="A_0"/>
             <lane id="A_1">
-                <vehicle id="carflow2.0" pos="9.68" speed="5.40"/>
+                <vehicle id="ego" pos="56.63" speed="26.40"/>
             </lane>
-            <lane id="A_2">
-                <vehicle id="carflow1.0" pos="11.18" speed="5.17"/>
-            </lane>
-        </edge>
-        <edge id="gneE5">
-            <lane id="gneE5_0">
-                <vehicle id="carflow5.0" pos="10.99" speed="6.07"/>
-            </lane>
-            <lane id="gneE5_1">
-                <vehicle id="carflow6.0" pos="10.18" speed="5.89"/>
-            </lane>
-            <lane id="gneE5_2">
-                <vehicle id="carflow4.0" pos="11.57" speed="5.25"/>
-            </lane>
+            <lane id="A_2"/>
         </edge>
     </timestep>
-    <timestep time="1.90">
+    <timestep time="6.90">
         <edge id="A">
-            <lane id="A_0">
-                <vehicle id="carflow3.0" pos="11.45" speed="6.19"/>
-            </lane>
+            <lane id="A_0"/>
             <lane id="A_1">
-                <vehicle id="carflow2.0" pos="10.23" speed="5.43"/>
+                <vehicle id="ego" pos="59.30" speed="26.70"/>
             </lane>
-            <lane id="A_2">
-                <vehicle id="carflow1.0" pos="11.74" speed="5.66"/>
-            </lane>
-        </edge>
-        <edge id="gneE5">
-            <lane id="gneE5_0">
-                <vehicle id="carflow5.0" pos="11.60" speed="6.10"/>
-            </lane>
-            <lane id="gneE5_1">
-                <vehicle id="carflow6.0" pos="10.78" speed="6.05"/>
-            </lane>
-            <lane id="gneE5_2">
-                <vehicle id="carflow4.0" pos="12.10" speed="5.28"/>
-            </lane>
+            <lane id="A_2"/>
         </edge>
     </timestep>
-    <timestep time="2.00">
+    <timestep time="7.00">
         <edge id="A">
-            <lane id="A_0">
-                <vehicle id="carflow3.0" pos="12.08" speed="6.30"/>
-            </lane>
+            <lane id="A_0"/>
             <lane id="A_1">
-                <vehicle id="carflow2.0" pos="10.81" speed="5.87"/>
+                <vehicle id="ego" pos="61.92" speed="26.20"/>
             </lane>
-            <lane id="A_2">
-                <vehicle id="carflow1.0" pos="12.31" speed="5.70"/>
-            </lane>
-        </edge>
-        <edge id="gneE5">
-            <lane id="gneE5_0">
-                <vehicle id="carflow5.0" pos="12.21" speed="6.13"/>
-            </lane>
-            <lane id="gneE5_1">
-                <vehicle id="carflow6.0" pos="11.40" speed="6.17"/>
-            </lane>
-            <lane id="gneE5_2">
-                <vehicle id="carflow4.0" pos="12.64" speed="5.42"/>
-            </lane>
+            <lane id="A_2"/>
         </edge>
     </timestep>
-    <timestep time="2.10">
+    <timestep time="7.10">
         <edge id="A">
-            <lane id="A_0">
-                <vehicle id="carflow3.0" pos="12.73" speed="6.46"/>
-            </lane>
+            <lane id="A_0"/>
             <lane id="A_1">
-                <vehicle id="carflow2.0" pos="11.41" speed="5.96"/>
+                <vehicle id="ego" pos="64.49" speed="25.70"/>
             </lane>
-            <lane id="A_2">
-                <vehicle id="carflow1.0" pos="12.88" speed="5.71"/>
-            </lane>
-        </edge>
-        <edge id="gneE5">
-            <lane id="gneE5_0">
-                <vehicle id="carflow5.0" pos="12.87" speed="6.56"/>
-            </lane>
-            <lane id="gneE5_1">
-                <vehicle id="carflow6.0" pos="12.06" speed="6.66"/>
-            </lane>
-            <lane id="gneE5_2">
-                <vehicle id="carflow4.0" pos="13.19" speed="5.46"/>
-            </lane>
+            <lane id="A_2"/>
         </edge>
     </timestep>
-    <timestep time="2.20">
+    <timestep time="7.20">
         <edge id="A">
-            <lane id="A_0">
-                <vehicle id="carflow3.0" pos="13.39" speed="6.69"/>
-            </lane>
+            <lane id="A_0"/>
             <lane id="A_1">
-                <vehicle id="carflow2.0" pos="12.04" speed="6.34"/>
+                <vehicle id="ego" pos="67.01" speed="25.20"/>
             </lane>
-            <lane id="A_2">
-                <vehicle id="carflow1.0" pos="13.47" speed="5.82"/>
-            </lane>
-        </edge>
-        <edge id="gneE5">
-            <lane id="gneE5_0">
-                <vehicle id="carflow5.0" pos="13.56" speed="6.92"/>
-            </lane>
-            <lane id="gneE5_1">
-                <vehicle id="carflow6.0" pos="12.77" speed="7.00"/>
-            </lane>
-            <lane id="gneE5_2">
-                <vehicle id="carflow4.0" pos="13.77" speed="5.87"/>
-            </lane>
+            <lane id="A_2"/>
         </edge>
     </timestep>
-    <timestep time="2.30">
+    <timestep time="7.30">
         <edge id="A">
-            <lane id="A_0">
-                <vehicle id="carflow3.0" pos="14.11" speed="7.13"/>
-            </lane>
+            <lane id="A_0"/>
             <lane id="A_1">
-                <vehicle id="carflow2.0" pos="12.72" speed="6.74"/>
+                <vehicle id="ego" pos="69.48" speed="24.70"/>
             </lane>
-            <lane id="A_2">
-                <vehicle id="carflow1.0" pos="14.06" speed="5.99"/>
-            </lane>
-        </edge>
-        <edge id="gneE5">
-            <lane id="gneE5_0">
-                <vehicle id="carflow5.0" pos="14.29" speed="7.32"/>
-            </lane>
-            <lane id="gneE5_1">
-                <vehicle id="carflow6.0" pos="13.50" speed="7.39"/>
-            </lane>
-            <lane id="gneE5_2">
-                <vehicle id="carflow4.0" pos="14.37" speed="5.94"/>
-            </lane>
+            <lane id="A_2"/>
         </edge>
     </timestep>
-    <timestep time="2.40">
+    <timestep time="7.40">
         <edge id="A">
-            <lane id="A_0">
-                <vehicle id="carflow3.0" pos="14.86" speed="7.53"/>
-            </lane>
+            <lane id="A_0"/>
             <lane id="A_1">
-                <vehicle id="carflow2.0" pos="13.44" speed="7.24"/>
+                <vehicle id="ego" pos="71.98" speed="25.00"/>
             </lane>
-            <lane id="A_2">
-                <vehicle id="carflow1.0" pos="14.70" speed="6.35"/>
-            </lane>
-        </edge>
-        <edge id="gneE5">
-            <lane id="gneE5_0">
-                <vehicle id="carflow5.0" pos="15.06" speed="7.70"/>
-            </lane>
-            <lane id="gneE5_1">
-                <vehicle id="carflow6.0" pos="14.25" speed="7.49"/>
-            </lane>
-            <lane id="gneE5_2">
-                <vehicle id="carflow4.0" pos="14.99" speed="6.26"/>
-            </lane>
+            <lane id="A_2"/>
         </edge>
     </timestep>
-    <timestep time="2.50">
+    <timestep time="7.50">
         <edge id="A">
-            <lane id="A_0">
-                <vehicle id="carflow3.0" pos="15.62" speed="7.56"/>
-            </lane>
+            <lane id="A_0"/>
             <lane id="A_1">
-                <vehicle id="carflow2.0" pos="14.20" speed="7.63"/>
+                <vehicle id="ego" pos="74.43" speed="24.50"/>
             </lane>
-            <lane id="A_2">
-                <vehicle id="carflow1.0" pos="15.34" speed="6.44"/>
-            </lane>
-        </edge>
-        <edge id="gneE5">
-            <lane id="gneE5_0">
-                <vehicle id="carflow5.0" pos="15.88" speed="8.17"/>
-            </lane>
-            <lane id="gneE5_1">
-                <vehicle id="carflow6.0" pos="15.03" speed="7.77"/>
-            </lane>
-            <lane id="gneE5_2">
-                <vehicle id="carflow4.0" pos="15.63" speed="6.35"/>
-            </lane>
+            <lane id="A_2"/>
         </edge>
     </timestep>
-    <timestep time="2.60">
+    <timestep time="7.60">
+        <edge id="A">
+            <lane id="A_0"/>
+            <lane id="A_1">
+                <vehicle id="ego" pos="76.91" speed="24.80"/>
+            </lane>
+            <lane id="A_2"/>
+        </edge>
+    </timestep>
+    <timestep time="7.70">
         <edge id="A">
             <lane id="A_0">
-                <vehicle id="carflow3.0" pos="16.41" speed="7.91"/>
+                <vehicle id="ego" pos="79.42" speed="25.10"/>
             </lane>
-            <lane id="A_1">
-                <vehicle id="carflow2.0" pos="15.00" speed="8.00"/>
-            </lane>
-            <lane id="A_2">
-                <vehicle id="carflow1.0" pos="16.03" speed="6.84"/>
-            </lane>
+            <lane id="A_1"/>
+            <lane id="A_2"/>
         </edge>
-        <edge id="gneE5">
-            <lane id="gneE5_0">
-                <vehicle id="carflow5.0" pos="16.71" speed="8.30"/>
+    </timestep>
+    <timestep time="7.80">
+        <edge id="A">
+            <lane id="A_0">
+                <vehicle id="ego" pos="81.93" speed="25.10"/>
             </lane>
-            <lane id="gneE5_1">
-                <vehicle id="carflow6.0" pos="15.85" speed="8.16"/>
-            </lane>
-            <lane id="gneE5_2">
-                <vehicle id="carflow4.0" pos="16.28" speed="6.56"/>
-            </lane>
+            <lane id="A_1"/>
+            <lane id="A_2"/>
         </edge>
     </timestep>
 </netstate>

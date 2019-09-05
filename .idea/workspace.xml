@@ -1,22 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="999f16c8-7d46-4b0a-83f0-9764e2ed7a90" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/sumoProject/archive_learnings/good_bad_examples/2019-07-21_06:25:44/model_0.weight" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sumoProject/archive_learnings/good_bad_examples/2019-07-21_06:25:44/model_2000.weight" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sumoProject/archive_learnings/good_bad_examples/2019-07-21_06:25:44/model_3000.weight" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sumoProject/archive_learnings/good_bad_examples/2019-07-21_06:25:44/model_4000.weight" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sumoProject/archive_learnings/good_bad_examples/2019-07-21_06:25:44/model_9000.weight" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sumoProject/archive_learnings/good_bad_examples/2019-07-21_06:25:44/model_final.weight" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sumoProject/archive_learnings/good_bad_examples/2019-07-21_18:44:32/events.out.tfevents.1563734672.St106ML1.30801.0" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sumoProject/archive_learnings/good_bad_examples/2019-07-21_18:44:32/model_0.weight" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sumoProject/archive_learnings/good_bad_examples/2019-07-21_18:44:32/model_2000.weight" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sumoProject/archive_learnings/good_bad_examples/2019-07-21_18:44:32/model_3000.weight" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sumoProject/archive_learnings/good_bad_examples/2019-07-21_18:44:32/model_4000.weight" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sumoProject/archive_learnings/good_bad_examples/2019-07-21_18:44:32/model_5000.weight" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sumoProject/archive_learnings/good_bad_examples/2019-07-21_18:44:32/model_6000.weight" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sumoProject/archive_learnings/good_bad_examples/2019-07-21_18:44:32/model_7000.weight" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sumoProject/archive_learnings/good_bad_examples/2019-07-21_18:44:32/model_9000.weight" afterDir="false" />
+    <list default="true" id="181bb37f-499a-4da7-8a32-2d6c7277c041" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/gym-highway-master.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gym-highway-master.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-05-19_19:28:28/events.out.tfevents.1558294108.St106ML1.14636.0" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-05-19_19:31:25/model_100" beforeDir="false" />
@@ -9803,21 +9790,31 @@
       <change beforePath="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-06-11_21:04:22/model_0.weight" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-06-11_21:04:22/model_10000.weight" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-06-11_21:04:22/model_20000.weight" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-06-20_12:51:10/events.out.tfevents.1561035070.St106ML1.10419.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-06-20_12:51:10/model_0.weight" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-06-20_12:51:10/model_10000.weight" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-06-20_12:51:10/model_20000.weight" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-06-23_06:23:27/events.out.tfevents.1561271007.St106ML1.5602.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-06-23_06:23:27/model_0.weight" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-06-23_06:23:27/model_10000.weight" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-06-23_06:23:27/model_20000.weight" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-06-23_06:23:27/model_30000.weight" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-06-23_06:23:27/model_40000.weight" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-06-23_06:23:27/model_50000.weight" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-07-09_12:33:59/events.out.tfevents.1562675639.St106ML1.9971.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-07-09_12:33:59/model_0.weight" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-07-09_12:33:59/model_1000.weight" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-07-09_12:33:59/model_2000.weight" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-07-09_12:33:59/model_3000.weight" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-07-09_12:33:59/model_4000.weight" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-07-09_12:33:59/model_5000.weight" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-07-09_12:33:59/model_6000.weight" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-07-09_12:33:59/model_7000.weight" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-07-09_12:33:59/model_8000.weight" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-07-09_12:33:59/model_9000.weight" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-07-09_12:33:59/model_final.weight" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/sumoProject/agents/torchpolicygrad.py" beforeDir="false" afterPath="$PROJECT_DIR$/sumoProject/agents/torchpolicygrad.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sumoProject/envs/SUMO_Starter.py" beforeDir="false" afterPath="$PROJECT_DIR$/sumoProject/envs/SUMO_Starter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sumoProject/envs/basicnet.net.xml" beforeDir="false" afterPath="$PROJECT_DIR$/sumoProject/envs/basicnet.net.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sumoProject/envs/basicnet.rou.xml" beforeDir="false" afterPath="$PROJECT_DIR$/sumoProject/envs/basicnet.rou.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sumoProject/envs/virtualtraffic" beforeDir="false" afterPath="$PROJECT_DIR$/sumoProject/envs/virtualtraffic" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ven/bin/activate" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ven/bin/activate.csh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ven/bin/activate.fish" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ven/bin/python" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ven/bin/python3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ven/bin/python3.5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ven/lib64" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ven/pyvenv.cfg" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -9825,77 +9822,16 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ChangesViewManager" show_ignored="true" />
-  <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/RLHighWay$envtest.coverage" NAME="envtest Coverage Results" MODIFIED="1554201419043" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_highway" />
-    <SUITE FILE_PATH="coverage/RLHighWay$dqn.coverage" NAME="dqn Coverage Results" MODIFIED="1554559331618" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_highway/Agent/DQN" />
-  </component>
-  <component name="DatabaseView">
-    <option name="SHOW_INTERMEDIATE" value="true" />
-    <option name="GROUP_DATA_SOURCES" value="true" />
-    <option name="GROUP_SCHEMA" value="true" />
-    <option name="GROUP_CONTENTS" value="false" />
-    <option name="SORT_POSITIONED" value="false" />
-    <option name="SHOW_EMPTY_GROUPS" value="false" />
-    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
-    <option name="HIDDEN_KINDS">
-      <set />
-    </option>
-    <expand />
-    <select />
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Python Script" />
-      </list>
-    </option>
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>stats</find>
-      <find>ev.laneindex</find>
-      <find>searcheg</find>
-      <find>check_</find>
-      <find>laneindex</find>
-      <find>egovehicle</find>
-      <find>sort</find>
-      <find>self.ego_vehicle</find>
-      <find>self.length</find>
-      <find>self.des</find>
-      <find>desired</find>
-      <find>front.vx * 1.2</find>
-      <find>viewport</find>
-      <find>time</find>
-      <find>print</find>
-      <find>sumo</find>
-      <find>left</find>
-      <find>starting sumo</find>
-      <find>error</find>
-      <find>Too</find>
-      <find>SUMO</find>
-      <find>load</find>
-      <find>optimizer</find>
-      <find>500</find>
-      <find>retrying</find>
-      <find>too</find>
-      <find>30</find>
-      <find>speed=&quot;25.00&quot;</find>
-    </findStrings>
-    <replaceStrings>
-      <replace>45</replace>
-      <replace>speed=&quot;45.00&quot;</replace>
-    </replaceStrings>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="1OZ5T6uWdfpSVRLpG0IcK3a0Y1Y" />
+  <component name="ProjectId" id="1OoTo1UlL3WTGxS73hpbs4Fjefq" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/sumoProject/archive_learnings/good_bad_examples" />
+    <property name="last_opened_file_path" value="$USER_HOME$/.local/lib/python3.6/site-packages/easygui" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -9903,22 +9839,6 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
-  </component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/sumoProject/archive_learnings/good_bad_examples" />
-      <recent name="$PROJECT_DIR$/sumoProject/agents" />
-      <recent name="D:\msc\second\research\RLHighWay\sumoProject" />
-      <recent name="C:\Users\szoke\Documents\msc\second\research\gym-highway-master\gym_highway" />
-      <recent name="C:\Users\szoke\Documents\msc\second\research\gym-highway-master\gym_highway\Agent" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-05-22_08:22:37" />
-      <recent name="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-05-22_18:49:03" />
-      <recent name="$PROJECT_DIR$/sumoProject/agents/torchSummary" />
-      <recent name="$PROJECT_DIR$/sumoProject/agents/torchSummary/2019-05-20_18:51:14" />
-      <recent name="$PROJECT_DIR$" />
-    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -9933,20 +9853,20 @@
     </option>
   </component>
   <component name="RunManager" selected="Python.torchpolicygrad">
-    <configuration name="SUMO_Starter" type="PythonConfigurationType" factoryName="Python">
+    <configuration name="__init__ (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="gym-highway-master" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="$PROJECT_DIR$/venv/bin/python" />
+      <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sumoProject/envs" />
-      <option name="IS_MODULE_SDK" value="false" />
+      <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sumoProject/envs/SUMO_Starter.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sumoProject/envs/__init__.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -9955,7 +9875,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="__init__ (1)" type="PythonConfigurationType" factoryName="Python">
+    <configuration name="__init__" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="gym-highway-master" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -9969,72 +9889,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sumoProject/__init__.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="__init__" type="PythonConfigurationType" factoryName="Python">
-      <module name="gym-highway-master" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/__init__.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="envtest" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="gym-highway-master" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sumoProject" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sumoProject/envtest.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="setup" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="gym-highway-master" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/setup.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -10063,71 +9917,13 @@
       <option name="MODULE_MODE" value="false" />
       <option name="REDIRECT_INPUT" value="false" />
       <option name="INPUT_FILE" value="" />
-      <method v="2">
-        <option name="RunConfigurationTask" enabled="true" run_configuration_name="__init__ (1)" run_configuration_type="PythonConfigurationType" />
-      </method>
-    </configuration>
-    <configuration name="torchpolicygrad_labor" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="gym-highway-master" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sumoProject/agents" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sumoProject/agents/torchpolicygrad_labor.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="vanilla_policy_gradient" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="gym-highway-master" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sumoProject/agents" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sumoProject/agents/vanilla_policy_gradient.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <list>
-      <item itemvalue="Python.SUMO_Starter" />
-      <item itemvalue="Python.__init__" />
-      <item itemvalue="Python.__init__ (1)" />
-      <item itemvalue="Python.envtest" />
-      <item itemvalue="Python.vanilla_policy_gradient" />
-      <item itemvalue="Python.torchpolicygrad" />
-      <item itemvalue="Python.setup" />
-      <item itemvalue="Python.torchpolicygrad_labor" />
-    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.torchpolicygrad" />
-        <item itemvalue="Python.torchpolicygrad_labor" />
-        <item itemvalue="Python.setup" />
-        <item itemvalue="Python.vanilla_policy_gradient" />
-        <item itemvalue="Python.envtest" />
+        <item itemvalue="Python.__init__ (1)" />
+        <item itemvalue="Python.__init__" />
       </list>
     </recent_temporary>
   </component>
@@ -10136,138 +9932,19 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="999f16c8-7d46-4b0a-83f0-9764e2ed7a90" name="Default Changelist" comment="" />
-      <created>1549377646525</created>
+      <changelist id="181bb37f-499a-4da7-8a32-2d6c7277c041" name="Default Changelist" comment="" />
+      <created>1564643121070</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1549377646525</updated>
-      <workItem from="1549377651205" duration="1129000" />
-      <workItem from="1549398523974" duration="2675000" />
-      <workItem from="1552221016532" duration="14294000" />
-      <workItem from="1552239306678" duration="162000" />
-      <workItem from="1552239538473" duration="3665000" />
-      <workItem from="1552293507153" duration="49000" />
-      <workItem from="1552327792704" duration="688000" />
-      <workItem from="1552377455619" duration="5530000" />
-      <workItem from="1552384386494" duration="277000" />
-      <workItem from="1552459716103" duration="52000" />
-      <workItem from="1553596359804" duration="1688000" />
-      <workItem from="1553691463884" duration="23000" />
-      <workItem from="1553805859713" duration="8024000" />
-      <workItem from="1553876343117" duration="5564000" />
-      <workItem from="1553971915177" duration="17970000" />
-      <workItem from="1554196735638" duration="4900000" />
-      <workItem from="1554279931695" duration="39000" />
-      <workItem from="1554557580924" duration="6975000" />
-      <workItem from="1554706253255" duration="17000" />
-      <workItem from="1555589416087" duration="918000" />
-      <workItem from="1555658173007" duration="61113000" />
-      <workItem from="1555960745892" duration="7206000" />
-      <workItem from="1556193846734" duration="56000" />
-      <workItem from="1556219760208" duration="642000" />
-      <workItem from="1556221470048" duration="1410000" />
-      <workItem from="1556223239904" duration="30000" />
-      <workItem from="1556223422127" duration="355000" />
-      <workItem from="1556223886140" duration="110000" />
-      <workItem from="1556224426052" duration="303000" />
-      <workItem from="1556224758656" duration="441000" />
-      <workItem from="1556225539508" duration="1070000" />
-      <workItem from="1556356309347" duration="17630000" />
-      <workItem from="1556391840202" duration="7483000" />
-      <workItem from="1556406206254" duration="660000" />
-      <workItem from="1556406881960" duration="75000" />
-      <workItem from="1556407280477" duration="848000" />
-      <workItem from="1556408273465" duration="14172000" />
-      <workItem from="1557389018396" duration="26464000" />
-      <workItem from="1557656222510" duration="7368000" />
-      <workItem from="1557672009818" duration="61000" />
-      <workItem from="1557830495039" duration="61000" />
-      <workItem from="1558286478999" duration="17000" />
-      <workItem from="1558287793249" duration="488000" />
-      <workItem from="1558288315231" duration="674000" />
-      <workItem from="1558290045995" duration="6402000" />
-      <workItem from="1558512830297" duration="4685000" />
-      <workItem from="1558721050707" duration="393000" />
-      <workItem from="1558722511089" duration="526000" />
-      <workItem from="1560150007183" duration="565000" />
-      <workItem from="1560151435446" duration="5251000" />
-      <workItem from="1561031777388" duration="4819000" />
-      <workItem from="1561270067983" duration="2518000" />
-      <workItem from="1561563900968" duration="14891000" />
-      <workItem from="1561981966842" duration="1368000" />
-      <workItem from="1562084733855" duration="8228000" />
-      <workItem from="1562672926358" duration="2245000" />
-      <workItem from="1563551975118" duration="12670000" />
-      <workItem from="1563882952060" duration="2590000" />
-      <workItem from="1564172340045" duration="11252000" />
+      <updated>1564643121070</updated>
+      <workItem from="1564643123778" duration="845000" />
+      <workItem from="1564643976962" duration="1633000" />
+      <workItem from="1564647475349" duration="693000" />
+      <workItem from="1564648259589" duration="3073000" />
+      <workItem from="1564687750465" duration="45112000" />
+      <workItem from="1565709822552" duration="14884000" />
     </task>
-    <task id="LOCAL-00001" summary="initial setup">
-      <created>1549377943473</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1549377943473</updated>
-    </task>
-    <task id="LOCAL-00002" summary="working model, learning with this settings">
-      <created>1558722965125</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1558722965125</updated>
-    </task>
-    <task id="LOCAL-00003" summary="new rewards">
-      <created>1561565020124</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1561565020124</updated>
-    </task>
-    <task id="LOCAL-00004" summary="new rewards">
-      <created>1561666266246</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1561666266246</updated>
-    </task>
-    <task id="LOCAL-00005" summary="David féle környezet rep, plusz dx reward">
-      <created>1561671785425</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1561671785425</updated>
-    </task>
-    <task id="LOCAL-00006" summary="David féle környezet rep, plusz dx reward">
-      <created>1562085085882</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1562085085882</updated>
-    </task>
-    <task id="LOCAL-00007" summary="új tömött környezet, kéőbbi indulás meg">
-      <created>1563552504993</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1563552504993</updated>
-    </task>
-    <task id="LOCAL-00008" summary="weights">
-      <created>1563553076952</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1563553076952</updated>
-    </task>
-    <option name="localTasksCounter" value="9" />
     <servers />
-  </component>
-  <component name="TodoView">
-    <todo-panel id="selected-file">
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-    <todo-panel id="all">
-      <are-packages-shown value="true" />
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -10277,158 +9954,17 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
   </component>
-  <component name="VcsManagerConfiguration">
-    <ignored-roots>
-      <path value="$PROJECT_DIR$/nn-theano" />
-    </ignored-roots>
-    <MESSAGE value="initial setup" />
-    <MESSAGE value="working model, learning with this settings" />
-    <MESSAGE value="new rewards" />
-    <MESSAGE value="David féle környezet rep, plusz dx reward" />
-    <MESSAGE value="új tömött környezet, kéőbbi indulás" />
-    <MESSAGE value="új tömött környezet, kéőbbi indulás meg" />
-    <MESSAGE value="weights" />
-    <option name="LAST_COMMIT_MESSAGE" value="weights" />
-    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
-    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/gym_highway/modell/environment_vehicle.py</url>
-          <line>69</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pyproject/gym_highway/__init__.py</url>
-          <line>3</line>
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/sumoProject/envtest.py</url>
-          <line>33</line>
-          <option name="timeStamp" value="37" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/sumoProject/agents/vanilla_policy_gradient.py</url>
-          <line>106</line>
-          <option name="timeStamp" value="49" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/RLHighWay$__init____1_.coverage" NAME="__init__ (1) Coverage Results" MODIFIED="1555689036554" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject" />
-    <SUITE FILE_PATH="coverage/szoke$vanilla_policy_gradient.coverage" NAME="vanilla_policy_gradient Coverage Results" MODIFIED="1557413042817" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject/agents" />
-    <SUITE FILE_PATH="coverage/RLHighWay$__init__.coverage" NAME="__init__ Coverage Results" MODIFIED="1555688396164" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject" />
-    <SUITE FILE_PATH="coverage/szoke$__init____2_.coverage" NAME="__init__ (2) Coverage Results" MODIFIED="1556406923154" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/RLHighWay$__init____2_.coverage" NAME="__init__ (2) Coverage Results" MODIFIED="1555689078724" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/szoke$__init__.coverage" NAME="__init__ Coverage Results" MODIFIED="1557423692361" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/RLhighway$__init____1_.coverage" NAME="__init__ (1) Coverage Results" MODIFIED="1564605137546" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject" />
-    <SUITE FILE_PATH="coverage/szoke$dqn.coverage" NAME="dqn Coverage Results" MODIFIED="1557423692637" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject/agents" />
-    <SUITE FILE_PATH="coverage/RLHighWay$envtest__1_.coverage" NAME="envtest (1) Coverage Results" MODIFIED="1555687339574" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject" />
-    <SUITE FILE_PATH="coverage/szoke$SUMO_Starter.coverage" NAME="SUMO_Starter Coverage Results" MODIFIED="1556408064264" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject/envs" />
-    <SUITE FILE_PATH="coverage/RLhighway$__init__.coverage" NAME="__init__ Coverage Results" MODIFIED="1560150635829" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/szoke$__init____1_.coverage" NAME="__init__ (1) Coverage Results" MODIFIED="1556226481269" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject" />
-    <SUITE FILE_PATH="coverage/RLHighWay$SUMO_Starter.coverage" NAME="SUMO_Starter Coverage Results" MODIFIED="1555674718619" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject" />
-    <SUITE FILE_PATH="coverage/RLHighWay$vanilla_policy_gradient.coverage" NAME="vanilla_policy_gradient Coverage Results" MODIFIED="1556010535754" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject/agents" />
-    <SUITE FILE_PATH="coverage/szoke$torchpolicygrad.coverage" NAME="torchpolicygrad Coverage Results" MODIFIED="1557658823487" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject/agents" />
-    <SUITE FILE_PATH="coverage/RLHighWay$envtest.coverage" NAME="envtest Coverage Results" MODIFIED="1555713373972" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject" />
-    <SUITE FILE_PATH="coverage/RLhighway$torchpolicygrad.coverage" NAME="torchpolicygrad Coverage Results" MODIFIED="1564605137890" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject/agents" />
-    <SUITE FILE_PATH="coverage/RLhighway$torchpolicygrad_labor.coverage" NAME="torchpolicygrad_labor Coverage Results" MODIFIED="1563883754995" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject/agents" />
-    <SUITE FILE_PATH="coverage/RLhighway$setup.coverage" NAME="setup Coverage Results" MODIFIED="1560150503021" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-  </component>
-  <component name="debuggerHistoryManager">
-    <expressions id="watch">
-      <expression>
-        <expression-string>traci.simulation.getCollidingVehiclesIDList()</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>traci.vehicle.getPosition(self.egoID)</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>traci.vehicle.getAngle(self.egoID)</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>traci.vehicle.setParameter(self.egoID, str(tc.VAR_ANGLE), str(self.state['angle'] + ctrl[0]))</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>abs(np.array(places[:-1])-np.array(places[1:]))</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>np.array(places[1:])</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>any(abs(np.array(places[:-1])-np.array(places[1:]))</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-    </expressions>
-    <expressions id="evaluateExpression">
-      <expression>
-        <expression-string>c.log_prob(action)</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>policy.policy_history</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>action.data[0]</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>len(policy.policy_history)</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>size(policy.policy_history)</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>policy.policy_history.shape</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>policy.policy_history.shape()</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>policy.policy_history.Size()</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>policy</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-    </expressions>
+    <SUITE FILE_PATH="coverage/RLHighWay$__init____1_.coverage" NAME="__init__ (1) Coverage Results" MODIFIED="1564650191248" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject/envs" />
+    <SUITE FILE_PATH="coverage/RLHighWay$torchpolicygrad.coverage" NAME="torchpolicygrad Coverage Results" MODIFIED="1567699232217" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject/agents" />
+    <SUITE FILE_PATH="coverage/RLHighWay$__init__.coverage" NAME="__init__ Coverage Results" MODIFIED="1564650182741" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sumoProject" />
   </component>
 </project>
