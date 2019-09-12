@@ -33,7 +33,7 @@ def plot_grad_flow(named_parameters):
 
 def network_plot(model, writer, epoch):
     for f in model.parameters():
-        hist_name = 'hist' + str(list(f.grad.data.size()))
+        hist_name = 'gradients/' + str(list(f.grad.data.size()))
         writer.add_histogram(hist_name, f, epoch)
 
 
@@ -46,8 +46,8 @@ class Policy(nn.Module):
         self.current_episode = 0
         self.state_space = self.env.observation_space.shape[0]
         self.action_space = self.env.action_space.n
-        self.hidden_size = 640
-        self.hidden_size2 = 320
+        self.hidden_size = 64
+        self.hidden_size2 = 32
         self.l1 = nn.Linear(self.state_space, self.hidden_size, bias=True)
         self.l2 = nn.Linear(self.hidden_size, self.hidden_size2, bias=True)
         self.l3 = nn.Linear(self.hidden_size2, self.action_space, bias=True)
@@ -159,7 +159,7 @@ def main(pol, writer, episodes=100):
 
         pol.update()
         for name in pol.model.state_dict():
-            writer.add_histogram(name.replace('.', "/"), pol.model.state_dict()[name], global_step=episode)
+            writer.add_histogram('layer' + name.replace('.', "/"), pol.model.state_dict()[name], global_step=episode)
 
         if episode % 50 == 0:
             running_reward = running_reward / 50
