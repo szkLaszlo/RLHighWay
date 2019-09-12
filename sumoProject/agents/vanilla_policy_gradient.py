@@ -59,7 +59,7 @@ class agent():
 tf.reset_default_graph()  # Clear the Tensorflow graph.
 
 # myAgent = agent(lr=1e-2, s_size=4, a_size=2, h_size=8)  # Load the agent.
-myAgent = agent(lr=1e-4, s_size=20, a_size=25, h_size=128)  # Load the agent.
+myAgent = agent(lr=1e-4, s_size=18, a_size=9, h_size=128)  # Load the agent.
 
 total_episodes = 30000  # Set total number of episodes to train agent on.
 update_frequency = 5

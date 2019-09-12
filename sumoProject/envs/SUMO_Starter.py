@@ -17,6 +17,7 @@ class EPHighWayEnv(gym.Env):
 
     def __init__(self):
 
+        self.max_punishment = -20
         self.steps_done = 0
         self.rendering = None
 
@@ -52,7 +53,6 @@ class EPHighWayEnv(gym.Env):
             print("Starting SUMO")
             traci.start(self.sumoCmd)
             self.lane_width = traci.lane.getWidth('A_0')
-            self.max_punishment = -200
             self.lane_offset = traci.junction.getPosition('J1')[1] - 3 * self.lane_width
             self.cumulated_reward = 0
             self.rewards = [0, 0, 0, 0]
