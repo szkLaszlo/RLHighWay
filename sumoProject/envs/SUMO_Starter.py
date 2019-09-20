@@ -53,7 +53,7 @@ class EPHighWayEnv(gym.Env):
             print("Starting SUMO")
             traci.start(self.sumoCmd)
             self.lane_width = traci.lane.getWidth('A_0')
-            self.lane_offset = traci.junction.getPosition('J1')[1] - 3 * self.lane_width
+            self.lane_offset = traci.junction.getPosition('J1')[1] - 2 * self.lane_width - self.lane_width / 2
             self.cumulated_reward = 0
             self.rewards = [0, 0, 0, 0]
             self.egoID = None
@@ -72,8 +72,8 @@ class EPHighWayEnv(gym.Env):
     def calculate_action(self, action):
         st = [-0.5, 0, 0.5]
         ac = [-0.5, 0.0, 0.3]
-        steer = st[action // 3]
-        acc = ac[action % 3]
+        steer = st[action // len(st)]
+        acc = ac[action % len(st)]
         ctrl = [steer, acc]
         return ctrl
 
@@ -128,11 +128,12 @@ class EPHighWayEnv(gym.Env):
             reward = self.max_punishment
         elif not terminated:
             reward = new_x - last_x  # 1
-            reward *= self.state['speed'] * 0.1
+            reward *= self.state['speed'] * 0.01
+            # reward = -1
             self.steps_done += 1
         else:
             traci.close()
-            reward = -self.max_punishment
+            reward = 0
         reward = reward
         self.cumulated_reward = self.cumulated_reward + reward
         return self.state, reward, terminated, {'cause': cause, 'rewards': self.cumulated_reward,
@@ -236,14 +237,18 @@ class EPHighWayEnv(gym.Env):
                 math.radians(state['angle']))
             if state['y_pos'] > self.lane_width / 2:
                 state['lane'] -= 1
+                state['y_pos'] *= -1
             elif state['y_pos'] < -self.lane_width / 2:
                 state['lane'] += 1
+                state['y_pos'] *= -1
+
         else:
             state['angle'] = 0
             state['y_pos'] = ego_data[tc.VAR_POSITION][1] - self.lane_offset - \
-                             (state['lane']) * self.lane_width - self.lane_width / 2 \
+                             (state['lane']) * self.lane_width \
                              + (state['speed']) * self.dt * sin(math.radians(state['angle']))
-
+        if math.isclose(abs(state['y_pos']), 0, rel_tol=1e-4, abs_tol=1e-4):
+            state['y_pos'] = 0.0
         return state
 
     def one_step(self):

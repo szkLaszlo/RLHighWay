@@ -46,8 +46,8 @@ class Policy(nn.Module):
         self.current_episode = 0
         self.state_space = self.env.observation_space.shape[0]
         self.action_space = self.env.action_space.n
-        self.hidden_size = 64
-        self.hidden_size2 = 32
+        self.hidden_size = 128
+        self.hidden_size2 = 64
         self.l1 = nn.Linear(self.state_space, self.hidden_size, bias=True)
         self.l2 = nn.Linear(self.hidden_size, self.hidden_size2, bias=True)
         self.l3 = nn.Linear(self.hidden_size2, self.action_space, bias=True)
@@ -98,8 +98,8 @@ class Policy(nn.Module):
         # Update network weights
         self.loss.backward()
         # plot_grad_flow(self.model.named_parameters())
-        self.optimizer.step() if self.current_episode % 5 == 0 else None
-        self.optimizer.zero_grad() if self.current_episode % 5 == 0 else None
+        self.optimizer.step()  # if self.current_episode % 5 == 0 else self.model.retain_graph(True)
+        self.optimizer.zero_grad()  # if self.current_episode % 5 == 0 else None
 
         network_plot(self.model, self.writer, self.current_episode)
 
@@ -116,7 +116,7 @@ class Policy(nn.Module):
         c = np.random.choice(self.action_space, 1, p=action_probs.detach().numpy())
         action_ = c
 
-        # Add log probability of our chosen action to our history
+        # Add probability of our chosen action to our history #not log because log1 = 0
         self.policy_history = torch.cat([self.policy_history, torch.log(action_probs[int(c)].reshape(-1, ))], 0)
         self.action_history = torch.cat([self.action_history, torch.Tensor(action_).reshape(-1, )], 0)
         return action_
@@ -126,11 +126,14 @@ def main(pol, writer, episodes=100):
     running_reward = 0
     done_average = 0
     episode_reward = 0
+    max_reward = -100000
+    stopping_counter = 0
 
     for episode in range(episodes):
         state = env.reset()  # Reset environment and record the starting state
         done = False
         episode_reward = 0
+        running_speed = []
         reward = 0
         for t in itertools.count():
 
@@ -138,11 +141,12 @@ def main(pol, writer, episodes=100):
 
             # Step through environment using chosen action
             state, reward, done, info = pol.env.step(action.item())
-
+            running_speed.append(state['speed'])
             # Save reward
             pol.reward_episode.append(reward)
             if done:
-                print(f"Steps:{t}, distance: {info['distance']:.3f},  "
+                print(f"Steps:{t}, distance: {info['distance']:.3f}, "
+                      f"average speed: {sum(running_speed) / len(running_speed):.2f} "
                       f"cause: {info['cause']}, reward: {info['rewards']:.3f} \n")
                 episode_reward = info['rewards']
                 print(f"Episode {episode + 1}:")
@@ -151,6 +155,7 @@ def main(pol, writer, episodes=100):
         running_reward += episode_reward
         writer.add_scalar('episode/reward', episode_reward, episode)
         writer.add_scalar('episode/length', t, episode)
+        writer.add_scalar('episode/speed', sum(running_speed) / len(running_speed), episode)
         writer.add_scalar('episode/finished', 1 if info['cause'] is None else 0, episode)
         done_average += 1 if info['cause'] is None else 0
         writer.add_scalar('episode/distance', info["distance"], episode)
@@ -158,16 +163,24 @@ def main(pol, writer, episodes=100):
         writer.add_histogram('history/action', pol.action_history, episode)
 
         pol.update()
-        for name in pol.model.state_dict():
-            writer.add_histogram('layer' + name.replace('.', "/"), pol.model.state_dict()[name], global_step=episode)
+        # for name in pol.model.state_dict():
+        #     writer.add_histogram('layer' + name.replace('.', "/"), pol.model.state_dict()[name], global_step=episode)
 
-        if episode % 50 == 0:
+        if episode % 50 == 0 and episode != 0:
             running_reward = running_reward / 50
             done_average = done_average / 50
             print('Episode {}\tLast length: {:5d}\tAverage reward: {:.2f}'.format(episode + 1, t, running_reward))
             writer.add_scalar('average/reward', running_reward, episode + 1)
             writer.add_scalar('average/done', done_average, episode + 1)
             plt.show()
+            if running_reward > max_reward:
+                max_reward = running_reward
+                stopping_counter = 0
+            elif stopping_counter > 100:
+                print(f"The rewards did not improve since {50 * stopping_counter} episodes")
+                break
+            else:
+                stopping_counter += 1
 
             # pol.scheduler.step(running_reward)
             running_reward = 0
@@ -184,11 +197,11 @@ if __name__ == "__main__":
         env = gym.make('EPHighWay-v1')
         env.render(mode='none')
 
-        torch.manual_seed(1)
+        torch.manual_seed(10)
         # Hyperparameters
         learning_rate = 0.0001
         gamma = 0.9
-        episodes = 20000
+        episodes = 200000
         save_path = 'torchSummary/{}'.format(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime()))
         policy = Policy(env=env, episodes=episodes, save_path=save_path)
 
