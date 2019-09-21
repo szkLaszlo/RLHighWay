@@ -1,13 +1,13 @@
 import copy
+import math
 import random
+from math import sin
 
 import gym
-import math
 import numpy as np
 import traci
 import traci.constants as tc
 from gym import spaces
-from math import sin
 
 
 class EPHighWayEnv(gym.Env):
@@ -133,7 +133,7 @@ class EPHighWayEnv(gym.Env):
             self.steps_done += 1
         else:
             traci.close()
-            reward = 0
+            reward = -self.max_punishment
         reward = reward
         self.cumulated_reward = self.cumulated_reward + reward
         return self.state, reward, terminated, {'cause': cause, 'rewards': self.cumulated_reward,

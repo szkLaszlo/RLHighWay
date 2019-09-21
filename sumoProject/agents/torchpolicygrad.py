@@ -4,13 +4,12 @@ import time
 
 import easygui as easygui
 import gym
+import matplotlib.pyplot as plt
 import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.autograd import Variable
-import matplotlib.pyplot as plt
-from torch.distributions import Categorical
 from torch.utils.tensorboard import SummaryWriter
 
 
@@ -39,7 +38,7 @@ def network_plot(model, writer, epoch):
 
 class Policy(nn.Module):
 
-    def __init__(self, env, episodes, save_path):
+    def __init__(self, env, episodes, save_path, update_freq=10):
         super(Policy, self).__init__()
         self.env = env
         self.writer = SummaryWriter(save_path)
@@ -48,6 +47,7 @@ class Policy(nn.Module):
         self.action_space = self.env.action_space.n
         self.hidden_size = 128
         self.hidden_size2 = 64
+        self.update_freq = update_freq
         self.l1 = nn.Linear(self.state_space, self.hidden_size, bias=True)
         self.l2 = nn.Linear(self.hidden_size, self.hidden_size2, bias=True)
         self.l3 = nn.Linear(self.hidden_size2, self.action_space, bias=True)
@@ -94,12 +94,12 @@ class Policy(nn.Module):
 
         # Calculate loss
         self.loss = (torch.sum(torch.mul(self.policy_history, Variable(rewards)).mul(-1), -1))
-
+        self.loss /= self.update_freq
         # Update network weights
         self.loss.backward()
         # plot_grad_flow(self.model.named_parameters())
-        self.optimizer.step()  # if self.current_episode % 5 == 0 else self.model.retain_graph(True)
-        self.optimizer.zero_grad()  # if self.current_episode % 5 == 0 else None
+        self.optimizer.step() if self.current_episode % self.update_freq == 0 else None
+        self.optimizer.zero_grad() if self.current_episode % self.update_freq == 0 else None
 
         network_plot(self.model, self.writer, self.current_episode)
 
@@ -176,7 +176,7 @@ def main(pol, writer, episodes=100):
             if running_reward > max_reward:
                 max_reward = running_reward
                 stopping_counter = 0
-            elif stopping_counter > 100:
+            elif stopping_counter > 500:
                 print(f"The rewards did not improve since {50 * stopping_counter} episodes")
                 break
             else:
@@ -199,8 +199,8 @@ if __name__ == "__main__":
 
         torch.manual_seed(10)
         # Hyperparameters
-        learning_rate = 0.0001
-        gamma = 0.9
+        learning_rate = 0.0005
+        gamma = 0.99
         episodes = 200000
         save_path = 'torchSummary/{}'.format(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime()))
         policy = Policy(env=env, episodes=episodes, save_path=save_path)
