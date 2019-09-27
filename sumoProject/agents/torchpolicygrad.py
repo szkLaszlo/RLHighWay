@@ -10,6 +10,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.autograd import Variable
+from torch.distributions import Categorical
 from torch.utils.tensorboard import SummaryWriter
 
 
@@ -66,9 +67,11 @@ class Policy(nn.Module):
         #                                                       cooldown=2, min_lr=0, eps=1e-08)
         self.model = torch.nn.Sequential(
             self.l1,
+            nn.BatchNorm1d(self.hidden_size),
             # nn.Dropout(p=0.4),
             nn.ReLU(),
             self.l2,
+            nn.BatchNorm1d(self.hidden_size2),
             nn.ReLU(),
             self.l3,
             nn.Softmax(dim=-1)
@@ -113,11 +116,11 @@ class Policy(nn.Module):
         state_ = torch.from_numpy(np.asarray(state_)).type(torch.FloatTensor)
         state_ = Variable(state_)
         action_probs = self.forward(state_)
-        c = np.random.choice(self.action_space, 1, p=action_probs.detach().numpy())
-        action_ = c
+        c = Categorical(action_probs) #np.random.choice(self.action_space, 1, p=action_probs.detach().numpy())
+        action_ = c.sample()
 
         # Add probability of our chosen action to our history #not log because log1 = 0
-        self.policy_history = torch.cat([self.policy_history, torch.log(action_probs[int(c)].reshape(-1, ))], 0)
+        self.policy_history = torch.cat([self.policy_history, c.log_prob(action_).reshape(-1, )], 0)
         self.action_history = torch.cat([self.action_history, torch.Tensor(action_).reshape(-1, )], 0)
         return action_
 

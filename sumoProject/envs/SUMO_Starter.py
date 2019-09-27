@@ -110,6 +110,7 @@ class EPHighWayEnv(gym.Env):
                         except traci.exceptions.TraCIException:
                             self.state['lane'] = int(traci.vehicle.getLaneID(self.egoID)[-1])
                             pass
+                        self.state = self.get_surroundings()
                     new_x = traci.vehicle.getContextSubscriptionResults(self.egoID)[self.egoID][tc.VAR_POSITION][0]
                 else:
                     new_x = last_x + max(self.state['speed'] + ctrl[1], 0) * self.dt
