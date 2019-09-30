@@ -36,6 +36,7 @@ class EPHighWayEnv(gym.Env):
         self.state = None
         self.desired_speed = None
         self.dt = None
+        self.middle_counter = 0
 
     def reset(self):
         if self.rendering is not None:
@@ -110,7 +111,7 @@ class EPHighWayEnv(gym.Env):
                         except traci.exceptions.TraCIException:
                             self.state['lane'] = int(traci.vehicle.getLaneID(self.egoID)[-1])
                             pass
-                        self.state = self.get_surroundings()
+                        self.state = self.get_surroundings(only_env_recheck=True)
                     new_x = traci.vehicle.getContextSubscriptionResults(self.egoID)[self.egoID][tc.VAR_POSITION][0]
                 else:
                     new_x = last_x + max(self.state['speed'] + ctrl[1], 0) * self.dt
@@ -130,7 +131,12 @@ class EPHighWayEnv(gym.Env):
         elif not terminated:
             reward = new_x - last_x  # 1
             reward *= self.state['speed'] * 0.01
-            # reward = -1
+            if abs(self.state['y_pos']) > 0.3:
+                self.middle_counter += 1
+            else:
+                self.middle_counter = 0
+            if self.middle_counter > 20:
+                reward = -1
             self.steps_done += 1
         else:
             traci.close()
@@ -157,7 +163,7 @@ class EPHighWayEnv(gym.Env):
                             "--collision.mingap-factor", "0", "--collision.action", "remove", "--no-warnings", "1",
                             "--random"]
 
-    def get_surroundings(self):
+    def get_surroundings(self, only_env_recheck=False):
         cars_around = traci.vehicle.getContextSubscriptionResults(self.egoID)
         # traci.vehicle.getContextSubscriptionResults(self.egoID)[self.egoID][tc.VAR_POSITION][0]
         ego_data = cars_around[self.egoID]
@@ -234,14 +240,14 @@ class EPHighWayEnv(gym.Env):
         state['lane'] = ego_data[tc.VAR_LANE_INDEX]  # todo: onehot vector
         if self.state is not None:
             state['angle'] = self.state['angle']
-            state['y_pos'] = self.state['y_pos'] + (state['speed']) * self.dt * sin(
-                math.radians(state['angle']))
+            state['y_pos'] = (self.state['y_pos'] + (state['speed']) * self.dt * sin(
+                math.radians(state['angle']))) if not only_env_recheck else self.state['y_pos']
             if state['y_pos'] > self.lane_width / 2:
                 state['lane'] -= 1
-                state['y_pos'] *= -1
+                state['y_pos'] = -1 * (self.lane_width - state['y_pos'])
             elif state['y_pos'] < -self.lane_width / 2:
                 state['lane'] += 1
-                state['y_pos'] *= -1
+                state['y_pos'] += self.lane_width
 
         else:
             state['angle'] = 0

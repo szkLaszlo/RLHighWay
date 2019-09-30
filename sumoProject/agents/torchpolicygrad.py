@@ -39,7 +39,7 @@ def network_plot(model, writer, epoch):
 
 class Policy(nn.Module):
 
-    def __init__(self, env, episodes, save_path, update_freq=10):
+    def __init__(self, env, episodes, save_path, update_freq=10, gamma=0.99, learning_rate=0.001):
         super(Policy, self).__init__()
         self.env = env
         self.writer = SummaryWriter(save_path)
@@ -49,7 +49,8 @@ class Policy(nn.Module):
         self.hidden_size = 128
         self.hidden_size2 = 64
         self.update_freq = update_freq
-        self.l1 = nn.Linear(self.state_space, self.hidden_size, bias=True)
+        self.buffer_lstm = []
+        self.l1 = nn.Linear(self.hidden_size, self.hidden_size, bias=True)
         self.l2 = nn.Linear(self.hidden_size, self.hidden_size2, bias=True)
         self.l3 = nn.Linear(self.hidden_size2, self.action_space, bias=True)
 
@@ -62,24 +63,29 @@ class Policy(nn.Module):
         self.reward_episode = []
         # Overall reward and loss history
         self.reward_history = []
-        # self.scheduler = optim.lr_scheduler.ReduceLROnPlateau(self.optimizer, mode='max', factor=0.5, patience=20,
-        #                                                       verbose=True, threshold=0.001, threshold_mode='rel',
-        #                                                       cooldown=2, min_lr=0, eps=1e-08)
+        self.lstm = nn.LSTM(input_size=self.state_space, hidden_size=self.hidden_size, num_layers=3)
         self.model = torch.nn.Sequential(
             self.l1,
-            nn.BatchNorm1d(self.hidden_size),
-            # nn.Dropout(p=0.4),
+            # nn.BatchNorm1d(self.hidden_size),
             nn.ReLU(),
             self.l2,
-            nn.BatchNorm1d(self.hidden_size2),
+            # nn.BatchNorm1d(self.hidden_size2),
             nn.ReLU(),
             self.l3,
             nn.Softmax(dim=-1)
         )
         self.optimizer = optim.Adam(self.model.parameters(), lr=learning_rate)
+        self.scheduler = optim.lr_scheduler.ReduceLROnPlateau(self.optimizer, mode='max', factor=0.5, patience=20,
+                                                              verbose=True, threshold=0.001, threshold_mode='rel',
+                                                              cooldown=2, min_lr=0, eps=1e-08)
 
     def forward(self, x):
-        return self.model(x)
+        self.buffer_lstm.append(x)
+        if len(self.buffer_lstm) > 100:
+            self.buffer_lstm.pop(0)
+        self.lstm.flatten_parameters()
+        output = self.lstm(torch.stack(self.buffer_lstm))[0][-1]
+        return self.model(output)
 
     def update(self):
         self.current_episode += 1
@@ -111,17 +117,16 @@ class Policy(nn.Module):
         self.reward_episode = []
 
     def select_action_probabilities(self, state_):
-
         state_ = self.env.state_to_tuple(state_)
         state_ = torch.from_numpy(np.asarray(state_)).type(torch.FloatTensor)
         state_ = Variable(state_)
-        action_probs = self.forward(state_)
+        action_probs = self.forward(state_.reshape(1, -1))
         c = Categorical(action_probs) #np.random.choice(self.action_space, 1, p=action_probs.detach().numpy())
         action_ = c.sample()
 
         # Add probability of our chosen action to our history #not log because log1 = 0
         self.policy_history = torch.cat([self.policy_history, c.log_prob(action_).reshape(-1, )], 0)
-        self.action_history = torch.cat([self.action_history, torch.Tensor(action_).reshape(-1, )], 0)
+        self.action_history = torch.cat([self.action_history, action_.float()], 0)
         return action_
 
 
@@ -176,11 +181,12 @@ def main(pol, writer, episodes=100):
             writer.add_scalar('average/reward', running_reward, episode + 1)
             writer.add_scalar('average/done', done_average, episode + 1)
             plt.show()
+            pol.scheduler.step(running_reward)
             if running_reward > max_reward:
                 max_reward = running_reward
                 stopping_counter = 0
             elif stopping_counter > 500:
-                print(f"The rewards did not improve since {50 * stopping_counter} episodes")
+                print(f"The rewards did not improve since {50 * stopping_counter - 1} episodes")
                 break
             else:
                 stopping_counter += 1
@@ -191,6 +197,7 @@ def main(pol, writer, episodes=100):
 
         if not episode % (episodes // 10):
             torch.save(pol.model, os.path.join(save_path, 'model_{}.weight'.format(episode + 1)))
+    return pol
 
 
 if __name__ == "__main__":
@@ -202,32 +209,32 @@ if __name__ == "__main__":
 
         torch.manual_seed(10)
         # Hyperparameters
-        learning_rate = 0.0005
+        learning_rate = 0.0007
         gamma = 0.99
         episodes = 200000
         save_path = 'torchSummary/{}'.format(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime()))
-        policy = Policy(env=env, episodes=episodes, save_path=save_path)
+        policy = Policy(env=env, episodes=episodes, save_path=save_path, gamma=gamma, learning_rate=learning_rate)
 
-        main(pol=policy,
-             writer=policy.writer,
-             episodes=episodes,
-             )
-        torch.save(policy, os.path.join(save_path, 'model_final.weight'))
+        policy = main(pol=policy,
+                      writer=policy.writer,
+                      episodes=episodes,
+                      )
+        torch.save(policy.model, os.path.join(save_path, 'model_final.weight'))
     else:
         path = easygui.fileopenbox()
-        model = torch.load(path)
         env = gym.make('EPHighWay-v1')
         env.render()
+        policy = torch.load(path)
 
         for _ in range(episode_nums):
             state = env.reset()  # Reset environment and record the starting state
             for t in itertools.count():
-                action = model.select_action_probabilities(state)
+                action = 4  # policy.select_action_probabilities(state)
                 # Step through environment using chosen action
-                state, reward, done, info = env.step(action.item())
+                state, reward, done, info = policy.env.step(action)
 
                 # Save reward
-                model.reward_episode.append(reward)
+                policy.reward_episode.append(reward)
                 if done:
                     print(info)
                     print(t)
