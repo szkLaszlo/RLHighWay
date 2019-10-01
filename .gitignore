@@ -107,3 +107,4 @@ sumoProject/virtualtraffic
 sumoProject/envs/virtualtraffic
 sumoProject/agents/torchSummary
 */save_model
+*/workspace.xml
