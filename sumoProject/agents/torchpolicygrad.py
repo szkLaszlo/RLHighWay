@@ -50,7 +50,7 @@ class Policy(nn.Module):
         self.hidden_size2 = 64
         self.update_freq = update_freq
         self.buffer_lstm = []
-        self.l1 = nn.Linear(self.hidden_size, self.hidden_size, bias=True)
+        self.l1 = nn.Linear(self.state_space, self.hidden_size, bias=True)
         self.l2 = nn.Linear(self.hidden_size, self.hidden_size2, bias=True)
         self.l3 = nn.Linear(self.hidden_size2, self.action_space, bias=True)
 
@@ -63,7 +63,6 @@ class Policy(nn.Module):
         self.reward_episode = []
         # Overall reward and loss history
         self.reward_history = []
-        self.lstm = nn.LSTM(input_size=self.state_space, hidden_size=self.hidden_size, num_layers=3)
         self.model = torch.nn.Sequential(
             self.l1,
             # nn.BatchNorm1d(self.hidden_size),
@@ -196,7 +195,7 @@ def main(pol, writer, episodes=100):
 
 
 if __name__ == "__main__":
-    train = False
+    train = True
     episode_nums = 10
     if train:
         env = gym.make('EPHighWay-v1')
