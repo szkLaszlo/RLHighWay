@@ -80,12 +80,7 @@ class Policy(nn.Module):
                                                               cooldown=2, min_lr=0, eps=1e-08)
 
     def forward(self, x):
-        self.buffer_lstm.append(x)
-        if len(self.buffer_lstm) > 100:
-            self.buffer_lstm.pop(0)
-        self.lstm.flatten_parameters()
-        output = self.lstm(torch.stack(self.buffer_lstm))[0][-1]
-        return self.model(output)
+        return self.model(x)
 
     def update(self):
         self.current_episode += 1
