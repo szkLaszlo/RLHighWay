@@ -72,7 +72,7 @@ class EPHighWayEnv(gym.Env):
 
     def calculate_action(self, action):
         st = [-0.5, 0, 0.5]
-        ac = [-0.5, 0.0, 0.3]
+        ac = [-0.7, 0.0, 0.3]
         steer = st[action // len(st)]
         acc = ac[action % len(st)]
         ctrl = [steer, acc]

@@ -32,7 +32,7 @@
 	<flow id="carflow6" type="typedist1" route="r7" beg="10" departLane="random" period="1" number="30"/>
 	<flow id="carflow1" type="typedist1" route="r1" beg="0" end="3600" departLane="random" vehsPerHour="3000"/>
 	<!--	<flow id="carflow2" type="typedist1" route="r7" beg="0" end="6" departLane="random" vehsPerHour="3000"/>-->
-	<vehicle id="ego" type="car1" depart="5" route="r1" color="1,1,1" departSpeed="30" departLane="random">
+	<vehicle id="ego" type="car1" depart="5" route="r1" color="1,1,1" departSpeed="30" departLane="0">
 		</vehicle>
 </routes>
 

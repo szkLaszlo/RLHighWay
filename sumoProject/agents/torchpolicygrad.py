@@ -201,7 +201,7 @@ def main(pol, writer, episodes=100):
 
 
 if __name__ == "__main__":
-    train = True
+    train = False
     episode_nums = 10
     if train:
         env = gym.make('EPHighWay-v1')
@@ -224,19 +224,21 @@ if __name__ == "__main__":
         path = easygui.fileopenbox()
         env = gym.make('EPHighWay-v1')
         env.render()
-        policy = torch.load(path)
+        policy = Policy(env=env, episodes=100, save_path=os.path.split(path)[0], gamma=0.99, learning_rate=0.001)
 
-        for _ in range(episode_nums):
-            state = env.reset()  # Reset environment and record the starting state
-            for t in itertools.count():
-                action = 4  # policy.select_action_probabilities(state)
-                # Step through environment using chosen action
-                state, reward, done, info = policy.env.step(action)
+        policy.model = torch.load(path)
+        with torch.no_grad():
+            for _ in range(episode_nums):
+                state = env.reset()  # Reset environment and record the starting state
+                for t in itertools.count():
+                    action = policy.select_action_probabilities(state)
+                    # Step through environment using chosen action
+                    state, reward, done, info = policy.env.step(action.item())
 
-                # Save reward
-                policy.reward_episode.append(reward)
-                if done:
-                    print(info)
-                    print(t)
-                    episode_reward = reward
-                    break
+                    # Save reward
+                    policy.reward_episode.append(reward)
+                    if done:
+                        print(info)
+                        print(t)
+                        episode_reward = reward
+                        break
