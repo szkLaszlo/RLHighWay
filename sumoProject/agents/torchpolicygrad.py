@@ -39,7 +39,7 @@ def network_plot(model, writer, epoch):
 
 class Policy(nn.Module):
 
-    def __init__(self, env, episodes, save_path, update_freq=10, gamma=0.99, learning_rate=0.001):
+    def __init__(self, env, episodes, save_path, update_freq=10, gamma=0.99, learning_rate=0.001, use_gpu=True):
         super(Policy, self).__init__()
         self.env = env
         self.writer = SummaryWriter(save_path)
@@ -56,10 +56,10 @@ class Policy(nn.Module):
 
         self.gamma = gamma
         self.loss = 10
-
+        self.use_gpu = use_gpu
         # Episode policy and reward history
-        self.policy_history = Variable(torch.Tensor())
-        self.action_history = Variable(torch.Tensor())
+        self.policy_history = Variable(torch.Tensor()).cuda()
+        self.action_history = Variable(torch.Tensor()).cuda()
         self.reward_episode = []
         # Overall reward and loss history
         self.reward_history = []
@@ -75,13 +75,18 @@ class Policy(nn.Module):
             nn.Softmax(dim=-1)
         )
         self.optimizer = optim.Adam(self.model.parameters(), lr=learning_rate)
-        self.scheduler = optim.lr_scheduler.ReduceLROnPlateau(self.optimizer, mode='max', factor=0.5, patience=20,
-                                                              verbose=True, threshold=0.001, threshold_mode='rel',
-                                                              cooldown=2, min_lr=0, eps=1e-08)
+        if self.use_gpu:
+            self.policy_history.cuda()
+            self.action_history.cuda()
+            self.lstm.cuda()
+            self.model.cuda()
+        # self.scheduler = optim.lr_scheduler.ReduceLROnPlateau(self.optimizer, mode='max', factor=0.5, patience=20,
+        #                                                       verbose=True, threshold=0.001, threshold_mode='rel',
+        #                                                       cooldown=2, min_lr=0, eps=1e-08)
 
     def forward(self, x):
         self.buffer_lstm.append(x)
-        if len(self.buffer_lstm) > 100:
+        if len(self.buffer_lstm) > 20:
             self.buffer_lstm.pop(0)
         self.lstm.flatten_parameters()
         output = self.lstm(torch.stack(self.buffer_lstm))[0][-1]
@@ -98,7 +103,7 @@ class Policy(nn.Module):
             rewards.insert(0, R)
 
         # Scale rewards
-        rewards = torch.FloatTensor(rewards)
+        rewards = torch.FloatTensor(rewards).cuda()
         rewards = (rewards - rewards.mean()) / (rewards.std() + np.finfo(np.float32).eps)
 
         # Calculate loss
@@ -112,14 +117,14 @@ class Policy(nn.Module):
 
         network_plot(self.model, self.writer, self.current_episode)
 
-        self.policy_history = Variable(torch.Tensor())
-        self.action_history = Variable(torch.Tensor())
+        self.policy_history = Variable(torch.Tensor()).cuda()
+        self.action_history = Variable(torch.Tensor()).cuda()
         self.reward_episode = []
 
     def select_action_probabilities(self, state_):
         state_ = self.env.state_to_tuple(state_)
         state_ = torch.from_numpy(np.asarray(state_)).type(torch.FloatTensor)
-        state_ = Variable(state_)
+        state_ = Variable(state_).cuda()
         action_probs = self.forward(state_.reshape(1, -1))
         c = Categorical(action_probs) #np.random.choice(self.action_space, 1, p=action_probs.detach().numpy())
         action_ = c.sample()
@@ -127,7 +132,7 @@ class Policy(nn.Module):
         # Add probability of our chosen action to our history #not log because log1 = 0
         self.policy_history = torch.cat([self.policy_history, c.log_prob(action_).reshape(-1, )], 0)
         self.action_history = torch.cat([self.action_history, action_.float()], 0)
-        return action_
+        return action_.detach().cpu()
 
 
 def main(pol, writer, episodes=100):
@@ -181,7 +186,7 @@ def main(pol, writer, episodes=100):
             writer.add_scalar('average/reward', running_reward, episode + 1)
             writer.add_scalar('average/done', done_average, episode + 1)
             plt.show()
-            pol.scheduler.step(running_reward)
+            # pol.scheduler.step(running_reward)
             if running_reward > max_reward:
                 max_reward = running_reward
                 stopping_counter = 0
@@ -201,7 +206,7 @@ def main(pol, writer, episodes=100):
 
 
 if __name__ == "__main__":
-    train = False
+    train = True
     episode_nums = 10
     if train:
         env = gym.make('EPHighWay-v1')
