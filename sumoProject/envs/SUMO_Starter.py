@@ -43,7 +43,6 @@ class EPHighWayEnv(gym.Env):
             try:
                 for vehs in traci.vehicle.getIDList():
                     del vehs
-                traci.close(False)
             except KeyError:
                 pass
             except AttributeError:
@@ -51,8 +50,7 @@ class EPHighWayEnv(gym.Env):
             except TypeError:
                 pass
 
-            print("Starting SUMO")
-            traci.start(self.sumoCmd)
+            traci.load(self.sumoCmd[1:])
             self.lane_width = traci.lane.getWidth('A_0')
             self.lane_offset = traci.junction.getPosition('J1')[1] - 2 * self.lane_width - self.lane_width / 2
             self.cumulated_reward = 0
@@ -96,7 +94,6 @@ class EPHighWayEnv(gym.Env):
                     lane_new = traci.vehicle.getLaneID(self.egoID)
                     if int(lane_new[-1]) != self.state['lane']:
                         if self.state['lane'] < 0 or self.state['lane'] > 2:
-                            traci.close()
                             reward = self.max_punishment
                             self.cumulated_reward += reward
                             new_x = \
@@ -126,7 +123,6 @@ class EPHighWayEnv(gym.Env):
         terminated = not is_ok
         reward = 0
         if terminated and cause is not None:
-            traci.close()
             reward = self.max_punishment
         elif not terminated:
             reward = new_x - last_x  # 1
@@ -139,7 +135,6 @@ class EPHighWayEnv(gym.Env):
                 reward = -1
             self.steps_done += 1
         else:
-            traci.close()
             reward = -self.max_punishment
         reward = reward
         self.cumulated_reward = self.cumulated_reward + reward
@@ -162,6 +157,7 @@ class EPHighWayEnv(gym.Env):
             self.sumoCmd = [self.sumoBinary, "-c", "../envs/no_gui.sumocfg", "--start", "--quit-on-end",
                             "--collision.mingap-factor", "0", "--collision.action", "remove", "--no-warnings", "1",
                             "--random"]
+        traci.start(self.sumoCmd)
 
     def get_surroundings(self, only_env_recheck=False):
         cars_around = traci.vehicle.getContextSubscriptionResults(self.egoID)
