@@ -63,6 +63,7 @@ class Policy(nn.Module):
         self.reward_episode = []
         # Overall reward and loss history
         self.reward_history = []
+        self.lstm = nn.LSTM(input_size=self.state_space, hidden_size=self.hidden_size, num_layers=3)
         self.model = torch.nn.Sequential(
             self.l1,
             # nn.BatchNorm1d(self.hidden_size),
