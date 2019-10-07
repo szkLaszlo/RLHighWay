@@ -58,8 +58,8 @@ class Policy(nn.Module):
         self.loss = 10
         self.use_gpu = use_gpu
         # Episode policy and reward history
-        self.policy_history = Variable(torch.Tensor()).cuda()
-        self.action_history = Variable(torch.Tensor()).cuda()
+        self.policy_history = Variable(torch.Tensor())
+        self.action_history = Variable(torch.Tensor())
         self.reward_episode = []
         # Overall reward and loss history
         self.reward_history = []
@@ -75,9 +75,9 @@ class Policy(nn.Module):
         )
         self.optimizer = optim.Adam(self.model.parameters(), lr=learning_rate)
         if self.use_gpu:
-            self.policy_history.cuda()
-            self.action_history.cuda()
-            self.model.cuda()
+            self.policy_history = self.policy_history.cuda()
+            self.action_history = self.action_history.cuda()
+            self.model = self.model.cuda()
         self.scheduler = optim.lr_scheduler.ReduceLROnPlateau(self.optimizer, mode='max', factor=0.5, patience=200,
                                                               verbose=True, threshold=0.001, threshold_mode='rel',
                                                               cooldown=5, min_lr=0, eps=1e-08)
@@ -96,7 +96,9 @@ class Policy(nn.Module):
             rewards.insert(0, R)
 
         # Scale rewards
-        rewards = torch.FloatTensor(rewards).cuda()
+        rewards = torch.FloatTensor(rewards)
+        if self.use_gpu:
+            rewards = rewards.cuda()
         rewards = (rewards - rewards.mean()) / (rewards.std() + np.finfo(np.float32).eps)
 
         # Calculate loss
@@ -110,14 +112,19 @@ class Policy(nn.Module):
 
         network_plot(self.model, self.writer, self.current_episode)
 
-        self.policy_history = Variable(torch.Tensor()).cuda()
-        self.action_history = Variable(torch.Tensor()).cuda()
+        self.policy_history = Variable(torch.Tensor())
+        self.action_history = Variable(torch.Tensor())
+        if self.use_gpu:
+            self.action_history = self.action_history.cuda()
+            self.policy_history = self.policy_history.cuda()
         self.reward_episode = []
 
     def select_action_probabilities(self, state_):
         state_ = self.env.state_to_tuple(state_)
         state_ = torch.from_numpy(np.asarray(state_)).type(torch.FloatTensor)
-        state_ = Variable(state_).cuda()
+        state_ = Variable(state_)
+        if self.use_gpu:
+            state_ = state_.cuda()
         action_probs = self.forward(state_.reshape(1, -1))
         c = Categorical(action_probs) #np.random.choice(self.action_space, 1, p=action_probs.detach().numpy())
         action_ = c.sample()
@@ -125,7 +132,7 @@ class Policy(nn.Module):
         # Add probability of our chosen action to our history #not log because log1 = 0
         self.policy_history = torch.cat([self.policy_history, c.log_prob(action_).reshape(-1, )], 0)
         self.action_history = torch.cat([self.action_history, action_.float()], 0)
-        return action_.detach().cpu()
+        return action_.detach().cpu() if action_.is_cuda else action_
 
 
 def main(pol, writer, episodes=100):
