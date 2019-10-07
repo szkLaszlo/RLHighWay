@@ -1,9 +1,6 @@
 import os
 import sys
 
-from gym.envs.registration import register
-
-
 if 'SUMO_HOME' in os.environ:
     tools = os.path.join(os.environ['SUMO_HOME'], 'tools')
     sys.path.append(tools)

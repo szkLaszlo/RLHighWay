@@ -1,5 +1,6 @@
 import itertools
 import os
+import platform
 import time
 
 import easygui as easygui
@@ -56,7 +57,7 @@ class Policy(nn.Module):
 
         self.gamma = gamma
         self.loss = 10
-        self.use_gpu = use_gpu
+        self.use_gpu = use_gpu if "Windows" not in platform.system() else False
         # Episode policy and reward history
         self.policy_history = Variable(torch.Tensor())
         self.action_history = Variable(torch.Tensor())
@@ -218,7 +219,7 @@ if __name__ == "__main__":
         learning_rate = 0.0007
         gamma = 0.99
         episodes = 200000
-        save_path = 'torchSummary/{}'.format(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime()))
+        save_path = 'torchSummary/{}'.format(time.strftime("%Y%m%d_%H%M%S", time.gmtime()))
         policy = Policy(env=env, episodes=episodes, save_path=save_path, gamma=gamma, learning_rate=learning_rate)
 
         policy = main(pol=policy,
@@ -232,7 +233,7 @@ if __name__ == "__main__":
         env.render()
         policy = Policy(env=env, episodes=100, save_path=os.path.split(path)[0], gamma=0.99, learning_rate=0.001)
 
-        policy.model = torch.load(path)
+        policy.model = torch.load(path, map_location=torch.device('cpu') if "Windows" in platform.system() else torch.device('cuda'))
         with torch.no_grad():
             for _ in range(episode_nums):
                 state = env.reset()  # Reset environment and record the starting state

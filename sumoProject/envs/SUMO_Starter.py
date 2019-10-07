@@ -18,7 +18,7 @@ class EPHighWayEnv(gym.Env):
 
     def __init__(self):
 
-        self.max_punishment = -20
+        self.max_punishment = -100
         self.steps_done = 0
         self.rendering = None
 
@@ -130,7 +130,7 @@ class EPHighWayEnv(gym.Env):
             reward = self.max_punishment
         elif not terminated:
             reward = new_x - last_x  # 1
-            reward *= self.state['speed'] * 0.001
+            reward *= self.state['speed'] * 0.01
             if abs(self.state['y_pos']) > 0.3:
                 self.middle_counter += 1
             else:
