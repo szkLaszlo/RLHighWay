@@ -78,9 +78,9 @@ class Policy(nn.Module):
             self.policy_history.cuda()
             self.action_history.cuda()
             self.model.cuda()
-        # self.scheduler = optim.lr_scheduler.ReduceLROnPlateau(self.optimizer, mode='max', factor=0.5, patience=20,
-        #                                                       verbose=True, threshold=0.001, threshold_mode='rel',
-        #                                                       cooldown=2, min_lr=0, eps=1e-08)
+        self.scheduler = optim.lr_scheduler.ReduceLROnPlateau(self.optimizer, mode='max', factor=0.5, patience=200,
+                                                              verbose=True, threshold=0.001, threshold_mode='rel',
+                                                              cooldown=5, min_lr=0, eps=1e-08)
 
     def forward(self, x):
         return self.model(x)
@@ -179,12 +179,13 @@ def main(pol, writer, episodes=100):
             writer.add_scalar('average/reward', running_reward, episode + 1)
             writer.add_scalar('average/done', done_average, episode + 1)
             plt.show()
-            # pol.scheduler.step(running_reward)
+            pol.scheduler.step(running_reward)
             if running_reward > max_reward:
                 max_reward = running_reward
                 stopping_counter = 0
-            elif stopping_counter > 500:
+            elif stopping_counter > 200:
                 print(f"The rewards did not improve since {50 * stopping_counter - 1} episodes")
+                env.stop()
                 break
             else:
                 stopping_counter += 1
@@ -193,7 +194,7 @@ def main(pol, writer, episodes=100):
             running_reward = 0
             done_average = 0
 
-        if not episode % (episodes // 10):
+        if not episode % (episodes // 100):
             torch.save(pol.model, os.path.join(save_path, 'model_{}.weight'.format(episode + 1)))
     return pol
 
