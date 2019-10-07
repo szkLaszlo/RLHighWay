@@ -1,5 +1,6 @@
 import copy
 import math
+import platform
 import random
 from math import sin
 
@@ -147,16 +148,29 @@ class EPHighWayEnv(gym.Env):
         else:
             self.rendering = False
 
-        if self.rendering:
-            self.sumoBinary = "/usr/share/sumo/bin/sumo-gui"
-            self.sumoCmd = [self.sumoBinary, "-c", "../envs/jatek.sumocfg", "--start", "--quit-on-end",
-                            "--collision.mingap-factor", "0", "--collision.action", "remove", "--no-warnings", "1",
-                            "--random"]
+        if "Windows" in platform.system():
+            if self.rendering:
+                self.sumoBinary = "C:/Sumo/bin/sumo-gui"
+                self.sumoCmd = [self.sumoBinary, "-c", "../envs/jatek.sumocfg", "--start", "--quit-on-end",
+                                "--collision.mingap-factor", "0", "--collision.action", "remove", "--no-warnings", "1",
+                                "--random"]
+            else:
+                self.sumoBinary = "C:/Sumo/bin/sumo"
+                self.sumoCmd = [self.sumoBinary, "-c", "../envs/no_gui.sumocfg", "--start", "--quit-on-end",
+                                "--collision.mingap-factor", "0", "--collision.action", "remove", "--no-warnings", "1",
+                                "--random"]
         else:
-            self.sumoBinary = "/usr/share/sumo/bin/sumo"
-            self.sumoCmd = [self.sumoBinary, "-c", "../envs/no_gui.sumocfg", "--start", "--quit-on-end",
-                            "--collision.mingap-factor", "0", "--collision.action", "remove", "--no-warnings", "1",
-                            "--random"]
+            if self.rendering:
+                self.sumoBinary = "/usr/share/sumo/bin/sumo-gui"
+                self.sumoCmd = [self.sumoBinary, "-c", "../envs/jatek.sumocfg", "--start", "--quit-on-end",
+                                "--collision.mingap-factor", "0", "--collision.action", "remove", "--no-warnings", "1",
+                                "--random"]
+            else:
+                self.sumoBinary = "/usr/share/sumo/bin/sumo"
+                self.sumoCmd = [self.sumoBinary, "-c", "../envs/no_gui.sumocfg", "--start", "--quit-on-end",
+                                "--collision.mingap-factor", "0", "--collision.action", "remove", "--no-warnings", "1",
+                                "--random"]
+
         traci.start(self.sumoCmd)
 
     def get_surroundings(self, only_env_recheck=False):
