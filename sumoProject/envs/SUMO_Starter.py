@@ -175,7 +175,7 @@ class EPHighWayEnv(gym.Env):
                                 "--collision.mingap-factor", "0", "--collision.action", "remove", "--no-warnings", "1",
                                 "--random"]
 
-        traci.start(self.sumoCmd)
+        traci.start(self.sumoCmd[:4])
 
     def get_surroundings(self, only_env_recheck=False):
         cars_around = traci.vehicle.getContextSubscriptionResults(self.egoID)
