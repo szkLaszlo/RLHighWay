@@ -38,6 +38,10 @@ class EPHighWayEnv(gym.Env):
         self.desired_speed = None
         self.dt = None
         self.middle_counter = 0
+        self.reward_type = "simple"
+
+    def set_reward_type(self, reward_type):
+        self.reward_type = reward_type
 
     def stop(self):
         traci.close()
@@ -69,6 +73,7 @@ class EPHighWayEnv(gym.Env):
             while self.egoID is None:
                 self.one_step()
             self.state = self.get_surroundings()
+            self.state["speed"] = self.desired_speed
             return self.state
         else:
             raise RuntimeError('Please run render before reset!')
@@ -87,9 +92,9 @@ class EPHighWayEnv(gym.Env):
         IDsOfVehicles = traci.vehicle.getIDList()
         if "ego" in IDsOfVehicles:
             ctrl = self.calculate_action(action)
+            # traci.vehicle.setMaxSpeed(self.egoID, min(max(self.state['speed'] + ctrl[1], 1), 50))
             traci.vehicle.setSpeed(self.egoID,
                                    min(max(self.state['speed'] + ctrl[1], 0), 50))  # todo hardcoded max speed
-            traci.vehicle.setMaxSpeed(self.egoID, min(max(self.state['speed'] + ctrl[1], 1), 50))
             self.state['angle'] += ctrl[0]
             if self.egoID is not None:
                 last_x = traci.vehicle.getContextSubscriptionResults(self.egoID)[self.egoID][tc.VAR_POSITION][0]
@@ -130,14 +135,18 @@ class EPHighWayEnv(gym.Env):
         if terminated and cause is not None:
             reward = self.max_punishment
         elif not terminated:
-            reward = new_x - last_x  # 1
-            reward *= self.state['speed'] * 0.01
-            if abs(self.state['y_pos']) > 0.3:
-                self.middle_counter += 1
+            if self.reward_type == 'complex':
+                reward, _ = self.calculate_reward()
+                reward += 1
             else:
-                self.middle_counter = 0
-            if self.middle_counter > 100:
-                reward -= 1
+                reward = new_x - last_x  # 1
+                reward *= self.state['speed'] * 0.01
+                if abs(self.state['y_pos']) > 0.3:
+                    self.middle_counter += 1
+                else:
+                    self.middle_counter = 0
+                if self.middle_counter > 100:
+                    reward -= 1
             self.steps_done += 1
         else:
             reward = -self.max_punishment
@@ -283,7 +292,6 @@ class EPHighWayEnv(gym.Env):
             traci.vehicle.setLaneChangeMode(self.egoID, 0x0)
             traci.vehicle.setSpeedMode(self.egoID, 0x0)
             traci.vehicle.setSpeed(self.egoID, self.desired_speed)
-            traci.vehicle.setMaxSpeed(self.egoID, self.desired_speed)
             traci.vehicle.subscribeContext(self.egoID, tc.CMD_GET_VEHICLE_VARIABLE, 0.0,
                                            [tc.VAR_SPEED, tc.VAR_LANE_INDEX, tc.VAR_ANGLE, tc.VAR_POSITION,
                                             tc.VAR_LENGTH])
@@ -322,27 +330,24 @@ class EPHighWayEnv(gym.Env):
                 elif keys is "angle":
                     new_state.append(state[keys] / 90)
                 elif keys is "y_pos":
-                    new_state.append(state[keys] / self.lane_width / 2)
+                    new_state.append(state[keys] / (self.lane_width / 2))
                 else:
                     new_state.append(state[keys])
         return new_state
 
     def calculate_reward(self):
         reward = 0
-
         # LANE BASED REWARD
-
         lane_reward = 0
         lane_index = self.state['lane']
         if lane_index > 0:
-            if (self.state['ER']['dx'] == 200) and (self.state['FR']['dx'] > 30):
+            if (self.state['ER'] == 0) and (self.state['FR']['dx'] > 30):
                 lane_reward = -min(1, max(0, (self.state['FR']['dx'] - 50.0) / 20.0))
 
         # POSITION BASED REWARD
-        # dy=abs(self.modell.egovehicle.y-lane_index*self.envdict['lane_width'])
-        dy = abs(self.state['y_pos'] - self.state['lane'] * self.lane_width)
-        y_treshold_low = self.state['lane'] / 2.0 * self.lane_width + 0.3  # [m]
-        y_treshold_high = self.state['lane'] / 2.0 * self.lane_width - 0.3  # [m]
+        dy = abs(self.state['y_pos'])
+        y_treshold_low = 0.3  # [m]
+        y_treshold_high = 0.3  # [m]
         y_reward_max = 1.0
         y_reward_low = 0.0
         if dy < y_treshold_low:
@@ -374,15 +379,15 @@ class EPHighWayEnv(gym.Env):
         closing_rear = 0  # following vehicle
 
         lane_width = self.lane_width
-        vehicle_y = self.state['y_pos'] - self.state['lane'] * lane_width
+        vehicle_y = self.state['y_pos']
 
         # right safe zone
-        if self.state['ER']['dx'] != 200:
-            if vehicle_y < -lane_width / 4:
-                closing_right = max(-1, (vehicle_y + lane_width / 4) / (lane_width / 4))
-        # left safe zone
-        if self.state['EL']['dx'] != 200:
+        if self.state['ER'] != 0:
             if vehicle_y > lane_width / 4:
+                closing_right = max(-1, (-vehicle_y + lane_width / 4) / (lane_width / 4))
+        # left safe zone
+        if self.state['EL'] != 0:
+            if vehicle_y > - lane_width / 4:
                 closing_left = max(-1, -(vehicle_y - lane_width / 4) / (lane_width / 4))
         # front
         following_time = self.state['FE']['dx'] / self.state['speed']
