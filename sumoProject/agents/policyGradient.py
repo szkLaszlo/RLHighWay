@@ -38,13 +38,16 @@ def network_plot(model, writer, epoch):
 
 class Policy(nn.Module):
 
-    def __init__(self, env, save_path=None, update_freq=10, gamma=0.99, learning_rate=0.001, use_gpu=True):
+    def __init__(self, env, save_path=None, update_freq=10, gamma=0.99, learning_rate=0.001, use_gpu=True,
+                 tb_summary=True):
         super(Policy, self).__init__()
-        torch.manual_seed(int(time.time_ns()))
+        torch.manual_seed(int(time.time()))
         self.env = env
         self.save_path = save_path \
             if save_path is not None else 'torchSummary/{}'.format(time.strftime("%Y%m%d_%H%M%S", time.gmtime()))
-        self.writer = SummaryWriter(save_path) if save_path is not None else None
+        if not os.path.exists(self.save_path) and tb_summary:
+            os.mkdir(self.save_path)
+        self.writer = SummaryWriter(self.save_path) if tb_summary else None
         self.current_episode = 0
         self.state_space = self.env.observation_space.shape[0]
         self.action_space = self.env.action_space.n
@@ -79,6 +82,7 @@ class Policy(nn.Module):
             self.policy_history = self.policy_history.cuda()
             self.action_history = self.action_history.cuda()
             self.model = self.model.cuda()
+            print("Using CUDA backend.")
         self.scheduler = optim.lr_scheduler.ReduceLROnPlateau(self.optimizer, mode='max', factor=0.5, patience=200,
                                                               verbose=True, threshold=0.001, threshold_mode='rel',
                                                               cooldown=5, min_lr=0, eps=1e-08)
