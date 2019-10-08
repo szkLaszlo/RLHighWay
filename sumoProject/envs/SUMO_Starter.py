@@ -23,8 +23,8 @@ class EPHighWayEnv(gym.Env):
         self.rendering = None
 
         low = np.array(
-            [-200, -50, -200, -50, -200, -50, -200, -50, -200, -50, -200, -50, -200, -50, 0, -1, -90, -10])
-        high = np.array([200, 50, 200, 50, 200, 50, 200, 50, 200, 50, 200, 50, 200, 50, 50, 3, 90, 20])
+            [-200, -50, -200, -50, -200, -50, -200, -50, -200, -50, -200, -50, -200, -50, 0, -1, -90, -10, 0])
+        high = np.array([200, 50, 200, 50, 200, 50, 200, 50, 200, 50, 200, 50, 200, 50, 50, 3, 90, 20, 50])
         self.action_space = spaces.Discrete(9)
         self.observation_space = spaces.Box(low, high, dtype=np.float32)
         self.cumulated_reward = 0
@@ -279,6 +279,7 @@ class EPHighWayEnv(gym.Env):
                              + (state['speed']) * self.dt * sin(math.radians(state['angle']))
         if math.isclose(abs(state['y_pos']), 0, rel_tol=1e-4, abs_tol=1e-4):
             state['y_pos'] = 0.0
+        state['des_speed'] = self.desired_speed
         return state
 
     def one_step(self):
@@ -315,7 +316,7 @@ class EPHighWayEnv(gym.Env):
 
     def state_to_tuple(self, state):
         new_state = []
-        for keys in ['FL', 'FE', 'FR', 'RL', 'RE', 'RR', 'EL', 'ER', 'speed', 'angle', 'y_pos', 'lane']:
+        for keys in ['FL', 'FE', 'FR', 'RL', 'RE', 'RR', 'EL', 'ER', 'speed', 'angle', 'y_pos', 'lane', 'des_speed']:
             if keys not in state.keys():
                 raise RuntimeError('Not valid state!')
             else:
@@ -331,6 +332,8 @@ class EPHighWayEnv(gym.Env):
                     new_state.append(state[keys] / 90)
                 elif keys is "y_pos":
                     new_state.append(state[keys] / (self.lane_width / 2))
+                elif keys is "des_speed":
+                    new_state.append(state[keys] / 50)
                 else:
                     new_state.append(state[keys])
         return new_state
