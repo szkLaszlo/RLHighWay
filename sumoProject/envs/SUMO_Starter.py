@@ -65,6 +65,7 @@ class EPHighWayEnv(gym.Env):
             self.desired_speed = random.randint(100, 140)
             self.desired_speed = self.desired_speed / 3.6
             self.state = None
+            self.middle_counter = 0
             while self.egoID is None:
                 self.one_step()
             self.state = self.get_surroundings()
@@ -136,7 +137,7 @@ class EPHighWayEnv(gym.Env):
             else:
                 self.middle_counter = 0
             if self.middle_counter > 100:
-                reward = -1
+                reward -= 1
             self.steps_done += 1
         else:
             reward = -self.max_punishment

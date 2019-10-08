@@ -3,8 +3,6 @@ import os
 import platform
 import time
 
-import easygui as easygui
-import gym
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
@@ -40,24 +38,26 @@ def network_plot(model, writer, epoch):
 
 class Policy(nn.Module):
 
-    def __init__(self, env, episodes, save_path, update_freq=10, gamma=0.99, learning_rate=0.001, use_gpu=True):
+    def __init__(self, env, save_path=None, update_freq=10, gamma=0.99, learning_rate=0.001, use_gpu=True):
         super(Policy, self).__init__()
+        torch.manual_seed(int(time.time_ns()))
         self.env = env
-        self.writer = SummaryWriter(save_path)
+        self.save_path = save_path \
+            if save_path is not None else 'torchSummary/{}'.format(time.strftime("%Y%m%d_%H%M%S", time.gmtime()))
+        self.writer = SummaryWriter(save_path) if save_path is not None else None
         self.current_episode = 0
         self.state_space = self.env.observation_space.shape[0]
         self.action_space = self.env.action_space.n
         self.hidden_size = 128
         self.hidden_size2 = 64
         self.update_freq = update_freq
-        self.buffer_lstm = []
         self.l1 = nn.Linear(self.state_space, self.hidden_size, bias=True)
         self.l2 = nn.Linear(self.hidden_size, self.hidden_size2, bias=True)
         self.l3 = nn.Linear(self.hidden_size2, self.action_space, bias=True)
 
         self.gamma = gamma
         self.loss = 10
-        self.use_gpu = use_gpu if "Windows" not in platform.system() else False
+        self.use_gpu = use_gpu if torch.cuda.is_available() else False
         # Episode policy and reward history
         self.policy_history = Variable(torch.Tensor())
         self.action_history = Variable(torch.Tensor())
@@ -93,7 +93,7 @@ class Policy(nn.Module):
 
         # Discount future rewards back to the present using gamma
         for r in self.reward_episode[::-1]:
-            R = r + policy.gamma * R
+            R = r + self.gamma * R
             rewards.insert(0, R)
 
         # Scale rewards
@@ -111,7 +111,7 @@ class Policy(nn.Module):
         self.optimizer.step() if self.current_episode % self.update_freq == 0 else None
         self.optimizer.zero_grad() if self.current_episode % self.update_freq == 0 else None
 
-        network_plot(self.model, self.writer, self.current_episode)
+        # network_plot(self.model, self.writer, self.current_episode)
 
         self.policy_history = Variable(torch.Tensor())
         self.action_history = Variable(torch.Tensor())
@@ -127,7 +127,7 @@ class Policy(nn.Module):
         if self.use_gpu:
             state_ = state_.cuda()
         action_probs = self.forward(state_.reshape(1, -1))
-        c = Categorical(action_probs) #np.random.choice(self.action_space, 1, p=action_probs.detach().numpy())
+        c = Categorical(action_probs)  # np.random.choice(self.action_space, 1, p=action_probs.detach().numpy())
         action_ = c.sample()
 
         # Add probability of our chosen action to our history #not log because log1 = 0
@@ -135,117 +135,89 @@ class Policy(nn.Module):
         self.action_history = torch.cat([self.action_history, action_.float()], 0)
         return action_.detach().cpu() if action_.is_cuda else action_
 
+    def train_network(self, episodes=100):
+        running_reward = 0
+        done_average = 0
+        max_reward = -100000
+        stopping_counter = 0
 
-def main(pol, writer, episodes=100):
-    running_reward = 0
-    done_average = 0
-    episode_reward = 0
-    max_reward = -100000
-    stopping_counter = 0
+        for episode in range(episodes):
+            state = self.env.reset()  # Reset environment and record the starting state
+            done = False
+            episode_reward = 0
+            running_speed = []
+            reward = 0
+            for t in itertools.count():
 
-    for episode in range(episodes):
-        state = env.reset()  # Reset environment and record the starting state
-        done = False
-        episode_reward = 0
-        running_speed = []
-        reward = 0
-        for t in itertools.count():
+                action = self.select_action_probabilities(state)
 
-            action = pol.select_action_probabilities(state)
+                # Step through environment using chosen action
+                state, reward, done, info = self.env.step(action.item())
+                running_speed.append(state['speed'])
+                # Save reward
+                self.reward_episode.append(reward)
+                if done:
+                    print(f"Steps:{t}, distance: {info['distance']:.3f}, "
+                          f"average speed: {sum(running_speed) / len(running_speed):.2f} "
+                          f"cause: {info['cause']}, reward: {info['rewards']:.3f} \n")
+                    episode_reward = info['rewards']
+                    print(f"Episode {episode + 1}:")
+                    break
 
-            # Step through environment using chosen action
-            state, reward, done, info = pol.env.step(action.item())
-            running_speed.append(state['speed'])
-            # Save reward
-            pol.reward_episode.append(reward)
-            if done:
-                print(f"Steps:{t}, distance: {info['distance']:.3f}, "
-                      f"average speed: {sum(running_speed) / len(running_speed):.2f} "
-                      f"cause: {info['cause']}, reward: {info['rewards']:.3f} \n")
-                episode_reward = info['rewards']
-                print(f"Episode {episode + 1}:")
-                break
+            running_reward += episode_reward
+            if self.writer is not None:
+                self.writer.add_scalar('episode/reward', episode_reward, episode)
+                self.writer.add_scalar('episode/length', t, episode)
+                self.writer.add_scalar('episode/speed', sum(running_speed) / len(running_speed), episode)
+                self.writer.add_scalar('episode/finished', 1 if info['cause'] is None else 0, episode)
+                done_average += 1 if info['cause'] is None else 0
+                self.writer.add_scalar('episode/distance', info["distance"], episode)
+                # writer.add_histogram('history/policy', pol.policy_history, episode)
+                # writer.add_histogram('history/action', pol.action_history, episode)
 
-        running_reward += episode_reward
-        writer.add_scalar('episode/reward', episode_reward, episode)
-        writer.add_scalar('episode/length', t, episode)
-        writer.add_scalar('episode/speed', sum(running_speed) / len(running_speed), episode)
-        writer.add_scalar('episode/finished', 1 if info['cause'] is None else 0, episode)
-        done_average += 1 if info['cause'] is None else 0
-        writer.add_scalar('episode/distance', info["distance"], episode)
-        writer.add_histogram('history/policy', pol.policy_history, episode)
-        writer.add_histogram('history/action', pol.action_history, episode)
+            self.update()
 
-        pol.update()
-        # for name in pol.model.state_dict():
-        #     writer.add_histogram('layer' + name.replace('.', "/"), pol.model.state_dict()[name], global_step=episode)
+            if episode % 50 == 0 and episode != 0:
+                running_reward = running_reward / 50
+                done_average = done_average / 50
+                print('Episode {}\tLast length: {:5d}\tAverage reward: {:.2f}'.format(episode + 1, t, running_reward))
+                self.writer.add_scalar('average/reward', running_reward,
+                                       episode + 1) if self.writer is not None else None
+                self.writer.add_scalar('average/done', done_average, episode + 1) if self.writer is not None else None
+                self.scheduler.step(running_reward)
+                if running_reward > max_reward:
+                    max_reward = running_reward
+                    stopping_counter = 0
+                elif stopping_counter > 200:
+                    print(f"The rewards did not improve since {50 * stopping_counter - 1} episodes")
+                    self.env.stop()
+                    break
+                else:
+                    stopping_counter += 1
 
-        if episode % 50 == 0 and episode != 0:
-            running_reward = running_reward / 50
-            done_average = done_average / 50
-            print('Episode {}\tLast length: {:5d}\tAverage reward: {:.2f}'.format(episode + 1, t, running_reward))
-            writer.add_scalar('average/reward', running_reward, episode + 1)
-            writer.add_scalar('average/done', done_average, episode + 1)
-            plt.show()
-            pol.scheduler.step(running_reward)
-            if running_reward > max_reward:
-                max_reward = running_reward
-                stopping_counter = 0
-            elif stopping_counter > 200:
-                print(f"The rewards did not improve since {50 * stopping_counter - 1} episodes")
-                env.stop()
-                break
-            else:
-                stopping_counter += 1
+                # pol.scheduler.step(running_reward)
+                running_reward = 0
+                done_average = 0
 
-            # pol.scheduler.step(running_reward)
-            running_reward = 0
-            done_average = 0
+            if not episode % (episodes // 100):
+                torch.save(self.model, os.path.join(self.save_path, 'model_{}.weight'.format(episode + 1)))
+        torch.save(self.model, os.path.join(self.save_path, 'model_final.weight'))
 
-        if not episode % (episodes // 100):
-            torch.save(pol.model, os.path.join(save_path, 'model_{}.weight'.format(episode + 1)))
-    return pol
-
-
-if __name__ == "__main__":
-    train = True
-    episode_nums = 10
-    if train:
-        env = gym.make('EPHighWay-v1')
-        env.render(mode='none')
-
-        torch.manual_seed(10)
-        # Hyperparameters
-        learning_rate = 0.0007
-        gamma = 0.99
-        episodes = 200000
-        save_path = 'torchSummary/{}'.format(time.strftime("%Y%m%d_%H%M%S", time.gmtime()))
-        policy = Policy(env=env, episodes=episodes, save_path=save_path, gamma=gamma, learning_rate=learning_rate)
-
-        policy = main(pol=policy,
-                      writer=policy.writer,
-                      episodes=episodes,
-                      )
-        torch.save(policy.model, os.path.join(save_path, 'model_final.weight'))
-    else:
-        path = easygui.fileopenbox()
-        env = gym.make('EPHighWay-v1')
-        env.render()
-        policy = Policy(env=env, episodes=100, save_path=os.path.split(path)[0], gamma=0.99, learning_rate=0.001)
-
-        policy.model = torch.load(path, map_location=torch.device('cpu') if "Windows" in platform.system() else torch.device('cuda'))
+    def eval_model(self, path, episode_nums):
+        self.model = torch.load(path,
+                                map_location=torch.device('cpu')
+                                if "Windows" in platform.system() else torch.device('cuda'))
+        self.model.train(False)
         with torch.no_grad():
             for _ in range(episode_nums):
-                state = env.reset()  # Reset environment and record the starting state
+                state = self.env.reset()  # Reset environment and record the starting state
                 for t in itertools.count():
-                    action = policy.select_action_probabilities(state)
+                    action = self.select_action_probabilities(state)
                     # Step through environment using chosen action
-                    state, reward, done, info = policy.env.step(action.item())
-
+                    state, reward, done, info = self.env.step(action.item())
                     # Save reward
-                    policy.reward_episode.append(reward)
+                    self.reward_episode.append(reward)
                     if done:
                         print(info)
                         print(t)
-                        episode_reward = reward
                         break
