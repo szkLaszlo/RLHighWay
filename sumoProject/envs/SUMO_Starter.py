@@ -149,7 +149,7 @@ class EPHighWayEnv(gym.Env):
                     reward -= 1
             self.steps_done += 1
         else:
-            reward = -self.max_punishment
+            reward = 0
         reward = reward
         self.cumulated_reward = self.cumulated_reward + reward
         return self.state, reward, terminated, {'cause': cause, 'rewards': self.cumulated_reward,

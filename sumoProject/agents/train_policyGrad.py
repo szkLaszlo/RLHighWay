@@ -7,7 +7,7 @@ if __name__ == "__main__":
     env.set_reward_type('complex')
     env.render(mode='none')
     # Hyperparameters
-    learning_rate = 0.0007
+    learning_rate = 0.0001
     gamma = 0.99
     episodes = 200000
     policy = Policy(env=env, gamma=gamma, learning_rate=learning_rate)
