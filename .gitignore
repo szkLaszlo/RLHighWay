@@ -107,3 +107,10 @@ sumoProject/virtualtraffic
 sumoProject/envs/virtualtraffic
 sumoProject/agents/torchSummary
 */save_model
+*/workspace.xml
+
+*.0
+
+*.st106
+
+*.weight

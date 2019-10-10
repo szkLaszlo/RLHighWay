@@ -1,14 +1,13 @@
-import time
-
-import gym
-from gym.wrappers import Monitor
 import itertools
-import numpy as np
 import os
 import random
 import sys
+import time
 
+import gym
+import numpy as np
 import tensorflow as tf
+from gym.wrappers import Monitor
 
 from sumoProject import plotting
 from sumoProject.envs.SUMO_Starter import EPHighWayEnv
@@ -16,9 +15,9 @@ from sumoProject.envs.SUMO_Starter import EPHighWayEnv
 if "../" not in sys.path:
     sys.path.append("../")
 
-from collections import deque, namedtuple
+from collections import namedtuple
 
-VALID_ACTIONS = list(range(25))
+VALID_ACTIONS = list(range(9))
 
 
 class StateProcessor():
@@ -29,7 +28,7 @@ class StateProcessor():
     def __init__(self):
         # Build the Tensorflow graph
         with tf.variable_scope("state_processor"):
-            self.input_state = tf.placeholder(shape=[20, ], dtype=tf.float32)
+            self.input_state = tf.placeholder(shape=[18, ], dtype=tf.float32)
             self.output = tf.squeeze(self.input_state)  # , [1, 17])
 
     def process(self, sess, state):
@@ -86,7 +85,7 @@ class Estimator():
 
         # Placeholders for our input
         # Our input are 4 RGB frames of shape 160, 160 each
-        self.X_pl = tf.placeholder(shape=[None, 20], dtype=tf.float32, name="X")
+        self.X_pl = tf.placeholder(shape=[None, 18], dtype=tf.float32, name="X")
         # The TD target value
         self.y_pl = tf.placeholder(shape=[None], dtype=tf.float32, name="y")
         # Integer id of which action was selected
@@ -95,7 +94,7 @@ class Estimator():
         h_size = 256
 
         # Weight initializations
-        self.w_1 = init_weights((20, h_size))
+        self.w_1 = init_weights((18, h_size))
         self.w_2 = init_weights((h_size, 1))
 
         # Forward propagation
@@ -104,7 +103,7 @@ class Estimator():
         nn = tf.layers.dense(self.X_pl, 512, activation=tf.nn.sigmoid)
         nn = tf.layers.dense(nn, 512, activation=tf.nn.sigmoid)
 
-        self.predictions = tf.layers.dense(nn, 25, activation=tf.nn.sigmoid)
+        self.predictions = tf.layers.dense(nn, 9, activation=tf.nn.sigmoid)
 
         # Get the predictions for the chosen actions only
         gather_indices = tf.range(batch_size) * tf.shape(self.predictions)[0] + self.actions_pl

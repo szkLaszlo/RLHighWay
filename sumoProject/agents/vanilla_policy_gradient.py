@@ -1,4 +1,4 @@
-# https://medium.com/@awjuliani/super-simple-reinforcement-learning-tutorial-part-2-ded33892c724
+
 import os
 import time
 

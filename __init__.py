@@ -13,5 +13,3 @@ if 'SUMO_HOME' in os.environ:
     sys.path.append(tools)
 else:
         os.system('export SUMO_HOME="/usr/share/sumo"')
-#        sys.exit("please declare environment variable 'SUMO_HOME'")
-print("runned")
