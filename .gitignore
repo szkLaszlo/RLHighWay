@@ -114,3 +114,4 @@ sumoProject/agents/torchSummary
 *.st106
 
 *.weight
+/sumoProject/agents/experiments/
