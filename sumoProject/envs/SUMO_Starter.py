@@ -39,6 +39,8 @@ class EPHighWayEnv(gym.Env):
         self.dt = None
         self.middle_counter = 0
         self.reward_type = "simple"
+        self.environment_state = 0
+        self.environment_state_list = []
 
     def set_reward_type(self, reward_type):
         self.reward_type = reward_type
@@ -72,14 +74,14 @@ class EPHighWayEnv(gym.Env):
             self.middle_counter = 0
             while self.egoID is None:
                 self.one_step()
-            self.state = self.get_surroundings()
-            self.state["speed"] = self.desired_speed
-            return self.state
+            self.one_step()
+            self.environment_state = self.get_surroundings_env()
+            return self.environment_state
         else:
             raise RuntimeError('Please run render before reset!')
 
     def calculate_action(self, action):
-        st = [-0.5, 0, 0.5]
+        st = [-1, 0, 1]
         ac = [-0.7, 0.0, 0.3]
         steer = st[action // len(st)]
         acc = ac[action % len(st)]
@@ -94,34 +96,33 @@ class EPHighWayEnv(gym.Env):
             ctrl = self.calculate_action(action)
             # traci.vehicle.setMaxSpeed(self.egoID, min(max(self.state['speed'] + ctrl[1], 1), 50))
             traci.vehicle.setSpeed(self.egoID,
-                                   min(max(self.state['speed'] + ctrl[1], 0), 50))  # todo hardcoded max speed
-            self.state['angle'] += ctrl[0]
+                                   min(max(self.state['velocity'] + ctrl[1], 0), 50))  # todo hardcoded max speed
+            last_lane = traci.vehicle.getLaneID(self.egoID)[:-1]
+            lane_new = int(traci.vehicle.getLaneID(self.egoID)[-1]) + ctrl[0]
+            if lane_new not in [0, 1, 2]:
+                reward = self.max_punishment
+                self.cumulated_reward += reward
+                new_x = \
+                    traci.vehicle.getContextSubscriptionResults(self.egoID)[self.egoID][tc.VAR_POSITION][0]
+                return self.environment_state, reward, True, {'cause': 'Left Highway',
+                                                              'rewards': self.cumulated_reward,
+                                                              'velocity': self.state['velocity'],
+                                                              'distance': 500 + new_x}
+            else:
+                lane_new = last_lane + str(lane_new)
+                x = traci.vehicle.getLanePosition(self.egoID)
+                try:
+                    traci.vehicle.moveTo(self.egoID, lane_new, x)
+                except traci.exceptions.TraCIException:
+                    pass
             if self.egoID is not None:
                 last_x = traci.vehicle.getContextSubscriptionResults(self.egoID)[self.egoID][tc.VAR_POSITION][0]
                 is_ok, cause = self.one_step()
                 if is_ok:
-                    self.state = self.get_surroundings()
-                    lane_new = traci.vehicle.getLaneID(self.egoID)
-                    if int(lane_new[-1]) != self.state['lane']:
-                        if self.state['lane'] < 0 or self.state['lane'] > 2:
-                            reward = self.max_punishment
-                            self.cumulated_reward += reward
-                            new_x = \
-                                traci.vehicle.getContextSubscriptionResults(self.egoID)[self.egoID][tc.VAR_POSITION][0]
-                            return self.state, reward, True, {'cause': 'Left Highway',
-                                                              'rewards': self.cumulated_reward,
-                                                              'distance': 500 + new_x}
-                        lane_new = lane_new[:-1] + str(self.state['lane'])
-                        x = traci.vehicle.getLanePosition(self.egoID)
-                        try:
-                            traci.vehicle.moveTo(self.egoID, lane_new, x)
-                        except traci.exceptions.TraCIException:
-                            self.state['lane'] = int(traci.vehicle.getLaneID(self.egoID)[-1])
-                            pass
-                        self.state = self.get_surroundings(only_env_recheck=True)
+                    environment_state = self.calculate_environment()
                     new_x = traci.vehicle.getContextSubscriptionResults(self.egoID)[self.egoID][tc.VAR_POSITION][0]
                 else:
-                    new_x = last_x + max(self.state['speed'] + ctrl[1], 0) * self.dt
+                    new_x = last_x + max(self.state['velocity'] + ctrl[1], 0) * self.dt
         else:
             is_ok = False
             cause = None
@@ -140,20 +141,15 @@ class EPHighWayEnv(gym.Env):
                 reward += 1
             else:
                 reward = new_x - last_x  # 1
-                reward *= self.state['speed'] * 0.01
-                if abs(self.state['y_pos']) > 0.3:
-                    self.middle_counter += 1
-                else:
-                    self.middle_counter = 0
-                if self.middle_counter > 100:
-                    reward -= 1
+                reward *= self.state['velocity'] * 0.01
             self.steps_done += 1
         else:
             reward = 0
         reward = reward
         self.cumulated_reward = self.cumulated_reward + reward
-        return self.state, reward, terminated, {'cause': cause, 'rewards': self.cumulated_reward,
-                                                'distance': 500 + new_x}
+        return self.environment_state, reward, terminated, {'cause': cause, 'rewards': self.cumulated_reward,
+                                                            'velocity': self.state['velocity'],
+                                                            'distance': 500 + new_x}
 
     def render(self, mode='human', close=False):
         if mode == 'human':
@@ -188,6 +184,7 @@ class EPHighWayEnv(gym.Env):
 
     def get_surroundings(self, only_env_recheck=False):
         cars_around = traci.vehicle.getContextSubscriptionResults(self.egoID)
+        self.calculate_environment()
         # traci.vehicle.getContextSubscriptionResults(self.egoID)[self.egoID][tc.VAR_POSITION][0]
         ego_data = cars_around[self.egoID]
         state = {}
@@ -199,13 +196,7 @@ class EPHighWayEnv(gym.Env):
                 state[state_key]['dv'] = 0
                 state[state_key]['dx'] = -200
             elif state_key in ['EL', 'ER']:
-                # state[keys] = copy.copy(basic_vals)
                 state[state_key] = 0
-                # state[keys]['dx'] = 3 * self.lane_width + self.lane_offset - ego_data[tc.VAR_POSITION][1]
-            # elif keys in ['ER']:
-            #     state[keys] = copy.copy(basic_vals)
-            #     state[keys]['dv'] = 0
-            #     state[keys]['dx'] = ego_data[tc.VAR_POSITION][1] - self.lane_offset
             else:
                 state[state_key] = copy.copy(basic_vals)
         lane = {0: [], 1: [], 2: []}
@@ -282,6 +273,18 @@ class EPHighWayEnv(gym.Env):
         state['des_speed'] = self.desired_speed
         return state
 
+    def get_surroundings_env(self, only_env_recheck=False):
+        environment, ego_state = self.calculate_environment()
+        self.environment_state_list.append(environment)
+        if len(self.environment_state_list) > 3:
+            self.environment_state_list.pop(0)
+        elif len(self.environment_state_list) == 1:
+            self.environment_state_list.append(environment)
+            self.environment_state_list.append(environment)
+        self.environment_state = np.concatenate(self.environment_state_list, -1)
+        self.state = ego_state
+        return self.environment_state
+
     def one_step(self):
         terminated = False
         w = traci.simulationStep()
@@ -289,13 +292,13 @@ class EPHighWayEnv(gym.Env):
         IDsOfVehicles = traci.vehicle.getIDList()
         if "ego" in IDsOfVehicles and self.egoID is None:
             self.egoID = "ego"
-            lanes = [-1, 0, 1]
+            lanes = [-2, -1, 0, 1, 2]
             traci.vehicle.setLaneChangeMode(self.egoID, 0x0)
             traci.vehicle.setSpeedMode(self.egoID, 0x0)
             traci.vehicle.setSpeed(self.egoID, self.desired_speed)
             traci.vehicle.subscribeContext(self.egoID, tc.CMD_GET_VEHICLE_VARIABLE, 0.0,
                                            [tc.VAR_SPEED, tc.VAR_LANE_INDEX, tc.VAR_ANGLE, tc.VAR_POSITION,
-                                            tc.VAR_LENGTH])
+                                            tc.VAR_LENGTH, tc.VAR_WIDTH])
             traci.vehicle.addSubscriptionFilterLanes(lanes, noOpposite=True, downstreamDist=100.0, upstreamDist=100.0)
         cause = None
         if self.egoID is not None:
@@ -313,30 +316,6 @@ class EPHighWayEnv(gym.Env):
                 terminated = True
                 self.egoID = None
         return (not terminated), cause
-
-    def state_to_tuple(self, state):
-        new_state = []
-        for keys in ['FL', 'FE', 'FR', 'RL', 'RE', 'RR', 'EL', 'ER', 'speed', 'angle', 'y_pos', 'lane', 'des_speed']:
-            if keys not in state.keys():
-                raise RuntimeError('Not valid state!')
-            else:
-                if dict is type(state[keys]):
-                    for key in ['dx', 'dv']:
-                        if key == 'dx':
-                            new_state.append(state[keys][key] / 200)
-                        else:
-                            new_state.append((state[keys][key] / 50))
-                elif keys is "speed":
-                    new_state.append(state[keys] / 50)
-                elif keys is "angle":
-                    new_state.append(state[keys] / 90)
-                elif keys is "y_pos":
-                    new_state.append(state[keys] / (self.lane_width / 2))
-                elif keys is "des_speed":
-                    new_state.append(state[keys] / 50)
-                else:
-                    new_state.append(state[keys])
-        return new_state
 
     def calculate_reward(self):
         reward = 0
@@ -418,3 +397,65 @@ class EPHighWayEnv(gym.Env):
         self.rewards[3] += rewards['c']
 
         return reward, rewards
+
+    def calculate_environment(self):
+
+        cars_around = traci.vehicle.getContextSubscriptionResults(self.egoID)
+        # traci.vehicle.getContextSubscriptionResults(self.egoID)[self.egoID][tc.VAR_POSITION][0]
+        ego_state = {}
+
+        environment_collection = []
+        for car_id, car in cars_around.items():
+            car_state = {'x_position': car[tc.VAR_POSITION][0] - car[tc.VAR_LENGTH] / 2,
+                         'y_position': car[tc.VAR_POSITION][1],
+                         'length': car[tc.VAR_LENGTH],
+                         'width': car[tc.VAR_WIDTH],
+                         'velocity': car[tc.VAR_SPEED],
+                         'lane_id': car[tc.VAR_LANE_INDEX],
+                         'heading': car[tc.VAR_ANGLE]}
+            if car_id == self.egoID:
+                ego_state = copy.copy(car_state)
+            environment_collection.append(copy.copy(car_state))
+        grid_per_meter = 10
+        x_range = 50  # symmetrically for front and back
+        x_range_grid = x_range * grid_per_meter  # symmetrically for front and back
+        y_range = 9  # symmetrucally for left and right
+        y_range_grid = y_range * grid_per_meter  # symmetrucally for left and right
+
+        state_matrix = np.zeros((2 * x_range_grid, 2 * y_range_grid, 4))
+        for element in environment_collection:
+            indexes_to_fill = []
+            dx = int(np.rint((element['x_position'] - ego_state["x_position"]) * grid_per_meter))
+            dy = int(np.rint((ego_state["y_position"] - element['y_position']) * grid_per_meter))
+            l = int(np.ceil(element['length'] / 2 * grid_per_meter))
+            w = int(np.ceil(element['width'] / 2 * grid_per_meter))
+            if (abs(dx) < (x_range_grid - element['length'] / 2 * grid_per_meter)) and \
+                    abs(dy) < (y_range_grid - element['width'] / 2 * grid_per_meter):
+                state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
+                y_range_grid + dy - w:y_range_grid + dy + w, 0] += np.ones_like(
+                    state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
+                    y_range_grid + dy - w:y_range_grid + dy + w, 0]) * element['velocity'] / 50
+                state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
+                y_range_grid + dy - w:y_range_grid + dy + w, 1] += np.ones_like(
+                    state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
+                    y_range_grid + dy - w:y_range_grid + dy + w, 1]) * element['heading'] / 180
+                state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
+                y_range_grid + dy - w:y_range_grid + dy + w, 2] += np.ones_like(
+                    state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
+                    y_range_grid + dy - w:y_range_grid + dy + w, 2]) * element['lane_id'] / 2
+
+        lane = traci.vehicle.getLaneID(self.egoID).split('_')[0]
+        for i in range(3):
+            laneID = f"{lane}_{i}"
+            lane_pos = traci.lane.getShape(laneID)[0][1]
+            lane_width = traci.lane.getWidth(laneID)
+            dy = int((ego_state["y_position"] - lane_pos - ego_state['width']) * grid_per_meter)
+            w = int(np.ceil(lane_width * grid_per_meter))
+            state_matrix[:, y_range_grid + dy:y_range_grid + dy + w, 3] = np.ones_like(
+                state_matrix[:, y_range_grid + dy:y_range_grid + dy + w, 3]) * 0.3 * (i + 0.1)
+
+        # import matplotlib.pyplot as plt
+        # plt.gcf()
+        # plt.imshow(state_matrix)
+        # plt.show()
+        return state_matrix, ego_state
