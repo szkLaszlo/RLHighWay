@@ -37,6 +37,7 @@ class EPHighWayEnv(gym.Env):
         self.state = None
         self.desired_speed = None
         self.dt = None
+        self.ego_start_position = None
         self.middle_counter = 0
         self.reward_type = "simple"
         self.environment_state = 0
@@ -72,9 +73,9 @@ class EPHighWayEnv(gym.Env):
             self.desired_speed = self.desired_speed / 3.6
             self.state = None
             self.middle_counter = 0
+            self.ego_start_position = None
             while self.egoID is None:
                 self.one_step()
-            self.one_step()
             self.environment_state_list = []
             self.environment_state = self.get_surroundings_env()
             return self.environment_state
@@ -108,7 +109,7 @@ class EPHighWayEnv(gym.Env):
                 return self.environment_state, reward, True, {'cause': 'Left Highway',
                                                               'rewards': self.cumulated_reward,
                                                               'velocity': self.state['velocity'],
-                                                              'distance': 500 + new_x}
+                                                              'distance': new_x - self.ego_start_position}
             else:
                 lane_new = last_lane + str(lane_new)
                 x = traci.vehicle.getLanePosition(self.egoID)
@@ -150,7 +151,7 @@ class EPHighWayEnv(gym.Env):
         self.cumulated_reward = self.cumulated_reward + reward
         return self.environment_state, reward, terminated, {'cause': cause, 'rewards': self.cumulated_reward,
                                                             'velocity': self.state['velocity'],
-                                                            'distance': 500 + new_x}
+                                                            'distance': new_x - self.ego_start_position}
 
     def render(self, mode='human', close=False):
         if mode == 'human':
@@ -293,6 +294,7 @@ class EPHighWayEnv(gym.Env):
         IDsOfVehicles = traci.vehicle.getIDList()
         if len(IDsOfVehicles) > 50 and self.egoID is None:
             self.egoID = IDsOfVehicles[np.random.randint(0, 50)]
+            self.ego_start_position = traci.vehicle.getPosition(self.egoID)[0]
             lanes = [-2, -1, 0, 1, 2]
             traci.vehicle.setLaneChangeMode(self.egoID, 0x0)
             traci.vehicle.setSpeedMode(self.egoID, 0x0)
@@ -423,7 +425,7 @@ class EPHighWayEnv(gym.Env):
         y_range = 9  # symmetrucally for left and right
         y_range_grid = y_range * grid_per_meter  # symmetrucally for left and right
 
-        state_matrix = np.zeros((2 * x_range_grid, 2 * y_range_grid, 3))
+        state_matrix = np.zeros((2 * x_range_grid, 2 * y_range_grid, 2))
         for element in environment_collection:
             indexes_to_fill = []
             dx = int(np.rint((element['x_position'] - ego_state["x_position"]) * grid_per_meter))
@@ -436,14 +438,14 @@ class EPHighWayEnv(gym.Env):
                 y_range_grid + dy - w:y_range_grid + dy + w, 0] += np.ones_like(
                     state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
                     y_range_grid + dy - w:y_range_grid + dy + w, 0]) * element['velocity'] / 50
+                # state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
+                # y_range_grid + dy - w:y_range_grid + dy + w, 2] += np.ones_like(
+                #     state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
+                #     y_range_grid + dy - w:y_range_grid + dy + w, 2]) * element['heading'] / 180
                 state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
                 y_range_grid + dy - w:y_range_grid + dy + w, 1] += np.ones_like(
                     state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
-                    y_range_grid + dy - w:y_range_grid + dy + w, 1]) * element['heading'] / 180
-                state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
-                y_range_grid + dy - w:y_range_grid + dy + w, 2] += np.ones_like(
-                    state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
-                    y_range_grid + dy - w:y_range_grid + dy + w, 2]) * element['lane_id'] / 2
+                    y_range_grid + dy - w:y_range_grid + dy + w, 1]) * element['lane_id'] / 2
 
         # lane = traci.vehicle.getLaneID(self.egoID).split('_')[0]
         # for i in range(3):
