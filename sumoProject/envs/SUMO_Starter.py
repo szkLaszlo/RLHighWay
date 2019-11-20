@@ -298,6 +298,7 @@ class EPHighWayEnv(gym.Env):
             lanes = [-2, -1, 0, 1, 2]
             traci.vehicle.setLaneChangeMode(self.egoID, 0x0)
             traci.vehicle.setSpeedMode(self.egoID, 0x0)
+            traci.vehicle.setColor(self.egoID, (255,0,0))
             traci.vehicle.setSpeed(self.egoID, self.desired_speed)
             traci.vehicle.subscribeContext(self.egoID, tc.CMD_GET_VEHICLE_VARIABLE, 0.0,
                                            [tc.VAR_SPEED, tc.VAR_LANE_INDEX, tc.VAR_ANGLE, tc.VAR_POSITION,

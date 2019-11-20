@@ -54,11 +54,11 @@ class Policy(nn.Module):
         self.hidden_size = 128
         self.hidden_size2 = 64
         self.update_freq = update_freq
-        self.convolutional = nn.Sequential(nn.Conv2d(in_channels=9, out_channels=9, kernel_size=11, padding=5,
+        self.convolutional = nn.Sequential(nn.Conv2d(in_channels=6, out_channels=6, kernel_size=11, padding=5,
                                                      stride=1),
-                                           nn.BatchNorm2d(9),
+                                           nn.BatchNorm2d(6),
                                            nn.ReLU(),
-                                           nn.Conv2d(in_channels=9, out_channels=6, kernel_size=11, padding=5,
+                                           nn.Conv2d(in_channels=6, out_channels=6, kernel_size=11, padding=5,
                                                      stride=1),
                                            nn.BatchNorm2d(6),
                                            nn.ReLU(),

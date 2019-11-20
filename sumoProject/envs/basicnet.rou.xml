@@ -25,10 +25,7 @@
 	<vType id="car3" length="5" accel="5" decel="6" sigma="1" speedFactor="normc(0.8,0.2,0.6,1.1)" probability="0.4"/>
   	<vTypeDistribution id="typedist1" vTypes="car1 car2 car3 car4"/>
 	<flow id="carflow1" type="typedist1" route="r1" beg="0" end="3600" departLane="random" vehsPerHour="3000"/>
-	<flow id="carflow2" type="typedist1" route="routedist1" beg="0" departLane="random" number="100"/>
-	<!--	<flow id="carflow2" type="typedist1" route="r7" beg="0" end="6" departLane="random" vehsPerHour="3000"/>-->
-    <vehicle id="ego" type="ego" depart="5" route="r1" color="1,1,1" departSpeed="30" departLane="random">
-		</vehicle>
+	<flow id="carflow2" type="typedist1" route="routedist1" beg="0" departLane="random" departPos="random" number="100"/>
 </routes>
 
 
