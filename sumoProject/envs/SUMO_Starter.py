@@ -75,6 +75,7 @@ class EPHighWayEnv(gym.Env):
             while self.egoID is None:
                 self.one_step()
             self.one_step()
+            self.environment_state_list = []
             self.environment_state = self.get_surroundings_env()
             return self.environment_state
         else:
@@ -92,7 +93,7 @@ class EPHighWayEnv(gym.Env):
         assert self.action_space.contains(action), "%r (%s) invalid" % (action, type(action))
         new_x, last_x = 0, 0
         IDsOfVehicles = traci.vehicle.getIDList()
-        if "ego" in IDsOfVehicles:
+        if self.egoID in IDsOfVehicles:
             ctrl = self.calculate_action(action)
             # traci.vehicle.setMaxSpeed(self.egoID, min(max(self.state['speed'] + ctrl[1], 1), 50))
             traci.vehicle.setSpeed(self.egoID,
@@ -290,8 +291,8 @@ class EPHighWayEnv(gym.Env):
         w = traci.simulationStep()
 
         IDsOfVehicles = traci.vehicle.getIDList()
-        if "ego" in IDsOfVehicles and self.egoID is None:
-            self.egoID = "ego"
+        if len(IDsOfVehicles) > 50 and self.egoID is None:
+            self.egoID = IDsOfVehicles[np.random.randint(0, 50)]
             lanes = [-2, -1, 0, 1, 2]
             traci.vehicle.setLaneChangeMode(self.egoID, 0x0)
             traci.vehicle.setSpeedMode(self.egoID, 0x0)
@@ -416,13 +417,13 @@ class EPHighWayEnv(gym.Env):
             if car_id == self.egoID:
                 ego_state = copy.copy(car_state)
             environment_collection.append(copy.copy(car_state))
-        grid_per_meter = 10
+        grid_per_meter = 2
         x_range = 50  # symmetrically for front and back
         x_range_grid = x_range * grid_per_meter  # symmetrically for front and back
         y_range = 9  # symmetrucally for left and right
         y_range_grid = y_range * grid_per_meter  # symmetrucally for left and right
 
-        state_matrix = np.zeros((2 * x_range_grid, 2 * y_range_grid, 4))
+        state_matrix = np.zeros((2 * x_range_grid, 2 * y_range_grid, 3))
         for element in environment_collection:
             indexes_to_fill = []
             dx = int(np.rint((element['x_position'] - ego_state["x_position"]) * grid_per_meter))
@@ -444,15 +445,15 @@ class EPHighWayEnv(gym.Env):
                     state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
                     y_range_grid + dy - w:y_range_grid + dy + w, 2]) * element['lane_id'] / 2
 
-        lane = traci.vehicle.getLaneID(self.egoID).split('_')[0]
-        for i in range(3):
-            laneID = f"{lane}_{i}"
-            lane_pos = traci.lane.getShape(laneID)[0][1]
-            lane_width = traci.lane.getWidth(laneID)
-            dy = int((ego_state["y_position"] - lane_pos - ego_state['width']) * grid_per_meter)
-            w = int(np.ceil(lane_width * grid_per_meter))
-            state_matrix[:, y_range_grid + dy:y_range_grid + dy + w, 3] = np.ones_like(
-                state_matrix[:, y_range_grid + dy:y_range_grid + dy + w, 3]) * 0.3 * (i + 0.1)
+        # lane = traci.vehicle.getLaneID(self.egoID).split('_')[0]
+        # for i in range(3):
+        #     laneID = f"{lane}_{i}"
+        #     lane_pos = traci.lane.getShape(laneID)[0][1]
+        #     lane_width = traci.lane.getWidth(laneID)
+        #     dy = int((ego_state["y_position"] - lane_pos - ego_state['width']) * grid_per_meter)
+        #     w = int(np.ceil(lane_width * grid_per_meter))
+        #     state_matrix[:, y_range_grid + dy:y_range_grid + dy + w, 3] = np.ones_like(
+        #         state_matrix[:, y_range_grid + dy:y_range_grid + dy + w, 3]) * 0.3 * (i + 0.1)
 
         # import matplotlib.pyplot as plt
         # plt.gcf()

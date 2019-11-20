@@ -54,15 +54,19 @@ class Policy(nn.Module):
         self.hidden_size = 128
         self.hidden_size2 = 64
         self.update_freq = update_freq
-        self.convolutional = nn.Sequential(nn.Conv2d(in_channels=12, out_channels=12, kernel_size=11, padding=5),
-                                           nn.BatchNorm2d(12),
+        self.convolutional = nn.Sequential(nn.Conv2d(in_channels=9, out_channels=9, kernel_size=11, padding=5,
+                                                     stride=1),
+                                           nn.BatchNorm2d(9),
                                            nn.ReLU(),
-                                           nn.Conv2d(in_channels=12, out_channels=6, kernel_size=11, padding=5),
+                                           nn.Conv2d(in_channels=9, out_channels=6, kernel_size=11, padding=5,
+                                                     stride=1),
                                            nn.BatchNorm2d(6),
                                            nn.ReLU(),
-                                           nn.Conv2d(in_channels=6, out_channels=3, kernel_size=11, padding=5),
+                                           nn.Conv2d(in_channels=6, out_channels=3, kernel_size=11, padding=5,
+                                                     stride=1),
                                            nn.BatchNorm2d(3),
-                                           nn.Conv2d(in_channels=3, out_channels=1, kernel_size=11, padding=5),
+                                           nn.Conv2d(in_channels=3, out_channels=1, kernel_size=11, padding=5,
+                                                     stride=1),
                                            nn.BatchNorm2d(1),
                                            nn.AdaptiveMaxPool2d(output_size=(10, 2))
                                            )
@@ -94,8 +98,8 @@ class Policy(nn.Module):
 
     def forward(self, x):
         x = x.unsqueeze(0).permute(0, 3, 1, 2)
-        conved_result = self.convolutional(x)
-        linear_result = self.linear(conved_result.flatten(-2, -1))
+
+        linear_result = self.linear(self.convolutional(x).flatten(-2, -1))
         return linear_result
 
     def update(self):
@@ -115,7 +119,7 @@ class Policy(nn.Module):
         if rewards.shape[0] > 1:
             rewards = (rewards - rewards.mean()) / (rewards.std() + np.finfo(np.float32).eps)
         else:
-            rewards /= sum(rewards)
+            rewards /= abs(rewards)
 
         # Calculate loss
         self.loss = (torch.sum(torch.mul(self.policy_history, Variable(rewards)).mul(-1), -1))
@@ -125,8 +129,6 @@ class Policy(nn.Module):
         # plot_grad_flow(self.model.named_parameters())
         self.optimizer.step() if self.current_episode % self.update_freq == 0 else None
         self.optimizer.zero_grad() if self.current_episode % self.update_freq == 0 else None
-
-        # network_plot(self.model, self.writer, self.current_episode)
 
         self.policy_history = Variable(torch.Tensor())
         self.action_history = Variable(torch.Tensor())
@@ -146,8 +148,8 @@ class Policy(nn.Module):
 
         # Add probability of our chosen action to our history #not log because log1 = 0
         self.policy_history = torch.cat([self.policy_history, c.log_prob(action_).reshape(-1, )], 0)
-        self.action_history = torch.cat([self.action_history, action_.float()], 0)
-        return action_.detach().cpu() if action_.is_cuda else action_
+        self.action_history = torch.cat([self.action_history, action_.float().detach()], 0)
+        return action_.detach().cpu() if action_.is_cuda else action_.detach()
 
     def train_network(self, episodes=100):
         running_reward = 0
