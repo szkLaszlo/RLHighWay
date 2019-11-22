@@ -3,7 +3,7 @@ import gym
 
 from sumoProject.agents.policyGradient import Policy
 
-episode_nums = 10
+episode_nums = 100
 path = easygui.fileopenbox()
 env = gym.make('EPHighWay-v1')
 env.render()

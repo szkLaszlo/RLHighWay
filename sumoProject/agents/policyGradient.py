@@ -84,15 +84,15 @@ class Policy(nn.Module):
         self.reward_episode = []
         # Overall reward and loss history
         self.reward_history = []
-        self.model = list(self.convolutional.parameters()) + list(self.linear.parameters())
-        self.optimizer = optim.Adam(self.model, lr=learning_rate)
+        self.model = self.state_dict()
+        self.optimizer = optim.Adam(list(self.model.values()), lr=learning_rate, weight_decay=0.01)
         if self.use_gpu:
             self.policy_history = self.policy_history.cuda()
             self.action_history = self.action_history.cuda()
             self.convolutional = self.convolutional.cuda()
             self.linear = self.linear.cuda()
             print("Using CUDA backend.")
-        self.scheduler = optim.lr_scheduler.ReduceLROnPlateau(self.optimizer, mode='max', factor=0.5, patience=200,
+        self.scheduler = optim.lr_scheduler.ReduceLROnPlateau(self.optimizer, mode='max', factor=0.5, patience=20,
                                                               verbose=True, threshold=0.001, threshold_mode='rel',
                                                               cooldown=5, min_lr=0, eps=1e-08)
 
@@ -204,7 +204,7 @@ class Policy(nn.Module):
                 if running_reward > max_reward:
                     max_reward = running_reward
                     stopping_counter = 0
-                elif stopping_counter > 200:
+                elif stopping_counter > 40:
                     print(f"The rewards did not improve since {50 * stopping_counter - 1} episodes")
                     self.env.stop()
                     break
@@ -215,15 +215,18 @@ class Policy(nn.Module):
                 running_reward = 0
                 done_average = 0
 
-            if not episode % (episodes // 100):
-                torch.save(self.model, os.path.join(self.save_path, 'model_{}.weight'.format(episode + 1)))
-        torch.save(self.model, os.path.join(self.save_path, 'model_final.weight'))
+            if not episode % (episodes // 1000):
+                torch.save(self.state_dict(),
+                           os.path.join(self.save_path, 'model_{}.weight'.format(episode + 1)))
+                print('saved_weights')
+        torch.save(self.state_dict(),
+                   os.path.join(self.save_path, 'model_final.weight'))
 
     def eval_model(self, path, episode_nums):
-        self.model = torch.load(path,
-                                map_location=torch.device('cpu')
-                                if "Windows" in platform.system() else torch.device('cuda'))
-        self.model.train(False)
+        state_dicts = torch.load(path,
+                                 map_location=torch.device('cpu')
+                                 if "Windows" in platform.system() else torch.device('cuda'))
+        self.load_state_dict(state_dicts)
         with torch.no_grad():
             for _ in range(episode_nums):
                 state = self.env.reset()  # Reset environment and record the starting state
