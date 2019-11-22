@@ -10,7 +10,6 @@ import tensorflow as tf
 from gym.wrappers import Monitor
 
 from sumoProject import plotting
-from sumoProject.envs.SUMO_Starter import EPHighWayEnv
 
 if "../" not in sys.path:
     sys.path.append("../")
@@ -28,7 +27,7 @@ class StateProcessor():
     def __init__(self):
         # Build the Tensorflow graph
         with tf.variable_scope("state_processor"):
-            self.input_state = tf.placeholder(shape=[18, ], dtype=tf.float32)
+            self.input_state = tf.placeholder(shape=[19, ], dtype=tf.float32)
             self.output = tf.squeeze(self.input_state)  # , [1, 17])
 
     def process(self, sess, state):
@@ -85,7 +84,7 @@ class Estimator():
 
         # Placeholders for our input
         # Our input are 4 RGB frames of shape 160, 160 each
-        self.X_pl = tf.placeholder(shape=[None, 18], dtype=tf.float32, name="X")
+        self.X_pl = tf.placeholder(shape=[None, 19], dtype=tf.float32, name="X")
         # The TD target value
         self.y_pl = tf.placeholder(shape=[None], dtype=tf.float32, name="y")
         # Integer id of which action was selected
@@ -94,7 +93,7 @@ class Estimator():
         h_size = 256
 
         # Weight initializations
-        self.w_1 = init_weights((18, h_size))
+        self.w_1 = init_weights((19, h_size))
         self.w_2 = init_weights((h_size, 1))
 
         # Forward propagation
@@ -106,7 +105,7 @@ class Estimator():
         self.predictions = tf.layers.dense(nn, 9, activation=tf.nn.sigmoid)
 
         # Get the predictions for the chosen actions only
-        gather_indices = tf.range(batch_size) * tf.shape(self.predictions)[0] + self.actions_pl
+        gather_indices = tf.range(batch_size) * tf.shape(self.predictions)[1] + self.actions_pl
         self.action_predictions = tf.gather(tf.reshape(self.predictions, [-1]), gather_indices)
 
         # Calculate the loss
@@ -115,7 +114,7 @@ class Estimator():
         # Backward propagation
 
         # Optimizer Parameters from original paper
-        self.optimizer = tf.train.RMSPropOptimizer(0.00025, 0.99, 0.0, 1e-6)
+        self.optimizer = tf.train.RMSPropOptimizer(0.000025, 0.99, 0.1, 1e-6)
         self.train_op = self.optimizer.minimize(self.loss, global_step=tf.contrib.framework.get_global_step())
 
         # Summaries for Tensorboard
@@ -140,7 +139,7 @@ class Estimator():
         """
         temp_s = []
         for i in range(len(s)):
-            temp_s.append(EPHighWayEnv.state_to_tuple(s[i]))
+            temp_s.append(env.state_to_tuple(s[i]))
 
         return sess.run(self.predictions, feed_dict={self.X_pl: temp_s})
 
@@ -160,7 +159,7 @@ class Estimator():
 
         temp_s = []
         for i in range(len(s)):
-            temp_s.append(EPHighWayEnv.state_to_tuple(s[i]))
+            temp_s.append(env.state_to_tuple(s[i]))
         feed_dict = {self.X_pl: temp_s, self.y_pl: y, self.actions_pl: a}
         summaries, global_step, _, loss = sess.run(
             [self.summaries, tf.contrib.framework.get_global_step(), self.train_op, self.loss],
@@ -374,7 +373,7 @@ def deep_q_learning(sess,
 
             # Calculate q values and targets (Double DQN)
             q_values_next = q_estimator.predict(sess, next_states_batch)
-            best_actions = np.argmax(q_values_next, axis=0)
+            best_actions = np.argmax(q_values_next, axis=1)
             q_values_next_target = target_estimator.predict(sess, next_states_batch)
             targets_batch = reward_batch + np.invert(done_batch).astype(np.float32) * \
                             discount_factor * q_values_next_target[np.arange(batch_size), best_actions]
@@ -433,16 +432,16 @@ if train:
                                         q_estimator=q_estimator,
                                         target_estimator=target_estimator,
                                         experiment_dir=experiment_dir,
-                                        num_episodes=100000,
+                                        num_episodes=1000000,
                                         state_processor=state_proc,
                                         replay_memory_size=500000,
-                                        replay_memory_init_size=500,
+                                        replay_memory_init_size=5000,
                                         update_target_estimator_every=10000,
                                         epsilon_start=1,
                                         epsilon_end=0.01,
                                         epsilon_decay_steps=500000,
                                         discount_factor=0.99,
-                                        batch_size=25):
+                                        batch_size=256):
             print("\nEpisode Reward: {}".format(stats.episode_rewards[-1]))
 else:
     tf.reset_default_graph()

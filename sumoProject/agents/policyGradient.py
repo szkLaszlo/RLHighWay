@@ -54,10 +54,27 @@ class Policy(nn.Module):
         self.hidden_size = 128
         self.hidden_size2 = 64
         self.update_freq = update_freq
-        self.l1 = nn.Linear(self.state_space, self.hidden_size, bias=True)
-        self.l2 = nn.Linear(self.hidden_size, self.hidden_size2, bias=True)
-        self.l3 = nn.Linear(self.hidden_size2, self.action_space, bias=True)
-
+        self.convolutional = nn.Sequential(nn.Conv2d(in_channels=6, out_channels=6, kernel_size=11, padding=5,
+                                                     stride=1),
+                                           nn.BatchNorm2d(6),
+                                           nn.ReLU(),
+                                           nn.Conv2d(in_channels=6, out_channels=6, kernel_size=11, padding=5,
+                                                     stride=1),
+                                           nn.BatchNorm2d(6),
+                                           nn.ReLU(),
+                                           nn.Conv2d(in_channels=6, out_channels=3, kernel_size=11, padding=5,
+                                                     stride=1),
+                                           nn.BatchNorm2d(3),
+                                           nn.Conv2d(in_channels=3, out_channels=1, kernel_size=11, padding=5,
+                                                     stride=1),
+                                           nn.BatchNorm2d(1),
+                                           nn.AdaptiveMaxPool2d(output_size=(10, 2))
+                                           )
+        self.linear = nn.Sequential(nn.Linear(in_features=20, out_features=10),
+                                    nn.ReLU(),
+                                    nn.Linear(in_features=10, out_features=9),
+                                    nn.Softmax(dim=-1)
+                                    )
         self.gamma = gamma
         self.loss = 10
         self.use_gpu = use_gpu if torch.cuda.is_available() else False
@@ -67,28 +84,23 @@ class Policy(nn.Module):
         self.reward_episode = []
         # Overall reward and loss history
         self.reward_history = []
-        self.model = torch.nn.Sequential(
-            self.l1,
-            # nn.BatchNorm1d(self.hidden_size),
-            nn.ReLU(),
-            self.l2,
-            # nn.BatchNorm1d(self.hidden_size2),
-            nn.ReLU(),
-            self.l3,
-            nn.Softmax(dim=-1)
-        )
-        self.optimizer = optim.Adam(self.model.parameters(), lr=learning_rate)
+        self.model = list(self.convolutional.parameters()) + list(self.linear.parameters())
+        self.optimizer = optim.Adam(self.model, lr=learning_rate)
         if self.use_gpu:
             self.policy_history = self.policy_history.cuda()
             self.action_history = self.action_history.cuda()
-            self.model = self.model.cuda()
+            self.convolutional = self.convolutional.cuda()
+            self.linear = self.linear.cuda()
             print("Using CUDA backend.")
         self.scheduler = optim.lr_scheduler.ReduceLROnPlateau(self.optimizer, mode='max', factor=0.5, patience=200,
                                                               verbose=True, threshold=0.001, threshold_mode='rel',
                                                               cooldown=5, min_lr=0, eps=1e-08)
 
     def forward(self, x):
-        return self.model(x)
+        x = x.unsqueeze(0).permute(0, 3, 1, 2)
+
+        linear_result = self.linear(self.convolutional(x).flatten(-2, -1))
+        return linear_result
 
     def update(self):
         self.current_episode += 1
@@ -104,7 +116,10 @@ class Policy(nn.Module):
         rewards = torch.FloatTensor(rewards)
         if self.use_gpu:
             rewards = rewards.cuda()
-        rewards = (rewards - rewards.mean()) / (rewards.std() + np.finfo(np.float32).eps)
+        if rewards.shape[0] > 1:
+            rewards = (rewards - rewards.mean()) / (rewards.std() + np.finfo(np.float32).eps)
+        else:
+            rewards /= abs(rewards)
 
         # Calculate loss
         self.loss = (torch.sum(torch.mul(self.policy_history, Variable(rewards)).mul(-1), -1))
@@ -115,8 +130,6 @@ class Policy(nn.Module):
         self.optimizer.step() if self.current_episode % self.update_freq == 0 else None
         self.optimizer.zero_grad() if self.current_episode % self.update_freq == 0 else None
 
-        # network_plot(self.model, self.writer, self.current_episode)
-
         self.policy_history = Variable(torch.Tensor())
         self.action_history = Variable(torch.Tensor())
         if self.use_gpu:
@@ -125,19 +138,18 @@ class Policy(nn.Module):
         self.reward_episode = []
 
     def select_action_probabilities(self, state_):
-        state_ = self.env.state_to_tuple(state_)
         state_ = torch.from_numpy(np.asarray(state_)).type(torch.FloatTensor)
         state_ = Variable(state_)
         if self.use_gpu:
             state_ = state_.cuda()
-        action_probs = self.forward(state_.reshape(1, -1))
+        action_probs = self.forward(state_)
         c = Categorical(action_probs)  # np.random.choice(self.action_space, 1, p=action_probs.detach().numpy())
         action_ = c.sample()
 
         # Add probability of our chosen action to our history #not log because log1 = 0
         self.policy_history = torch.cat([self.policy_history, c.log_prob(action_).reshape(-1, )], 0)
-        self.action_history = torch.cat([self.action_history, action_.float()], 0)
-        return action_.detach().cpu() if action_.is_cuda else action_
+        self.action_history = torch.cat([self.action_history, action_.float().detach()], 0)
+        return action_.detach().cpu() if action_.is_cuda else action_.detach()
 
     def train_network(self, episodes=100):
         running_reward = 0
@@ -157,7 +169,7 @@ class Policy(nn.Module):
 
                 # Step through environment using chosen action
                 state, reward, done, info = self.env.step(action.item())
-                running_speed.append(state['speed'])
+                running_speed.append(info['velocity'])
                 # Save reward
                 self.reward_episode.append(reward)
                 if done:
