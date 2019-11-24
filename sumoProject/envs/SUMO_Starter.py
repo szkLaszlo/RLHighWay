@@ -427,7 +427,7 @@ class EPHighWayEnv(gym.Env):
         y_range = 9  # symmetrucally for left and right
         y_range_grid = y_range * grid_per_meter  # symmetrucally for left and right
 
-        state_matrix = np.zeros((2 * x_range_grid, 2 * y_range_grid, 2))
+        state_matrix = np.zeros((2 * x_range_grid, 2 * y_range_grid, 3))
         for element in environment_collection:
             indexes_to_fill = []
             dx = int(np.rint((element['x_position'] - ego_state["x_position"]) * grid_per_meter))
@@ -448,6 +448,11 @@ class EPHighWayEnv(gym.Env):
                 y_range_grid + dy - w:y_range_grid + dy + w, 1] += np.ones_like(
                     state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
                     y_range_grid + dy - w:y_range_grid + dy + w, 1]) * element['lane_id'] / 2
+                state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
+                y_range_grid + dy - w:y_range_grid + dy + w, 2] += np.ones_like(
+                    state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
+                    y_range_grid + dy - w:y_range_grid + dy + w, 2]) * self.desired_speed / 50
+
 
         # lane = traci.vehicle.getLaneID(self.egoID).split('_')[0]
         # for i in range(3):
