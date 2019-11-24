@@ -143,7 +143,7 @@ class EPHighWayEnv(gym.Env):
                 reward += 1
             else:
                 reward = new_x - last_x  # 1
-                reward *= self.state['velocity'] * 0.01
+                reward = reward - (abs(self.state['velocity'] - self.desired_speed)) * 0.1
             self.steps_done += 1
         else:
             reward = 0
@@ -300,6 +300,7 @@ class EPHighWayEnv(gym.Env):
             traci.vehicle.setSpeedMode(self.egoID, 0x0)
             traci.vehicle.setColor(self.egoID, (255,0,0))
             traci.vehicle.setSpeed(self.egoID, self.desired_speed)
+            traci.vehicle.setMaxSpeed(self.egoID, 50)
             traci.vehicle.subscribeContext(self.egoID, tc.CMD_GET_VEHICLE_VARIABLE, 0.0,
                                            [tc.VAR_SPEED, tc.VAR_LANE_INDEX, tc.VAR_ANGLE, tc.VAR_POSITION,
                                             tc.VAR_LENGTH, tc.VAR_WIDTH])
