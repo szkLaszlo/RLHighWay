@@ -84,8 +84,8 @@ class Policy(nn.Module):
         self.reward_episode = []
         # Overall reward and loss history
         self.reward_history = []
-        self.model = self.state_dict()
-        self.optimizer = optim.Adam(list(self.model.values()), lr=learning_rate, weight_decay=0.01)
+        self.model = list(self.convolutional.parameters()) + list(self.linear.parameters())
+        self.optimizer = optim.Adam(list(self.model), lr=learning_rate, weight_decay=0.001)
         if self.use_gpu:
             self.policy_history = self.policy_history.cuda()
             self.action_history = self.action_history.cuda()
