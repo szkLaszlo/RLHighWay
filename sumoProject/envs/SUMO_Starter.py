@@ -37,10 +37,12 @@ class EPHighWayEnv(gym.Env):
         self.state = None
         self.desired_speed = None
         self.dt = None
-        self.ego_start_position = None
+        self.ego_start_position = 100000
         self.middle_counter = 0
         self.reward_type = "simple"
         self.environment_state = 0
+        self.lanechange_counter = 0
+        self.min_departed_vehicles = np.random.randint(40, 60, 1).item()
         self.environment_state_list = []
 
     def set_reward_type(self, reward_type):
@@ -73,7 +75,9 @@ class EPHighWayEnv(gym.Env):
             self.desired_speed = self.desired_speed / 3.6
             self.state = None
             self.middle_counter = 0
-            self.ego_start_position = None
+            self.ego_start_position = 100000
+            self.lanechange_counter = 0
+            self.min_departed_vehicles = np.random.randint(40, 60,1).item()
             while self.egoID is None:
                 self.one_step()
             self.environment_state_list = []
@@ -99,24 +103,32 @@ class EPHighWayEnv(gym.Env):
             # traci.vehicle.setMaxSpeed(self.egoID, min(max(self.state['speed'] + ctrl[1], 1), 50))
             traci.vehicle.setSpeed(self.egoID,
                                    min(max(self.state['velocity'] + ctrl[1], 0), 50))  # todo hardcoded max speed
-            last_lane = traci.vehicle.getLaneID(self.egoID)[:-1]
-            lane_new = int(traci.vehicle.getLaneID(self.egoID)[-1]) + ctrl[0]
-            if lane_new not in [0, 1, 2]:
-                reward = self.max_punishment
-                self.cumulated_reward += reward
-                new_x = \
-                    traci.vehicle.getContextSubscriptionResults(self.egoID)[self.egoID][tc.VAR_POSITION][0]
-                return self.environment_state, reward, True, {'cause': 'Left Highway',
-                                                              'rewards': self.cumulated_reward,
-                                                              'velocity': self.state['velocity'],
-                                                              'distance': new_x - self.ego_start_position}
-            else:
-                lane_new = last_lane + str(lane_new)
-                x = traci.vehicle.getLanePosition(self.egoID)
-                try:
-                    traci.vehicle.moveTo(self.egoID, lane_new, x)
-                except traci.exceptions.TraCIException:
-                    pass
+            if ctrl[0] != 0:
+                self.lanechange_counter +=1
+                last_lane = traci.vehicle.getLaneID(self.egoID)[:-1]
+                lane_new = int(traci.vehicle.getLaneID(self.egoID)[-1]) + ctrl[0]
+                if lane_new not in [0, 1, 2]:
+                    reward = self.max_punishment
+                    self.cumulated_reward += reward
+                    new_x = \
+                        traci.vehicle.getContextSubscriptionResults(self.egoID)[self.egoID][tc.VAR_POSITION][0]
+                    return self.environment_state, reward, True, {'cause': 'Left Highway',
+                                                                  'rewards': self.cumulated_reward,
+                                                                  'velocity': self.state['velocity'],
+                                                                  'distance': new_x - self.ego_start_position,
+                                                                  'lane_change': self.lanechange_counter}
+                else:
+                    lane_new = last_lane + str(lane_new)
+                    x = traci.vehicle.getLanePosition(self.egoID)
+                    #traci.vehicle.setRoute(self.egoID, [lane_new[:-2]])
+                    done = False
+                    while not done:
+                        try:
+                            traci.vehicle.moveTo(self.egoID, lane_new, x)
+                        except traci.exceptions.TraCIException:
+                            x += 0.1
+                        else:
+                            done = True
             if self.egoID is not None:
                 last_x = traci.vehicle.getContextSubscriptionResults(self.egoID)[self.egoID][tc.VAR_POSITION][0]
                 is_ok, cause = self.one_step()
@@ -151,7 +163,8 @@ class EPHighWayEnv(gym.Env):
         self.cumulated_reward = self.cumulated_reward + reward
         return self.environment_state, reward, terminated, {'cause': cause, 'rewards': self.cumulated_reward,
                                                             'velocity': self.state['velocity'],
-                                                            'distance': new_x - self.ego_start_position}
+                                                            'distance': new_x - self.ego_start_position,
+                                                            'lane_change': self.lanechange_counter}
 
     def render(self, mode='human', close=False):
         if mode == 'human':
@@ -292,9 +305,12 @@ class EPHighWayEnv(gym.Env):
         w = traci.simulationStep()
 
         IDsOfVehicles = traci.vehicle.getIDList()
-        if len(IDsOfVehicles) > 50 and self.egoID is None:
-            self.egoID = IDsOfVehicles[np.random.randint(0, 50)]
-            self.ego_start_position = traci.vehicle.getPosition(self.egoID)[0]
+        if len(IDsOfVehicles) > self.min_departed_vehicles and self.egoID is None:
+            for carID in IDsOfVehicles:
+                if traci.vehicle.getPosition(carID)[0] < self.ego_start_position and \
+                        traci.vehicle.getSpeed(carID) > (60/3.6):
+                    self.egoID = carID
+                    self.ego_start_position = traci.vehicle.getPosition(self.egoID)[0]
             lanes = [-2, -1, 0, 1, 2]
             traci.vehicle.setLaneChangeMode(self.egoID, 0x0)
             traci.vehicle.setSpeedMode(self.egoID, 0x0)
@@ -305,6 +321,7 @@ class EPHighWayEnv(gym.Env):
                                            [tc.VAR_SPEED, tc.VAR_LANE_INDEX, tc.VAR_ANGLE, tc.VAR_POSITION,
                                             tc.VAR_LENGTH, tc.VAR_WIDTH])
             traci.vehicle.addSubscriptionFilterLanes(lanes, noOpposite=True, downstreamDist=100.0, upstreamDist=100.0)
+            return True, None
         cause = None
         if self.egoID is not None:
             if self.egoID in traci.simulation.getCollidingVehiclesIDList():

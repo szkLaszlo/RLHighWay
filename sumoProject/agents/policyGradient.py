@@ -85,16 +85,16 @@ class Policy(nn.Module):
         # Overall reward and loss history
         self.reward_history = []
         self.model = list(self.convolutional.parameters()) + list(self.linear.parameters())
-        self.optimizer = optim.Adam(list(self.model), lr=learning_rate, weight_decay=0.001)
+        self.optimizer = optim.Adam(list(self.model), lr=learning_rate, weight_decay=0.0001)
         if self.use_gpu:
             self.policy_history = self.policy_history.cuda()
             self.action_history = self.action_history.cuda()
             self.convolutional = self.convolutional.cuda()
             self.linear = self.linear.cuda()
             print("Using CUDA backend.")
-        self.scheduler = optim.lr_scheduler.ReduceLROnPlateau(self.optimizer, mode='max', factor=0.5, patience=20,
-                                                              verbose=True, threshold=0.001, threshold_mode='rel',
-                                                              cooldown=5, min_lr=0, eps=1e-08)
+        self.scheduler = optim.lr_scheduler.ReduceLROnPlateau(self.optimizer, mode='max', factor=0.5, patience=100,
+                                                              verbose=True, threshold=0.01, threshold_mode='rel',
+                                                              cooldown=10, min_lr=0, eps=1e-08)
 
     def forward(self, x):
         x = x.unsqueeze(0).permute(0, 3, 1, 2)
@@ -175,7 +175,8 @@ class Policy(nn.Module):
                 if done:
                     print(f"Steps:{t}, distance: {info['distance']:.3f}, "
                           f"average speed: {sum(running_speed) / len(running_speed):.2f} "
-                          f"cause: {info['cause']}, reward: {info['rewards']:.3f} \n")
+                          f"cause: {info['cause']}, reward: {info['rewards']:.3f} "
+                          f"lane_changes: {info['lane_change']}\n")
                     episode_reward = info['rewards']
                     print(f"Episode {episode + 1}:")
                     break
@@ -185,6 +186,7 @@ class Policy(nn.Module):
                 self.writer.add_scalar('episode/reward', episode_reward, episode)
                 self.writer.add_scalar('episode/length', t, episode)
                 self.writer.add_scalar('episode/speed', sum(running_speed) / len(running_speed), episode)
+                self.writer.add_scalar('episode/lane_change', info['lane_change'],episode)
                 self.writer.add_scalar('episode/finished', 1 if info['cause'] is None else 0, episode)
                 done_average += 1 if info['cause'] is None else 0
                 self.writer.add_scalar('episode/distance', info["distance"], episode)
@@ -204,8 +206,8 @@ class Policy(nn.Module):
                 if running_reward > max_reward:
                     max_reward = running_reward
                     stopping_counter = 0
-                elif stopping_counter > 40:
-                    print(f"The rewards did not improve since {50 * stopping_counter - 1} episodes")
+                elif stopping_counter > 5000:
+                    print(f"The rewards did not improve since {50 * (stopping_counter - 1)} episodes")
                     self.env.stop()
                     break
                 else:
@@ -215,10 +217,9 @@ class Policy(nn.Module):
                 running_reward = 0
                 done_average = 0
 
-            if not episode % (episodes // 1000):
-                torch.save(self.state_dict(),
-                           os.path.join(self.save_path, 'model_{}.weight'.format(episode + 1)))
-                print('saved_weights')
+                if not stopping_counter:
+                    torch.save(self.state_dict(),
+                               os.path.join(self.save_path, 'model_{}.weight'.format(episode + 1)))
         torch.save(self.state_dict(),
                    os.path.join(self.save_path, 'model_final.weight'))
 
