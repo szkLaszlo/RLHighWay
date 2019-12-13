@@ -42,6 +42,8 @@ class EPHighWayEnv(gym.Env):
         self.reward_type = "simple"
         self.environment_state = 0
         self.lanechange_counter = 0
+        self.wants_to_change = []
+        self.change_after = 5
         self.min_departed_vehicles = np.random.randint(40, 60, 1).item()
         self.environment_state_list = []
 
@@ -77,11 +79,14 @@ class EPHighWayEnv(gym.Env):
             self.middle_counter = 0
             self.ego_start_position = 100000
             self.lanechange_counter = 0
-            self.min_departed_vehicles = np.random.randint(40, 60,1).item()
+            self.wants_to_change = []
+            self.change_after = 2
+            self.min_departed_vehicles = np.random.randint(40, 60, 1).item()
             while self.egoID is None:
                 self.one_step()
             self.environment_state_list = []
             self.environment_state = self.get_surroundings_env()
+            self.state['velocity'] = self.desired_speed - 5
             return self.environment_state
         else:
             raise RuntimeError('Please run render before reset!')
@@ -103,8 +108,9 @@ class EPHighWayEnv(gym.Env):
             # traci.vehicle.setMaxSpeed(self.egoID, min(max(self.state['speed'] + ctrl[1], 1), 50))
             traci.vehicle.setSpeed(self.egoID,
                                    min(max(self.state['velocity'] + ctrl[1], 0), 50))  # todo hardcoded max speed
-            if ctrl[0] != 0:
-                self.lanechange_counter +=1
+            self.wants_to_change.append(ctrl[0])
+            if sum(self.wants_to_change) > self.change_after or sum(self.wants_to_change) < -self.change_after:
+                self.lanechange_counter += 1
                 last_lane = traci.vehicle.getLaneID(self.egoID)[:-1]
                 lane_new = int(traci.vehicle.getLaneID(self.egoID)[-1]) + ctrl[0]
                 if lane_new not in [0, 1, 2]:
@@ -118,9 +124,10 @@ class EPHighWayEnv(gym.Env):
                                                                   'distance': new_x - self.ego_start_position,
                                                                   'lane_change': self.lanechange_counter}
                 else:
+                    self.wants_to_change = []
                     lane_new = last_lane + str(lane_new)
                     x = traci.vehicle.getLanePosition(self.egoID)
-                    #traci.vehicle.setRoute(self.egoID, [lane_new[:-2]])
+                    # traci.vehicle.setRoute(self.egoID, [lane_new[:-2]])
                     done = False
                     while not done:
                         try:
@@ -129,6 +136,8 @@ class EPHighWayEnv(gym.Env):
                             x += 0.1
                         else:
                             done = True
+            if len(self.wants_to_change) > self.change_after:
+                self.wants_to_change.pop(0)
             if self.egoID is not None:
                 last_x = traci.vehicle.getContextSubscriptionResults(self.egoID)[self.egoID][tc.VAR_POSITION][0]
                 is_ok, cause = self.one_step()
@@ -154,8 +163,7 @@ class EPHighWayEnv(gym.Env):
                 reward, _ = self.calculate_reward()
                 reward += 1
             else:
-                reward = new_x - last_x  # 1
-                reward = reward - (abs(self.state['velocity'] - self.desired_speed)) * 0.1
+                reward = reward - (abs(self.state['velocity'] - self.desired_speed)) / self.desired_speed
             self.steps_done += 1
         else:
             reward = 0
@@ -308,13 +316,18 @@ class EPHighWayEnv(gym.Env):
         if len(IDsOfVehicles) > self.min_departed_vehicles and self.egoID is None:
             for carID in IDsOfVehicles:
                 if traci.vehicle.getPosition(carID)[0] < self.ego_start_position and \
-                        traci.vehicle.getSpeed(carID) > (60/3.6):
+                        traci.vehicle.getSpeed(carID) > (60 / 3.6):
                     self.egoID = carID
                     self.ego_start_position = traci.vehicle.getPosition(self.egoID)[0]
             lanes = [-2, -1, 0, 1, 2]
             traci.vehicle.setLaneChangeMode(self.egoID, 0x0)
             traci.vehicle.setSpeedMode(self.egoID, 0x0)
-            traci.vehicle.setColor(self.egoID, (255,0,0))
+            traci.vehicle.setColor(self.egoID, (255, 0, 0))
+            traci.vehicle.setType(self.egoID, 'ego')
+            traci.vehicle.setMinGap(self.egoID, 0)
+            traci.vehicle.setMinGapLat(self.egoID, 0)
+
+            traci.vehicle.setSpeedFactor(self.egoID, 2)
             traci.vehicle.setSpeed(self.egoID, self.desired_speed)
             traci.vehicle.setMaxSpeed(self.egoID, 50)
             traci.vehicle.subscribeContext(self.egoID, tc.CMD_GET_VEHICLE_VARIABLE, 0.0,
@@ -438,7 +451,7 @@ class EPHighWayEnv(gym.Env):
             if car_id == self.egoID:
                 ego_state = copy.copy(car_state)
             environment_collection.append(copy.copy(car_state))
-        grid_per_meter = 2
+        grid_per_meter = 1
         x_range = 50  # symmetrically for front and back
         x_range_grid = x_range * grid_per_meter  # symmetrically for front and back
         y_range = 9  # symmetrucally for left and right

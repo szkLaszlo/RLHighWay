@@ -102,7 +102,7 @@ class Policy(nn.Module):
         linear_result = self.linear(self.convolutional(x).flatten(-2, -1))
         return linear_result
 
-    def update(self):
+    def update(self, episode):
         self.current_episode += 1
         R = 0
         rewards = []
@@ -116,9 +116,11 @@ class Policy(nn.Module):
         rewards = torch.FloatTensor(rewards)
         if self.use_gpu:
             rewards = rewards.cuda()
-
+        rewards /= len(rewards)
         # Calculate loss
         self.loss = (torch.sum(torch.mul(self.policy_history, Variable(rewards)).mul(-1), -1))
+        self.writer.add_scalar('loss', self.loss.item(), episode)
+        self.writer.add_scalar('episode/reward', sum(rewards), episode)
         self.loss /= self.update_freq
         # Update network weights
         self.loss.backward()
@@ -179,7 +181,7 @@ class Policy(nn.Module):
 
             running_reward += episode_reward
             if self.writer is not None:
-                self.writer.add_scalar('episode/reward', episode_reward, episode)
+
                 self.writer.add_scalar('episode/length', t, episode)
                 self.writer.add_scalar('episode/speed', sum(running_speed) / len(running_speed), episode)
                 self.writer.add_scalar('episode/lane_change', info['lane_change'],episode)
@@ -189,7 +191,7 @@ class Policy(nn.Module):
                 # writer.add_histogram('history/policy', pol.policy_history, episode)
                 # writer.add_histogram('history/action', pol.action_history, episode)
 
-            self.update()
+            self.update(episode)
 
             if episode % 50 == 0 and episode != 0:
                 running_reward = running_reward / 50
