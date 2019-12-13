@@ -116,10 +116,6 @@ class Policy(nn.Module):
         rewards = torch.FloatTensor(rewards)
         if self.use_gpu:
             rewards = rewards.cuda()
-        if rewards.shape[0] > 1:
-            rewards = (rewards - rewards.mean()) / (rewards.std() + np.finfo(np.float32).eps)
-        else:
-            rewards /= abs(rewards)
 
         # Calculate loss
         self.loss = (torch.sum(torch.mul(self.policy_history, Variable(rewards)).mul(-1), -1))
