@@ -103,6 +103,7 @@ class EPHighWayEnv(gym.Env):
         assert self.action_space.contains(action), "%r (%s) invalid" % (action, type(action))
         new_x, last_x = 0, 0
         IDsOfVehicles = traci.vehicle.getIDList()
+        reward = 0
         if self.egoID in IDsOfVehicles:
             ctrl = self.calculate_action(action)
             # traci.vehicle.setMaxSpeed(self.egoID, min(max(self.state['speed'] + ctrl[1], 1), 50))
@@ -124,6 +125,7 @@ class EPHighWayEnv(gym.Env):
                                                                   'distance': new_x - self.ego_start_position,
                                                                   'lane_change': self.lanechange_counter}
                 else:
+                    reward = 1
                     self.wants_to_change = []
                     lane_new = last_lane + str(lane_new)
                     x = traci.vehicle.getLanePosition(self.egoID)
@@ -155,7 +157,6 @@ class EPHighWayEnv(gym.Env):
             traci.gui.setOffset('View #0', egoPos[0], egoPos[1])
 
         terminated = not is_ok
-        reward = 0
         if terminated and cause is not None:
             reward = self.max_punishment
         elif not terminated:
@@ -166,7 +167,7 @@ class EPHighWayEnv(gym.Env):
                 reward = reward - (abs(self.state['velocity'] - self.desired_speed)) / self.desired_speed
             self.steps_done += 1
         else:
-            reward = 0
+            reward = -self.max_punishment
         reward = reward
         self.cumulated_reward = self.cumulated_reward + reward
         return self.environment_state, reward, terminated, {'cause': cause, 'rewards': self.cumulated_reward,
