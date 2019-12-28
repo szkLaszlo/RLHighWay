@@ -44,7 +44,7 @@ class EPHighWayEnv(gym.Env):
         self.lanechange_counter = 0
         self.wants_to_change = []
         self.change_after = 5
-        self.min_departed_vehicles = np.random.randint(40, 60, 1).item()
+        self.min_departed_vehicles = np.random.randint(1, 3, 1).item()
         self.environment_state_list = []
 
     def set_reward_type(self, reward_type):
