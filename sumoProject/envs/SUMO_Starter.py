@@ -106,7 +106,6 @@ class EPHighWayEnv(gym.Env):
         reward = 0
         if self.egoID in IDsOfVehicles:
             ctrl = self.calculate_action(action)
-            # traci.vehicle.setMaxSpeed(self.egoID, min(max(self.state['speed'] + ctrl[1], 1), 50))
             traci.vehicle.setSpeed(self.egoID,
                                    min(max(self.state['velocity'] + ctrl[1], 0), 50))  # todo hardcoded max speed
             self.wants_to_change.append(ctrl[0])
@@ -129,7 +128,6 @@ class EPHighWayEnv(gym.Env):
                     self.wants_to_change = []
                     lane_new = last_lane + str(lane_new)
                     x = traci.vehicle.getLanePosition(self.egoID)
-                    # traci.vehicle.setRoute(self.egoID, [lane_new[:-2]])
                     done = False
                     while not done:
                         try:
@@ -144,7 +142,7 @@ class EPHighWayEnv(gym.Env):
                 last_x = traci.vehicle.getContextSubscriptionResults(self.egoID)[self.egoID][tc.VAR_POSITION][0]
                 is_ok, cause = self.one_step()
                 if is_ok:
-                    environment_state = self.calculate_environment()
+                    self.get_surroundings_env()
                     new_x = traci.vehicle.getContextSubscriptionResults(self.egoID)[self.egoID][tc.VAR_POSITION][0]
                 else:
                     new_x = last_x + max(self.state['velocity'] + ctrl[1], 0) * self.dt
@@ -208,8 +206,7 @@ class EPHighWayEnv(gym.Env):
 
     def get_surroundings(self, only_env_recheck=False):
         cars_around = traci.vehicle.getContextSubscriptionResults(self.egoID)
-        self.calculate_environment()
-        # traci.vehicle.getContextSubscriptionResults(self.egoID)[self.egoID][tc.VAR_POSITION][0]
+        self.get_surroundings_env()
         ego_data = cars_around[self.egoID]
         state = {}
         basic_vals = {'dx': 200, 'dv': 0}
@@ -256,9 +253,7 @@ class EPHighWayEnv(gym.Env):
                             state['RL']['dv'] = veh['dv']
                     else:
                         state['EL'] = 1
-                        # if veh['dy'] < state['EL']['dx']:
-                        #     state['EL']['dx'] = veh['dy']
-                        #     state['EL']['dv'] = veh['dv']
+
             elif lane_id < ego_data[tc.VAR_LANE_INDEX]:
                 for veh in lane[lane_id]:
                     if veh['dx'] - veh['l'] > 0:
@@ -271,9 +266,7 @@ class EPHighWayEnv(gym.Env):
                             state['RR']['dv'] = veh['dv']
                     else:
                         state['ER'] = 1
-                        # if veh['dy'] < state['ER']['dx']:
-                        #     state['ER']['dx'] = veh['dy']
-                        #     state['ER']['dv'] = veh['dv']
+
         state['speed'] = ego_data[tc.VAR_SPEED]
         state['lane'] = ego_data[tc.VAR_LANE_INDEX]  # todo: onehot vector
         if self.state is not None:
@@ -297,15 +290,12 @@ class EPHighWayEnv(gym.Env):
         state['des_speed'] = self.desired_speed
         return state
 
-    def get_surroundings_env(self, only_env_recheck=False):
+    def get_surroundings_env(self):
         environment, ego_state = self.calculate_environment()
         self.environment_state_list.append(environment)
         if len(self.environment_state_list) > 3:
             self.environment_state_list.pop(0)
-        elif len(self.environment_state_list) == 1:
-            self.environment_state_list.append(environment)
-            self.environment_state_list.append(environment)
-        self.environment_state = np.concatenate(self.environment_state_list, -1)
+        self.environment_state = np.stack(self.environment_state_list, 0)
         self.state = ego_state
         return self.environment_state
 
@@ -315,6 +305,7 @@ class EPHighWayEnv(gym.Env):
 
         IDsOfVehicles = traci.vehicle.getIDList()
         if len(IDsOfVehicles) > self.min_departed_vehicles and self.egoID is None:
+
             for carID in IDsOfVehicles:
                 if traci.vehicle.getPosition(carID)[0] < self.ego_start_position and \
                         traci.vehicle.getSpeed(carID) > (60 / 3.6):
