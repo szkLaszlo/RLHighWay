@@ -2,7 +2,6 @@ import copy
 import math
 import platform
 import random
-from math import sin
 
 import gym
 import numpy as np
@@ -27,8 +26,8 @@ class EPHighWayEnv(gym.Env):
         high = np.array([200, 50, 200, 50, 200, 50, 200, 50, 200, 50, 200, 50, 200, 50, 50, 3, 90, 20, 50])
         self.action_space = spaces.Discrete(9)
         self.observation_space = spaces.Box(low, high, dtype=np.float32)
-        self.cumulated_reward = 0
-        self.rewards = [0, 0, 0, 0]
+        self.rewards = [0, 0, 0, 0]  # was used for reward calculation
+        # setting basic environment variables
         self.lane_width = None
         self.lane_offset = None
         self.sumoBinary = None
@@ -37,15 +36,15 @@ class EPHighWayEnv(gym.Env):
         self.state = None
         self.desired_speed = None
         self.dt = None
-        self.ego_start_position = 100000
-        self.middle_counter = 0
-        self.reward_type = "simple"
-        self.environment_state = 0
+        self.ego_start_position = 100000  # for the search of the last vehicle on the highway
+        self.reward_type = "simple"  # Using simple calculation for now
+        self.environment_state = None
         self.lanechange_counter = 0
-        self.wants_to_change = []
-        self.change_after = 5
-        self.min_departed_vehicles = np.random.randint(1, 3, 1).item()
-        self.environment_state_list = []
+        self.wants_to_change = []  # variable to count how many times the agent wanted to change lane
+        self.change_after = 5  # variable after how many trials the lane is changed
+
+        # variable defining how many vehicles must exist on the road before ego is chosen.
+        self.min_departed_vehicles = 1
 
     def set_reward_type(self, reward_type):
         self.reward_type = reward_type
@@ -55,6 +54,7 @@ class EPHighWayEnv(gym.Env):
 
     def reset(self):
         if self.rendering is not None:
+            # this is for memory minimization
             try:
                 for vehs in traci.vehicle.getIDList():
                     del vehs
@@ -64,36 +64,47 @@ class EPHighWayEnv(gym.Env):
                 pass
             except TypeError:
                 pass
-
+            # Loads traci configuration
             traci.load(self.sumoCmd[1:])
+            # Loading variables with real values from traci
             self.lane_width = traci.lane.getWidth('A_0')
             self.lane_offset = traci.junction.getPosition('J1')[1] - 2 * self.lane_width - self.lane_width / 2
-            self.cumulated_reward = 0
-            self.rewards = [0, 0, 0, 0]
-            self.egoID = None
-            self.steps_done = 0
             self.dt = traci.simulation.getDeltaT()
-            self.desired_speed = random.randint(100, 140)
-            self.desired_speed = self.desired_speed / 3.6
+            self.rewards = [0, 0, 0, 0]
+            self.egoID = None  # Resetting chosen ego vehicle id
+            self.steps_done = 0  # resetting steps done
+
+            self.desired_speed = random.randint(100, 140) / 3.6
             self.state = None
-            self.middle_counter = 0
             self.ego_start_position = 100000
             self.lanechange_counter = 0
             self.wants_to_change = []
             self.change_after = 2
-            self.min_departed_vehicles = np.random.randint(40, 60, 1).item()
+            self.min_departed_vehicles = np.random.randint(20, 60, 1).item()
+            # Running simulation until ego can be inserted
             while self.egoID is None:
                 self.one_step()
-            self.environment_state_list = []
+            # Getting initial environment state
             self.environment_state = self.get_surroundings_env()
+            # Setting a starting speed of the ego
             self.state['velocity'] = self.desired_speed - 5
             return self.environment_state
         else:
             raise RuntimeError('Please run render before reset!')
 
     def calculate_action(self, action):
-        st = [-1, 0, 1]
-        ac = [-0.7, 0.0, 0.3]
+        """
+        This function is used to select the actions for steering and velocity change.
+        Parameters
+        ----------
+        action an int between 0 and 9
+
+        Returns a steering and velocity change action
+        -------
+
+        """
+        st = [-1, 0, 1]  # [right, nothing, left] lane change
+        ac = [-0.7, 0.0, 0.3]  # are in m/s
         steer = st[action // len(st)]
         acc = ac[action % len(st)]
         ctrl = [steer, acc]
@@ -101,29 +112,36 @@ class EPHighWayEnv(gym.Env):
 
     def step(self, action):
         assert self.action_space.contains(action), "%r (%s) invalid" % (action, type(action))
-        new_x, last_x = 0, 0
+        new_x, last_x = 0, 0  # for reward calculation
+        # Collecting the ids of online vehicles
         IDsOfVehicles = traci.vehicle.getIDList()
+
         reward = 0
+        # Checking if ego is still alive
         if self.egoID in IDsOfVehicles:
+            # Selecting action to do
             ctrl = self.calculate_action(action)
+            # Setting vehicle speed according to selected action
             traci.vehicle.setSpeed(self.egoID,
                                    min(max(self.state['velocity'] + ctrl[1], 0), 50))  # todo hardcoded max speed
-            self.wants_to_change.append(ctrl[0])
+            self.wants_to_change.append(ctrl[0])  # Collecting change attempts
+            # Checking if change attempts are enough to change lane
             if sum(self.wants_to_change) > self.change_after or sum(self.wants_to_change) < -self.change_after:
-                self.lanechange_counter += 1
+                self.lanechange_counter += 1  # Storing successful lane change
                 last_lane = traci.vehicle.getLaneID(self.egoID)[:-1]
                 lane_new = int(traci.vehicle.getLaneID(self.egoID)[-1]) + ctrl[0]
+                # Checking if new lane is still on the road
                 if lane_new not in [0, 1, 2]:
                     reward = self.max_punishment
-                    self.cumulated_reward += reward
                     new_x = \
                         traci.vehicle.getContextSubscriptionResults(self.egoID)[self.egoID][tc.VAR_POSITION][0]
                     return self.environment_state, reward, True, {'cause': 'Left Highway',
-                                                                  'rewards': self.cumulated_reward,
+                                                                  'rewards': reward,
                                                                   'velocity': self.state['velocity'],
                                                                   'distance': new_x - self.ego_start_position,
                                                                   'lane_change': self.lanechange_counter}
                 else:
+                    # Setting reward to 1 because of lane change
                     reward = 1
                     self.wants_to_change = []
                     lane_new = last_lane + str(lane_new)
@@ -136,8 +154,10 @@ class EPHighWayEnv(gym.Env):
                             x += 0.1
                         else:
                             done = True
+            # Removing elements of lane change attempts to have always the same lenght
             if len(self.wants_to_change) > self.change_after:
                 self.wants_to_change.pop(0)
+
             if self.egoID is not None:
                 last_x = traci.vehicle.getContextSubscriptionResults(self.egoID)[self.egoID][tc.VAR_POSITION][0]
                 is_ok, cause = self.one_step()
@@ -150,14 +170,17 @@ class EPHighWayEnv(gym.Env):
             is_ok = False
             cause = None
 
+        # Setting ego to the middle of the screen if rendering is "human"
         if self.egoID is not None and self.rendering and is_ok:
             egoPos = traci.vehicle.getPosition(self.egoID)
             traci.gui.setOffset('View #0', egoPos[0], egoPos[1])
 
         terminated = not is_ok
         if terminated and cause is not None:
+            # case for some bad event with termination
             reward = self.max_punishment
         elif not terminated:
+            # Case for successful step
             if self.reward_type == 'complex':
                 reward, _ = self.calculate_reward()
                 reward += 1
@@ -165,21 +188,30 @@ class EPHighWayEnv(gym.Env):
                 reward = reward - (abs(self.state['velocity'] - self.desired_speed)) / self.desired_speed
             self.steps_done += 1
         else:
+            # Case for completing the highway without a problem
             reward = -self.max_punishment
         reward = reward
-        self.cumulated_reward = self.cumulated_reward + reward
-        return self.environment_state, reward, terminated, {'cause': cause, 'rewards': self.cumulated_reward,
+
+        return self.environment_state, reward, terminated, {'cause': cause, 'rewards': reward,
                                                             'velocity': self.state['velocity'],
                                                             'distance': new_x - self.ego_start_position,
                                                             'lane_change': self.lanechange_counter}
 
-    def render(self, mode='human', close=False):
+    def render(self, mode='human'):
+        """
+        This function lets us choose between simulation with or without GUI
+        Parameters
+        ----------
+        mode: "human" means rendering with GUI
+        -------
+        """
         if mode == 'human':
             self.rendering = True
         else:
             self.rendering = False
 
         if "Windows" in platform.system():
+            # Case for windows execution
             if self.rendering:
                 self.sumoBinary = "C:/Sumo/bin/sumo-gui"
                 self.sumoCmd = [self.sumoBinary, "-c", "../envs/jatek.sumocfg", "--start", "--quit-on-end",
@@ -191,6 +223,7 @@ class EPHighWayEnv(gym.Env):
                                 "--collision.mingap-factor", "0", "--collision.action", "remove", "--no-warnings", "1",
                                 "--random"]
         else:
+            # Case for linux execution
             if self.rendering:
                 self.sumoBinary = "/usr/share/sumo/bin/sumo-gui"
                 self.sumoCmd = [self.sumoBinary, "-c", "../envs/jatek.sumocfg", "--start", "--quit-on-end",
@@ -204,93 +237,14 @@ class EPHighWayEnv(gym.Env):
 
         traci.start(self.sumoCmd[:4])
 
-    def get_surroundings(self, only_env_recheck=False):
-        cars_around = traci.vehicle.getContextSubscriptionResults(self.egoID)
-        self.get_surroundings_env()
-        ego_data = cars_around[self.egoID]
-        state = {}
-        basic_vals = {'dx': 200, 'dv': 0}
-        basic_keys = ['FL', 'FE', 'FR', 'RL', 'RE', 'RR', 'EL', 'ER']
-        for state_key in basic_keys:
-            if state_key in ['RL', 'RE', 'RR']:
-                state[state_key] = copy.copy(basic_vals)
-                state[state_key]['dv'] = 0
-                state[state_key]['dx'] = -200
-            elif state_key in ['EL', 'ER']:
-                state[state_key] = 0
-            else:
-                state[state_key] = copy.copy(basic_vals)
-        lane = {0: [], 1: [], 2: []}
-        for car_id in cars_around.keys():
-            if car_id is not self.egoID:
-                new_car = dict()
-                new_car['dx'] = cars_around[car_id][tc.VAR_POSITION][0] - ego_data[tc.VAR_POSITION][0]
-                new_car['dy'] = abs(cars_around[car_id][tc.VAR_POSITION][1] - ego_data[tc.VAR_POSITION][1])
-                new_car['dv'] = cars_around[car_id][tc.VAR_SPEED] - ego_data[tc.VAR_SPEED]
-                new_car['l'] = cars_around[car_id][tc.VAR_LENGTH]
-                lane[cars_around[car_id][tc.VAR_LANE_INDEX]].append(new_car)
-        [lane[i].sort(key=lambda x: x['dx']) for i in lane.keys()]
-        for lane_id in lane.keys():
-            if lane_id == ego_data[tc.VAR_LANE_INDEX]:
-                for veh in lane[lane_id]:
-                    if veh['dx'] - veh['l'] > 0:
-                        if veh['dx'] - veh['l'] < state['FE']['dx']:
-                            state['FE']['dx'] = veh['dx'] - veh['l']
-                            state['FE']['dv'] = veh['dv']
-                    elif veh['dx'] + ego_data[tc.VAR_LENGTH] < 0:
-                        if veh['dx'] + ego_data[tc.VAR_LENGTH] > state['RE']['dx']:
-                            state['RE']['dx'] = veh['dx'] + ego_data[tc.VAR_LENGTH]
-                            state['RE']['dv'] = veh['dv']
-            elif lane_id > ego_data[tc.VAR_LANE_INDEX]:
-                for veh in lane[lane_id]:
-                    if veh['dx'] - veh['l'] > 0:
-                        if veh['dx'] - veh['l'] < state['FL']['dx']:
-                            state['FL']['dx'] = veh['dx'] - veh['l']
-                            state['FL']['dv'] = veh['dv']
-                    elif veh['dx'] + ego_data[tc.VAR_LENGTH] < 0:
-                        if veh['dx'] + ego_data[tc.VAR_LENGTH] > state['RL']['dx']:
-                            state['RL']['dx'] = veh['dx'] + ego_data[tc.VAR_LENGTH]
-                            state['RL']['dv'] = veh['dv']
-                    else:
-                        state['EL'] = 1
-
-            elif lane_id < ego_data[tc.VAR_LANE_INDEX]:
-                for veh in lane[lane_id]:
-                    if veh['dx'] - veh['l'] > 0:
-                        if veh['dx'] - veh['l'] < state['FR']['dx']:
-                            state['FR']['dx'] = veh['dx'] - veh['l']
-                            state['FR']['dv'] = veh['dv']
-                    elif veh['dx'] + ego_data[tc.VAR_LENGTH] < 0:
-                        if veh['dx'] + ego_data[tc.VAR_LENGTH] > state['RR']['dx']:
-                            state['RR']['dx'] = veh['dx'] + ego_data[tc.VAR_LENGTH]
-                            state['RR']['dv'] = veh['dv']
-                    else:
-                        state['ER'] = 1
-
-        state['speed'] = ego_data[tc.VAR_SPEED]
-        state['lane'] = ego_data[tc.VAR_LANE_INDEX]  # todo: onehot vector
-        if self.state is not None:
-            state['angle'] = self.state['angle']
-            state['y_pos'] = (self.state['y_pos'] + (state['speed']) * self.dt * sin(
-                math.radians(state['angle']))) if not only_env_recheck else self.state['y_pos']
-            if state['y_pos'] > self.lane_width / 2:
-                state['lane'] -= 1
-                state['y_pos'] = -1 * (self.lane_width - state['y_pos'])
-            elif state['y_pos'] < -self.lane_width / 2:
-                state['lane'] += 1
-                state['y_pos'] += self.lane_width
-
-        else:
-            state['angle'] = 0
-            state['y_pos'] = ego_data[tc.VAR_POSITION][1] - self.lane_offset - \
-                             (state['lane']) * self.lane_width \
-                             + (state['speed']) * self.dt * sin(math.radians(state['angle']))
-        if math.isclose(abs(state['y_pos']), 0, rel_tol=1e-4, abs_tol=1e-4):
-            state['y_pos'] = 0.0
-        state['des_speed'] = self.desired_speed
-        return state
-
     def get_surroundings_env(self):
+        """
+        This is used to call environment surroundings
+        Returns: environment state in the shape of [1, range_x, range_y, 3]
+        where the last dimension is the channels of speed, lane_id, and desired speed
+        -------
+
+        """
         self.environment_state, self.state = self.calculate_environment()
         return self.environment_state
 
@@ -421,11 +375,17 @@ class EPHighWayEnv(gym.Env):
         return reward, rewards
 
     def calculate_environment(self):
+        """
 
+        Returns: environment state in the shape of [1, range_x, range_y, 3]
+        where the last dimension is the channels of speed, lane_id, and desired speed
+        and ego state as a dict: {'x_position', 'y_position', 'length', 'width', 'velocity', 'lane_id', 'heading'}
+        -------
+        """
+        # Getting cars around ego vehicle
         cars_around = traci.vehicle.getContextSubscriptionResults(self.egoID)
-        # traci.vehicle.getContextSubscriptionResults(self.egoID)[self.egoID][tc.VAR_POSITION][0]
         ego_state = {}
-
+        # Collecting car details
         environment_collection = []
         for car_id, car in cars_around.items():
             car_state = {'x_position': car[tc.VAR_POSITION][0] - car[tc.VAR_LENGTH] / 2,
@@ -435,35 +395,49 @@ class EPHighWayEnv(gym.Env):
                          'velocity': car[tc.VAR_SPEED],
                          'lane_id': car[tc.VAR_LANE_INDEX],
                          'heading': car[tc.VAR_ANGLE]}
+            # Saving ego state
             if car_id == self.egoID:
                 ego_state = copy.copy(car_state)
             environment_collection.append(copy.copy(car_state))
-        grid_per_meter = 1
+
+        grid_per_meter = 1  # Defines the precision of the returned image
         x_range = 50  # symmetrically for front and back
         x_range_grid = x_range * grid_per_meter  # symmetrically for front and back
-        y_range = 9  # symmetrucally for left and right
-        y_range_grid = y_range * grid_per_meter  # symmetrucally for left and right
+        y_range = 9  # symmetrically for left and right
+        y_range_grid = y_range * grid_per_meter  # symmetrically for left and right
 
+        # Creating state representation as a matrix (image)
         state_matrix = np.zeros((2 * x_range_grid, 2 * y_range_grid, 3))
+        # Drawing the image channels with actual data
         for element in environment_collection:
-            indexes_to_fill = []
             dx = int(np.rint((element['x_position'] - ego_state["x_position"]) * grid_per_meter))
             dy = int(np.rint((ego_state["y_position"] - element['y_position']) * grid_per_meter))
             l = int(np.ceil(element['length'] / 2 * grid_per_meter))
             w = int(np.ceil(element['width'] / 2 * grid_per_meter))
+
+            # Only if car is in the range
             if (abs(dx) < (x_range_grid - element['length'] / 2 * grid_per_meter)) and \
                     abs(dy) < (y_range_grid - element['width'] / 2 * grid_per_meter):
+
+                # Drawing speed of the current car
                 state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
                 y_range_grid + dy - w:y_range_grid + dy + w, 0] += np.ones_like(
                     state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
                     y_range_grid + dy - w:y_range_grid + dy + w, 0]) * element['velocity'] / 50
+
+                # Drawing lane of the current car
                 state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
                 y_range_grid + dy - w:y_range_grid + dy + w, 1] += np.ones_like(
                     state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
                     y_range_grid + dy - w:y_range_grid + dy + w, 1]) * element['lane_id'] / 2
-                state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
-                y_range_grid + dy - w:y_range_grid + dy + w, 2] += np.ones_like(
+
+                # If ego, drawing the desired speed
+                if math.isclose(dx, 0) and math.isclose(dy, 0):
                     state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
-                    y_range_grid + dy - w:y_range_grid + dy + w, 2]) * self.desired_speed / 50
+                    y_range_grid + dy - w:y_range_grid + dy + w,
+                    2] += np.ones_like(
+                        state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
+                        y_range_grid + dy - w:y_range_grid + dy + w,
+                        2]) * self.desired_speed / 50
 
         return state_matrix, ego_state
