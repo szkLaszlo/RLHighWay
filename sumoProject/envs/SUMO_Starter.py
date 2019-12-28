@@ -291,12 +291,7 @@ class EPHighWayEnv(gym.Env):
         return state
 
     def get_surroundings_env(self):
-        environment, ego_state = self.calculate_environment()
-        self.environment_state_list.append(environment)
-        if len(self.environment_state_list) > 3:
-            self.environment_state_list.pop(0)
-        self.environment_state = np.stack(self.environment_state_list, 0)
-        self.state = ego_state
+        self.environment_state, self.state = self.calculate_environment()
         return self.environment_state
 
     def one_step(self):

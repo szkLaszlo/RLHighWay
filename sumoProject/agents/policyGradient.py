@@ -54,26 +54,28 @@ class Policy(nn.Module):
         self.hidden_size = 128
         self.hidden_size2 = 64
         self.update_freq = update_freq
-        self.convolutional = nn.Sequential(nn.Conv2d(in_channels=3, out_channels=64, kernel_size=11, padding=5,
-                                                     stride=1),
-                                           nn.BatchNorm2d(64),
-                                           nn.ReLU(),
-                                           nn.Conv2d(in_channels=64, out_channels=64, kernel_size=11, padding=5,
-                                                     stride=1),
-                                           nn.BatchNorm2d(64),
-                                           nn.ReLU(),
-                                           nn.Conv2d(in_channels=64, out_channels=32, kernel_size=11, padding=5,
-                                                     stride=1),
-                                           nn.BatchNorm2d(32),
-                                           nn.Conv2d(in_channels=32, out_channels=1, kernel_size=11, padding=5,
-                                                     stride=1),
-                                           nn.BatchNorm2d(1),
-                                           nn.AdaptiveMaxPool2d(output_size=(10, 2))
-                                           )
-        self.lstm = nn.LSTM(input_size=20, hidden_size=512, num_layers=2, batch_first=True)
-        self.linear = nn.Sequential(nn.Linear(in_features=512, out_features=256),
+        hidden_size = 16
+        self.convolutional = nn.Sequential(
+            nn.Conv2d(in_channels=3, out_channels=hidden_size * 2, kernel_size=11, padding=5,
+                      stride=1),
+            nn.BatchNorm2d(hidden_size * 2),
+            nn.ReLU(),
+            nn.Conv2d(in_channels=hidden_size * 2, out_channels=hidden_size * 2,
+                      kernel_size=11, padding=5, stride=1),
+            nn.BatchNorm2d(hidden_size * 2),
+            nn.ReLU(),
+            nn.Conv2d(in_channels=hidden_size * 2, out_channels=hidden_size,
+                      kernel_size=11, padding=5, stride=1),
+            nn.BatchNorm2d(hidden_size),
+            nn.Conv2d(in_channels=hidden_size, out_channels=1,
+                      kernel_size=11, padding=5, stride=1),
+            nn.BatchNorm2d(1),
+            nn.AdaptiveMaxPool2d(output_size=(10, 2))
+            )
+        self.lstm = nn.LSTM(input_size=20, hidden_size=128, num_layers=1, batch_first=True)
+        self.linear = nn.Sequential(nn.Linear(in_features=128, out_features=64),
                                     nn.ReLU(),
-                                    nn.Linear(in_features=256, out_features=9),
+                                    nn.Linear(in_features=64, out_features=9),
                                     nn.Softmax(dim=-1)
                                     )
         self.gamma = gamma
@@ -145,7 +147,7 @@ class Policy(nn.Module):
         self.reward_episode = []
 
     def select_action_probabilities(self, state_):
-        state_ = torch.from_numpy(np.asarray(state_)).type(torch.FloatTensor)
+        state_ = torch.from_numpy(state_).type(torch.FloatTensor)
         state_ = Variable(state_)
         if self.use_gpu:
             state_ = state_.cuda()
@@ -165,17 +167,18 @@ class Policy(nn.Module):
         stopping_counter = 0
 
         for episode in range(episodes):
-            state = self.env.reset()  # Reset environment and record the starting state
+            state_list = [self.env.reset()]
             done = False
             episode_reward = 0
             running_speed = []
             reward = 0
             for t in itertools.count():
 
-                action = self.select_action_probabilities(state)
+                action = self.select_action_probabilities(np.stack(state_list[-3:]))
 
                 # Step through environment using chosen action
                 state, reward, done, info = self.env.step(action.item())
+                state_list.append(state)
                 running_speed.append(info['velocity'])
                 # Save reward
                 self.reward_episode.append(reward)
