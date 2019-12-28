@@ -471,10 +471,6 @@ class EPHighWayEnv(gym.Env):
                 y_range_grid + dy - w:y_range_grid + dy + w, 0] += np.ones_like(
                     state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
                     y_range_grid + dy - w:y_range_grid + dy + w, 0]) * element['velocity'] / 50
-                # state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
-                # y_range_grid + dy - w:y_range_grid + dy + w, 2] += np.ones_like(
-                #     state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
-                #     y_range_grid + dy - w:y_range_grid + dy + w, 2]) * element['heading'] / 180
                 state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
                 y_range_grid + dy - w:y_range_grid + dy + w, 1] += np.ones_like(
                     state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
@@ -484,19 +480,4 @@ class EPHighWayEnv(gym.Env):
                     state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
                     y_range_grid + dy - w:y_range_grid + dy + w, 2]) * self.desired_speed / 50
 
-
-        # lane = traci.vehicle.getLaneID(self.egoID).split('_')[0]
-        # for i in range(3):
-        #     laneID = f"{lane}_{i}"
-        #     lane_pos = traci.lane.getShape(laneID)[0][1]
-        #     lane_width = traci.lane.getWidth(laneID)
-        #     dy = int((ego_state["y_position"] - lane_pos - ego_state['width']) * grid_per_meter)
-        #     w = int(np.ceil(lane_width * grid_per_meter))
-        #     state_matrix[:, y_range_grid + dy:y_range_grid + dy + w, 3] = np.ones_like(
-        #         state_matrix[:, y_range_grid + dy:y_range_grid + dy + w, 3]) * 0.3 * (i + 0.1)
-
-        # import matplotlib.pyplot as plt
-        # plt.gcf()
-        # plt.imshow(state_matrix)
-        # plt.show()
         return state_matrix, ego_state
