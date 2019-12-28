@@ -54,18 +54,18 @@ class Policy(nn.Module):
         self.hidden_size = 128
         self.hidden_size2 = 64
         self.update_freq = update_freq
-        self.convolutional = nn.Sequential(nn.Conv2d(in_channels=9, out_channels=6, kernel_size=11, padding=5,
+        self.convolutional = nn.Sequential(nn.Conv2d(in_channels=9, out_channels=64, kernel_size=11, padding=5,
                                                      stride=1),
-                                           nn.BatchNorm2d(6),
+                                           nn.BatchNorm2d(64),
                                            nn.ReLU(),
-                                           nn.Conv2d(in_channels=6, out_channels=6, kernel_size=11, padding=5,
+                                           nn.Conv2d(in_channels=64, out_channels=64, kernel_size=11, padding=5,
                                                      stride=1),
-                                           nn.BatchNorm2d(6),
+                                           nn.BatchNorm2d(64),
                                            nn.ReLU(),
-                                           nn.Conv2d(in_channels=6, out_channels=3, kernel_size=11, padding=5,
+                                           nn.Conv2d(in_channels=64, out_channels=32, kernel_size=11, padding=5,
                                                      stride=1),
-                                           nn.BatchNorm2d(3),
-                                           nn.Conv2d(in_channels=3, out_channels=1, kernel_size=11, padding=5,
+                                           nn.BatchNorm2d(32),
+                                           nn.Conv2d(in_channels=32, out_channels=1, kernel_size=11, padding=5,
                                                      stride=1),
                                            nn.BatchNorm2d(1),
                                            nn.AdaptiveMaxPool2d(output_size=(10, 2))
@@ -85,7 +85,7 @@ class Policy(nn.Module):
         # Overall reward and loss history
         self.reward_history = []
         self.model = list(self.convolutional.parameters()) + list(self.linear.parameters())
-        self.optimizer = optim.Adam(list(self.model), lr=learning_rate, weight_decay=0.0001)
+        self.optimizer = optim.Adam(list(self.model), lr=learning_rate, weight_decay=0.00001)
         if self.use_gpu:
             self.policy_history = self.policy_history.cuda()
             self.action_history = self.action_history.cuda()
@@ -98,8 +98,12 @@ class Policy(nn.Module):
 
     def forward(self, x):
         x = x.unsqueeze(0).permute(0, 3, 1, 2)
-
-        linear_result = self.linear(self.convolutional(x).flatten(-2, -1))
+        x = self.convolutional(x)
+        #   print(x.shape)
+        x = x.flatten(-2, -1)
+        # print(x.shape)
+        linear_result = self.linear(x)
+        # print(linear_result)
         return linear_result
 
     def update(self, episode):
@@ -179,7 +183,7 @@ class Policy(nn.Module):
                     print(f"Episode {episode + 1}:")
                     break
 
-            running_reward += episode_reward
+            running_reward += episode_reward / t
             if self.writer is not None:
 
                 self.writer.add_scalar('episode/length', t, episode)
@@ -204,7 +208,7 @@ class Policy(nn.Module):
                 if running_reward > max_reward:
                     max_reward = running_reward
                     stopping_counter = 0
-                elif stopping_counter > 5000:
+                elif stopping_counter > 50000:
                     print(f"The rewards did not improve since {50 * (stopping_counter - 1)} episodes")
                     self.env.stop()
                     break
