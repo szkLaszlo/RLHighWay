@@ -181,10 +181,7 @@ class EPHighWayEnv(gym.Env):
             reward = self.max_punishment
         elif not terminated:
             # Case for successful step
-            if self.reward_type == 'complex':
-                reward, _ = self.calculate_reward()
-                reward += 1
-            else:
+            if self.reward_type == 'simple':
                 reward = reward - (abs(self.state['velocity'] - self.desired_speed)) / self.desired_speed
             self.steps_done += 1
         else:
@@ -249,17 +246,26 @@ class EPHighWayEnv(gym.Env):
         return self.environment_state
 
     def one_step(self):
+        """
+        This function is used to step the SUMO.
+        Returns
+        -------
+
+        """
         terminated = False
         w = traci.simulationStep()
-
+        # Collecting online vehicles
         IDsOfVehicles = traci.vehicle.getIDList()
+        # Moving forward if ego can be inserted
         if len(IDsOfVehicles) > self.min_departed_vehicles and self.egoID is None:
-
+            # Finding the last car on the highway
             for carID in IDsOfVehicles:
                 if traci.vehicle.getPosition(carID)[0] < self.ego_start_position and \
                         traci.vehicle.getSpeed(carID) > (60 / 3.6):
+                    # Saving ID and start position for ego vehicle
                     self.egoID = carID
                     self.ego_start_position = traci.vehicle.getPosition(self.egoID)[0]
+            # Setting ego simulation variables to be controlled by us (not SUMO)
             lanes = [-2, -1, 0, 1, 2]
             traci.vehicle.setLaneChangeMode(self.egoID, 0x0)
             traci.vehicle.setSpeedMode(self.egoID, 0x0)
@@ -275,104 +281,28 @@ class EPHighWayEnv(gym.Env):
                                            [tc.VAR_SPEED, tc.VAR_LANE_INDEX, tc.VAR_ANGLE, tc.VAR_POSITION,
                                             tc.VAR_LENGTH, tc.VAR_WIDTH])
             traci.vehicle.addSubscriptionFilterLanes(lanes, noOpposite=True, downstreamDist=100.0, upstreamDist=100.0)
+            # Since it is when we start the simulation it returns True for the reset function.
             return True, None
+
         cause = None
+        # Checking abnormal cases for ego (if events happened which terminate the simulation)
         if self.egoID is not None:
             if self.egoID in traci.simulation.getCollidingVehiclesIDList():
                 cause = "Collision"
             elif self.egoID in traci.vehicle.getIDList() and traci.vehicle.getSpeed(self.egoID) < (50 / 3.6):
                 cause = 'Too Slow'
             elif self.egoID in traci.simulation.getArrivedIDList():
+                # Case for finished route
                 cause = None
                 self.egoID = None
                 terminated = True
             else:
+                # Case for running simulation (no events yet)
                 cause = None
             if cause is not None:
                 terminated = True
                 self.egoID = None
         return (not terminated), cause
-
-    def calculate_reward(self):
-        reward = 0
-        # LANE BASED REWARD
-        lane_reward = 0
-        lane_index = self.state['lane']
-        if lane_index > 0:
-            if (self.state['ER'] == 0) and (self.state['FR']['dx'] > 30):
-                lane_reward = -min(1, max(0, (self.state['FR']['dx'] - 50.0) / 20.0))
-
-        # POSITION BASED REWARD
-        dy = abs(self.state['y_pos'])
-        y_treshold_low = 0.3  # [m]
-        y_treshold_high = 0.3  # [m]
-        y_reward_max = 1.0
-        y_reward_low = 0.0
-        if dy < y_treshold_low:
-            y_reward = y_reward_max
-        elif dy > y_treshold_high:
-            y_reward = y_reward_low
-        else:
-            y_reward = y_reward_max - (y_reward_max - y_reward_low) * \
-                       (dy - y_treshold_low) / (y_treshold_high - y_treshold_low)
-
-        # DESIRED SPEED BASED REWARD
-        dv = abs(self.desired_speed - self.state['speed'])
-        v_treshold_low = 1  # [m/s]
-        v_treshold_high = 10  # self.modell.egovehicle.desired_speed #[m/s]
-        v_reward_high = 1.0
-        v_reward_low = 0.1
-        if dv < v_treshold_low:
-            v_reward = v_reward_high
-        elif dv > v_treshold_high:
-            v_reward = v_reward_low
-        else:
-            v_reward = v_reward_high - (v_reward_high - v_reward_low) * \
-                       (dv - v_treshold_low) / (v_treshold_high - v_treshold_low)
-
-        # Vehicle Closing Based Rewards
-        closing_right = 0  # right safe zone
-        closing_left = 0  # left safe zone
-        closing_front = 0  # followed vehicle
-        closing_rear = 0  # following vehicle
-
-        lane_width = self.lane_width
-        vehicle_y = self.state['y_pos']
-
-        # right safe zone
-        if self.state['ER'] != 0:
-            if vehicle_y > lane_width / 4:
-                closing_right = max(-1, (-vehicle_y + lane_width / 4) / (lane_width / 4))
-        # left safe zone
-        if self.state['EL'] != 0:
-            if vehicle_y > - lane_width / 4:
-                closing_left = max(-1, -(vehicle_y - lane_width / 4) / (lane_width / 4))
-        # front
-        following_time = self.state['FE']['dx'] / self.state['speed']
-        if following_time < 1:
-            closing_front = following_time - 1
-        # rear
-        following_time = self.state['RE']['dx'] / self.state['speed']
-        if following_time < 0.5:
-            closing_front = (following_time - 0.5) * 2
-
-        closing_reward = max(-1, closing_right + closing_left + closing_front + closing_rear)
-
-        closing_reward *= 1.0
-        lane_reward *= 0.7
-        y_reward *= 0.1
-        v_reward *= 0.9
-
-        reward = lane_reward + y_reward + v_reward + closing_reward
-
-        rewards = {'y': y_reward, 'v': v_reward, 'l': lane_reward, 'c': closing_reward}
-
-        self.rewards[0] += rewards['l']
-        self.rewards[1] += rewards['y']
-        self.rewards[2] += rewards['v']
-        self.rewards[3] += rewards['c']
-
-        return reward, rewards
 
     def calculate_environment(self):
         """
