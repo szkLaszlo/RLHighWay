@@ -54,7 +54,7 @@ class Policy(nn.Module):
         self.hidden_size = 128
         self.hidden_size2 = 64
         self.update_freq = update_freq
-        self.convolutional = nn.Sequential(nn.Conv2d(in_channels=9, out_channels=64, kernel_size=11, padding=5,
+        self.convolutional = nn.Sequential(nn.Conv2d(in_channels=3, out_channels=64, kernel_size=11, padding=5,
                                                      stride=1),
                                            nn.BatchNorm2d(64),
                                            nn.ReLU(),
@@ -70,9 +70,10 @@ class Policy(nn.Module):
                                            nn.BatchNorm2d(1),
                                            nn.AdaptiveMaxPool2d(output_size=(10, 2))
                                            )
-        self.linear = nn.Sequential(nn.Linear(in_features=20, out_features=10),
+        self.lstm = nn.LSTM(input_size=20, hidden_size=512, num_layers=2, batch_first=True)
+        self.linear = nn.Sequential(nn.Linear(in_features=512, out_features=256),
                                     nn.ReLU(),
-                                    nn.Linear(in_features=10, out_features=9),
+                                    nn.Linear(in_features=256, out_features=9),
                                     nn.Softmax(dim=-1)
                                     )
         self.gamma = gamma
@@ -84,12 +85,14 @@ class Policy(nn.Module):
         self.reward_episode = []
         # Overall reward and loss history
         self.reward_history = []
-        self.model = list(self.convolutional.parameters()) + list(self.linear.parameters())
+        self.model = list(self.convolutional.parameters()) + list(self.linear.parameters()) + list(
+            self.lstm.parameters())
         self.optimizer = optim.Adam(list(self.model), lr=learning_rate, weight_decay=0.00001)
         if self.use_gpu:
             self.policy_history = self.policy_history.cuda()
             self.action_history = self.action_history.cuda()
             self.convolutional = self.convolutional.cuda()
+            self.lstm = self.lstm.cuda()
             self.linear = self.linear.cuda()
             print("Using CUDA backend.")
         self.scheduler = optim.lr_scheduler.ReduceLROnPlateau(self.optimizer, mode='max', factor=0.5, patience=100,
@@ -97,13 +100,15 @@ class Policy(nn.Module):
                                                               cooldown=10, min_lr=0, eps=1e-08)
 
     def forward(self, x):
-        x = x.unsqueeze(0).permute(0, 3, 1, 2)
-        x = self.convolutional(x)
-        #   print(x.shape)
-        x = x.flatten(-2, -1)
-        # print(x.shape)
+        x = x.permute(0, 3, 1, 2)
+        time_steps = []
+        for time_step in range(x.shape[0]):
+            time_steps.append(self.convolutional(x[time_step, :, :, :].unsqueeze(0)))
+        self.lstm.flatten_parameters()
+        lstm_input = torch.stack(time_steps, dim=1).flatten(-2, -1).squeeze(2)
+        x, _ = self.lstm(lstm_input)
+        x = x[:, -1, :]
         linear_result = self.linear(x)
-        # print(linear_result)
         return linear_result
 
     def update(self, episode):
@@ -185,10 +190,9 @@ class Policy(nn.Module):
 
             running_reward += episode_reward / t
             if self.writer is not None:
-
                 self.writer.add_scalar('episode/length', t, episode)
                 self.writer.add_scalar('episode/speed', sum(running_speed) / len(running_speed), episode)
-                self.writer.add_scalar('episode/lane_change', info['lane_change'],episode)
+                self.writer.add_scalar('episode/lane_change', info['lane_change'], episode)
                 self.writer.add_scalar('episode/finished', 1 if info['cause'] is None else 0, episode)
                 done_average += 1 if info['cause'] is None else 0
                 self.writer.add_scalar('episode/distance', info["distance"], episode)
