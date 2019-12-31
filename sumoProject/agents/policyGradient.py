@@ -311,6 +311,11 @@ class Policy(nn.Module):
                 if running_reward > max_reward:
                     max_reward = running_reward
                     stopping_counter = 0
+                    test = os.listdir(self.save_path)
+
+                    for item in test:
+                        if item.endswith(".weight"):
+                            os.remove(os.path.join(self.save_path, item))
                     # Saving weights with better results
                     torch.save(self.state_dict(),
                                os.path.join(self.save_path, 'model_{}.weight'.format(episode + 1)))
