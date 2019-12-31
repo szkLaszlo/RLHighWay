@@ -340,14 +340,15 @@ class Policy(nn.Module):
         self.load_state_dict(state_dicts)
         with torch.no_grad():
             for _ in range(episode_nums):
-                state = self.env.reset()  # Reset environment and record the starting state
+                state_list = [self.env.reset()]  # Reset environment and record the starting state
                 for t in itertools.count():
-                    action = self.select_action_probabilities(state)
+                    action = self.select_action_probabilities(np.stack(state_list[-self.timesteps_observed:]))
                     # Step through environment using chosen action
                     state, reward, done, info = self.env.step(action.item())
+                    state_list.append(state)
                     # Save reward
                     self.reward_episode.append(reward)
                     if done:
-                        print(info)
+                        print(f"Reward: {sum(self.reward_episode):.3f}, and steps done: {t}")
                         print(t)
                         break
