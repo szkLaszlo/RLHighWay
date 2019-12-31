@@ -92,7 +92,7 @@ class Policy(nn.Module):
         self.update_freq = update_freq
         self.timesteps_observed = 3  # Defines how many timesteps to feed for the network
 
-        hidden_size_lstm = 128
+        hidden_size_lstm = 64
         hidden_size_conv = 16
 
         # Building network modules
@@ -113,8 +113,7 @@ class Policy(nn.Module):
             nn.BatchNorm2d(1),
             nn.AdaptiveMaxPool2d(output_size=(10, 2))
         ).to(device=self.device)
-        self.lstm = nn.LSTM(input_size=20, hidden_size=hidden_size_lstm, num_layers=1,
-                            batch_first=True).to(device=self.device)
+        self.lstm = nn.LSTM(input_size=20, hidden_size=hidden_size_lstm, num_layers=1).to(device=self.device)
 
         self.linear = nn.Sequential(nn.Linear(in_features=hidden_size_lstm,
                                               out_features=hidden_size_lstm // 2),
@@ -158,15 +157,12 @@ class Policy(nn.Module):
         # Changing dimension to be [time, channel, x, y]
         x = x.permute(0, 3, 1, 2)
         # Going through the timesteps and extracting the convolutional output
-        time_steps = []
-        for time_step in range(x.shape[0]):
-            time_steps.append(self.convolution(x[time_step, :, :, :].unsqueeze(0)))
+        lstm_input = self.convolution(x).flatten(-2, -1)  # using that batch size is one.
         # Preparing and propagating through lstm layer(s)
         self.lstm.flatten_parameters()
-        lstm_input = torch.stack(time_steps, dim=1).flatten(-2, -1).squeeze(2)
         x, _ = self.lstm(lstm_input)
         # Removing unnecessary time steps (only using the last one)
-        x = x[:, -1, :]
+        x = x[-1, :, :]
         # Getting the output of the MLP as the probability of actions
         linear_result = self.linear(x)
         return linear_result
