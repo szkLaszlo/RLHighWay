@@ -17,7 +17,7 @@ class EPHighWayEnv(gym.Env):
 
     def __init__(self):
 
-        self.max_punishment = -10
+        self.max_punishment = -100
         self.steps_done = 0
         self.rendering = None
 
@@ -132,7 +132,7 @@ class EPHighWayEnv(gym.Env):
                 lane_new = int(traci.vehicle.getLaneID(self.egoID)[-1]) + ctrl[0]
                 # Checking if new lane is still on the road
                 if lane_new not in [0, 1, 2]:
-                    reward = self.max_punishment
+                    reward = -50  # self.max_punishment
                     new_x = \
                         traci.vehicle.getContextSubscriptionResults(self.egoID)[self.egoID][tc.VAR_POSITION][0]
                     return self.environment_state, reward, True, {'cause': 'Left Highway',
@@ -210,24 +210,24 @@ class EPHighWayEnv(gym.Env):
                 self.sumoBinary = "C:/Sumo/bin/sumo-gui"
                 self.sumoCmd = [self.sumoBinary, "-c", "../envs/jatek.sumocfg", "--start", "--quit-on-end",
                                 "--collision.mingap-factor", "0", "--collision.action", "remove", "--no-warnings", "1",
-                                "--random"]
+                                "--random", "--log"]
             else:
                 self.sumoBinary = "C:/Sumo/bin/sumo"
                 self.sumoCmd = [self.sumoBinary, "-c", "../envs/no_gui.sumocfg", "--start", "--quit-on-end",
                                 "--collision.mingap-factor", "0", "--collision.action", "remove", "--no-warnings", "1",
-                                "--random"]
+                                "--random", "--log"]
         else:
             # Case for linux execution
             if self.rendering:
                 self.sumoBinary = "/usr/share/sumo/bin/sumo-gui"
                 self.sumoCmd = [self.sumoBinary, "-c", "../envs/jatek.sumocfg", "--start", "--quit-on-end",
                                 "--collision.mingap-factor", "0", "--collision.action", "remove", "--no-warnings", "1",
-                                "--random"]
+                                "--random", "--log"]
             else:
                 self.sumoBinary = "/usr/share/sumo/bin/sumo"
                 self.sumoCmd = [self.sumoBinary, "-c", "../envs/no_gui.sumocfg", "--start", "--quit-on-end",
                                 "--collision.mingap-factor", "0", "--collision.action", "remove", "--no-warnings", "1",
-                                "--random"]
+                                "--random", "--log"]
 
         traci.start(self.sumoCmd[:4])
 
@@ -250,7 +250,13 @@ class EPHighWayEnv(gym.Env):
 
         """
         terminated = False
-        w = traci.simulationStep()
+        try:
+            w = traci.simulationStep()
+        except traci.exceptions.FatalTraCIError:
+            self.stop()
+            self.render()
+            self.reset()
+
         # Collecting online vehicles
         IDsOfVehicles = traci.vehicle.getIDList()
         # Moving forward if ego can be inserted
