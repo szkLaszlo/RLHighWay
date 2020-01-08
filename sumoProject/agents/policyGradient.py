@@ -268,6 +268,7 @@ class Policy(nn.Module):
                     state, reward, done, info = self.env.step(action.item())
                 except RuntimeError:
                     self.env.__init__()
+                    self.env.render(mode='none')
                     error_running_traci = True
                     break
                 state_list.append(state)
