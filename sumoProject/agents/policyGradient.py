@@ -258,12 +258,18 @@ class Policy(nn.Module):
             running_speed = []
             t = 0
             info = 0
+            error_running_traci = False
             for t in itertools.count():
                 # Selecting action based on current state
                 action = self.select_action_probabilities(np.stack(state_list[-self.timesteps_observed:]))
 
                 # Step through environment using chosen action
-                state, reward, done, info = self.env.step(action.item())
+                try:
+                    state, reward, done, info = self.env.step(action.item())
+                except RuntimeError:
+                    self.env.__init__()
+                    error_running_traci = True
+                    break
                 state_list.append(state)
                 running_speed.append(info['velocity'])
                 # Save reward
@@ -279,51 +285,54 @@ class Policy(nn.Module):
                     print(f"Episode {episode + 1}:")
                     break
 
-            running_reward += episode_reward
+            if not error_running_traci:
+                running_reward += episode_reward
 
-            # Updating the network
-            self.update(episode)
+                # Updating the network
+                self.update(episode)
 
-            # If needed writing episode details to tensorboard
-            if self.writer is not None:
-                self.writer.add_scalar('episode/length', t, episode)
-                self.writer.add_scalar('episode/speed', sum(running_speed) / len(running_speed), episode)
-                self.writer.add_scalar('episode/lane_change', info['lane_change'], episode)
-                self.writer.add_scalar('episode/finished', 1 if info['cause'] is None else 0, episode)
-                done_average += 1 if info['cause'] is None else 0
-                self.writer.add_scalar('episode/distance', info["distance"], episode)
+                # If needed writing episode details to tensorboard
+                if self.writer is not None:
+                    self.writer.add_scalar('episode/length', t, episode)
+                    self.writer.add_scalar('episode/speed', sum(running_speed) / len(running_speed), episode)
+                    self.writer.add_scalar('episode/lane_change', info['lane_change'], episode)
+                    self.writer.add_scalar('episode/finished', 1 if info['cause'] is None else 0, episode)
+                    done_average += 1 if info['cause'] is None else 0
+                    self.writer.add_scalar('episode/distance', info["distance"], episode)
 
-            # Calculating average based on 50 episodes
-            if episode % 50 == 0 and episode != 0:
-                running_reward = running_reward / 50
-                done_average = done_average / 50
-                print('Episode {}\tLast length: {:5d}\tAverage reward: {:.2f}'.format(episode + 1, t, running_reward))
-                self.writer.add_scalar('average/reward', running_reward,
-                                       episode + 1) if self.writer is not None else None
-                self.writer.add_scalar('average/done', done_average, episode + 1) if self.writer is not None else None
+                # Calculating average based on 50 episodes
+                if episode % 50 == 0 and episode != 0:
+                    running_reward = running_reward / 50
+                    done_average = done_average / 50
+                    print(
+                        'Episode {}\tLast length: {:5d}\tAverage reward: {:.2f}'.format(episode + 1, t, running_reward))
+                    self.writer.add_scalar('average/reward', running_reward,
+                                           episode + 1) if self.writer is not None else None
+                    self.writer.add_scalar('average/done', done_average,
+                                           episode + 1) if self.writer is not None else None
 
-                self.scheduler.step(running_reward)
-                # Checking if reward has improved
-                if running_reward > max_reward:
-                    max_reward = running_reward
-                    stopping_counter = 0
-                    test = os.listdir(self.save_path)
+                    self.scheduler.step(running_reward)
+                    # Checking if reward has improved
+                    if running_reward > max_reward:
+                        max_reward = running_reward
+                        stopping_counter = 0
+                        test = os.listdir(self.save_path)
 
-                    for item in test:
-                        if item.endswith(".weight"):
-                            os.remove(os.path.join(self.save_path, item))
-                    # Saving weights with better results
-                    torch.save(self.state_dict(),
-                               os.path.join(self.save_path, 'model_{}.weight'.format(episode + 1)))
-                elif stopping_counter > episodes * 0.01:
-                    print(f"The rewards did not improve since {50 * (stopping_counter - 1)} episodes")
-                    self.env.stop()
-                    break
-                else:
-                    stopping_counter += 1
-                # Clearing averaging variables
-                running_reward = 0
-                done_average = 0
+                        for item in test:
+                            if item.endswith(".weight"):
+                                os.remove(os.path.join(self.save_path, item))
+                        # Saving weights with better results
+                        torch.save(self.state_dict(),
+                                   os.path.join(self.save_path, 'model_{}.weight'.format(episode + 1)))
+                    elif stopping_counter > episodes * 0.01:
+                        print(f"The rewards did not improve since {50 * (stopping_counter - 1)} episodes")
+                        self.env.stop()
+                        break
+                    else:
+                        stopping_counter += 1
+                    # Clearing averaging variables
+                    running_reward = 0
+                    done_average = 0
 
         # Saving final weights
         torch.save(self.state_dict(),

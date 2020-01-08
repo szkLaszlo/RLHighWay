@@ -254,8 +254,7 @@ class EPHighWayEnv(gym.Env):
             w = traci.simulationStep()
         except traci.exceptions.FatalTraCIError:
             self.stop()
-            self.render()
-            self.reset()
+            raise RuntimeError
 
         # Collecting online vehicles
         IDsOfVehicles = traci.vehicle.getIDList()
