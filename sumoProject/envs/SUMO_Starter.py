@@ -263,7 +263,7 @@ class EPHighWayEnv(gym.Env):
             # Finding the last car on the highway
             for carID in IDsOfVehicles:
                 if traci.vehicle.getPosition(carID)[0] < self.ego_start_position and \
-                        traci.vehicle.getSpeed(carID) > (60 / 3.6):
+                        traci.vehicle.getSpeed(carID) > (60 / 3.6) and "0" in traci.vehicle.getLaneID(carID):
                     # Saving ID and start position for ego vehicle
                     self.egoID = carID
                     self.ego_start_position = traci.vehicle.getPosition(self.egoID)[0]
