@@ -269,6 +269,10 @@ class Policy(nn.Module):
                 except RuntimeError:
                     self.env.__init__()
                     self.env.render(mode='none')
+                    # Delete histories
+                    self.policy_history = torch.tensor([], requires_grad=True, device=self.device)
+                    self.action_history = torch.tensor([])
+                    self.reward_episode = []
                     error_running_traci = True
                     break
                 state_list.append(state)

@@ -80,14 +80,14 @@ class EPHighWayEnv(gym.Env):
             self.lanechange_counter = 0
             self.wants_to_change = []
             self.change_after = 2
-            self.min_departed_vehicles = np.random.randint(20, 60, 1).item()
+            self.min_departed_vehicles = np.random.randint(50, 80, 1).item()
             # Running simulation until ego can be inserted
             while self.egoID is None:
                 self.one_step()
             # Getting initial environment state
             self.environment_state = self.get_surroundings_env()
             # Setting a starting speed of the ego
-            self.state['velocity'] = self.desired_speed - 5
+            self.state['velocity'] = self.desired_speed
             return self.environment_state
         else:
             raise RuntimeError('Please run render before reset!')
@@ -267,6 +267,9 @@ class EPHighWayEnv(gym.Env):
                     # Saving ID and start position for ego vehicle
                     self.egoID = carID
                     self.ego_start_position = traci.vehicle.getPosition(self.egoID)[0]
+            if self.egoID is None:
+                self.egoID = IDsOfVehicles[0]
+                self.ego_start_position = traci.vehicle.getPosition(self.egoID)[0]
             # Setting ego simulation variables to be controlled by us (not SUMO)
             lanes = [-2, -1, 0, 1, 2]
             traci.vehicle.setLaneChangeMode(self.egoID, 0x0)
