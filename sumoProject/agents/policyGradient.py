@@ -360,5 +360,5 @@ class Policy(nn.Module):
                     self.reward_episode.append(reward)
                     if done:
                         print(f"Reward: {sum(self.reward_episode):.3f}, and steps done: {t}")
-                        print(t)
+                        print(f"Reason:{info['cause']}")
                         break

@@ -41,8 +41,8 @@ class EPHighWayEnv(gym.Env):
         self.environment_state = None
         self.lanechange_counter = 0
         self.wants_to_change = []  # variable to count how many times the agent wanted to change lane
-        self.change_after = 5  # variable after how many trials the lane is changed
-
+        self.change_after = 1  # variable after how many trials the lane is changed
+        self.time_to_change_des_speed = 100
         # variable defining how many vehicles must exist on the road before ego is chosen.
         self.min_departed_vehicles = 1
 
@@ -76,13 +76,14 @@ class EPHighWayEnv(gym.Env):
             self.egoID = None  # Resetting chosen ego vehicle id
             self.steps_done = 0  # resetting steps done
 
-            self.desired_speed = random.randint(100, 140) / 3.6
+            self.desired_speed = random.randint(120, 160) / 3.6
             self.state = None
             self.ego_start_position = 100000
             self.lanechange_counter = 0
             self.wants_to_change = []
-            self.change_after = 2
-            self.min_departed_vehicles = np.random.randint(50, 80, 1).item()
+            self.change_after = 1
+            self.min_departed_vehicles = 10 if "5" in self.sumoCmd[2] else np.random.randint(50, 80, 1).item()
+            self.time_to_change_des_speed = np.random.randint(100, 250)
             # Running simulation until ego can be inserted
             while self.egoID is None:
                 self.one_step()
@@ -94,6 +95,9 @@ class EPHighWayEnv(gym.Env):
         else:
             raise RuntimeError('Please run render before reset!')
 
+    def set_random_desired_speed(self):
+        self.desired_speed = random.randint(130, 160) / 3.6
+        
     def calculate_action(self, action):
         """
         This function is used to select the actions for steering and velocity change.
@@ -126,6 +130,8 @@ class EPHighWayEnv(gym.Env):
             # Setting vehicle speed according to selected action
             traci.vehicle.setSpeed(self.egoID,
                                    min(max(self.state['velocity'] + ctrl[1], 0), 50))  # todo hardcoded max speed
+            if self.steps_done % self.time_to_change_des_speed == 0:
+                self.set_random_desired_speed()
             self.wants_to_change.append(ctrl[0])  # Collecting change attempts
             # Checking if change attempts are enough to change lane
             if sum(self.wants_to_change) > self.change_after or sum(self.wants_to_change) < -self.change_after:
@@ -193,8 +199,10 @@ class EPHighWayEnv(gym.Env):
                                                             'distance': new_x - self.ego_start_position,
                                                             'lane_change': self.lanechange_counter}
 
-    def choose_random_configuration(self):
-        rand_index = np.random.randint(0, 6, 1)
+    def choose_random_simulation(self):
+        rand_index = np.random.choice(np.arange(0, 6), p=[0.20, 0.15, 0.20, 0.20, 0.20, 0.05])
+        # rand_index = 5
+        print(f"Simulation {rand_index} loaded.")
         if "jatek" in self.sumoCmd[2]:
             self.sumoCmd[2] = f"../envs/sim_conf/jatek_{rand_index}.sumocfg"
         elif "no_gui" in self.sumoCmd[2]:
@@ -217,25 +225,25 @@ class EPHighWayEnv(gym.Env):
             # Case for windows execution
             if self.rendering:
                 self.sumoBinary = "C:/Sumo/bin/sumo-gui"
-                self.sumoCmd = [self.sumoBinary, "-c", "../envs/jatek.sumocfg", "--start", "--quit-on-end",
-                                "--collision.mingap-factor", "0", "--collision.action", "remove", "--no-warnings", "1",
+                self.sumoCmd = [self.sumoBinary, "-c", "../envs/sim_conf/jatek.sumocfg", "--start", "--quit-on-end",
+                                "--collision.mingap-factor", "2", "--collision.action", "remove", "--no-warnings", "1",
                                 "--random", "--log"]
             else:
                 self.sumoBinary = "C:/Sumo/bin/sumo"
-                self.sumoCmd = [self.sumoBinary, "-c", "../envs/no_gui.sumocfg", "--start", "--quit-on-end",
-                                "--collision.mingap-factor", "0", "--collision.action", "remove", "--no-warnings", "1",
+                self.sumoCmd = [self.sumoBinary, "-c", "../envs/sim_conf/no_gui.sumocfg", "--start", "--quit-on-end",
+                                "--collision.mingap-factor", "2", "--collision.action", "remove", "--no-warnings", "1",
                                 "--random", "--log"]
         else:
             # Case for linux execution
             if self.rendering:
                 self.sumoBinary = "/usr/share/sumo/bin/sumo-gui"
-                self.sumoCmd = [self.sumoBinary, "-c", "../envs/jatek.sumocfg", "--start", "--quit-on-end",
-                                "--collision.mingap-factor", "0", "--collision.action", "remove", "--no-warnings", "1",
+                self.sumoCmd = [self.sumoBinary, "-c", "../envs/sim_conf/jatek.sumocfg", "--start", "--quit-on-end",
+                                "--collision.mingap-factor", "2", "--collision.action", "remove", "--no-warnings", "1",
                                 "--random", "--log"]
             else:
                 self.sumoBinary = "/usr/share/sumo/bin/sumo"
-                self.sumoCmd = [self.sumoBinary, "-c", "../envs/no_gui.sumocfg", "--start", "--quit-on-end",
-                                "--collision.mingap-factor", "0", "--collision.action", "remove", "--no-warnings", "1",
+                self.sumoCmd = [self.sumoBinary, "-c", "../envs/sim_conf/no_gui.sumocfg", "--start", "--quit-on-end",
+                                "--collision.mingap-factor", "2", "--collision.action", "remove", "--no-warnings", "1",
                                 "--random", "--log"]
 
         traci.start(self.sumoCmd[:4])
@@ -272,7 +280,7 @@ class EPHighWayEnv(gym.Env):
             # Finding the last car on the highway
             for carID in IDsOfVehicles:
                 if traci.vehicle.getPosition(carID)[0] < self.ego_start_position and \
-                        traci.vehicle.getSpeed(carID) > (60 / 3.6) and "0" in traci.vehicle.getLaneID(carID):
+                        traci.vehicle.getSpeed(carID) > (60 / 3.6):  # and "0" in traci.vehicle.getLaneID(carID):
                     # Saving ID and start position for ego vehicle
                     self.egoID = carID
                     self.ego_start_position = traci.vehicle.getPosition(self.egoID)[0]
@@ -383,5 +391,6 @@ class EPHighWayEnv(gym.Env):
                         state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
                         y_range_grid + dy - w:y_range_grid + dy + w,
                         2]) * self.desired_speed / 50
-
+        # filename = os.path.join(os.path.curdir, "scenarios",f"{self.steps_done}.jpg")
+        # plt.imsave(filename,state_matrix)
         return state_matrix, ego_state
