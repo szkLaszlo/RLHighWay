@@ -64,6 +64,8 @@ class EPHighWayEnv(gym.Env):
                 pass
             except TypeError:
                 pass
+            # Changing configuration
+            self.choose_random_simulation()
             # Loads traci configuration
             traci.load(self.sumoCmd[1:])
             # Loading variables with real values from traci
@@ -190,6 +192,13 @@ class EPHighWayEnv(gym.Env):
                                                             'velocity': self.state['velocity'],
                                                             'distance': new_x - self.ego_start_position,
                                                             'lane_change': self.lanechange_counter}
+
+    def choose_random_configuration(self):
+        rand_index = np.random.randint(0, 6, 1)
+        if "jatek" in self.sumoCmd[2]:
+            self.sumoCmd[2] = f"../envs/sim_conf/jatek_{rand_index}.sumocfg"
+        elif "no_gui" in self.sumoCmd[2]:
+            self.sumoCmd[2] = f"../envs/sim_conf/no_gui_{rand_index}.sumocfg"
 
     def render(self, mode='human'):
         """
