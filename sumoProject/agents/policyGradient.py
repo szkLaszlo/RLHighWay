@@ -288,6 +288,7 @@ class Policy(nn.Module):
                           f"cause: {info['cause']}, reward: {episode_reward:.3f} "
                           f"lane_changes: {info['lane_change']}\n")
                     print(f"Episode {episode + 1}:")
+
                     break
 
             if not error_running_traci:
@@ -300,6 +301,7 @@ class Policy(nn.Module):
                 if self.writer is not None:
                     self.writer.add_scalar('episode/length', t, episode)
                     self.writer.add_scalar('episode/speed', sum(running_speed) / len(running_speed), episode)
+                    self.writer.add_scalar('episode/type', self.env.rand_index, episode)
                     self.writer.add_scalar('episode/lane_change', info['lane_change'], episode)
                     self.writer.add_scalar('episode/finished', 1 if info['cause'] is None else 0, episode)
                     done_average += 1 if info['cause'] is None else 0
@@ -317,6 +319,9 @@ class Policy(nn.Module):
                                            episode + 1) if self.writer is not None else None
 
                     self.scheduler.step(running_reward)
+                    for param_group in self.optimizer.param_groups:
+                        lr = param_group['lr']
+                    self.writer.add_scalar('average/learning_rate', lr, episode)
                     # Checking if reward has improved
                     if running_reward > max_reward:
                         max_reward = running_reward

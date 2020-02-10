@@ -45,6 +45,7 @@ class EPHighWayEnv(gym.Env):
         self.time_to_change_des_speed = 100
         # variable defining how many vehicles must exist on the road before ego is chosen.
         self.min_departed_vehicles = 1
+        self.rand_index = 0
 
     def set_reward_type(self, reward_type):
         self.reward_type = reward_type
@@ -200,13 +201,13 @@ class EPHighWayEnv(gym.Env):
                                                             'lane_change': self.lanechange_counter}
 
     def choose_random_simulation(self):
-        rand_index = np.random.choice(np.arange(0, 6), p=[0.20, 0.15, 0.20, 0.20, 0.20, 0.05])
+        self.rand_index = np.random.choice(np.arange(0, 6), p=[0.20, 0.15, 0.20, 0.20, 0.20, 0.05])
         # rand_index = 5
-        print(f"Simulation {rand_index} loaded.")
+        print(f"Simulation {self.rand_index} loaded.")
         if "jatek" in self.sumoCmd[2]:
-            self.sumoCmd[2] = f"../envs/sim_conf/jatek_{rand_index}.sumocfg"
+            self.sumoCmd[2] = f"../envs/sim_conf/jatek_{self.rand_index}.sumocfg"
         elif "no_gui" in self.sumoCmd[2]:
-            self.sumoCmd[2] = f"../envs/sim_conf/no_gui_{rand_index}.sumocfg"
+            self.sumoCmd[2] = f"../envs/sim_conf/no_gui_{self.rand_index}.sumocfg"
 
     def render(self, mode='human'):
         """
