@@ -115,3 +115,4 @@ sumoProject/agents/torchSummary
 
 *.weight
 /sumoProject/agents/experiments/
+/sumoProject/SAC/true

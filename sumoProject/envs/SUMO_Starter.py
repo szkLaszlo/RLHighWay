@@ -9,6 +9,12 @@ import traci
 import traci.constants as tc
 from gym import spaces
 
+grid_per_meter = 1  # Defines the precision of the returned image
+x_range = 50  # symmetrically for front and back
+x_range_grid = x_range * grid_per_meter  # symmetrically for front and back
+y_range = 9  # symmetrically for left and right
+y_range_grid = y_range * grid_per_meter  # symmetrically for left and right
+
 
 class EPHighWayEnv(gym.Env):
     metadata = {
@@ -17,15 +23,16 @@ class EPHighWayEnv(gym.Env):
 
     def __init__(self):
 
-        self.max_punishment = -100
+        self.max_punishment = -10
         self.steps_done = 0
         self.rendering = None
 
-        low = np.array(
-            [-200, -50, -200, -50, -200, -50, -200, -50, -200, -50, -200, -50, -200, -50, 0, -1, -90, -10, 0])
-        high = np.array([200, 50, 200, 50, 200, 50, 200, 50, 200, 50, 200, 50, 200, 50, 50, 3, 90, 20, 50])
-        self.action_space = spaces.Discrete(9)
-        self.observation_space = spaces.Box(low, high, dtype=np.float32)
+        high = np.array([1, 0.5])
+        low = np.array([-1, -0.7])
+
+        self.action_space = spaces.Box(low, high, dtype=np.float)  # spaces.Discrete(9)
+        self.observation_space = np.zeros((2 * x_range_grid, 2 * y_range_grid, 3))
+        self._max_episode_steps = 2500
         self.rewards = [0, 0, 0, 0]  # was used for reward calculation
         # setting basic environment variables
         self.lane_width = None
@@ -98,7 +105,7 @@ class EPHighWayEnv(gym.Env):
 
     def set_random_desired_speed(self):
         self.desired_speed = random.randint(130, 160) / 3.6
-        
+
     def calculate_action(self, action):
         """
         This function is used to select the actions for steering and velocity change.
@@ -112,13 +119,20 @@ class EPHighWayEnv(gym.Env):
         """
         st = [-1, 0, 1]  # [right, nothing, left] lane change
         ac = [-0.7, 0.0, 0.3]  # are in m/s
-        steer = st[action // len(st)]
-        acc = ac[action % len(st)]
+        if isinstance(action, np.ndarray) and len(action.shape) > 1:
+            steer = int(np.sign(action[:, :, 0]).min())
+            acc = action[:, :, 1]
+        elif isinstance(action, np.ndarray):
+            steer = int(np.sign(action[0]))
+            acc = action[1]
+        else:  # isinstance(action, int):
+            steer = st[action // len(st)]
+            acc = ac[action % len(st)]
         ctrl = [steer, acc]
         return ctrl
 
     def step(self, action):
-        assert self.action_space.contains(action), "%r (%s) invalid" % (action, type(action))
+        #        assert self.action_space.contains(action), "%r (%s) invalid" % (action, type(action))
         new_x, last_x = 0, 0  # for reward calculation
         # Collecting the ids of online vehicles
         IDsOfVehicles = traci.vehicle.getIDList()
@@ -141,7 +155,7 @@ class EPHighWayEnv(gym.Env):
                 lane_new = int(traci.vehicle.getLaneID(self.egoID)[-1]) + ctrl[0]
                 # Checking if new lane is still on the road
                 if lane_new not in [0, 1, 2]:
-                    reward = -50  # self.max_punishment
+                    reward = self.max_punishment
                     new_x = \
                         traci.vehicle.getContextSubscriptionResults(self.egoID)[self.egoID][tc.VAR_POSITION][0]
                     return self.environment_state, reward, True, {'cause': 'Left Highway',
@@ -352,12 +366,6 @@ class EPHighWayEnv(gym.Env):
             if car_id == self.egoID:
                 ego_state = copy.copy(car_state)
             environment_collection.append(copy.copy(car_state))
-
-        grid_per_meter = 1  # Defines the precision of the returned image
-        x_range = 50  # symmetrically for front and back
-        x_range_grid = x_range * grid_per_meter  # symmetrically for front and back
-        y_range = 9  # symmetrically for left and right
-        y_range_grid = y_range * grid_per_meter  # symmetrically for left and right
 
         # Creating state representation as a matrix (image)
         state_matrix = np.zeros((2 * x_range_grid, 2 * y_range_grid, 3))
