@@ -99,7 +99,7 @@ for i_episode in itertools.count(1):
                 writer.add_scalar('entropy_temprature/alpha', alpha, updates)
                 updates += 1
 
-        next_state, reward, done, _ = env.step(action)  # Step
+        next_state, reward, done, info = env.step(action)  # Step
         episode_steps += 1
         total_numsteps += 1
         episode_reward += reward
@@ -116,9 +116,8 @@ for i_episode in itertools.count(1):
         break
 
     writer.add_scalar('reward/train', episode_reward, i_episode)
-    print("Episode: {}, total numsteps: {}, episode steps: {}, reward: {}".format(i_episode, total_numsteps,
-                                                                                  episode_steps,
-                                                                                  round(episode_reward, 2)))
+    print(f"Episode: {i_episode}, total numsteps: {total_numsteps}, episode steps: {episode_steps}, "
+          f"reward: {round(episode_reward, 2)}, cause: {info['cause']}")
 
     if i_episode % 10 == 0 and args.eval is True:
         avg_reward = 0.
