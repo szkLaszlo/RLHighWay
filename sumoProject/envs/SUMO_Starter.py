@@ -83,7 +83,7 @@ class EPHighWayEnv(gym.Env):
             self.lanechange_counter = 0
             self.wants_to_change = []
             self.change_after = 1
-            self.min_departed_vehicles = 10 if "5" in self.sumoCmd[2] else np.random.randint(50, 80, 1).item()
+            self.min_departed_vehicles = 10 if "5" in self.sumoCmd[2] else np.random.randint(25, 80, 1).item()
             self.time_to_change_des_speed = np.random.randint(100, 250)
             # Running simulation until ego can be inserted
             while self.egoID is None:
@@ -203,7 +203,7 @@ class EPHighWayEnv(gym.Env):
     def choose_random_simulation(self):
         self.rand_index = np.random.choice(np.arange(0, 6), p=[0.20, 0.15, 0.20, 0.20, 0.20, 0.05])
         # rand_index = 5
-        print(f"Simulation {self.rand_index} loaded.")
+        # print(f"Simulation {self.rand_index} loaded.")
         if "jatek" in self.sumoCmd[2]:
             self.sumoCmd[2] = f"../envs/sim_conf/jatek_{self.rand_index}.sumocfg"
         elif "no_gui" in self.sumoCmd[2]:
