@@ -21,8 +21,4 @@
         <no-step-log value="true"/>
     </report>
 	
-	<output> 
-		<netstate-dump value="virtualtraffic" />
-	</output>
-	
 </configuration>
