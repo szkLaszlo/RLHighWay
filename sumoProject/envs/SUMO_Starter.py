@@ -216,7 +216,7 @@ class EPHighWayEnv(gym.Env):
 
     def choose_random_simulation(self):
         self.rand_index = np.random.choice(np.arange(0, 6), p=[0.20, 0.15, 0.20, 0.20, 0.20, 0.05])
-        # rand_index = 5
+        # self.rand_index = 0
         # print(f"Simulation {self.rand_index} loaded.")
         if "jatek" in self.sumoCmd[2]:
             self.sumoCmd[2] = f"../envs/sim_conf/jatek_{self.rand_index}.sumocfg"
@@ -242,24 +242,24 @@ class EPHighWayEnv(gym.Env):
                 self.sumoBinary = "C:/Sumo/bin/sumo-gui"
                 self.sumoCmd = [self.sumoBinary, "-c", "../envs/sim_conf/jatek.sumocfg", "--start", "--quit-on-end",
                                 "--collision.mingap-factor", "2", "--collision.action", "remove", "--no-warnings", "1",
-                                "--random", "--log"]
+                                "--random"]
             else:
                 self.sumoBinary = "C:/Sumo/bin/sumo"
                 self.sumoCmd = [self.sumoBinary, "-c", "../envs/sim_conf/no_gui.sumocfg", "--start", "--quit-on-end",
                                 "--collision.mingap-factor", "2", "--collision.action", "remove", "--no-warnings", "1",
-                                "--random", "--log"]
+                                "--random"]
         else:
             # Case for linux execution
             if self.rendering:
                 self.sumoBinary = "/usr/share/sumo/bin/sumo-gui"
                 self.sumoCmd = [self.sumoBinary, "-c", "../envs/sim_conf/jatek.sumocfg", "--start", "--quit-on-end",
                                 "--collision.mingap-factor", "2", "--collision.action", "remove", "--no-warnings", "1",
-                                "--random", "--log"]
+                                "--random"]
             else:
                 self.sumoBinary = "/usr/share/sumo/bin/sumo"
                 self.sumoCmd = [self.sumoBinary, "-c", "../envs/sim_conf/no_gui.sumocfg", "--start", "--quit-on-end",
                                 "--collision.mingap-factor", "2", "--collision.action", "remove", "--no-warnings", "1",
-                                "--random", "--log"]
+                                "--random"]
 
         traci.start(self.sumoCmd[:4])
 

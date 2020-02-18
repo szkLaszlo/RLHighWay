@@ -25,6 +25,7 @@ class SAC(object):
         self.critic_optim = Adam(self.critic.parameters(), lr=args.lr)
 
         self.critic_target = QNetwork(num_inputs, action_space.shape[0], args.hidden_size).to(self.device)
+
         hard_update(self.critic_target, self.critic)
 
         if self.policy_type == "Gaussian":
@@ -47,6 +48,7 @@ class SAC(object):
 
     def select_action(self, state, evaluate=False):
         state = torch.FloatTensor(state).to(self.device).unsqueeze(0)
+        state = self.critic.convolutional_prepare(state)
         if evaluate is False:
             action, _, _ = self.policy.sample(state)
         else:
@@ -58,7 +60,9 @@ class SAC(object):
         state_batch, action_batch, reward_batch, next_state_batch, mask_batch = memory.sample(batch_size=batch_size)
 
         state_batch = torch.FloatTensor(state_batch).to(self.device)
+        state_batch = self.critic.convolutional_prepare(state_batch)
         next_state_batch = torch.FloatTensor(next_state_batch).to(self.device)
+        next_state_batch = self.critic.convolutional_prepare(next_state_batch)
         action_batch = torch.FloatTensor(action_batch).to(self.device)
         reward_batch = torch.FloatTensor(reward_batch).to(self.device).unsqueeze(1)
         mask_batch = torch.FloatTensor(mask_batch).to(self.device).unsqueeze(1)
@@ -82,11 +86,11 @@ class SAC(object):
                                    self.alpha * log_pi) - min_qf_pi).mean()  # Jπ = 𝔼st∼D,εt∼N[α * logπ(f(εt;st)|st) − Q(st,f(εt;st))]
 
         self.critic_optim.zero_grad()
-        qf1_loss.backward()
+        qf1_loss.backward(retain_graph=True)
         self.critic_optim.step()
 
         self.critic_optim.zero_grad()
-        qf2_loss.backward()
+        qf2_loss.backward(retain_graph=True)
         self.critic_optim.step()
 
         self.policy_optim.zero_grad()

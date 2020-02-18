@@ -32,25 +32,52 @@ class ValueNetwork(nn.Module):
         return x
 
 
+class ConvolutionalPrepare(nn.Module):
+
+    def __init__(self, hidden_dim, num_output):
+        super(ConvolutionalPrepare, self).__init__()
+        self.convolution = nn.Sequential(
+            nn.Conv2d(in_channels=3, out_channels=hidden_dim * 2, kernel_size=11, padding=5,
+                      stride=1),
+            nn.BatchNorm2d(hidden_dim * 2),
+            nn.ReLU(),
+            nn.Conv2d(in_channels=hidden_dim * 2, out_channels=hidden_dim * 2,
+                      kernel_size=11, padding=5, stride=1),
+            nn.BatchNorm2d(hidden_dim * 2),
+            nn.ReLU(),
+            nn.Conv2d(in_channels=hidden_dim * 2, out_channels=hidden_dim,
+                      kernel_size=11, padding=5, stride=1),
+            nn.BatchNorm2d(hidden_dim),
+            nn.Conv2d(in_channels=hidden_dim, out_channels=1,
+                      kernel_size=11, padding=5, stride=1),
+            nn.BatchNorm2d(1),
+            nn.AdaptiveMaxPool2d(output_size=(num_output // 2, 2))
+        )
+
+    def forward(self, input):
+        u = self.convolution(input.permute(0, 3, 1, 2)).flatten(1)
+        return u
+
+
 class QNetwork(nn.Module):
     def __init__(self, num_inputs, num_actions, hidden_dim):
         super(QNetwork, self).__init__()
 
+        self.convolutional_prepare = ConvolutionalPrepare(hidden_dim=hidden_dim, num_output=(num_inputs))
         # Q1 architecture
-        self.linear1 = nn.Linear(num_inputs + num_actions, hidden_dim)
+        self.linear1 = nn.Linear((num_inputs + num_actions), hidden_dim)
         self.linear2 = nn.Linear(hidden_dim, hidden_dim)
         self.linear3 = nn.Linear(hidden_dim, 1)
 
         # Q2 architecture
-        self.linear4 = nn.Linear(num_inputs + num_actions, hidden_dim)
+        self.linear4 = nn.Linear((num_inputs + num_actions), hidden_dim)
         self.linear5 = nn.Linear(hidden_dim, hidden_dim)
         self.linear6 = nn.Linear(hidden_dim, 1)
 
         self.apply(weights_init_)
 
     def forward(self, state, action):
-        xu = torch.cat([state.flatten(1), action], 1)
-
+        xu = torch.cat([state, action], dim=1)
         x1 = F.relu(self.linear1(xu))
         x1 = F.relu(self.linear2(x1))
         x1 = self.linear3(x1)
@@ -85,8 +112,7 @@ class GaussianPolicy(nn.Module):
                 (action_space.high + action_space.low) / 2.)
 
     def forward(self, state):
-
-        x = F.relu(self.linear1(state.flatten(1)))
+        x = F.relu(self.linear1(state))
         x = F.relu(self.linear2(x))
         mean = self.mean_linear(x)
         log_std = self.log_std_linear(x)
