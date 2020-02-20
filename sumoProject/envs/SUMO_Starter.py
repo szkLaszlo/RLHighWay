@@ -48,7 +48,7 @@ class EPHighWayEnv(gym.Env):
         self.environment_state = None
         self.lanechange_counter = 0
         self.wants_to_change = []  # variable to count how many times the agent wanted to change lane
-        self.change_after = 1  # variable after how many trials the lane is changed
+        self.change_after = 0  # variable after how many trials the lane is changed
         self.time_to_change_des_speed = 100
         # variable defining how many vehicles must exist on the road before ego is chosen.
         self.min_departed_vehicles = 1
@@ -89,7 +89,7 @@ class EPHighWayEnv(gym.Env):
             self.ego_start_position = 100000
             self.lanechange_counter = 0
             self.wants_to_change = []
-            self.change_after = 1
+            self.change_after = 0
             self.min_departed_vehicles = 10 if "5" in self.sumoCmd[2] else np.random.randint(25, 80, 1).item()
             self.time_to_change_des_speed = np.random.randint(100, 250)
             # Running simulation until ego can be inserted
@@ -120,14 +120,20 @@ class EPHighWayEnv(gym.Env):
         st = [-1, 0, 1]  # [right, nothing, left] lane change
         ac = [-0.7, 0.0, 0.3]  # are in m/s
         if isinstance(action, np.ndarray) and len(action.shape) > 1:
-            steer = int(np.sign(action[:, :, 0]).min())
+            steer = action[:, :, 0]
             acc = action[:, :, 1]
         elif isinstance(action, np.ndarray):
-            steer = int(np.sign(action[0]))
+            steer = action[0]
             acc = action[1]
         else:  # isinstance(action, int):
             steer = st[action // len(st)]
             acc = ac[action % len(st)]
+        if steer > 0.35:
+            steer = 1
+        elif steer < -0.35:
+            steer = -1
+        else:
+            steer = 0
         ctrl = [steer, acc]
         return ctrl
 
