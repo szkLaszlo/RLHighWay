@@ -1,3 +1,5 @@
+import platform
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -32,30 +34,39 @@ class ValueNetwork(nn.Module):
         return x
 
 
-class ConvolutionalPrepare(nn.Module):
+class ImageProcessor(nn.Module):
 
-    def __init__(self, hidden_dim, num_output):
-        super(ConvolutionalPrepare, self).__init__()
+    def __init__(self,
+                 model_path="/home/st106/workspace/RLHighWay/sumoProject/agents/torchSummary/20200212_191313/model_final.weight"):
+        super(ImageProcessor, self).__init__()
+        device = torch.device('cpu') if "Windows" in platform.system() else torch.device('cuda')
+        state_dicts = torch.load(model_path, map_location=device)
+        hidden_size_conv = state_dicts['convolution.0.weight'].size()[0] // 2
         self.convolution = nn.Sequential(
-            nn.Conv2d(in_channels=3, out_channels=hidden_dim * 2, kernel_size=11, padding=5,
+            nn.Conv2d(in_channels=3, out_channels=hidden_size_conv * 2, kernel_size=11, padding=5,
                       stride=1),
-            nn.BatchNorm2d(hidden_dim * 2),
+            nn.BatchNorm2d(hidden_size_conv * 2),
             nn.ReLU(),
-            nn.Conv2d(in_channels=hidden_dim * 2, out_channels=hidden_dim * 2,
+            nn.Conv2d(in_channels=hidden_size_conv * 2, out_channels=hidden_size_conv * 2,
                       kernel_size=11, padding=5, stride=1),
-            nn.BatchNorm2d(hidden_dim * 2),
+            nn.BatchNorm2d(hidden_size_conv * 2),
             nn.ReLU(),
-            nn.Conv2d(in_channels=hidden_dim * 2, out_channels=hidden_dim,
+            nn.Conv2d(in_channels=hidden_size_conv * 2, out_channels=hidden_size_conv,
                       kernel_size=11, padding=5, stride=1),
-            nn.BatchNorm2d(hidden_dim),
-            nn.Conv2d(in_channels=hidden_dim, out_channels=1,
+            nn.BatchNorm2d(hidden_size_conv),
+            nn.Conv2d(in_channels=hidden_size_conv, out_channels=1,
                       kernel_size=11, padding=5, stride=1),
             nn.BatchNorm2d(1),
-            nn.AdaptiveMaxPool2d(output_size=(num_output // 2, 2))
-        )
+            nn.AdaptiveMaxPool2d(output_size=(10, 2))
+        ).to(device=device)
+        for key in list(state_dicts.keys()):
+            if key not in self.state_dict().keys():
+                del state_dicts[key]
+        self.load_state_dict(state_dicts)
 
     def forward(self, input):
-        u = self.convolution(input.permute(0, 3, 1, 2)).flatten(1)
+        with torch.no_grad():
+            u = self.convolution(input.permute(0, 3, 1, 2)).flatten(1)
         return u
 
 
@@ -63,7 +74,6 @@ class QNetwork(nn.Module):
     def __init__(self, num_inputs, num_actions, hidden_dim):
         super(QNetwork, self).__init__()
 
-        self.convolutional_prepare = ConvolutionalPrepare(hidden_dim=hidden_dim, num_output=(num_inputs))
         # Q1 architecture
         self.linear1 = nn.Linear((num_inputs + num_actions), hidden_dim)
         self.linear2 = nn.Linear(hidden_dim, hidden_dim)
