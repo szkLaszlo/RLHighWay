@@ -23,7 +23,7 @@ class EPHighWayEnv(gym.Env):
 
     def __init__(self):
 
-        self.max_punishment = -10
+        self.max_punishment = -1
         self.steps_done = 0
         self.rendering = None
 
@@ -143,7 +143,7 @@ class EPHighWayEnv(gym.Env):
         # Collecting the ids of online vehicles
         IDsOfVehicles = traci.vehicle.getIDList()
 
-        reward = 0
+        reward = 1
         # Checking if ego is still alive
         if self.egoID in IDsOfVehicles:
             # Selecting action to do
@@ -213,7 +213,7 @@ class EPHighWayEnv(gym.Env):
             self.steps_done += 1
         else:
             # Case for completing the highway without a problem
-            reward = 0
+            reward = -1 * self.max_punishment
 
         return self.environment_state, reward, terminated, {'cause': cause, 'rewards': reward,
                                                             'velocity': self.state['velocity'],

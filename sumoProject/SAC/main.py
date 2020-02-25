@@ -99,6 +99,7 @@ for i_episode in itertools.count(1):
         try:
             next_state, reward, done, info = env.step(action)  # Step
         except RuntimeError:
+            env = gym.make(args.env_name)
             env.__init__()
             env.render(mode='none')
             break
