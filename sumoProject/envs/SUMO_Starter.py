@@ -120,8 +120,8 @@ class EPHighWayEnv(gym.Env):
         st = [-1, 0, 1]  # [right, nothing, left] lane change
         ac = [-0.7, 0.0, 0.3]  # are in m/s
         if isinstance(action, np.ndarray) and len(action.shape) > 1:
-            steer = action[:, :, 0]
-            acc = action[:, :, 1]
+            steer = action[:, 0]
+            acc = action[:, 1]
         elif isinstance(action, np.ndarray):
             steer = action[0]
             acc = action[1]

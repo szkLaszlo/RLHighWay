@@ -59,15 +59,17 @@ class ImageProcessor(nn.Module):
             nn.BatchNorm2d(1),
             nn.AdaptiveMaxPool2d(output_size=(10, 2))
         ).to(device=device)
+        self.device = device
         for key in list(state_dicts.keys()):
             if key not in self.state_dict().keys():
                 del state_dicts[key]
         self.load_state_dict(state_dicts)
 
-    def forward(self, input):
+    def forward(self, input_):
+        input_ = torch.FloatTensor(input_).to(self.device).unsqueeze(0)
         with torch.no_grad():
-            u = self.convolution(input.permute(0, 3, 1, 2)).flatten(1)
-        return u
+            u = self.convolution(input_.permute(0, 3, 1, 2)).flatten(1)
+        return u.squeeze(0).detach().cpu().numpy()
 
 
 class QNetwork(nn.Module):
@@ -87,7 +89,7 @@ class QNetwork(nn.Module):
         self.apply(weights_init_)
 
     def forward(self, state, action):
-        xu = torch.cat([state, action], dim=1)
+        xu = torch.cat([state, action], dim=-1)
         x1 = F.relu(self.linear1(xu))
         x1 = F.relu(self.linear2(x1))
         x1 = self.linear3(x1)

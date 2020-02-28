@@ -4,7 +4,7 @@ import torch
 import torch.nn.functional as F
 from torch.optim import Adam
 
-from sumoProject.SAC.model import GaussianPolicy, QNetwork, DeterministicPolicy, ImageProcessor
+from sumoProject.SAC.model import GaussianPolicy, QNetwork, DeterministicPolicy
 from sumoProject.SAC.utils import soft_update, hard_update
 
 
@@ -20,8 +20,8 @@ class SAC(object):
         self.automatic_entropy_tuning = args.automatic_entropy_tuning
 
         self.device = torch.device("cuda" if args.cuda and torch.cuda.is_available() else "cpu")
-
-        self.convolutional_prepare = ImageProcessor()
+        self.logdir = args.log_dir
+        # self.convolutional_prepare = ImageProcessor()
         self.critic = QNetwork(num_inputs, action_space.shape[0], args.hidden_size).to(device=self.device)
         self.critic_optim = Adam(self.critic.parameters(), lr=args.lr)
 
@@ -48,22 +48,22 @@ class SAC(object):
             self.policy_optim = Adam(self.policy.parameters(), lr=args.lr)
 
     def select_action(self, state, evaluate=False):
-        state = torch.FloatTensor(state).to(self.device).unsqueeze(0)
-        state = self.convolutional_prepare(state)
+        state = torch.FloatTensor(state).to(self.device)
+        # state = self.convolutional_prepare(state)
         if evaluate is False:
             action, _, _ = self.policy.sample(state)
         else:
             _, _, action = self.policy.sample(state)
-        return action.detach().cpu().numpy()[0]
+        return action.squeeze(0).detach().cpu().numpy()[0]
 
     def update_parameters(self, memory, batch_size, updates):
         # Sample a batch from memory
         state_batch, action_batch, reward_batch, next_state_batch, mask_batch = memory.sample(batch_size=batch_size)
 
         state_batch = torch.FloatTensor(state_batch).to(self.device)
-        state_batch = self.convolutional_prepare(state_batch)
+        # state_batch = self.convolutional_prepare(state_batch)
         next_state_batch = torch.FloatTensor(next_state_batch).to(self.device)
-        next_state_batch = self.convolutional_prepare(next_state_batch)
+        # next_state_batch = self.convolutional_prepare(next_state_batch)
         action_batch = torch.FloatTensor(action_batch).to(self.device)
         reward_batch = torch.FloatTensor(reward_batch).to(self.device).unsqueeze(1)
         mask_batch = torch.FloatTensor(mask_batch).to(self.device).unsqueeze(1)
@@ -118,13 +118,14 @@ class SAC(object):
 
     # Save model parameters
     def save_model(self, env_name, suffix="", actor_path=None, critic_path=None):
-        if not os.path.exists('models/'):
-            os.makedirs('models/')
+        model_path = os.path.join(self.logdir, 'models')
+        if not os.path.exists(model_path):
+            os.makedirs(model_path)
 
         if actor_path is None:
-            actor_path = "models/sac_actor_{}_{}".format(env_name, suffix)
+            actor_path = os.path.join(model_path, f"actor_{suffix}.pkl")
         if critic_path is None:
-            critic_path = "models/sac_critic_{}_{}".format(env_name, suffix)
+            critic_path = os.path.join(model_path, f"critic_{suffix}.pkl")
         print('Saving models to {} and {}'.format(actor_path, critic_path))
         torch.save(self.policy.state_dict(), actor_path)
         torch.save(self.critic.state_dict(), critic_path)

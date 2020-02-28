@@ -106,8 +106,7 @@ venv.bak/
 sumoProject/virtualtraffic
 sumoProject/envs/virtualtraffic
 sumoProject/agents/torchSummary
-*/save_model
-*/workspace.xml
+*/save_model*/workspace.xml
 
 *.0
 
@@ -116,3 +115,5 @@ sumoProject/agents/torchSummary
 *.weight
 /sumoProject/agents/experiments/
 /sumoProject/SAC/true
+/sumoProject/SAC/models/
+/sumoProject/SAC/runs/
