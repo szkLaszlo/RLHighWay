@@ -5,7 +5,7 @@ import gym
 from sumoProject.agents.policyGradient import Policy
 
 
-def find_latest_weight(path='torchSummary'):
+def find_latest_weight(path='torchSummary', file_end='.weight', exclude_end='.0'):
     """
 
     :param path:
@@ -14,19 +14,24 @@ def find_latest_weight(path='torchSummary'):
     name_list = os.listdir(path)
     full_list = [os.path.join(path, i) for i in name_list]
     time_sorted_list = sorted(full_list, key=os.path.getmtime)
+    for i in range(len(time_sorted_list)):
+        if time_sorted_list[i].endswith(exclude_end):
+            del time_sorted_list[i]
     if os.path.isdir(time_sorted_list[-1]):
-        latest_weight = find_latest_weight(path=time_sorted_list[-1])
+        latest_weight = find_latest_weight(path=time_sorted_list[-1], file_end=file_end, exclude_end=exclude_end)
         return latest_weight
     else:
-        for i in range(1, len(time_sorted_list) + 1):
-            if time_sorted_list[-i].endswith('.weight'):
-                return time_sorted_list[-i]
+        for i in range(len(time_sorted_list) - 1, 1, -1):
+            if time_sorted_list[-i].endswith(file_end):
+                return time_sorted_list[i]
     print(time_sorted_list)
 
-episode_nums = 100
-# path = easygui.fileopenbox()
-path = find_latest_weight()
-env = gym.make('EPHighWay-v1')
-env.render('human')
-policy = Policy(env=env, tb_summary=False)
-policy.eval_model(path=path, episode_nums=episode_nums)
+
+if __name__ == "__main__":
+    episode_nums = 100
+    # path = easygui.fileopenbox()
+    path = find_latest_weight()
+    env = gym.make('EPHighWay-v1')
+    env.render('human')
+    policy = Policy(env=env, tb_summary=False)
+    policy.eval_model(path=path, episode_nums=episode_nums)
