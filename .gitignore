@@ -117,3 +117,5 @@ sumoProject/agents/torchSummary
 /sumoProject/SAC/true
 /sumoProject/SAC/models/
 /sumoProject/SAC/runs/
+sumoProject/agents/true
+sumoProject/envs/sim_conf/virtualtraffic
