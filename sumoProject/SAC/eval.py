@@ -92,4 +92,4 @@ for episode in range(args.episode_num):
 avg_reward /= args.episode_num
 print(f'Average evaluation reward: {avg_reward} in {args.episode_num}. Successful episodes: {success}')
 
-env.close()
+env.stop()

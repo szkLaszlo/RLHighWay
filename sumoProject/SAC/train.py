@@ -2,6 +2,7 @@ import argparse
 import datetime
 import itertools
 import os
+import pickle
 
 import gym
 import numpy as np
@@ -23,12 +24,12 @@ parser.add_argument('--gamma', type=float, default=0.99, metavar='G',
                     help='discount factor for reward (default: 0.99)')
 parser.add_argument('--tau', type=float, default=0.005, metavar='G',
                     help='target smoothing coefficient(τ) (default: 0.005)')
-parser.add_argument('--lr', type=float, default=0.003, metavar='G',
+parser.add_argument('--lr', type=float, default=0.00003, metavar='G',
                     help='learning rate (default: 0.0003)')
 parser.add_argument('--alpha', type=float, default=0.5, metavar='G',
                     help='Temperature parameter α determines the relative importance of the entropy\
                             term against the reward (default: 0.2)')
-parser.add_argument('--automatic_entropy_tuning', type=bool, default=False, metavar='G',
+parser.add_argument('--automatic_entropy_tuning', type=bool, default=True, metavar='G',
                     help='Automaically adjust α (default: False)')
 parser.add_argument('--seed', type=int, default=123456, metavar='N',
                     help='random seed (default: 123456)')
@@ -42,13 +43,27 @@ parser.add_argument('--updates_per_step', type=int, default=1, metavar='N',
                     help='model updates per simulator step (default: 1)')
 parser.add_argument('--start_steps', type=int, default=10000, metavar='N',
                     help='Steps sampling random actions (default: 10000)')
-parser.add_argument('--target_update_interval', type=int, default=1, metavar='N',
+parser.add_argument('--target_update_interval', type=int, default=10, metavar='N',
                     help='Value target update per no. of updates per step (default: 1)')
-parser.add_argument('--replay_size', type=int, default=100000, metavar='N',
+parser.add_argument('--replay_size', type=int, default=1000000, metavar='N',
                     help='size of replay buffer (default: 10000000)')
 parser.add_argument('--cuda', default=True, action="store_true",
                     help='run on CUDA (default: False)')
+parser.add_argument('--conv_path',
+                    default="/home/st106/workspace/RLHighWay/sumoProject/agents/torchSummary/20200212_191313/model_final.weight",
+                    help='path to convolutional weights')
 args = parser.parse_args()
+
+# Tesnorboard
+date = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+logdir = 'runs/{}_SAC_{}_{}_{}'.format(date, args.env_name, args.policy,
+                                       "autotune" if args.automatic_entropy_tuning else "")
+setattr(args, "log_dir", logdir)
+writer = SummaryWriter(log_dir=logdir)
+# write args file
+with open(os.path.join(logdir, "params.pkl"), "bw") as file:
+    pickle.dump(args, file)
+    file.close()
 
 # Environment
 # env = NormalizedActions(gym.make(args.env_name))
@@ -58,24 +73,13 @@ np.random.seed(args.seed)
 env.seed(args.seed)
 env.render('none')
 
-# Tesnorboard
-date = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-logdir = 'runs/{}_SAC_{}_{}_{}'.format(date, args.env_name, args.policy,
-                                       "autotune" if args.automatic_entropy_tuning else "")
-setattr(args, "log_dir", logdir)
-writer = SummaryWriter(log_dir=logdir)
-# write args file
-f = open(os.path.join(logdir, "params.txt"), "w")
-f.write(f"{args}")
-f.close()
+# Memory
+memory = ReplayMemory(args.replay_size)
 
 # Agent
 observation_space = env.observation_space.flatten().shape[0]
 agent = SAC(20, env.action_space, args)
-convolutional_prepare = ImageProcessor()
-
-# Memory
-memory = ReplayMemory(args.replay_size)
+convolutional_prepare = ImageProcessor(args.conv_path)
 
 # Training Loop
 total_numsteps = 0
@@ -135,21 +139,22 @@ for i_episode in itertools.count(1):
         if i_episode % 100 == 0 and args.eval is True:
             avg_reward = 0.
             episodes = 10
-            for _ in range(episodes):
-                state = env.reset()
-                state = convolutional_prepare(state)
-                episode_reward = 0
-                done = False
-                while not done:
-                    action = agent.select_action(state[np.newaxis, np.newaxis, :], evaluate=True)
+            with torch.no_grad():
+                for _ in range(episodes):
+                    state = env.reset()
+                    state = convolutional_prepare(state)
+                    episode_reward = 0
+                    done = False
+                    while not done:
+                        action = agent.select_action(state[np.newaxis, np.newaxis, :], evaluate=True)
 
-                    next_state, reward, done, _ = env.step(action)
-                    next_state = convolutional_prepare(next_state)
+                        next_state, reward, done, _ = env.step(action)
+                        next_state = convolutional_prepare(next_state)
 
-                    episode_reward += reward
+                        episode_reward += reward
 
-                    state = next_state
-                avg_reward += episode_reward
+                        state = next_state
+                    avg_reward += episode_reward
             avg_reward /= episodes
             agent.save_model('sumo', f"e{i_episode}")
             writer.add_scalar('reward/test', avg_reward, i_episode)
@@ -163,4 +168,4 @@ for i_episode in itertools.count(1):
         env.render(mode='none')
         continue
 
-env.close()
+env.stop()
