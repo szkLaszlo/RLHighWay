@@ -276,6 +276,8 @@ class Policy(nn.Module):
                     error_running_traci = True
                     break
                 state_list.append(state)
+                if len(state_list) > self.timesteps_observed:
+                    state_list.pop(0)
                 running_speed.append(info['velocity'])
                 # Save reward
                 self.reward_episode.append(reward)
