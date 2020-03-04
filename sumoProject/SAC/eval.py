@@ -23,7 +23,7 @@ parser = argparse.ArgumentParser(description='PyTorch Soft Actor-Critic Args')
 parser.add_argument('--episode_num', type=int, default=100, metavar='N',
                     help='maximum number of steps (default: 1000000)')
 parser.add_argument('--model_path',
-                    default="/home/st106/workspace/RLHighWay/sumoProject/SAC/runs/2020-02-29_20-59-38_SAC_EPHighWay-v1_Gaussian_autotune",
+                    default="/home/st106/workspace/RLHighWay/sumoProject/SAC/runs/2020-03-02_19-38-41_SAC_EPHighWay-v1_Gaussian_autotune",
                     help='path to actor and critic weights')
 parser.add_argument('--conv_path',
                     default="/home/st106/workspace/RLHighWay/sumoProject/agents/torchSummary/20200212_191313/model_final.weight",
