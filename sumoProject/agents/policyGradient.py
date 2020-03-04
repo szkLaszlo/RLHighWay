@@ -157,10 +157,13 @@ class Policy(nn.Module):
         # Changing dimension to be [time, channel, x, y]
         x = x.permute(0, 3, 1, 2)
         # Going through the timesteps and extracting the convolutional output
-        lstm_input = self.convolution(x).flatten(-2, -1)  # using that batch size is one.
+        output_list = []
+        for i in range(x.shape[0]):
+            lstm_input = self.convolution(x[i, :, :, :].unsqueeze(0)).flatten(-2, -1)  # using that batch size is one.
+            output_list.append(lstm_input)
         # Preparing and propagating through lstm layer(s)
         self.lstm.flatten_parameters()
-        x, _ = self.lstm(lstm_input)
+        x, _ = self.lstm(torch.stack(output_list).squeeze(1))
         # Removing unnecessary time steps (only using the last one)
         x = x[-1, :, :]
         # Getting the output of the MLP as the probability of actions
