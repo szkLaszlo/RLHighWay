@@ -23,7 +23,7 @@ class EPHighWayEnv(gym.Env):
 
     def __init__(self):
 
-        self.max_punishment = -1
+        self.max_punishment = -10
         self.steps_done = 0
         self.rendering = None
 

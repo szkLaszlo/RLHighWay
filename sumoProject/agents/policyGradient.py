@@ -88,7 +88,7 @@ class Policy(nn.Module):
 
         self.current_episode = 0  # Initial episode counter
         self.state_space = self.env.observation_space.shape[0]
-        self.action_space = self.env.action_space.n
+        self.action_space = 9
         self.update_freq = update_freq
         self.timesteps_observed = 3  # Defines how many timesteps to feed for the network
 
