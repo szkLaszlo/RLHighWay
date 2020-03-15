@@ -51,7 +51,7 @@ class EPHighWayEnv(gym.Env):
         self.change_after = 0  # variable after how many trials the lane is changed
         self.time_to_change_des_speed = 100
         # variable defining how many vehicles must exist on the road before ego is chosen.
-        self.min_departed_vehicles = 1
+        self.min_departed_vehicles = 2
         self.rand_index = 0
 
     def set_reward_type(self, reward_type):
@@ -173,6 +173,7 @@ class EPHighWayEnv(gym.Env):
                     self.wants_to_change = []
                     lane_new = last_lane + str(lane_new)
                     x = traci.vehicle.getLanePosition(self.egoID)
+                    reward = 0.5
                     done = False
                     while not done:
                         try:

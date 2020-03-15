@@ -158,6 +158,7 @@ class Policy(nn.Module):
         x = x.permute(0, 3, 1, 2)
         # Going through the timesteps and extracting the convolutional output
         output_list = []
+        # todo: check if it is the same self.convolution(x).flatten(-2,-1).flatten(0,1).unsqueeze(1)
         for i in range(x.shape[0]):
             lstm_input = self.convolution(x[i, :, :, :].unsqueeze(0)).flatten(-2, -1)  # using that batch size is one.
             output_list.append(lstm_input)
