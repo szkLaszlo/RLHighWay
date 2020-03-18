@@ -92,28 +92,24 @@ class Policy(nn.Module):
         self.update_freq = update_freq
         self.timesteps_observed = 3  # Defines how many timesteps to feed for the network
 
-        hidden_size_lstm = 64
+        hidden_size_lstm = 128
         hidden_size_conv = 16
 
         # Building network modules
         self.convolution = nn.Sequential(
             nn.Conv2d(in_channels=3, out_channels=hidden_size_conv * 2, kernel_size=11, padding=5,
                       stride=1),
-            nn.BatchNorm2d(hidden_size_conv * 2),
             nn.ReLU(),
             nn.Conv2d(in_channels=hidden_size_conv * 2, out_channels=hidden_size_conv * 2,
                       kernel_size=11, padding=5, stride=1),
-            nn.BatchNorm2d(hidden_size_conv * 2),
             nn.ReLU(),
             nn.Conv2d(in_channels=hidden_size_conv * 2, out_channels=hidden_size_conv,
                       kernel_size=11, padding=5, stride=1),
-            nn.BatchNorm2d(hidden_size_conv),
             nn.Conv2d(in_channels=hidden_size_conv, out_channels=1,
                       kernel_size=11, padding=5, stride=1),
-            nn.BatchNorm2d(1),
-            nn.AdaptiveMaxPool2d(output_size=(10, 2))
+            nn.AdaptiveMaxPool2d(output_size=(20, 2))
         ).to(device=self.device)
-        self.lstm = nn.LSTM(input_size=20, hidden_size=hidden_size_lstm, num_layers=1).to(device=self.device)
+        self.lstm = nn.LSTM(input_size=40, hidden_size=hidden_size_lstm, num_layers=1).to(device=self.device)
 
         self.linear = nn.Sequential(nn.Linear(in_features=hidden_size_lstm,
                                               out_features=hidden_size_lstm // 2),

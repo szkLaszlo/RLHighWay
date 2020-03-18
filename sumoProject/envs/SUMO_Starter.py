@@ -173,7 +173,7 @@ class EPHighWayEnv(gym.Env):
                     self.wants_to_change = []
                     lane_new = last_lane + str(lane_new)
                     x = traci.vehicle.getLanePosition(self.egoID)
-                    reward = 0.5
+                    reward = 0.9
                     done = False
                     while not done:
                         try:
@@ -214,7 +214,7 @@ class EPHighWayEnv(gym.Env):
             self.steps_done += 1
         else:
             # Case for completing the highway without a problem
-            reward = -1 * self.max_punishment
+            reward = 1
 
         return self.environment_state, reward, terminated, {'cause': cause, 'rewards': reward,
                                                             'velocity': self.state['velocity'],
