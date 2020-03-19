@@ -211,7 +211,7 @@ class Policy(nn.Module):
         self.action_history = torch.tensor([])
         self.reward_episode = []
 
-    def select_action_probabilities(self, state_):
+    def select_action_probabilities(self, state_, eval=False):
         """
 
         Parameters
@@ -224,13 +224,16 @@ class Policy(nn.Module):
         """
         state_ = torch.tensor(state_, dtype=torch.float, requires_grad=True, device=self.device)
         action_probs = self.forward(state_)
-        # Creating categorical distribution based on the output of the network
-        c = Categorical(action_probs)
-        # Selecting action
-        action_ = c.sample()
-        # Add probability of our chosen action to our history
-        self.policy_history = torch.cat([self.policy_history, c.log_prob(action_).reshape(-1, )], 0)
-        self.action_history = torch.cat([self.action_history, action_.float().detach().cpu()], 0)
+        if eval:
+            action_ = torch.argmax(action_probs)
+        else:
+            # Creating categorical distribution based on the output of the network
+            c = Categorical(action_probs)
+            # Selecting action
+            action_ = c.sample()
+            # Add probability of our chosen action to our history
+            self.policy_history = torch.cat([self.policy_history, c.log_prob(action_).reshape(-1, )], 0)
+            self.action_history = torch.cat([self.action_history, action_.float().detach().cpu()], 0)
 
         return action_.detach().cpu() if action_.is_cuda else action_.detach()
 
@@ -284,7 +287,7 @@ class Policy(nn.Module):
 
                 # Printing to console if episode is terminated
                 if done:
-                    episode_reward = sum(self.reward_episode) / len(self.reward_episode)
+                    episode_reward = sum(self.reward_episode)
                     print(f"Steps:{t}, distance: {info['distance']:.3f}, "
                           f"average speed: {sum(running_speed) / len(running_speed):.2f} "
                           f"cause: {info['cause']}, reward: {episode_reward:.3f} "
@@ -359,7 +362,8 @@ class Policy(nn.Module):
             for _ in range(episode_nums):
                 state_list = [self.env.reset()]  # Reset environment and record the starting state
                 for t in itertools.count():
-                    action = self.select_action_probabilities(np.stack(state_list[-self.timesteps_observed:]))
+                    action = self.select_action_probabilities(np.stack(state_list[-self.timesteps_observed:]),
+                                                              eval=True)
                     # Step through environment using chosen action
                     state, reward, done, info = self.env.step(action.item())
                     state_list.append(state)
