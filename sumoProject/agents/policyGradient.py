@@ -164,7 +164,7 @@ class Policy(nn.Module):
         # Removing unnecessary time steps (only using the last one)
         x = x[-1, :, :]
         # Getting the output of the MLP as the probability of actions
-        linear_result = self.linear(x)
+        linear_result = self.linear(x.unsqueeze(0))
         return linear_result
 
     def update(self, episode):

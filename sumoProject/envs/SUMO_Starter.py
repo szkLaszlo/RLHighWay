@@ -23,7 +23,7 @@ class EPHighWayEnv(gym.Env):
 
     def __init__(self):
 
-        self.max_punishment = -10
+        self.max_punishment = -100
         self.steps_done = 0
         self.rendering = None
 
@@ -222,7 +222,7 @@ class EPHighWayEnv(gym.Env):
                                                             'lane_change': self.lanechange_counter}
 
     def choose_random_simulation(self):
-        self.rand_index = np.random.choice(np.arange(0, 6), p=[0.20, 0.15, 0.20, 0.20, 0.20, 0.05])
+        self.rand_index = np.random.choice(np.arange(0, 6), p=[0.20, 0.19, 0.20, 0.20, 0.20, 0.01])
         # self.rand_index = 0
         # print(f"Simulation {self.rand_index} loaded.")
         if "jatek" in self.sumoCmd[2]:
