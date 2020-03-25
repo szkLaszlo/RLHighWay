@@ -90,26 +90,29 @@ class Policy(nn.Module):
         self.state_space = self.env.observation_space.shape[0]
         self.action_space = 9
         self.update_freq = update_freq
-        self.timesteps_observed = 3  # Defines how many timesteps to feed for the network
+        self.timesteps_observed = 5  # Defines how many timesteps to feed for the network
 
         hidden_size_lstm = 128
         hidden_size_conv = 16
 
         # Building network modules
         self.convolution = nn.Sequential(
-            nn.Conv2d(in_channels=3, out_channels=hidden_size_conv * 2, kernel_size=11, padding=5,
+            nn.Conv2d(in_channels=3, out_channels=hidden_size_conv * 2, kernel_size=3, padding=2,
                       stride=1),
+            nn.MaxPool2d(2),
             nn.ReLU(),
             nn.Conv2d(in_channels=hidden_size_conv * 2, out_channels=hidden_size_conv * 2,
-                      kernel_size=11, padding=5, stride=1),
+                      kernel_size=3, padding=2, stride=1),
+            nn.MaxPool2d(2),
             nn.ReLU(),
             nn.Conv2d(in_channels=hidden_size_conv * 2, out_channels=hidden_size_conv,
-                      kernel_size=11, padding=5, stride=1),
+                      kernel_size=3, padding=2, stride=1),
+            nn.ReLU(),
             nn.Conv2d(in_channels=hidden_size_conv, out_channels=1,
-                      kernel_size=11, padding=5, stride=1),
+                      kernel_size=3, padding=2, stride=1),
             nn.AdaptiveMaxPool2d(output_size=(20, 2))
         ).to(device=self.device)
-        self.lstm = nn.LSTM(input_size=40, hidden_size=hidden_size_lstm, num_layers=1).to(device=self.device)
+        self.lstm = nn.LSTM(input_size=40, hidden_size=hidden_size_lstm, num_layers=2).to(device=self.device)
 
         self.linear = nn.Sequential(nn.Linear(in_features=hidden_size_lstm,
                                               out_features=hidden_size_lstm // 2),
@@ -128,7 +131,7 @@ class Policy(nn.Module):
         self.model = list(self.convolution.parameters()) + list(self.linear.parameters()) \
                      + list(self.lstm.parameters())
 
-        self.optimizer = optim.Adam(list(self.model), lr=learning_rate, weight_decay=0.0001)
+        self.optimizer = optim.Adam(list(self.model), lr=learning_rate)
         self.scheduler = optim.lr_scheduler.ReduceLROnPlateau(self.optimizer, mode='max', factor=0.5,
                                                               patience=int(0.01 / learning_rate), verbose=True,
                                                               threshold=0.01,
@@ -190,7 +193,7 @@ class Policy(nn.Module):
             rewards.insert(0, R)
 
         # Scale rewards with the length of the path
-        rewards = torch.tensor(rewards, dtype=torch.float, requires_grad=True, device=self.device) / len(rewards)
+        rewards = torch.tensor(rewards, dtype=torch.float, requires_grad=True, device=self.device)
 
         # Calculating loss
         self.loss = (torch.sum(torch.mul(self.policy_history, rewards).mul(-1), -1))

@@ -23,7 +23,7 @@ class EPHighWayEnv(gym.Env):
 
     def __init__(self):
 
-        self.max_punishment = -100
+        self.max_punishment = 0
         self.steps_done = 0
         self.rendering = None
 
@@ -48,7 +48,7 @@ class EPHighWayEnv(gym.Env):
         self.environment_state = None
         self.lanechange_counter = 0
         self.wants_to_change = []  # variable to count how many times the agent wanted to change lane
-        self.change_after = 0  # variable after how many trials the lane is changed
+        self.change_after = 1  # variable after how many trials the lane is changed
         self.time_to_change_des_speed = 100
         # variable defining how many vehicles must exist on the road before ego is chosen.
         self.min_departed_vehicles = 2
@@ -89,7 +89,6 @@ class EPHighWayEnv(gym.Env):
             self.ego_start_position = 100000
             self.lanechange_counter = 0
             self.wants_to_change = []
-            self.change_after = 0
             self.min_departed_vehicles = 10 if "5" in self.sumoCmd[2] else np.random.randint(25, 80, 1).item()
             self.time_to_change_des_speed = np.random.randint(100, 250)
             # Running simulation until ego can be inserted
@@ -104,7 +103,7 @@ class EPHighWayEnv(gym.Env):
             raise RuntimeError('Please run render before reset!')
 
     def set_random_desired_speed(self):
-        self.desired_speed = random.randint(130, 160) / 3.6
+        self.desired_speed = random.randint(110, 150) / 3.6
 
     def calculate_action(self, action):
         """
@@ -173,7 +172,7 @@ class EPHighWayEnv(gym.Env):
                     self.wants_to_change = []
                     lane_new = last_lane + str(lane_new)
                     x = traci.vehicle.getLanePosition(self.egoID)
-                    reward = 0.9
+                    reward = 1 - 0.01
                     done = False
                     while not done:
                         try:
@@ -222,8 +221,8 @@ class EPHighWayEnv(gym.Env):
                                                             'lane_change': self.lanechange_counter}
 
     def choose_random_simulation(self):
-        self.rand_index = np.random.choice(np.arange(0, 6), p=[0.20, 0.19, 0.20, 0.20, 0.20, 0.01])
-        # self.rand_index = 0
+        # self.rand_index = np.random.choice(np.arange(0, 6), p=[0.19, 0.19, 0.19, 0.19, 0.19, 0.05])
+        self.rand_index = 5
         # print(f"Simulation {self.rand_index} loaded.")
         if "jatek" in self.sumoCmd[2]:
             self.sumoCmd[2] = f"../envs/sim_conf/jatek_{self.rand_index}.sumocfg"

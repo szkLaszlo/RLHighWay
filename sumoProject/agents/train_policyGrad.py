@@ -8,6 +8,6 @@ if __name__ == "__main__":
     # Hyperparameters
     learning_rate = 0.0005
     gamma = 0.6
-    episodes = 2000000
+    episodes = 200000
     policy = Policy(env=env, gamma=gamma, learning_rate=learning_rate)
     policy.train_network(episodes=episodes)
