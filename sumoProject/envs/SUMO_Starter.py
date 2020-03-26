@@ -221,8 +221,8 @@ class EPHighWayEnv(gym.Env):
                                                             'lane_change': self.lanechange_counter}
 
     def choose_random_simulation(self):
-        # self.rand_index = np.random.choice(np.arange(0, 6), p=[0.19, 0.19, 0.19, 0.19, 0.19, 0.05])
-        self.rand_index = 5
+        self.rand_index = np.random.choice(np.arange(0, 6), p=[0.19, 0.19, 0.19, 0.19, 0.19, 0.05])
+        # self.rand_index = 5
         # print(f"Simulation {self.rand_index} loaded.")
         if "jatek" in self.sumoCmd[2]:
             self.sumoCmd[2] = f"../envs/sim_conf/jatek_{self.rand_index}.sumocfg"

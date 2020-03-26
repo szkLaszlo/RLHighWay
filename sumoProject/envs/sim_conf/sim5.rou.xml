@@ -23,5 +23,5 @@
 
     <vTypeDistribution id="typedist1" vTypes="car1 car2 car3 car4"/>
     <vTypeDistribution id="typedist2" vTypes="car5"/>
-    <flow id="carflow1" type="typedist1" route="r1" beg="0" end="14" departLane="random" period="1"/>
+    <flow id="carflow1" type="typedist1" route="r1" beg="0" end="20" departLane="random" period="1"/>
 </routes>

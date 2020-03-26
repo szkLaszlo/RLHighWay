@@ -60,7 +60,7 @@ def network_plot(model, writer, epoch):
 class Policy(nn.Module):
 
     def __init__(self, env, save_path=None, update_freq=10, gamma=0.99, learning_rate=0.001, use_gpu=True,
-                 tb_summary=True):
+                 tb_summary=True, load_weights_path=None):
         """
 
         Parameters
@@ -127,7 +127,12 @@ class Policy(nn.Module):
         self.policy_history = torch.tensor([], requires_grad=True, device=self.device)
         self.action_history = torch.tensor([])
         self.reward_episode = []
-
+        if load_weights_path is not None:
+            state_dicts = torch.load(load_weights_path,
+                                     map_location=torch.device('cpu')
+                                     if "Windows" in platform.system() else torch.device('cuda'))
+            self.load_state_dict(state_dicts)
+            print(f'weights loaded from {load_weights_path}')
         self.model = list(self.convolution.parameters()) + list(self.linear.parameters()) \
                      + list(self.lstm.parameters())
 
@@ -356,11 +361,7 @@ class Policy(nn.Module):
         torch.save(self.state_dict(),
                    os.path.join(self.save_path, 'model_final.weight'))
 
-    def eval_model(self, path, episode_nums):
-        state_dicts = torch.load(path,
-                                 map_location=torch.device('cpu')
-                                 if "Windows" in platform.system() else torch.device('cuda'))
-        self.load_state_dict(state_dicts)
+    def eval_model(self, episode_nums):
         with torch.no_grad():
             for _ in range(episode_nums):
                 state_list = [self.env.reset()]  # Reset environment and record the starting state
