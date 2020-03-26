@@ -89,7 +89,7 @@ class EPHighWayEnv(gym.Env):
             self.ego_start_position = 100000
             self.lanechange_counter = 0
             self.wants_to_change = []
-            self.min_departed_vehicles = 10 if "5" in self.sumoCmd[2] else np.random.randint(25, 80, 1).item()
+            self.min_departed_vehicles = 3 if "5" in self.sumoCmd[2] else np.random.randint(25, 80, 1).item()
             self.time_to_change_des_speed = np.random.randint(100, 250)
             # Running simulation until ego can be inserted
             while self.egoID is None:

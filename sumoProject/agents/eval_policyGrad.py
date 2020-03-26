@@ -21,7 +21,7 @@ def find_latest_weight(path='torchSummary', file_end='.weight', exclude_end='.0'
         latest_weight = find_latest_weight(path=time_sorted_list[-1], file_end=file_end, exclude_end=exclude_end)
         return latest_weight
     else:
-        for i in range(len(time_sorted_list) - 1, 1, -1):
+        for i in range(len(time_sorted_list) - 1, -1, -1):
             if time_sorted_list[-i].endswith(file_end):
                 return time_sorted_list[i]
     print(time_sorted_list)
