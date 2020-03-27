@@ -9,7 +9,7 @@ import traci
 import traci.constants as tc
 from gym import spaces
 
-grid_per_meter = 1  # Defines the precision of the returned image
+grid_per_meter = 2  # Defines the precision of the returned image
 x_range = 50  # symmetrically for front and back
 x_range_grid = x_range * grid_per_meter  # symmetrically for front and back
 y_range = 9  # symmetrically for left and right
@@ -48,7 +48,7 @@ class EPHighWayEnv(gym.Env):
         self.environment_state = None
         self.lanechange_counter = 0
         self.wants_to_change = []  # variable to count how many times the agent wanted to change lane
-        self.change_after = 1  # variable after how many trials the lane is changed
+        self.change_after = 0  # variable after how many trials the lane is changed
         self.time_to_change_des_speed = 100
         # variable defining how many vehicles must exist on the road before ego is chosen.
         self.rand_index = 0
