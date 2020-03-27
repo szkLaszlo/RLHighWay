@@ -110,7 +110,7 @@ class Policy(nn.Module):
             nn.ReLU(),
             nn.Conv2d(in_channels=hidden_size_conv, out_channels=1,
                       kernel_size=3, padding=2, stride=1),
-            nn.AdaptiveMaxPool2d(output_size=(64, 2))
+            nn.AdaptiveMaxPool2d(output_size=(32, 2))
         ).to(device=self.device)
         self.lstm = nn.LSTM(input_size=64, hidden_size=hidden_size_lstm, num_layers=2).to(device=self.device)
 
