@@ -203,7 +203,7 @@ class Policy(nn.Module):
         # Calculating loss
         self.loss = (torch.sum(torch.mul(self.policy_history, rewards).mul(-1), -1))
         # Writing data to tensorboard
-        self.writer.add_scalar('loss', self.loss.item(), episode)
+        self.writer.add_scalar('episode/loss', self.loss.item(), episode)
         self.writer.add_scalar('episode/reward', sum(rewards), episode)
         self.loss /= self.update_freq
 

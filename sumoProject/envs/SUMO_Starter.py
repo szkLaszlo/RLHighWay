@@ -291,7 +291,7 @@ class EPHighWayEnv(gym.Env):
         IDsOfVehicles = traci.vehicle.getIDList()
         # Moving forward if ego can be inserted
         if traci.simulation.getArrivedNumber() - 2 * traci.simulation.getCollidingVehiclesNumber() > 0 \
-                and self.egoID is None:
+                and len(IDsOfVehicles) > 5 and self.egoID is None:
             # Finding the last car on the highway
             for carID in IDsOfVehicles:
                 if traci.vehicle.getPosition(carID)[0] < self.ego_start_position and \
