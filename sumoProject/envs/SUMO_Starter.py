@@ -216,7 +216,7 @@ class EPHighWayEnv(gym.Env):
     def choose_random_simulation(self):
         self.rand_index = np.random.choice(np.arange(0, 6), p=[0.19, 0.19, 0.19, 0.19, 0.19, 0.05])
         # self.rand_index = 2
-        print(f"Simulation {self.rand_index} loaded.")
+        # print(f"Simulation {self.rand_index} loaded.")
         if "jatek" in self.sumoCmd[2]:
             self.sumoCmd[2] = f"../envs/sim_conf/jatek_{self.rand_index}.sumocfg"
         elif "no_gui" in self.sumoCmd[2]:

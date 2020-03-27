@@ -3,7 +3,7 @@ import gym
 from sumoProject.agents.eval_policyGrad import find_latest_weight
 from sumoProject.agents.policyGradient import Policy
 
-continues = True
+continues = False
 
 if __name__ == "__main__":
     env = gym.make('EPHighWay-v1')
