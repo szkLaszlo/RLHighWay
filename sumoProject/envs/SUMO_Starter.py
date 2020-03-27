@@ -195,11 +195,6 @@ class EPHighWayEnv(gym.Env):
             is_ok = False
             cause = None
 
-        # Setting ego to the middle of the screen if rendering is "human"
-        if self.egoID is not None and self.rendering and is_ok:
-            egoPos = traci.vehicle.getPosition(self.egoID)
-            traci.gui.setOffset('View #0', egoPos[0], egoPos[1])
-
         terminated = not is_ok
         if terminated and cause is not None:
             # case for some bad event with termination
@@ -220,8 +215,8 @@ class EPHighWayEnv(gym.Env):
 
     def choose_random_simulation(self):
         self.rand_index = np.random.choice(np.arange(0, 6), p=[0.19, 0.19, 0.19, 0.19, 0.19, 0.05])
-        # self.rand_index = 5
-        # print(f"Simulation {self.rand_index} loaded.")
+        # self.rand_index = 2
+        print(f"Simulation {self.rand_index} loaded.")
         if "jatek" in self.sumoCmd[2]:
             self.sumoCmd[2] = f"../envs/sim_conf/jatek_{self.rand_index}.sumocfg"
         elif "no_gui" in self.sumoCmd[2]:
@@ -295,7 +290,8 @@ class EPHighWayEnv(gym.Env):
         # Collecting online vehicles
         IDsOfVehicles = traci.vehicle.getIDList()
         # Moving forward if ego can be inserted
-        if traci.simulation.getArrivedNumber() > 1 and len(IDsOfVehicles) > 3 and self.egoID is None:
+        if traci.simulation.getArrivedNumber() - 2 * traci.simulation.getCollidingVehiclesNumber() > 0 \
+                and self.egoID is None:
             # Finding the last car on the highway
             for carID in IDsOfVehicles:
                 if traci.vehicle.getPosition(carID)[0] < self.ego_start_position and \
@@ -322,6 +318,8 @@ class EPHighWayEnv(gym.Env):
                                            [tc.VAR_SPEED, tc.VAR_LANE_INDEX, tc.VAR_ANGLE, tc.VAR_POSITION,
                                             tc.VAR_LENGTH, tc.VAR_WIDTH])
             traci.vehicle.addSubscriptionFilterLanes(lanes, noOpposite=True, downstreamDist=100.0, upstreamDist=100.0)
+            if self.rendering:
+                traci.gui.trackVehicle('View #0', self.egoID)
             # Since it is when we start the simulation it returns True for the reset function.
             return True, None
 

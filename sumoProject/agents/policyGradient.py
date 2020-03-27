@@ -112,7 +112,7 @@ class Policy(nn.Module):
                       kernel_size=3, padding=2, stride=1),
             nn.AdaptiveMaxPool2d(output_size=(64, 2))
         ).to(device=self.device)
-        self.lstm = nn.LSTM(input_size=128, hidden_size=hidden_size_lstm, num_layers=2).to(device=self.device)
+        self.lstm = nn.LSTM(input_size=64, hidden_size=hidden_size_lstm, num_layers=2).to(device=self.device)
 
         self.linear = nn.Sequential(nn.Linear(in_features=hidden_size_lstm,
                                               out_features=hidden_size_lstm // 2),
@@ -297,9 +297,10 @@ class Policy(nn.Module):
                 if done:
                     episode_reward = sum(self.reward_episode)
                     print(f"Steps:{t}, distance: {info['distance']:.3f}, "
-                          f"average speed: {sum(running_speed) / len(running_speed):.2f} "
-                          f"cause: {info['cause']}, reward: {episode_reward:.3f} "
-                          f"lane_changes: {info['lane_change']}\n")
+                          f"v_a: {sum(running_speed) / len(running_speed):.2f} "
+                          f"cause: {info['cause']}, reward: {episode_reward - t:.3f} "
+                          f"l_c: {info['lane_change']}"
+                          f"sim: {self.env.rand_index}\n")
                     print(f"Episode {episode + 1}:")
 
                     break
@@ -376,4 +377,5 @@ class Policy(nn.Module):
                     if done:
                         print(f"Reward: {sum(self.reward_episode):.3f}, and steps done: {t}")
                         print(f"Reason:{info['cause']}")
+                        self.reward_episode = []
                         break

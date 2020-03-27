@@ -33,5 +33,5 @@ if __name__ == "__main__":
     path = find_latest_weight()
     env = gym.make('EPHighWay-v1')
     env.render('human')
-    policy = Policy(env=env, tb_summary=False)
-    policy.eval_model(path=path, episode_nums=episode_nums)
+    policy = Policy(env=env, tb_summary=False, load_weights_path=path)
+    policy.eval_model(episode_nums=episode_nums)
