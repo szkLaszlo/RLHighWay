@@ -51,7 +51,6 @@ class EPHighWayEnv(gym.Env):
         self.change_after = 1  # variable after how many trials the lane is changed
         self.time_to_change_des_speed = 100
         # variable defining how many vehicles must exist on the road before ego is chosen.
-        self.min_departed_vehicles = 2
         self.rand_index = 0
 
     def set_reward_type(self, reward_type):
@@ -89,7 +88,6 @@ class EPHighWayEnv(gym.Env):
             self.ego_start_position = 100000
             self.lanechange_counter = 0
             self.wants_to_change = []
-            self.min_departed_vehicles = 3 if "5" in self.sumoCmd[2] else np.random.randint(25, 80, 1).item()
             self.time_to_change_des_speed = np.random.randint(100, 250)
             # Running simulation until ego can be inserted
             while self.egoID is None:
@@ -297,7 +295,7 @@ class EPHighWayEnv(gym.Env):
         # Collecting online vehicles
         IDsOfVehicles = traci.vehicle.getIDList()
         # Moving forward if ego can be inserted
-        if len(IDsOfVehicles) > self.min_departed_vehicles and self.egoID is None:
+        if traci.simulation.getArrivedNumber() > 1 and len(IDsOfVehicles) > 3 and self.egoID is None:
             # Finding the last car on the highway
             for carID in IDsOfVehicles:
                 if traci.vehicle.getPosition(carID)[0] < self.ego_start_position and \
