@@ -9,7 +9,7 @@ import traci
 import traci.constants as tc
 from gym import spaces
 
-grid_per_meter = 1  # Defines the precision of the returned image
+grid_per_meter = 2  # Defines the precision of the returned image
 x_range = 50  # symmetrically for front and back
 x_range_grid = x_range * grid_per_meter  # symmetrically for front and back
 y_range = 9  # symmetrically for left and right
@@ -23,7 +23,7 @@ class EPHighWayEnv(gym.Env):
 
     def __init__(self):
 
-        self.max_punishment = -1
+        self.max_punishment = 0
         self.steps_done = 0
         self.rendering = None
 
@@ -51,7 +51,6 @@ class EPHighWayEnv(gym.Env):
         self.change_after = 0  # variable after how many trials the lane is changed
         self.time_to_change_des_speed = 100
         # variable defining how many vehicles must exist on the road before ego is chosen.
-        self.min_departed_vehicles = 1
         self.rand_index = 0
 
     def set_reward_type(self, reward_type):
@@ -89,8 +88,6 @@ class EPHighWayEnv(gym.Env):
             self.ego_start_position = 100000
             self.lanechange_counter = 0
             self.wants_to_change = []
-            self.change_after = 0
-            self.min_departed_vehicles = 10 if "5" in self.sumoCmd[2] else np.random.randint(25, 80, 1).item()
             self.time_to_change_des_speed = np.random.randint(100, 250)
             # Running simulation until ego can be inserted
             while self.egoID is None:
@@ -104,7 +101,7 @@ class EPHighWayEnv(gym.Env):
             raise RuntimeError('Please run render before reset!')
 
     def set_random_desired_speed(self):
-        self.desired_speed = random.randint(130, 160) / 3.6
+        self.desired_speed = random.randint(110, 150) / 3.6
 
     def calculate_action(self, action):
         """
@@ -173,6 +170,7 @@ class EPHighWayEnv(gym.Env):
                     self.wants_to_change = []
                     lane_new = last_lane + str(lane_new)
                     x = traci.vehicle.getLanePosition(self.egoID)
+                    reward = 1 - 0.01
                     done = False
                     while not done:
                         try:
@@ -197,11 +195,6 @@ class EPHighWayEnv(gym.Env):
             is_ok = False
             cause = None
 
-        # Setting ego to the middle of the screen if rendering is "human"
-        if self.egoID is not None and self.rendering and is_ok:
-            egoPos = traci.vehicle.getPosition(self.egoID)
-            traci.gui.setOffset('View #0', egoPos[0], egoPos[1])
-
         terminated = not is_ok
         if terminated and cause is not None:
             # case for some bad event with termination
@@ -213,7 +206,7 @@ class EPHighWayEnv(gym.Env):
             self.steps_done += 1
         else:
             # Case for completing the highway without a problem
-            reward = -1 * self.max_punishment
+            reward = 1
 
         return self.environment_state, reward, terminated, {'cause': cause, 'rewards': reward,
                                                             'velocity': self.state['velocity'],
@@ -221,8 +214,8 @@ class EPHighWayEnv(gym.Env):
                                                             'lane_change': self.lanechange_counter}
 
     def choose_random_simulation(self):
-        self.rand_index = np.random.choice(np.arange(0, 6), p=[0.20, 0.15, 0.20, 0.20, 0.20, 0.05])
-        # self.rand_index = 0
+        self.rand_index = np.random.choice(np.arange(0, 6), p=[0.19, 0.19, 0.19, 0.19, 0.19, 0.05])
+        # self.rand_index = 2
         # print(f"Simulation {self.rand_index} loaded.")
         if "jatek" in self.sumoCmd[2]:
             self.sumoCmd[2] = f"../envs/sim_conf/jatek_{self.rand_index}.sumocfg"
@@ -297,7 +290,8 @@ class EPHighWayEnv(gym.Env):
         # Collecting online vehicles
         IDsOfVehicles = traci.vehicle.getIDList()
         # Moving forward if ego can be inserted
-        if len(IDsOfVehicles) > self.min_departed_vehicles and self.egoID is None:
+        if traci.simulation.getArrivedNumber() - 2 * traci.simulation.getCollidingVehiclesNumber() > 0 \
+                and len(IDsOfVehicles) > 5 and self.egoID is None:
             # Finding the last car on the highway
             for carID in IDsOfVehicles:
                 if traci.vehicle.getPosition(carID)[0] < self.ego_start_position and \
@@ -324,6 +318,8 @@ class EPHighWayEnv(gym.Env):
                                            [tc.VAR_SPEED, tc.VAR_LANE_INDEX, tc.VAR_ANGLE, tc.VAR_POSITION,
                                             tc.VAR_LENGTH, tc.VAR_WIDTH])
             traci.vehicle.addSubscriptionFilterLanes(lanes, noOpposite=True, downstreamDist=100.0, upstreamDist=100.0)
+            if self.rendering:
+                traci.gui.trackVehicle('View #0', self.egoID)
             # Since it is when we start the simulation it returns True for the reset function.
             return True, None
 
