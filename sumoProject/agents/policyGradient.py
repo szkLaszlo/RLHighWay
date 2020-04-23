@@ -274,8 +274,8 @@ class Policy(nn.Module):
                 self.writer.add_scalar('episode/length', t, episode)
 
             # Calculating average based on 50 episodes
-            if episode % 500 == 0 and episode != 0:
-                running_reward = running_reward / 500
+            if episode % 50 == 0 and episode != 0:
+                running_reward = running_reward / 50
                 print(
                     'Episode {}\tLast length: {:5d}\tAverage reward: {:.2f}'.format(episode + 1, t, running_reward))
                 self.writer.add_scalar('average/reward', running_reward,
