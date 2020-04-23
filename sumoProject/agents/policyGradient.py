@@ -81,38 +81,22 @@ class Policy(nn.Module):
 
         # Saving path creation if needed
         self.save_path = save_path \
-            if save_path is not None else 'torchSummary/{}'.format(time.strftime("%Y%m%d_%H%M%S", time.gmtime()))
+            if save_path is not None else 'torchSummary_gym/{}'.format(time.strftime("%Y%m%d_%H%M%S", time.gmtime()))
         if not os.path.exists(self.save_path) and tb_summary:
             os.mkdir(self.save_path)
         self.writer = SummaryWriter(self.save_path) if tb_summary else None
 
         self.current_episode = 0  # Initial episode counter
         self.state_space = self.env.observation_space.shape[0]
-        self.action_space = 9
+        self.action_space = self.env.action_space.n
         self.update_freq = update_freq
         self.timesteps_observed = 5  # Defines how many timesteps to feed for the network
 
         hidden_size_lstm = 128
-        hidden_size_conv = 16
 
         # Building network modules
-        self.convolution = nn.Sequential(
-            nn.Conv2d(in_channels=3, out_channels=hidden_size_conv * 2, kernel_size=3, padding=2,
-                      stride=1),
-            nn.MaxPool2d(8),
-            nn.ReLU(),
-            nn.Conv2d(in_channels=hidden_size_conv * 2, out_channels=hidden_size_conv * 2,
-                      kernel_size=3, padding=2, stride=1),
-            nn.MaxPool2d(4),
-            nn.ReLU(),
-            nn.Conv2d(in_channels=hidden_size_conv * 2, out_channels=hidden_size_conv,
-                      kernel_size=3, padding=2, stride=1),
-            nn.ReLU(),
-            nn.Conv2d(in_channels=hidden_size_conv, out_channels=1,
-                      kernel_size=3, padding=2, stride=1),
-            nn.AdaptiveMaxPool2d(output_size=(32, 2))
-        ).to(device=self.device)
-        self.lstm = nn.LSTM(input_size=64, hidden_size=hidden_size_lstm, num_layers=2).to(device=self.device)
+        self.lstm = nn.LSTM(input_size=self.state_space, hidden_size=hidden_size_lstm, num_layers=2).to(
+            device=self.device)
 
         self.linear = nn.Sequential(nn.Linear(in_features=hidden_size_lstm,
                                               out_features=hidden_size_lstm // 2),
@@ -133,7 +117,7 @@ class Policy(nn.Module):
                                      if "Windows" in platform.system() else torch.device('cuda'))
             self.load_state_dict(state_dicts)
             print(f'weights loaded from {load_weights_path}')
-        self.model = list(self.convolution.parameters()) + list(self.linear.parameters()) \
+        self.model = list(self.linear.parameters()) \
                      + list(self.lstm.parameters())
 
         self.optimizer = optim.Adam(list(self.model), lr=learning_rate)
@@ -158,21 +142,13 @@ class Policy(nn.Module):
         the output of the network
 
         """
-        # Changing dimension to be [time, channel, x, y]
-        x = x.permute(0, 3, 1, 2)
-        # Going through the timesteps and extracting the convolutional output
-        output_list = []
-        # todo: check if it is the same self.convolution(x).flatten(-2,-1).flatten(0,1).unsqueeze(1)
-        for i in range(x.shape[0]):
-            lstm_input = self.convolution(x[i, :, :, :].unsqueeze(0)).flatten(-2, -1)  # using that batch size is one.
-            output_list.append(lstm_input)
         # Preparing and propagating through lstm layer(s)
         self.lstm.flatten_parameters()
-        x, _ = self.lstm(torch.stack(output_list).squeeze(1))
+        x, _ = self.lstm(x.unsqueeze(1))
         # Removing unnecessary time steps (only using the last one)
         x = x[-1, :, :]
         # Getting the output of the MLP as the probability of actions
-        linear_result = self.linear(x.unsqueeze(0))
+        linear_result = self.linear(x.unsqueeze(0)).squeeze(0)
         return linear_result
 
     def update(self, episode):
@@ -218,6 +194,7 @@ class Policy(nn.Module):
         self.policy_history = torch.tensor([], requires_grad=True, device=self.device)
         self.action_history = torch.tensor([])
         self.reward_episode = []
+        network_plot(self, self.writer, self.current_episode)
 
     def select_action_probabilities(self, state_, eval=False):
         """
@@ -258,7 +235,6 @@ class Policy(nn.Module):
         """
         # Initiating global variables
         running_reward = 0
-        done_average = 0
         max_reward = -100000
         stopping_counter = 0
 
@@ -266,97 +242,68 @@ class Policy(nn.Module):
         for episode in range(episodes):
             state_list = [self.env.reset()]
             episode_reward = 0
-            running_speed = []
             t = 0
-            info = 0
-            error_running_traci = False
             for t in itertools.count():
                 # Selecting action based on current state
                 action = self.select_action_probabilities(np.stack(state_list[-self.timesteps_observed:]))
 
                 # Step through environment using chosen action
-                try:
-                    state, reward, done, info = self.env.step(action.item())
-                except RuntimeError:
-                    self.env.__init__()
-                    self.env.render(mode='none')
-                    # Delete histories
-                    self.policy_history = torch.tensor([], requires_grad=True, device=self.device)
-                    self.action_history = torch.tensor([])
-                    self.reward_episode = []
-                    error_running_traci = True
-                    break
+                state, reward, done, info = self.env.step(action.item())
                 state_list.append(state)
                 if len(state_list) > self.timesteps_observed:
                     state_list.pop(0)
-                running_speed.append(info['velocity'])
                 # Save reward
                 self.reward_episode.append(reward)
 
                 # Printing to console if episode is terminated
                 if done:
                     episode_reward = sum(self.reward_episode)
-                    print(f"Steps:{t}, distance: {info['distance']:.3f}, "
-                          f"v_a: {sum(running_speed) / len(running_speed):.2f} "
-                          f"cause: {info['cause']}, reward: {episode_reward - t:.3f} "
-                          f"l_c: {info['lane_change']}"
-                          f"sim: {self.env.rand_index}\n")
+                    print(f"Steps:{t}, "
+                          f"reward: {episode_reward:.3f}")
                     print(f"Episode {episode + 1}:")
 
                     break
 
-            if not error_running_traci:
-                running_reward += episode_reward
+            running_reward += episode_reward
 
-                # Updating the network
-                self.update(episode)
+            # Updating the network
+            self.update(episode)
 
-                # If needed writing episode details to tensorboard
-                if self.writer is not None:
-                    self.writer.add_scalar('episode/length', t, episode)
-                    self.writer.add_scalar('episode/speed', sum(running_speed) / len(running_speed), episode)
-                    self.writer.add_scalar('episode/type', self.env.rand_index, episode)
-                    self.writer.add_scalar('episode/lane_change', info['lane_change'], episode)
-                    self.writer.add_scalar('episode/finished', 1 if info['cause'] is None else 0, episode)
-                    done_average += 1 if info['cause'] is None else 0
-                    self.writer.add_scalar('episode/distance', info["distance"], episode)
+            # If needed writing episode details to tensorboard
+            if self.writer is not None:
+                self.writer.add_scalar('episode/length', t, episode)
 
-                # Calculating average based on 50 episodes
-                if episode % 50 == 0 and episode != 0:
-                    running_reward = running_reward / 50
-                    done_average = done_average / 50
-                    print(
-                        'Episode {}\tLast length: {:5d}\tAverage reward: {:.2f}'.format(episode + 1, t, running_reward))
-                    self.writer.add_scalar('average/reward', running_reward,
-                                           episode + 1) if self.writer is not None else None
-                    self.writer.add_scalar('average/done', done_average,
-                                           episode + 1) if self.writer is not None else None
+            # Calculating average based on 50 episodes
+            if episode % 500 == 0 and episode != 0:
+                running_reward = running_reward / 500
+                print(
+                    'Episode {}\tLast length: {:5d}\tAverage reward: {:.2f}'.format(episode + 1, t, running_reward))
+                self.writer.add_scalar('average/reward', running_reward,
+                                       episode + 1) if self.writer is not None else None
 
-                    self.scheduler.step(running_reward)
-                    for param_group in self.optimizer.param_groups:
-                        lr = param_group['lr']
-                    self.writer.add_scalar('average/learning_rate', lr, episode)
-                    # Checking if reward has improved
-                    if running_reward > max_reward:
-                        max_reward = running_reward
-                        stopping_counter = 0
-                        test = os.listdir(self.save_path)
+                self.scheduler.step(running_reward)
+                for param_group in self.optimizer.param_groups:
+                    lr = param_group['lr']
+                self.writer.add_scalar('average/learning_rate', lr, episode)
+                # Checking if reward has improved
+                if running_reward > max_reward:
+                    max_reward = running_reward
+                    stopping_counter = 0
+                    test = os.listdir(self.save_path)
 
-                        for item in test:
-                            if item.endswith(".weight"):
-                                os.remove(os.path.join(self.save_path, item))
-                        # Saving weights with better results
-                        torch.save(self.state_dict(),
-                                   os.path.join(self.save_path, 'model_{}.weight'.format(episode + 1)))
-                    elif stopping_counter > episodes * 0.01:
-                        print(f"The rewards did not improve since {50 * (stopping_counter - 1)} episodes")
-                        self.env.stop()
-                        break
-                    else:
-                        stopping_counter += 1
-                    # Clearing averaging variables
-                    running_reward = 0
-                    done_average = 0
+                    for item in test:
+                        if item.endswith(".weight"):
+                            os.remove(os.path.join(self.save_path, item))
+                    # Saving weights with better results
+                    torch.save(self.state_dict(),
+                               os.path.join(self.save_path, 'model_{}.weight'.format(episode + 1)))
+                elif stopping_counter > episodes * 0.01:
+                    print(f"The rewards did not improve since {50 * (stopping_counter - 1)} episodes")
+                    break
+                else:
+                    stopping_counter += 1
+                # Clearing averaging variables
+                running_reward = 0
 
         # Saving final weights
         torch.save(self.state_dict(),
@@ -376,6 +323,5 @@ class Policy(nn.Module):
                     self.reward_episode.append(reward)
                     if done:
                         print(f"Reward: {sum(self.reward_episode):.3f}, and steps done: {t}")
-                        print(f"Reason:{info['cause']}")
                         self.reward_episode = []
                         break
