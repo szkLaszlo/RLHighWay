@@ -81,9 +81,9 @@ class Policy(nn.Module):
 
         # Saving path creation if needed
         self.save_path = save_path \
-            if save_path is not None else 'torchSummary_gym/{}'.format(time.strftime("%Y%m%d_%H%M%S", time.gmtime()))
+            if save_path is not None else './torchSummary_gym/{}/'.format(time.strftime("%Y%m%d_%H%M%S", time.gmtime()))
         if not os.path.exists(self.save_path) and tb_summary:
-            os.mkdir(self.save_path)
+            os.makedirs(self.save_path)
         self.writer = SummaryWriter(self.save_path) if tb_summary else None
 
         self.current_episode = 0  # Initial episode counter
