@@ -39,7 +39,7 @@ def plot_grad_flow(named_parameters):
     plt.grid(True)
 
 
-def network_plot(model, writer, epoch):
+def network_plot(model, writer, epoch, name=''):
     """
     Function to plot gradients of networks
     Parameters
@@ -53,8 +53,9 @@ def network_plot(model, writer, epoch):
 
     """
     for f in model.parameters():
-        hist_name = 'gradients/' + str(list(f.grad.data.size()))
-        writer.add_histogram(hist_name, f, epoch)
+        if hasattr(f.grad, 'data'):
+            hist_name = f'{name}/ + {list(f.grad.data.size())}'
+            writer.add_histogram(hist_name, f, epoch)
 
 
 class Policy(nn.Module):

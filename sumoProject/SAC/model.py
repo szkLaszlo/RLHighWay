@@ -36,40 +36,49 @@ class ValueNetwork(nn.Module):
 
 class ImageProcessor(nn.Module):
 
-    def __init__(self,
+    def __init__(self, hidden_size=128, output_size=(100, 2),
                  model_path="/home/st106/workspace/RLHighWay/sumoProject/agents/torchSummary/20200212_191313/model_final.weight"):
         super(ImageProcessor, self).__init__()
         device = torch.device('cpu') if "Windows" in platform.system() else torch.device('cuda')
-        state_dicts = torch.load(model_path, map_location=device)
-        hidden_size_conv = state_dicts['convolution.0.weight'].size()[0] // 2
+        if model_path is not None:
+            state_dicts = torch.load(model_path, map_location=device)
+            hidden_size_conv = state_dicts['convolution.0.weight'].size()[0] // 2
+        else:
+            hidden_size_conv = hidden_size
         self.convolution = nn.Sequential(
             nn.Conv2d(in_channels=3, out_channels=hidden_size_conv * 2, kernel_size=11, padding=5,
                       stride=1),
             nn.BatchNorm2d(hidden_size_conv * 2),
+            nn.MaxPool2d(2),
             nn.ReLU(),
             nn.Conv2d(in_channels=hidden_size_conv * 2, out_channels=hidden_size_conv * 2,
                       kernel_size=11, padding=5, stride=1),
             nn.BatchNorm2d(hidden_size_conv * 2),
+            nn.MaxPool2d(2),
             nn.ReLU(),
             nn.Conv2d(in_channels=hidden_size_conv * 2, out_channels=hidden_size_conv,
                       kernel_size=11, padding=5, stride=1),
             nn.BatchNorm2d(hidden_size_conv),
+            nn.MaxPool2d(2),
             nn.Conv2d(in_channels=hidden_size_conv, out_channels=1,
                       kernel_size=11, padding=5, stride=1),
             nn.BatchNorm2d(1),
-            nn.AdaptiveMaxPool2d(output_size=(10, 2))
+            nn.AdaptiveMaxPool2d(output_size=output_size)
         ).to(device=device)
         self.device = device
-        for key in list(state_dicts.keys()):
-            if key not in self.state_dict().keys():
-                del state_dicts[key]
-        self.load_state_dict(state_dicts)
+        if model_path is not None:
+            for key in list(state_dicts.keys()):
+                if key not in self.state_dict().keys():
+                    del state_dicts[key]
+            self.load_state_dict(state_dicts)
 
     def forward(self, input_):
-        input_ = torch.FloatTensor(input_).to(self.device).unsqueeze(0)
-        with torch.no_grad():
-            u = self.convolution(input_.permute(0, 3, 1, 2)).flatten(1)
-        return u.squeeze(0).detach().cpu().numpy()
+        if input_.ndim == 3:
+            input_ = input_.unsqueeze(0).permute(0, 3, 1, 2)
+        elif input_.ndim == 4:
+            input_ = input_.permute(0, 3, 1, 2)
+        u = self.convolution(input_).flatten(1)
+        return u
 
 
 class QNetwork(nn.Module):
