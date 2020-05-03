@@ -91,8 +91,9 @@ for i_episode in itertools.count(1):
     episode_reward = 0
     episode_steps = 0
     done = False
-    state = env.reset()
+
     try:
+        state = env.reset()
         while not done:
             if args.start_steps > total_numsteps:
                 action = env.action_space.sample()  # Sample random action
@@ -123,7 +124,7 @@ for i_episode in itertools.count(1):
         env.stop()
         env = gym.make(args.env_name)
         env.render(mode='none')
-        continue
+
     if i_episode % 50 == 0:
 
         if len(memory) > args.batch_size * args.updates_per_episode / 10:
