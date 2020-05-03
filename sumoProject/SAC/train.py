@@ -9,6 +9,7 @@ import numpy as np
 import torch
 import tqdm
 from torch.utils.tensorboard import SummaryWriter
+from traci import FatalTraCIError
 
 from sumoProject.SAC.replay_memory import ReplayMemory
 from sumoProject.SAC.sac import SAC
@@ -86,11 +87,12 @@ total_numsteps = 0
 updates = 0
 top_reward = -np.inf
 for i_episode in itertools.count(1):
+
+    episode_reward = 0
+    episode_steps = 0
+    done = False
+    state = env.reset()
     try:
-        episode_reward = 0
-        episode_steps = 0
-        done = False
-        state = env.reset()
         while not done:
             if args.start_steps > total_numsteps:
                 action = env.action_space.sample()  # Sample random action
@@ -117,34 +119,39 @@ for i_episode in itertools.count(1):
 
         print(f"Episode: {i_episode}, total steps: {total_numsteps}, episode steps: {episode_steps}, "
               f"reward: {round(episode_reward, 3)}, {info['cause']}, lane_change: {info['lane_change']}")
+    except FatalTraCIError:
+        env.stop()
+        env = gym.make(args.env_name)
+        env.render(mode='none')
+        continue
+    if i_episode % 50 == 0:
 
-        if i_episode % 50 == 0:
+        if len(memory) > args.batch_size * args.updates_per_episode / 10:
+            # Number of updates per step in environment
+            trange_ = tqdm.trange(args.updates_per_episode, desc="Updating network weights")
+            for i in trange_:
+                # Update parameters of all the networks
+                critic_1_loss, critic_2_loss, policy_loss, ent_loss, alpha = agent(memory,
+                                                                                   updates)
+                network_plot(agent.convolution, writer, updates, name='conv')
+                network_plot(agent.critic, writer, updates, "critic1")
+                network_plot(agent.policy, writer, updates, 'policy')
+                writer.add_scalar('loss/critic_1', critic_1_loss, updates)
+                writer.add_scalar('loss/critic_2', critic_2_loss, updates)
+                writer.add_scalar('loss/policy', policy_loss, updates)
+                writer.add_scalar('loss/entropy', ent_loss, updates)
+                writer.add_scalar('loss/alpha', alpha, updates)
+                updates += 1
 
-            if len(memory) > args.batch_size * args.updates_per_episode / 10:
-                # Number of updates per step in environment
-                trange_ = tqdm.trange(args.updates_per_episode, desc="Updating network weights")
-                for i in trange_:
-                    # Update parameters of all the networks
-                    critic_1_loss, critic_2_loss, policy_loss, ent_loss, alpha = agent(memory,
-                                                                                       updates)
-                    network_plot(agent.convolution, writer, updates, name='conv')
-                    network_plot(agent.critic, writer, updates, "critic1")
-                    network_plot(agent.policy, writer, updates, 'policy')
-                    writer.add_scalar('loss/critic_1', critic_1_loss, updates)
-                    writer.add_scalar('loss/critic_2', critic_2_loss, updates)
-                    writer.add_scalar('loss/policy', policy_loss, updates)
-                    writer.add_scalar('loss/entropy', ent_loss, updates)
-                    writer.add_scalar('loss/alpha', alpha, updates)
-                    updates += 1
+        if total_numsteps > args.num_steps:
+            agent.save_model('sumo', f"e{i_episode}")
+            break
 
-            if total_numsteps > args.num_steps:
-                agent.save_model('sumo', f"e{i_episode}")
-                break
-
-            if i_episode % 500 == 0 and args.eval is True:
-                avg_reward = 0.
-                episodes = 100
-                done = 0
+        if i_episode % 500 == 0 and args.eval is True:
+            avg_reward = 0.
+            episodes = 100
+            done = 0
+            try:
                 with torch.no_grad():
                     for _ in range(episodes):
                         state = env.reset()
@@ -160,21 +167,21 @@ for i_episode in itertools.count(1):
                         if info["cause"] is None:
                             done += 1
                         avg_reward += episode_reward
-                done /= episodes
-                avg_reward /= episodes
-                if avg_reward >= top_reward:
-                    agent.save_model('sumo', f"e{i_episode}")
-                    top_reward = avg_reward
-                writer.add_scalar('test/reward', avg_reward, i_episode)
-                writer.add_scalar('test/success', done, i_episode)
+            except FatalTraCIError:
+                env.stop()
+                env = gym.make(args.env_name)
+                env.render(mode='none')
+                continue
+            done /= episodes
+            avg_reward /= episodes
+            if avg_reward >= top_reward:
+                agent.save_model('sumo', f"e{i_episode}")
+                top_reward = avg_reward
+            writer.add_scalar('test/reward', avg_reward, i_episode)
+            writer.add_scalar('test/success', done, i_episode)
 
-                print("----------------------------------------")
-                print("Test Episodes: {}, Avg. Reward: {}".format(episodes, round(avg_reward, 2)))
-                print("----------------------------------------")
-    except KeyError:
-        env.stop()
-        env = gym.make(args.env_name)
-        env.render(mode='none')
-        continue
+            print("----------------------------------------")
+            print("Test Episodes: {}, Avg. Reward: {}".format(episodes, round(avg_reward, 2)))
+            print("----------------------------------------")
 
 env.stop()
