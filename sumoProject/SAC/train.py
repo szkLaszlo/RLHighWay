@@ -26,7 +26,7 @@ parser.add_argument('--gamma', type=float, default=0.99, metavar='G',
                     help='discount factor for reward (default: 0.99)')
 parser.add_argument('--tau', type=float, default=0.005, metavar='G',
                     help='target smoothing coefficient(τ) (default: 0.005)')
-parser.add_argument('--lr', type=float, default=0.001, metavar='G',
+parser.add_argument('--lr', type=float, default=0.0001, metavar='G',
                     help='learning rate (default: 0.0003)')
 parser.add_argument('--alpha', type=float, default=0.2, metavar='G',
                     help='Temperature parameter α determines the relative importance of the entropy\
@@ -41,13 +41,13 @@ parser.add_argument('--num_steps', type=int, default=100000001, metavar='N',
                     help='maximum number of steps (default: 1000000)')
 parser.add_argument('--hidden_size', type=int, default=128, metavar='N',
                     help='hidden size (default: 256)')
-parser.add_argument('--updates_per_episode', type=int, default=100, metavar='N',
+parser.add_argument('--updates_per_episode', type=int, default=25, metavar='N',
                     help='model updates per episode (default: 1)')
 parser.add_argument('--start_steps', type=int, default=10000, metavar='N',
                     help='Steps sampling random actions (default: 10000)')
 parser.add_argument('--target_update_interval', type=int, default=100, metavar='N',
                     help='Value target update per no. of updates  (default: 1)')
-parser.add_argument('--replay_size', type=int, default=1000000, metavar='N',
+parser.add_argument('--replay_size', type=int, default=30000, metavar='N',
                     help='size of replay buffer (default: 10000000)')
 parser.add_argument('--cuda', default=True, action="store_true",
                     help='run on CUDA (default: False)')
@@ -82,6 +82,10 @@ memory = ReplayMemory(args.replay_size)
 # Agent
 observation_space = env.observation_space.flatten().shape[0]
 agent = SAC(num_inputs=50, action_space=env.action_space, args=args)
+agent.load_model(
+    actor_path="/home/st106/workspace/RLHighWay/sumoProject/SAC/conv_train/2020-05-06_07-22-50_SAC_EPHighWay-v1_Gaussian_/models/actor_e3000.pkl",
+    critic_path="/home/st106/workspace/RLHighWay/sumoProject/SAC/conv_train/2020-05-06_07-22-50_SAC_EPHighWay-v1_Gaussian_/models/critic_e3000.pkl",
+    conv_path="/home/st106/workspace/RLHighWay/sumoProject/SAC/conv_train/2020-05-06_07-22-50_SAC_EPHighWay-v1_Gaussian_/models/conv_e3000.pkl")
 # Training Loop
 total_numsteps = 0
 updates = 0
@@ -125,7 +129,7 @@ for i_episode in itertools.count(1):
         env = gym.make(args.env_name)
         env.render(mode='none')
 
-    if i_episode % 50 == 0:
+    if i_episode % 20 == 0:
 
         if len(memory) > args.batch_size * args.updates_per_episode / 10:
             # Number of updates per step in environment

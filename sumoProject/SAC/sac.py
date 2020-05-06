@@ -22,7 +22,6 @@ class SAC(nn.Module):
 
         self.device = torch.device("cuda" if args.cuda and torch.cuda.is_available() else "cpu")
         self.logdir = args.log_dir
-        # self.convolutional_prepare = ImageProcessor()
         self.critic = QNetwork(num_inputs, action_space.shape[0], args.hidden_size).to(device=self.device)
         self.critic_optim = Adam(self.critic.parameters(), lr=args.lr)
 
@@ -89,9 +88,7 @@ class SAC(nn.Module):
         min_qf_pi = torch.min(qf1_pi, qf2_pi)
 
         policy_loss = ((self.alpha * log_pi) - min_qf_pi).mean()
-        # Jπ = 𝔼st∼D,εt∼N[α * logπ(f(εt;st)|st) − Q(st,f(εt;st))]
-
-        self.convolution_optim.zero_grad()
+        # Jπ = 𝔼st∼D,εt∼N[α * logπ(f(εt;st)|st) − Q(st,f(εt;st))])
 
         self.critic_optim.zero_grad()
         qf1_loss.backward(retain_graph=True)
@@ -104,8 +101,6 @@ class SAC(nn.Module):
         self.policy_optim.zero_grad()
         policy_loss.backward(retain_graph=True)
         self.policy_optim.step()
-
-        self.convolution_optim.step()
 
         if self.automatic_entropy_tuning:
             alpha_loss = -(self.log_alpha * (log_pi + self.target_entropy).detach()).mean()
@@ -121,7 +116,9 @@ class SAC(nn.Module):
             alpha_tlogs = torch.tensor(self.alpha)  # For TensorboardX logs
 
         if updates % self.target_update_interval == 0:
+            self.convolution_optim.step()
             print('Updating target network softly')
+            self.convolution_optim.zero_grad()
             soft_update(self.critic_target, self.critic, self.tau)
 
         return qf1_loss.item(), qf2_loss.item(), policy_loss.item(), alpha_loss.item(), alpha_tlogs.item()
@@ -144,9 +141,11 @@ class SAC(nn.Module):
         print(f'Saving models to model path: {model_path}')
 
     # Load model parameters
-    def load_model(self, actor_path, critic_path):
-        print('Loading models from {} and {}'.format(actor_path, critic_path))
+    def load_model(self, actor_path, critic_path, conv_path):
+        print('Loading models from {}, {} and {}'.format(actor_path, critic_path, conv_path))
         if actor_path is not None:
             self.policy.load_state_dict(torch.load(actor_path))
         if critic_path is not None:
             self.critic.load_state_dict(torch.load(critic_path))
+        if conv_path is not None:
+            self.convolution.load_state_dict(torch.load(conv_path))
