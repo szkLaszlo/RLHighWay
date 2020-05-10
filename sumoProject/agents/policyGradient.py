@@ -90,20 +90,22 @@ class Policy(nn.Module):
         self.state_space = self.env.observation_space.shape[0]
         self.action_space = self.env.action_space.n
         self.update_freq = update_freq
-        self.timesteps_observed = 5  # Defines how many timesteps to feed for the network
+        self.timesteps_observed = 1  # Defines how many timesteps to feed for the network
 
         hidden_size_lstm = 128
 
         # Building network modules
-        self.lstm = nn.LSTM(input_size=self.state_space, hidden_size=hidden_size_lstm, num_layers=2).to(
-            device=self.device)
+        if self.timesteps_observed > 1:
+            self.lstm = nn.LSTM(input_size=self.state_space, hidden_size=hidden_size_lstm, num_layers=2).to(
+                device=self.device)
 
-        self.linear = nn.Sequential(nn.Linear(in_features=hidden_size_lstm,
-                                              out_features=hidden_size_lstm // 2),
-                                    nn.ReLU(),
-                                    nn.Linear(in_features=hidden_size_lstm // 2, out_features=self.action_space),
-                                    nn.Softmax(dim=-1)
-                                    ).to(device=self.device)
+        self.linear = nn.Sequential(
+            nn.Linear(in_features=hidden_size_lstm if self.timesteps_observed > 1 else self.state_space,
+                      out_features=hidden_size_lstm // 2),
+            nn.ReLU(),
+            nn.Linear(in_features=hidden_size_lstm // 2, out_features=self.action_space),
+            nn.Softmax(dim=-1)
+            ).to(device=self.device)
         self.gamma = gamma
         self.loss = 10
 
@@ -117,15 +119,12 @@ class Policy(nn.Module):
                                      if "Windows" in platform.system() else torch.device('cuda'))
             self.load_state_dict(state_dicts)
             print(f'weights loaded from {load_weights_path}')
-        self.model = list(self.linear.parameters()) \
-                     + list(self.lstm.parameters())
+        self.model = list(self.linear.parameters())
+        if self.timesteps_observed > 1:
+            self.model += list(self.lstm.parameters())
 
         self.optimizer = optim.Adam(list(self.model), lr=learning_rate)
-        self.scheduler = optim.lr_scheduler.ReduceLROnPlateau(self.optimizer, mode='max', factor=0.5,
-                                                              patience=int(0.01 / learning_rate), verbose=True,
-                                                              threshold=0.01,
-                                                              threshold_mode='rel',
-                                                              cooldown=10, min_lr=0, eps=1e-08)
+
         # Putting parameters onto gpu if needed
         if self.use_gpu:
             print("Using CUDA backend.")
@@ -142,11 +141,12 @@ class Policy(nn.Module):
         the output of the network
 
         """
-        # Preparing and propagating through lstm layer(s)
-        self.lstm.flatten_parameters()
-        x, _ = self.lstm(x.unsqueeze(1))
-        # Removing unnecessary time steps (only using the last one)
-        x = x[-1, :, :]
+        if self.timesteps_observed > 1:
+            # Preparing and propagating through lstm layer(s)
+            self.lstm.flatten_parameters()
+            x, _ = self.lstm(x.unsqueeze(1))
+            # Removing unnecessary time steps (only using the last one)
+            x = x[-1, :, :]
         # Getting the output of the MLP as the probability of actions
         linear_result = self.linear(x.unsqueeze(0)).squeeze(0)
         return linear_result
@@ -281,10 +281,6 @@ class Policy(nn.Module):
                 self.writer.add_scalar('average/reward', running_reward,
                                        episode + 1) if self.writer is not None else None
 
-                self.scheduler.step(running_reward)
-                for param_group in self.optimizer.param_groups:
-                    lr = param_group['lr']
-                self.writer.add_scalar('average/learning_rate', lr, episode)
                 # Checking if reward has improved
                 if running_reward > max_reward:
                     max_reward = running_reward
