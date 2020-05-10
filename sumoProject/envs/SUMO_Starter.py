@@ -9,7 +9,7 @@ import traci
 import traci.constants as tc
 from gym import spaces
 
-grid_per_meter = 2  # Defines the precision of the returned image
+grid_per_meter = 1  # Defines the precision of the returned image
 x_range = 50  # symmetrically for front and back
 x_range_grid = x_range * grid_per_meter  # symmetrically for front and back
 y_range = 9  # symmetrically for left and right
@@ -23,7 +23,7 @@ class EPHighWayEnv(gym.Env):
 
     def __init__(self):
 
-        self.max_punishment = 0
+        self.max_punishment = -1
         self.steps_done = 0
         self.rendering = None
 
@@ -161,16 +161,16 @@ class EPHighWayEnv(gym.Env):
                     reward = self.max_punishment
                     new_x = \
                         traci.vehicle.getContextSubscriptionResults(self.egoID)[self.egoID][tc.VAR_POSITION][0]
-                    return self.environment_state, reward, True, {'cause': 'Left Highway',
-                                                                  'rewards': reward,
-                                                                  'velocity': self.state['velocity'],
-                                                                  'distance': new_x - self.ego_start_position,
-                                                                  'lane_change': self.lanechange_counter}
+                    return self.environment_state * 0., reward, True, {'cause': 'Left Highway',
+                                                                       'rewards': reward,
+                                                                       'velocity': self.state['velocity'],
+                                                                       'distance': new_x - self.ego_start_position,
+                                                                       'lane_change': self.lanechange_counter}
                 else:
                     self.wants_to_change = []
                     lane_new = last_lane + str(lane_new)
                     x = traci.vehicle.getLanePosition(self.egoID)
-                    reward = 1 - 0.01
+                    reward = reward - 0.1
                     done = False
                     while not done:
                         try:
@@ -199,6 +199,7 @@ class EPHighWayEnv(gym.Env):
         if terminated and cause is not None:
             # case for some bad event with termination
             reward = self.max_punishment
+            self.environment_state *= 0.
         elif not terminated:
             # Case for successful step
             if self.reward_type == 'simple':
@@ -207,6 +208,7 @@ class EPHighWayEnv(gym.Env):
         else:
             # Case for completing the highway without a problem
             reward = 1
+            self.environment_state *= 0
 
         return self.environment_state, reward, terminated, {'cause': cause, 'rewards': reward,
                                                             'velocity': self.state['velocity'],
@@ -214,8 +216,8 @@ class EPHighWayEnv(gym.Env):
                                                             'lane_change': self.lanechange_counter}
 
     def choose_random_simulation(self):
-        self.rand_index = np.random.choice(np.arange(0, 6), p=[0.19, 0.19, 0.19, 0.19, 0.19, 0.05])
-        # self.rand_index = 2
+        # self.rand_index = np.random.choice(np.arange(0, 6), p=[0.19, 0.19, 0.19, 0.19, 0.19, 0.05])
+        self.rand_index = 5
         # print(f"Simulation {self.rand_index} loaded.")
         if "jatek" in self.sumoCmd[2]:
             self.sumoCmd[2] = f"../envs/sim_conf/jatek_{self.rand_index}.sumocfg"

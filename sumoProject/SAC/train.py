@@ -26,28 +26,28 @@ parser.add_argument('--gamma', type=float, default=0.99, metavar='G',
                     help='discount factor for reward (default: 0.99)')
 parser.add_argument('--tau', type=float, default=0.005, metavar='G',
                     help='target smoothing coefficient(τ) (default: 0.005)')
-parser.add_argument('--lr', type=float, default=0.0001, metavar='G',
+parser.add_argument('--lr', type=float, default=0.1, metavar='G',
                     help='learning rate (default: 0.0003)')
-parser.add_argument('--alpha', type=float, default=0.2, metavar='G',
+parser.add_argument('--alpha', type=float, default=0.1, metavar='G',
                     help='Temperature parameter α determines the relative importance of the entropy\
                             term against the reward (default: 0.2)')
 parser.add_argument('--automatic_entropy_tuning', type=bool, default=False, metavar='G',
                     help='Automaically adjust α (default: False)')
-parser.add_argument('--seed', type=int, default=123456, metavar='N',
+parser.add_argument('--seed', type=int, default=42, metavar='N',
                     help='random seed (default: 123456)')
 parser.add_argument('--batch_size', type=int, default=128, metavar='N',
                     help='batch size (default: 256)')
-parser.add_argument('--num_steps', type=int, default=100000001, metavar='N',
+parser.add_argument('--num_steps', type=int, default=10000001, metavar='N',
                     help='maximum number of steps (default: 1000000)')
 parser.add_argument('--hidden_size', type=int, default=128, metavar='N',
                     help='hidden size (default: 256)')
 parser.add_argument('--updates_per_episode', type=int, default=25, metavar='N',
                     help='model updates per episode (default: 1)')
-parser.add_argument('--start_steps', type=int, default=10000, metavar='N',
+parser.add_argument('--start_steps', type=int, default=1000, metavar='N',
                     help='Steps sampling random actions (default: 10000)')
 parser.add_argument('--target_update_interval', type=int, default=100, metavar='N',
                     help='Value target update per no. of updates  (default: 1)')
-parser.add_argument('--replay_size', type=int, default=30000, metavar='N',
+parser.add_argument('--replay_size', type=int, default=50000, metavar='N',
                     help='size of replay buffer (default: 10000000)')
 parser.add_argument('--cuda', default=True, action="store_true",
                     help='run on CUDA (default: False)')
@@ -82,14 +82,14 @@ memory = ReplayMemory(args.replay_size)
 # Agent
 observation_space = env.observation_space.flatten().shape[0]
 agent = SAC(num_inputs=50, action_space=env.action_space, args=args)
-agent.load_model(
-    actor_path="/home/st106/workspace/RLHighWay/sumoProject/SAC/conv_train/2020-05-06_07-22-50_SAC_EPHighWay-v1_Gaussian_/models/actor_e3000.pkl",
-    critic_path="/home/st106/workspace/RLHighWay/sumoProject/SAC/conv_train/2020-05-06_07-22-50_SAC_EPHighWay-v1_Gaussian_/models/critic_e3000.pkl",
-    conv_path="/home/st106/workspace/RLHighWay/sumoProject/SAC/conv_train/2020-05-06_07-22-50_SAC_EPHighWay-v1_Gaussian_/models/conv_e3000.pkl")
+agent.load_model(actor_path=None, critic_path=None,
+                 conv_path="/home/st106/workspace/RLHighWay/sumoProject/SAC/conv_train/2020-05-09_08-29-19_SAC_EPHighWay-v1_Gaussian_/models/conv_e34500.pkl")
 # Training Loop
 total_numsteps = 0
 updates = 0
-top_reward = -np.inf
+top_reward = 0
+avg_reward = 0.
+done_episodes = 0
 for i_episode in itertools.count(1):
 
     episode_reward = 0
@@ -129,7 +129,26 @@ for i_episode in itertools.count(1):
         env = gym.make(args.env_name)
         env.render(mode='none')
 
-    if i_episode % 20 == 0:
+    if info["cause"] is None:
+        done_episodes += 1
+    avg_reward += episode_reward
+
+    if i_episode % 500 == 0 and args.eval is True:
+        done_episodes /= 500
+        avg_reward /= 500
+        if abs(avg_reward) >= top_reward:
+            agent.save_model('sumo', f"e{i_episode}")
+            top_reward = abs(avg_reward)
+        writer.add_scalar('test/reward', avg_reward, i_episode)
+        writer.add_scalar('test/success', done_episodes, i_episode)
+
+        print("----------------------------------------")
+        print("Test Episodes: {}, Avg. Reward: {}".format(500, round(avg_reward, 2)))
+        print("----------------------------------------")
+        avg_reward = 0.
+        done_episodes = 0
+
+    if i_episode % 20 == 0 and total_numsteps > args.start_steps:
 
         if len(memory) > args.batch_size * args.updates_per_episode / 10:
             # Number of updates per step in environment
@@ -151,42 +170,5 @@ for i_episode in itertools.count(1):
         if total_numsteps > args.num_steps:
             agent.save_model('sumo', f"e{i_episode}")
             break
-
-        if i_episode % 500 == 0 and args.eval is True:
-            avg_reward = 0.
-            episodes = 100
-            done = 0
-            try:
-                with torch.no_grad():
-                    for _ in range(episodes):
-                        state = env.reset()
-                        episode_reward = 0
-                        done = False
-                        while not done:
-                            action = agent.select_action(state, evaluate=True)
-
-                            next_state, reward, done, info = env.step(action)
-                            episode_reward += reward
-
-                            state = next_state
-                        if info["cause"] is None:
-                            done += 1
-                        avg_reward += episode_reward
-            except FatalTraCIError:
-                env.stop()
-                env = gym.make(args.env_name)
-                env.render(mode='none')
-                continue
-            done /= episodes
-            avg_reward /= episodes
-            if avg_reward >= top_reward:
-                agent.save_model('sumo', f"e{i_episode}")
-                top_reward = avg_reward
-            writer.add_scalar('test/reward', avg_reward, i_episode)
-            writer.add_scalar('test/success', done, i_episode)
-
-            print("----------------------------------------")
-            print("Test Episodes: {}, Avg. Reward: {}".format(episodes, round(avg_reward, 2)))
-            print("----------------------------------------")
 
 env.stop()
