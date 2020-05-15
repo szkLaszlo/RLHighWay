@@ -9,11 +9,9 @@ import numpy as np
 import torch
 import tqdm
 from torch.utils.tensorboard import SummaryWriter
-from traci import FatalTraCIError
 
 from sumoProject.SAC.replay_memory import ReplayMemory
 from sumoProject.SAC.sac import SAC
-from sumoProject.agents.policyGradient import network_plot
 
 parser = argparse.ArgumentParser(description='PyTorch Soft Actor-Critic Args')
 parser.add_argument('--env-name', default='EPHighWay-v1',
@@ -43,7 +41,7 @@ parser.add_argument('--hidden_size', type=int, default=128, metavar='N',
                     help='hidden size (default: 256)')
 parser.add_argument('--updates_per_episode', type=int, default=25, metavar='N',
                     help='model updates per episode (default: 1)')
-parser.add_argument('--start_steps', type=int, default=1000, metavar='N',
+parser.add_argument('--start_steps', type=int, default=10000, metavar='N',
                     help='Steps sampling random actions (default: 10000)')
 parser.add_argument('--target_update_interval', type=int, default=100, metavar='N',
                     help='Value target update per no. of updates  (default: 1)')
@@ -78,12 +76,15 @@ env.render('none')
 
 # Memory
 memory = ReplayMemory(args.replay_size)
-
+continue_training = True
 # Agent
 observation_space = env.observation_space.flatten().shape[0]
 agent = SAC(num_inputs=50, action_space=env.action_space, args=args)
-agent.load_model(actor_path=None, critic_path=None,
-                 conv_path="/home/st106/workspace/RLHighWay/sumoProject/SAC/conv_train/2020-05-09_08-29-19_SAC_EPHighWay-v1_Gaussian_/models/conv_e34500.pkl")
+if continue_training:
+    agent.load_model(
+        conv_path="/home/st106/workspace/RLHighWay/sumoProject/SAC/conv_train/2020-05-14_00-44-41_SAC_EPHighWay-v1_Gaussian_/models/conv_e80000.pkl",
+        actor_path="/home/st106/workspace/RLHighWay/sumoProject/SAC/conv_train/2020-05-14_00-44-41_SAC_EPHighWay-v1_Gaussian_/models/actor_e80000.pkl",
+        critic_path="/home/st106/workspace/RLHighWay/sumoProject/SAC/conv_train/2020-05-14_00-44-41_SAC_EPHighWay-v1_Gaussian_/models/critic_e80000.pkl")
 # Training Loop
 total_numsteps = 0
 updates = 0
@@ -100,7 +101,10 @@ for i_episode in itertools.count(1):
         state = env.reset()
         while not done:
             if args.start_steps > total_numsteps:
-                action = env.action_space.sample()  # Sample random action
+                if continue_training:
+                    action = agent.select_action(state, evaluate=True)
+                else:
+                    action = env.action_space.sample()  # Sample random action
             else:
                 with torch.no_grad():
                     action = agent.select_action(state)  # Sample action from policy
@@ -124,7 +128,7 @@ for i_episode in itertools.count(1):
 
         print(f"Episode: {i_episode}, total steps: {total_numsteps}, episode steps: {episode_steps}, "
               f"reward: {round(episode_reward, 3)}, {info['cause']}, lane_change: {info['lane_change']}")
-    except FatalTraCIError:
+    except RuntimeError:
         env.stop()
         env = gym.make(args.env_name)
         env.render(mode='none')
@@ -157,9 +161,6 @@ for i_episode in itertools.count(1):
                 # Update parameters of all the networks
                 critic_1_loss, critic_2_loss, policy_loss, ent_loss, alpha = agent(memory,
                                                                                    updates)
-                network_plot(agent.convolution, writer, updates, name='conv')
-                network_plot(agent.critic, writer, updates, "critic1")
-                network_plot(agent.policy, writer, updates, 'policy')
                 writer.add_scalar('loss/critic_1', critic_1_loss, updates)
                 writer.add_scalar('loss/critic_2', critic_2_loss, updates)
                 writer.add_scalar('loss/policy', policy_loss, updates)
@@ -167,7 +168,7 @@ for i_episode in itertools.count(1):
                 writer.add_scalar('loss/alpha', alpha, updates)
                 updates += 1
 
-        if total_numsteps > args.num_steps:
+        if updates > args.num_steps:
             agent.save_model('sumo', f"e{i_episode}")
             break
 
