@@ -39,7 +39,7 @@ parser.add_argument('--num_steps', type=int, default=10000001, metavar='N',
                     help='maximum number of steps (default: 1000000)')
 parser.add_argument('--hidden_size', type=int, default=128, metavar='N',
                     help='hidden size (default: 256)')
-parser.add_argument('--updates_per_episode', type=int, default=25, metavar='N',
+parser.add_argument('--updates_per_episode', type=int, default=50, metavar='N',
                     help='model updates per episode (default: 1)')
 parser.add_argument('--start_steps', type=int, default=10000, metavar='N',
                     help='Steps sampling random actions (default: 10000)')
@@ -82,9 +82,9 @@ observation_space = env.observation_space.flatten().shape[0]
 agent = SAC(num_inputs=50, action_space=env.action_space, args=args)
 if continue_training:
     agent.load_model(
-        conv_path="/home/st106/workspace/RLHighWay/sumoProject/SAC/conv_train/2020-05-14_00-44-41_SAC_EPHighWay-v1_Gaussian_/models/conv_e80000.pkl",
-        actor_path="/home/st106/workspace/RLHighWay/sumoProject/SAC/conv_train/2020-05-14_00-44-41_SAC_EPHighWay-v1_Gaussian_/models/actor_e80000.pkl",
-        critic_path="/home/st106/workspace/RLHighWay/sumoProject/SAC/conv_train/2020-05-14_00-44-41_SAC_EPHighWay-v1_Gaussian_/models/critic_e80000.pkl")
+        conv_path="/home/st106/workspace/RLHighWay/sumoProject/SAC/conv_train/2020-05-15_18-13-30_SAC_EPHighWay-v1_Gaussian_/models/conv_e41500.pkl",
+        actor_path="/home/st106/workspace/RLHighWay/sumoProject/SAC/conv_train/2020-05-15_18-13-30_SAC_EPHighWay-v1_Gaussian_/models/actor_e41500.pkl",
+        critic_path="/home/st106/workspace/RLHighWay/sumoProject/SAC/conv_train/2020-05-15_18-13-30_SAC_EPHighWay-v1_Gaussian_/models/critic_e41500.pkl")
 # Training Loop
 total_numsteps = 0
 updates = 0
@@ -152,7 +152,7 @@ for i_episode in itertools.count(1):
         avg_reward = 0.
         done_episodes = 0
 
-    if i_episode % 20 == 0 and total_numsteps > args.start_steps:
+    if i_episode % 50 == 0 and total_numsteps > args.start_steps:
 
         if len(memory) > args.batch_size * args.updates_per_episode / 10:
             # Number of updates per step in environment

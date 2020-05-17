@@ -216,8 +216,8 @@ class EPHighWayEnv(gym.Env):
                                                             'lane_change': self.lanechange_counter}
 
     def choose_random_simulation(self):
-        self.rand_index = np.random.choice(np.arange(0, 6), p=[0.19, 0.19, 0.19, 0.19, 0.19, 0.05])
-        # self.rand_index = 5
+        # self.rand_index = np.random.choice(np.arange(0, 6), p=[0.19, 0.19, 0.19, 0.19, 0.19, 0.05])
+        self.rand_index = 5
         # print(f"Simulation {self.rand_index} loaded.")
         if "jatek" in self.sumoCmd[2]:
             self.sumoCmd[2] = f"../envs/sim_conf/jatek_{self.rand_index}.sumocfg"
@@ -390,11 +390,11 @@ class EPHighWayEnv(gym.Env):
                     state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
                     y_range_grid + dy - w:y_range_grid + dy + w, 0]) * element['velocity'] / 50
 
-                # Drawing lane of the current car
-                state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
-                y_range_grid + dy - w:y_range_grid + dy + w, 1] += np.ones_like(
-                    state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
-                    y_range_grid + dy - w:y_range_grid + dy + w, 1]) * element['lane_id'] / 2
+                # # Drawing lane of the current car
+                # state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
+                # y_range_grid + dy - w:y_range_grid + dy + w, 1] += np.ones_like(
+                #     state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
+                #     y_range_grid + dy - w:y_range_grid + dy + w, 1]) * element['lane_id'] / 2
 
                 # If ego, drawing the desired speed
                 if math.isclose(dx, 0) and math.isclose(dy, 0):
@@ -404,6 +404,13 @@ class EPHighWayEnv(gym.Env):
                         state_matrix[x_range_grid + dx - l:x_range_grid + dx + l,
                         y_range_grid + dy - w:y_range_grid + dy + w,
                         2]) * self.desired_speed / 50
+            # draw all the possible lanes
+            dy = int(np.rint((ego_state["y_position"] - self.lane_offset) * grid_per_meter))
+            l_d = int(np.ceil((self.lane_width / 2 * grid_per_meter)))
+            l_up = int(np.ceil((2 * self.lane_width + self.lane_width / 2) * grid_per_meter))
+            state_matrix[:, y_range_grid + dy - l_up:y_range_grid + dy + l_d, 1] = np.ones_like(
+                state_matrix[:, y_range_grid + dy - l_up:y_range_grid + dy + l_d, 1]) * 0.5
+
         # filename = os.path.join(os.path.curdir, "scenarios",f"{self.steps_done}.jpg")
         # plt.imsave(filename,state_matrix)
         return state_matrix, ego_state
