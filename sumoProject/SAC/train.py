@@ -12,10 +12,11 @@ from torch.utils.tensorboard import SummaryWriter
 
 from sumoProject.SAC.replay_memory import ReplayMemory
 from sumoProject.SAC.sac import SAC
+import SUMO.sumoGym
 
 parser = argparse.ArgumentParser(description='PyTorch Soft Actor-Critic Args')
-parser.add_argument('--env-name', default='EPHighWay-v1',
-                    help='SUMO Gym environment (default: EPHighWay-v1')
+parser.add_argument('--env-name', default='SUMOEnvironment-v0',
+                    help='SUMO Gym environment (default: SUMOEnvironment-v0')
 parser.add_argument('--policy', default="Gaussian",
                     help='Policy Type: Gaussian | Deterministic (default: Gaussian)')
 parser.add_argument('--eval', type=bool, default=True,
@@ -24,7 +25,7 @@ parser.add_argument('--gamma', type=float, default=0.99, metavar='G',
                     help='discount factor for reward (default: 0.99)')
 parser.add_argument('--tau', type=float, default=0.005, metavar='G',
                     help='target smoothing coefficient(τ) (default: 0.005)')
-parser.add_argument('--lr', type=float, default=0.1, metavar='G',
+parser.add_argument('--lr', type=float, default=0.001, metavar='G',
                     help='learning rate (default: 0.0003)')
 parser.add_argument('--alpha', type=float, default=0.1, metavar='G',
                     help='Temperature parameter α determines the relative importance of the entropy\
@@ -57,7 +58,7 @@ args = parser.parse_args()
 
 # Tesnorboard
 date = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-logdir = 'conv_train/{}_SAC_{}_{}_{}'.format(date, args.env_name, args.policy,
+logdir = 'autoencoders/{}_SAC_{}_{}_{}'.format(date, args.env_name, args.policy,
                                              "autotune" if args.automatic_entropy_tuning else "")
 setattr(args, "log_dir", logdir)
 writer = SummaryWriter(log_dir=logdir)
@@ -68,7 +69,13 @@ with open(os.path.join(logdir, "params.pkl"), "bw") as file:
 
 # Environment
 # env = NormalizedActions(gym.make(args.env_name))
-env = gym.make(args.env_name)
+env = gym.make(args.env_name, simulation_directory='/home/st106/workspace/SUMO/sim_conf',
+                   type_os="image",
+                   type_as='continuous',
+                   reward_type='speed',
+                   mode='none',
+                   change_speed_interval=100,
+                   )
 torch.manual_seed(args.seed)
 np.random.seed(args.seed)
 env.seed(args.seed)
@@ -78,13 +85,13 @@ env.render('none')
 memory = ReplayMemory(args.replay_size)
 continue_training = False
 # Agent
-observation_space = env.observation_space.flatten().shape[0]
-agent = SAC(num_inputs=50, action_space=env.action_space, args=args)
+observation_space = env.observation_space.shape
+agent = SAC(input_image_size=observation_space, action_space=env.action_space, args=args)
 if continue_training:
     agent.load_model(
-        conv_path="/home/st106/workspace/RLHighWay/sumoProject/SAC/conv_train/2020-05-15_18-13-30_SAC_EPHighWay-v1_Gaussian_/models/conv_e41500.pkl",
-        actor_path="/home/st106/workspace/RLHighWay/sumoProject/SAC/conv_train/2020-05-15_18-13-30_SAC_EPHighWay-v1_Gaussian_/models/actor_e41500.pkl",
-        critic_path="/home/st106/workspace/RLHighWay/sumoProject/SAC/conv_train/2020-05-15_18-13-30_SAC_EPHighWay-v1_Gaussian_/models/critic_e41500.pkl")
+        autoencoder_path="/sumoProject/runs/conv_train/2020-05-15_18-13-30_SAC_EPHighWay-v1_Gaussian_/models/conv_e41500.pkl",
+        actor_path="/sumoProject/runs/conv_train/2020-05-15_18-13-30_SAC_EPHighWay-v1_Gaussian_/models/actor_e41500.pkl",
+        critic_path="/sumoProject/runs/conv_train/2020-05-15_18-13-30_SAC_EPHighWay-v1_Gaussian_/models/critic_e41500.pkl")
 # Training Loop
 total_numsteps = 0
 updates = 0
@@ -96,42 +103,52 @@ for i_episode in itertools.count(1):
     episode_reward = 0
     episode_steps = 0
     done = False
+    state_list = []
+    next_state_list = []
+    action_list = []
 
-    try:
-        state = env.reset()
-        while not done:
-            if args.start_steps > total_numsteps:
-                if continue_training:
-                    action = agent.select_action(state, evaluate=True)
-                else:
-                    action = env.action_space.sample()  # Sample random action
+    state = env.reset()
+    while not done:
+        if args.start_steps > total_numsteps:
+            if continue_training:
+                action = agent.select_action(state, evaluate=True)
             else:
-                with torch.no_grad():
-                    action = agent.select_action(state)  # Sample action from policy
+                action = env.action_space.sample()  # Sample random action
+        else:
+            with torch.no_grad():
+                action = agent.select_action(state)  # Sample action from policy
 
-            next_state, reward, done, info = env.step(action)  # Step
-            episode_steps += 1
-            total_numsteps += 1
-            episode_reward += reward
+        next_state, reward, done, info = env.step(action)  # Step
+        episode_steps += 1
+        total_numsteps += 1
+        episode_reward += reward
+        state_list.append(state)
+        next_state_list.append(next_state)
+        action_list.append(action)
+        if len(state_list) == 3:
+            auto_loss, pred_loss = agent.autoencoder_target.forward_and_loss(input_=np.stack(state_list),
+                                                                             target=next_state,
+                                                                             actions=np.stack(action_list))
+            writer.add_scalar('loss/autoencoder', auto_loss, total_numsteps)
+            writer.add_scalar('loss/prediction', pred_loss, total_numsteps)
+            state_list.pop(0)
+            next_state_list.pop(0)
+            action_list.pop(0)
+        # Ignore the "done" signal if it comes from hitting the time horizon.
+        # (https://github.com/openai/spinningup/blob/master/spinup/algos/sac/sac.py)
+        mask = 1 if info['cause'] is None and done else float(not done)
 
-            # Ignore the "done" signal if it comes from hitting the time horizon.
-            # (https://github.com/openai/spinningup/blob/master/spinup/algos/sac/sac.py)
-            mask = 1 if info['cause'] is None and done else float(not done)
+        memory.push(state, action, reward, next_state, mask)  # Append transition to memory
 
-            memory.push(state, action, reward, next_state, mask)  # Append transition to memory
+        state = next_state
 
-            state = next_state
+    writer.add_scalar('Episode/reward', episode_reward, i_episode)
+    writer.add_scalar('Episode/lane_change', info['lane_change'], i_episode)
+    writer.add_scalar('Episode/distance', info['distance'], i_episode)
 
-        writer.add_scalar('Episode/reward', episode_reward, i_episode)
-        writer.add_scalar('Episode/lane_change', info['lane_change'], i_episode)
-        writer.add_scalar('Episode/distance', info['distance'], i_episode)
+    print(f"Episode: {i_episode}, total steps: {total_numsteps}, episode steps: {episode_steps}, "
+          f"reward: {round(episode_reward, 3)}, {info['cause']}, lane_change: {info['lane_change']}")
 
-        print(f"Episode: {i_episode}, total steps: {total_numsteps}, episode steps: {episode_steps}, "
-              f"reward: {round(episode_reward, 3)}, {info['cause']}, lane_change: {info['lane_change']}")
-    except RuntimeError:
-        env.stop()
-        env = gym.make(args.env_name)
-        env.render(mode='none')
 
     if info["cause"] is None:
         done_episodes += 1
