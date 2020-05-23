@@ -76,7 +76,7 @@ env.render('none')
 
 # Memory
 memory = ReplayMemory(args.replay_size)
-continue_training = True
+continue_training = False
 # Agent
 observation_space = env.observation_space.flatten().shape[0]
 agent = SAC(num_inputs=50, action_space=env.action_space, args=args)
