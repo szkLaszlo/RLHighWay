@@ -1,29 +1,14 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
-
-### What is this repository for? ###
-
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+This repository contain code for Vanilla policy agent of highway scenarios implemented in SUMO, and SAC implementation.
 
 ### How do I get set up? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+* SUMO must be installed into c:/sumo
+* SUMO_HOME should be added to system variables
+* Dependencies are included in setup.py
 
-### Contribution guidelines ###
 
-* Writing tests
-* Code review
-* Other guidelines
+### If there are questions ###
 
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+* Send me message Github ID: szkLaszlo
