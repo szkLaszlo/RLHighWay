@@ -34,6 +34,138 @@ class ValueNetwork(nn.Module):
         return x
 
 
+class ImageEncoder(nn.Module):
+
+    def __init__(self, in_features, hidden_size, kernel_size=(7, 3), padding=(3, 1), stride=(4, 2)):
+        super(ImageEncoder, self).__init__()
+        self.conv_encoder = nn.Sequential(
+            nn.Conv2d(in_channels=in_features[0], out_channels=hidden_size, kernel_size=kernel_size, padding=padding,
+                      stride=stride),
+            nn.ReLU(),
+            nn.Conv2d(in_channels=hidden_size, out_channels=hidden_size, kernel_size=kernel_size, padding=padding,
+                      stride=stride),
+            nn.ReLU(),
+            nn.Conv2d(in_channels=hidden_size, out_channels=1, kernel_size=kernel_size, padding=padding,
+                      stride=stride),
+        )
+
+    def forward(self, x_in):
+        # batch x channel x height x width
+        if x_in.ndim == 3:
+            x_in = x_in.unsqueeze(0)
+        # batch x channel x height x width
+        x_out = self.conv_encoder(x_in)
+        return x_out
+
+
+class ImageDecoder(nn.Module):
+
+    def __init__(self, in_features, out_features, hidden_channels, stride, kernel_size, padding):
+        super(ImageDecoder, self).__init__()
+        self.deconv = nn.Sequential(
+            nn.ConvTranspose2d(in_channels=1, out_channels=hidden_channels, kernel_size=kernel_size,
+                               padding=padding,
+                               stride=stride),
+            nn.ReLU(),
+            nn.ConvTranspose2d(in_channels=hidden_channels, out_channels=hidden_channels, kernel_size=kernel_size,
+                               padding=padding,
+                               stride=stride),
+            nn.ReLU(),
+            nn.ConvTranspose2d(in_channels=hidden_channels, out_channels=out_features[0], kernel_size=kernel_size,
+                               padding=padding,
+                               stride=stride),
+        )
+        self.out_features = out_features
+        self.input_size = in_features
+
+    def forward(self, x_in):
+        # batch x channel x height x width
+        x_in = self.deconv(x_in)
+        x_out = F.interpolate(x_in, self.out_features[1:], mode='bilinear')
+        return x_out
+
+
+class LSTMPredictor(nn.Module):
+
+    def __init__(self, latent_space, hidden_size, output_size):
+        super(LSTMPredictor, self).__init__()
+        self.lstm = nn.LSTM(input_size=latent_space, hidden_size=hidden_size, num_layers=2, batch_first=True)
+        self.linear = nn.Linear(in_features=hidden_size, out_features=output_size)
+
+    def forward(self, input_, actions):
+        # batch x time x features
+        if input_.ndim > 3:
+            input_ = input_.flatten(2)
+        if actions.ndim < 3:
+            actions = actions.unsqueeze(0)
+        lstm_input = torch.cat([input_,actions], dim=-1)
+        lstm_out, _ = self.lstm(lstm_input)
+        output_ = self.linear(lstm_out[:, -1, :].unsqueeze(1))
+        return output_
+
+
+class ImageAutoencoderPredictor(nn.Module):
+
+    def __init__(self, input_shape, hidden_channels, hidden_lstm, kernel_size, padding, stride, device='cuda', lr=0.001,
+                 num_of_actions=2):
+        super(ImageAutoencoderPredictor, self).__init__()
+        self.device = torch.device(device) if torch.cuda.is_available() else torch.device('cpu')
+        self.encoder = ImageEncoder(in_features=input_shape,
+                                    hidden_size=hidden_channels,
+                                    kernel_size=kernel_size, padding=padding, stride=stride).to(self.device)
+        with torch.no_grad():
+            sample_encoder_output = self.encoder(torch.ones(input_shape, device=self.device))
+        self.encoder_output_size = sample_encoder_output.size()
+        self.encoder_output_features = sample_encoder_output.flatten(2).size()[-1]
+        self.decoder = ImageDecoder(in_features=self.encoder_output_size[-1], out_features=input_shape,
+                                    hidden_channels=hidden_channels, stride=stride, kernel_size=kernel_size,
+                                    padding=padding).to(self.device)
+
+        self.predictor = LSTMPredictor(latent_space=self.encoder_output_features + num_of_actions,
+                                       hidden_size=hidden_lstm, output_size=self.encoder_output_features).to(self.device)
+        self.autoencoder_optim = torch.optim.Adam(list(self.encoder.parameters())+list(self.decoder.parameters()), lr=lr)
+        self.predictor_optim = torch.optim.Adam(self.predictor.parameters(), lr=lr)
+        self.loss_fn = nn.MSELoss()
+
+    def forward(self, input_, actions):
+        # batch x channel x heights x width
+        encoder_output = self.encoder(input_)
+        # batch x channel x height x width
+        decoder_output = self.decoder(encoder_output)
+
+        # batch x time x channel x height x width
+        predictor_input = encoder_output.unsqueeze(0)
+        # batch x features
+        predictor_output = self.predictor(predictor_input, actions)
+        # batch x channel x height x width
+        pred_dec_input = predictor_output.reshape(1,1,-1,encoder_output.shape[-1])
+        # batch x channel x height x width
+        pred_dec_output = self.decoder(pred_dec_input)
+        # channel x height x width
+        pred_dec_output = pred_dec_output.squeeze(0)
+
+        return encoder_output, decoder_output, pred_dec_output
+
+    def forward_and_loss(self, input_, target, actions):
+        # batch x channel x heights x width
+        input_ = torch.tensor(input_, dtype=torch.float32, device=self.device)
+        target = torch.tensor(target, dtype=torch.float32, device=self.device)
+        actions = torch.tensor(actions, dtype=torch.float32, device=self.device)
+        encoder_out, decoder_out, pred_dec_out = self.forward(input_, actions)
+
+        autoencoder_loss = self.loss_fn(decoder_out, input_)
+        autoencoder_loss.backward(retain_graph=True)
+        self.autoencoder_optim.step()
+        self.autoencoder_optim.zero_grad()
+
+        predictor_loss = self.loss_fn(pred_dec_out, target)
+        predictor_loss.backward()
+        self.predictor_optim.step()
+        self.predictor_optim.zero_grad()
+
+        return autoencoder_loss.cpu().detach().item(), predictor_loss.cpu().detach().item()
+
+
 class ImageProcessor(nn.Module):
 
     def __init__(self, hidden_size=128, output_size=(100, 2),

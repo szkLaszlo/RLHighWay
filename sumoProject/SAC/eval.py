@@ -44,9 +44,11 @@ writer = SummaryWriter(log_dir=logdir)
 observation_space = env.observation_space.flatten().shape[0]
 agent = SAC(num_inputs=50, action_space=env.action_space, args=args_)
 path = find_latest_weight(path=args.model_path, file_end='.pkl')
-agent.load_model(actor_path=path if 'actor' in path else path.replace('critic', 'actor'),
-                 critic_path=path if 'critic' in path else path.replace('actor', 'critic'))
-convolutional_prepare = ImageProcessor(model_path=args_.conv_path)
+
+agent.load_model(
+    autoencoder_path="/sumoProject/runs/conv_train/2020-05-18_08-27-50_SAC_EPHighWay-v1_Gaussian_/models/conv_e51000.pkl",
+    actor_path="/sumoProject/runs/conv_train/2020-05-18_08-27-50_SAC_EPHighWay-v1_Gaussian_/models/actor_e51000.pkl",
+    critic_path="/sumoProject/runs/conv_train/2020-05-18_08-27-50_SAC_EPHighWay-v1_Gaussian_/models/critic_e51000.pkl")
 
 avg_reward = 0
 success = 0
